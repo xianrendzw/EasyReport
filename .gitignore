@@ -29,3 +29,4 @@ nb-configuration.xml
 .project
 .classpath
 .settings
+*/logs/
