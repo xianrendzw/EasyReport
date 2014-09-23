@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/")
 public class HomeController extends AbstractController {
 
+	@RequestMapping(value = { "/login" })
+	public String login() {
+		return "login";
+	}
+	
 	@RequestMapping(value = { "/", "/index" })
 	public String index() {
-		return "/index";
+		return "home/index";
 	}
 }
