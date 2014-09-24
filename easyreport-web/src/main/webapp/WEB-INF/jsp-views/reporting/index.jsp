@@ -17,9 +17,6 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/addon/display/fullscreen.js"></script>
 </head>
 <body class="easyui-layout" style="text-align: left">
-	<div region="north" border="false" style="background: #666; text-align: center">
-		<%@ include file="/WEB-INF/jsp-views/frame/pageHeaderInner.jsp"%>
-	</div>
 	<div region="west" split="true" title="报表列表" style="width: 250px; padding: 5px;">
 		<ul id="reportingTree"></ul>
 		<input type="hidden" id="copyNodeId" name="copyNodeId" value="0" />

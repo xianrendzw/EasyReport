@@ -15,7 +15,7 @@ public class HomeController extends AbstractController {
 		return "login";
 	}
 	
-	@RequestMapping(value = { "/", "/index" })
+	@RequestMapping(value = {"", "/", "/index" })
 	public String index() {
 		return "home/index";
 	}

@@ -9,3 +9,23 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery.xframe.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/utils/frameUtils.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/common.js?v=<%=Math.random()%>"></script>
+<script type="text/javascript">
+		var XFrame = {
+				setContextPath :function(path) {
+					XFrame._contextPath = path;
+				},
+				getContextPath : function() {
+					return XFrame._contextPath;
+				}
+		};
+		XFrame.setContextPath('<%=request.getContextPath()%>');
+				$.ajaxSetup({
+					contentType : "application/x-www-form-urlencoded;charset=utf-8",
+					complete : function(xhr, textStatus) {
+						//session timeout
+						if (xhr.status == 911) {
+							return window.parent.location = '';
+						}
+					}
+		});
+	</script>
