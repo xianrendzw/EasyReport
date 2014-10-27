@@ -33,21 +33,6 @@ CREATE TABLE `config_dict` (
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='配置字典表';
 
 -- ----------------------------
--- Table structure for contacts
--- ----------------------------
-DROP TABLE IF EXISTS `contacts`;
-CREATE TABLE `contacts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '联系人id',
-  `pid` int(11) NOT NULL COMMENT '联系人父id',
-  `name` varchar(50) NOT NULL COMMENT '联系人姓名',
-  `email` varchar(100) NOT NULL COMMENT '联系人电子邮箱',
-  `telphone` varchar(13) NOT NULL COMMENT '联系人电话',
-  `create_time` datetime NOT NULL COMMENT '联系人记录创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '联系人记录更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='联系人表';
-
--- ----------------------------
 -- Table structure for datasource
 -- ----------------------------
 DROP TABLE IF EXISTS `datasource`;
@@ -96,19 +81,6 @@ CREATE TABLE `reporting` (
 ) ENGINE=InnoDB AUTO_INCREMENT=704 DEFAULT CHARSET=utf8 COMMENT='报表信息表';
 
 -- ----------------------------
--- Table structure for reporting_contacts
--- ----------------------------
-DROP TABLE IF EXISTS `reporting_contacts`;
-CREATE TABLE `reporting_contacts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '报表任务邮件地址id',
-  `report_id` int(11) NOT NULL COMMENT '报表id',
-  `contacts_id` varchar(100) NOT NULL COMMENT '联系人id',
-  `create_time` datetime NOT NULL COMMENT '报表邮件地址记录创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '报表邮件地址记录更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='报表与联系人关系表';
-
--- ----------------------------
 -- Table structure for reporting_sql_history
 -- ----------------------------
 DROP TABLE IF EXISTS `reporting_sql_history`;
@@ -138,21 +110,6 @@ CREATE TABLE `reporting_task` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '报表任务记录修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='报表任务信息表';
-
--- ----------------------------
--- Table structure for reporting_user
--- ----------------------------
-DROP TABLE IF EXISTS `reporting_user`;
-CREATE TABLE `reporting_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '报表管理员ID',
-  `report_id` int(11) NOT NULL COMMENT '报表ID',
-  `user_id` varchar(50) NOT NULL COMMENT '用户ID',
-  `comment` varchar(100) DEFAULT NULL COMMENT '说明备注',
-  `create_time` datetime NOT NULL COMMENT '记录创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录修改时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ak_user_report_id` (`report_id`,`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2810 DEFAULT CHARSET=utf8 COMMENT='报表管理员信息表';
 
 -- ----------------------------
 -- Table structure for sequence

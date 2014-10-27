@@ -100,7 +100,7 @@ public class DataExecution {
 	}
 
 	private List<ReportMetaDataColumn> getMetaDataColumns() {
-		return JSON.parseArray(this.parameter.getJsonMetaColumns(), ReportMetaDataColumn.class);
+		return JSON.parseArray(this.parameter.getMetaColumns(), ReportMetaDataColumn.class);
 	}
 
 	/**

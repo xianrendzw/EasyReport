@@ -1,4 +1,4 @@
-﻿package org.easyframework.report.dao;
+package org.easyframework.report.dao;
 
 import java.sql.DriverManager;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.easyframework.report.data.PageInfo;
 import org.easyframework.report.data.criterion.Restrictions;
 import org.easyframework.report.data.jdbc.BaseDao;
-import org.easyframework.report.entity.DataSource;
+import org.easyframework.report.po.DataSourcePo;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,10 +15,10 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository
-public class DataSourceDao extends BaseDao<DataSource> {
+public class DataSourceDao extends BaseDao<DataSourcePo> {
 
 	public DataSourceDao() {
-		super(DataSource.EntityName, DataSource.Id);
+		super(DataSourcePo.EntityName, DataSourcePo.Id);
 	}
 
 	public boolean testConnection(String url, String pass, String user) {
@@ -30,8 +30,8 @@ public class DataSourceDao extends BaseDao<DataSource> {
 		}
 	}
 
-	public List<DataSource> queryByPage(String createUser, PageInfo page) {
-		String condition = Restrictions.equal(DataSource.CreateUser, "?").toString();
+	public List<DataSourcePo> queryByPage(String createUser, PageInfo page) {
+		String condition = Restrictions.equal(DataSourcePo.CreateUser, "?").toString();
 		Object[] args = new Object[] { createUser };
 		return this.query(condition, page, args);
 	}

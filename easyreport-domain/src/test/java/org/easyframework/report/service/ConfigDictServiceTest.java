@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.easyframework.report.data.BaseTest;
 import org.easyframework.report.data.util.SpringContextUtils;
-import org.easyframework.report.entity.ConfigDict;
-import org.easyframework.report.service.ConfigDictService;
+import org.easyframework.report.po.ConfigDictPo;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +20,7 @@ public class ConfigDictServiceTest extends BaseTest {
 
 	@Test
 	public void testGetAll() {
-		List<ConfigDict> list = this.configDictService.getAll();
+		List<ConfigDictPo> list = this.configDictService.getAll();
 		Assert.assertThat(10, IsEqual.equalTo(list.size()));
 	}
 }

@@ -10,8 +10,8 @@ import org.easyframework.report.dao.ReportingDao;
 import org.easyframework.report.data.PageInfo;
 import org.easyframework.report.data.jdbc.BaseService;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
-import org.easyframework.report.entity.DataSource;
-import org.easyframework.report.entity.Reporting;
+import org.easyframework.report.po.DataSourcePo;
+import org.easyframework.report.po.ReportingPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * 报表信息表服务类
  */
 @Service
-public class ReportingService extends BaseService<ReportingDao, Reporting> {
+public class ReportingService extends BaseService<ReportingDao, ReportingPo> {
 	@Resource
 	private DataSourceService dataSourceService;
 	@Resource
@@ -30,7 +30,7 @@ public class ReportingService extends BaseService<ReportingDao, Reporting> {
 		super(dao);
 	}
 
-	public int addReport(Reporting entity) {
+	public int addReport(ReportingPo entity) {
 		entity.setUid(UUID.randomUUID().toString());
 		int newId = this.dao.insertWithId(entity);
 		this.setHasChild(entity.getPid());
@@ -38,24 +38,34 @@ public class ReportingService extends BaseService<ReportingDao, Reporting> {
 		return newId;
 	}
 
+	public boolean editReport(ReportingPo entity) {
+		String[] columnNames = new String[] {
+				ReportingPo.DsId, ReportingPo.Name, ReportingPo.Status,
+				ReportingPo.Sequence, ReportingPo.DataRange, ReportingPo.Layout,
+				ReportingPo.StatColumnLayout, ReportingPo.SqlText,
+				ReportingPo.MetaColumns, ReportingPo.QueryParams
+		};
+		return this.edit(entity, entity.getId(), columnNames);
+	}
+
 	public boolean setQueryParams(int id, String queryParamJson) {
 		return this.dao.updateQueryParams(id, queryParamJson) > 0;
 	}
 
-	public Reporting getByUid(String uid) {
+	public ReportingPo getByUid(String uid) {
 		return this.dao.queryByUid(uid);
 	}
 
-	public List<Reporting> getByPid(int pid) {
+	public List<ReportingPo> getByPid(int pid) {
 		return this.dao.queryByPid(pid);
 	}
 
 	public String getSqlText(int id) {
-		Reporting entity = this.dao.queryByKey(id, Reporting.SqlText);
+		ReportingPo entity = this.dao.queryByKey(id, ReportingPo.SqlText);
 		return entity == null ? "" : entity.getSqlText();
 	}
 
-	public List<Reporting> queryByPage(String fieldName, String keyword, PageInfo page) {
+	public List<ReportingPo> getByPage(String fieldName, String keyword, PageInfo page) {
 		return this.dao.queryByPage(fieldName, keyword, page);
 	}
 
@@ -85,11 +95,11 @@ public class ReportingService extends BaseService<ReportingDao, Reporting> {
 	}
 
 	public List<ReportMetaDataColumn> getReportMetaDataColumns(int dsId, String sqlText) {
-		DataSource ds = this.dataSourceService.getById(dsId);
+		DataSourcePo ds = this.dataSourceService.getById(dsId);
 		return this.getReportMetaDataColumns(ds, sqlText);
 	}
 
-	public List<ReportMetaDataColumn> getReportMetaDataColumns(DataSource ds, String sqlText) {
+	public List<ReportMetaDataColumn> getReportMetaDataColumns(DataSourcePo ds, String sqlText) {
 		List<ReportMetaDataColumn> metaDataColumns = this.dao.executeSqlText(ds.getJdbcUrl(), ds.getUser(),
 				ds.getPassword(), sqlText);
 		Map<String, ReportMetaDataColumn> commonColumnMap = this.configDictService.getCommonColumns();

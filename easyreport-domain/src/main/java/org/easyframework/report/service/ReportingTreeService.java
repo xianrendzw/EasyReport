@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.easyframework.report.dao.ReportingDao;
 import org.easyframework.report.data.jdbc.BaseService;
-import org.easyframework.report.entity.Reporting;
+import org.easyframework.report.po.ReportingPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 报表树服务类
  */
 @Service
-public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
+public class ReportingTreeService extends BaseService<ReportingDao, ReportingPo> {
 	@Resource
 	private ReportingService reportingService;
 
@@ -23,7 +23,7 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 		super(dao);
 	}
 
-	public boolean editNode(Reporting entity) {
+	public boolean editNode(ReportingPo entity) {
 		return this.dao.updateTreeNode(entity) > 0;
 	}
 
@@ -38,8 +38,8 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 		this.dao.updateHasChild(sourcePid, this.dao.countChildBy(sourcePid) > 0);
 	}
 
-	public Reporting pasteNode(int sourceId, int targetId, String createUser) {
-		Reporting entity = this.dao.queryByKey(sourceId);
+	public ReportingPo pasteNode(int sourceId, int targetId, String createUser) {
+		ReportingPo entity = this.dao.queryByKey(sourceId);
 		int count = this.dao.countChildBy(targetId, entity.getName());
 		if (count > 0) {
 			entity.setName(String.format("%s_复件%s", entity.getName(), count));
@@ -51,8 +51,8 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 	}
 
 	public void rebuildPathById(int id) {
-		List<Reporting> enities = this.dao.queryByPid(id);
-		for (Reporting entity : enities) {
+		List<ReportingPo> enities = this.dao.queryByPid(id);
+		for (ReportingPo entity : enities) {
 			String path = this.reportingService.getPath(entity.getPid(), entity.getId());
 			this.dao.updateHasChild(entity.getPid(), path.split(",").length > 1);
 			this.dao.updatePath(entity.getId(), path);
@@ -61,8 +61,8 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 	}
 
 	public void cloneNode(int sourceId, int targetId, int dsId) {
-		List<Reporting> children = this.dao.queryAllChild(sourceId);
-		for (Reporting child : children) {
+		List<ReportingPo> children = this.dao.queryAllChild(sourceId);
+		for (ReportingPo child : children) {
 			if (child.getId() == sourceId) {
 				child.setPid(targetId);
 				child.setDsId(dsId);
@@ -72,8 +72,8 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 		}
 	}
 
-	private void recursionCloneNode(List<Reporting> children, int newPid, int srcPid, int dsId) {
-		for (Reporting child : children) {
+	private void recursionCloneNode(List<ReportingPo> children, int newPid, int srcPid, int dsId) {
+		for (ReportingPo child : children) {
 			if (child.getPid() == srcPid) {
 				child.setPid(newPid);
 				child.setDsId(dsId);
@@ -84,12 +84,12 @@ public class ReportingTreeService extends BaseService<ReportingDao, Reporting> {
 	}
 
 	public void rebuildAllPath() {
-		List<Reporting> entities = this.dao.query();
+		List<ReportingPo> entities = this.dao.query();
 		this.rebuildPath(entities);
 	}
 
-	private void rebuildPath(List<Reporting> entities) {
-		for (Reporting entity : entities) {
+	private void rebuildPath(List<ReportingPo> entities) {
+		for (ReportingPo entity : entities) {
 			String path = this.reportingService.getPath(entity.getPid(), entity.getId());
 			this.dao.updateHasChild(entity.getPid(), path.split(",").length > 1);
 			this.dao.updatePath(entity.getId(), path);

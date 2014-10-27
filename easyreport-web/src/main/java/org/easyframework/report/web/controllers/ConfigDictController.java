@@ -5,71 +5,46 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.easyframework.report.common.util.CheckUtils;
-import org.easyframework.report.entity.ConfigDict;
+import org.easyframework.report.common.viewmodel.JsonResult;
+import org.easyframework.report.common.viewmodel.TreeNode;
+import org.easyframework.report.po.ConfigDictPo;
 import org.easyframework.report.service.ConfigDictService;
-import org.easyframework.report.web.models.JsonResult;
-import org.easyframework.report.web.models.TreeNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * ConfigDict控制器
+ * 报表配置控制器
  */
 @Controller
-@RequestMapping(value = "/config")
+@RequestMapping(value = "/report/config")
 public class ConfigDictController extends AbstractController {
 	@Resource
 	private ConfigDictService configDictService;
 
-	@RequestMapping(value = { "/", "/index" })
+	@RequestMapping(value = { "", "/", "/index" })
 	public String index() {
-		return "/config/index";
+		return "/config";
 	}
 
-	@RequestMapping(value = "/getchildconfig")
+	@RequestMapping(value = "/query")
 	@ResponseBody
-	public List<ConfigDict> getChildConfig(Integer id) {
-		try {
-			id = CheckUtils.validateNull(id, 0);
-			return this.configDictService.getDao().queryByPid(id);
-		} catch (Exception ex) {
-			logger.error(ex.toString());
-			return new ArrayList<ConfigDict>(0);
-		}
-	}
-
-	@RequestMapping(value = "/getchildnodes")
-	@ResponseBody
-	public List<TreeNode<ConfigDict>> getChildNodes(Integer id) {
-		try {
-			id = CheckUtils.validateNull(id, 0);
-			List<ConfigDict> configDicts = this.configDictService.getDao().queryByPid(id);
-			List<TreeNode<ConfigDict>> treeNodes = new ArrayList<TreeNode<ConfigDict>>(configDicts.size());
-			for (ConfigDict po : configDicts) {
-				String configId = Integer.toString(po.getId());
-				String text = po.getName();
-				String state = "closed";
-				TreeNode<ConfigDict> vmMode = new TreeNode<ConfigDict>(configId, text, state, po);
-				treeNodes.add(vmMode);
-			}
-			return treeNodes;
-		} catch (Exception ex) {
-			logger.error(ex.toString());
-			return new ArrayList<TreeNode<ConfigDict>>(0);
-		}
+	public List<ConfigDictPo> query(Integer id) {
+		if (id == null)
+			id = 0;
+		return this.configDictService.getDao().queryByPid(id);
 	}
 
 	@RequestMapping(value = "/add")
 	@ResponseBody
-	public JsonResult add(ConfigDict model) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult add(ConfigDictPo po) {
+		JsonResult result = new JsonResult(false, "");
 
 		try {
-			this.configDictService.add(model);
+			this.configDictService.add(po);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -77,13 +52,14 @@ public class ConfigDictController extends AbstractController {
 
 	@RequestMapping(value = "/edit")
 	@ResponseBody
-	public JsonResult edit(ConfigDict model) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult edit(ConfigDictPo po) {
+		JsonResult result = new JsonResult(false, "");
 
 		try {
-			this.configDictService.edit(model);
+			this.configDictService.edit(po);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -92,12 +68,13 @@ public class ConfigDictController extends AbstractController {
 	@RequestMapping(value = "/remove")
 	@ResponseBody
 	public JsonResult remove(int id) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+		JsonResult result = new JsonResult(false, "");
 
 		try {
 			this.configDictService.remove(id);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -105,15 +82,37 @@ public class ConfigDictController extends AbstractController {
 
 	@RequestMapping(value = "/batchremove")
 	@ResponseBody
-	public JsonResult batchRemove(String ids) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult remove(String ids) {
+		JsonResult result = new JsonResult(false, "");
 
 		try {
 			this.configDictService.remove(ids);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
+	}
+
+	@RequestMapping(value = "/listchildnodes")
+	@ResponseBody
+	public List<TreeNode<ConfigDictPo>> listChildNodes(Integer id) {
+		if (id == null)
+			id = 0;
+
+		List<ConfigDictPo> configDicts = this.configDictService.getDao().queryByPid(id);
+		List<TreeNode<ConfigDictPo>> treeNodes = new ArrayList<TreeNode<ConfigDictPo>>(
+				configDicts.size());
+
+		for (ConfigDictPo po : configDicts) {
+			String configId = Integer.toString(po.getId());
+			String text = po.getName();
+			String state = "closed";
+			TreeNode<ConfigDictPo> vmMode = new TreeNode<ConfigDictPo>(configId, text, state, po);
+			treeNodes.add(vmMode);
+		}
+
+		return treeNodes;
 	}
 }

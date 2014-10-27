@@ -44,9 +44,8 @@ public class NumberFormatUtils {
 	}
 
 	public static String decimalFormat(Object value, int decimals) {
-		if (value == null) {
+		if (value == null)
 			return "";
-		}
 
 		String formattedValue = value.toString();
 		NumberFormat nf = DecimalFormat.getInstance();

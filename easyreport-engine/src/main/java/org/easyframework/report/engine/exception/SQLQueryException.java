@@ -20,6 +20,6 @@ public class SQLQueryException extends RuntimeException {
 	}
 
 	public SQLQueryException(Throwable cause) {
-		super("报表SQL查询语句执行失败!可能有以下原因：</br>1.报表配置列与SQL语句中的列不一致;</br>2.SQL语句语法错误;</br>3.连接数据库服务器失败或超时;", cause);
+		super("报表SQL查询语句执行失败!请查看报表配置列与SQL语句中的列是否一致.详细信息：</br>" + cause.getMessage(), cause);
 	}
 }

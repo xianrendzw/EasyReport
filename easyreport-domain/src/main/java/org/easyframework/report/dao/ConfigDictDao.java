@@ -1,4 +1,4 @@
-﻿package org.easyframework.report.dao;
+package org.easyframework.report.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.easyframework.report.data.criterion.Restrictions;
 import org.easyframework.report.data.jdbc.BaseDao;
-import org.easyframework.report.entity.ConfigDict;
+import org.easyframework.report.po.ConfigDictPo;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,54 +15,54 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository
-public class ConfigDictDao extends BaseDao<ConfigDict> {
+public class ConfigDictDao extends BaseDao<ConfigDictPo> {
 
 	public ConfigDictDao() {
-		super(ConfigDict.EntityName, ConfigDict.Id);
+		super(ConfigDictPo.EntityName, ConfigDictPo.Id);
 	}
 
-	public ConfigDict queryByDictKey(String dictKey) {
-		String condition = Restrictions.equal(ConfigDict.Key, "?").toString();
+	public ConfigDictPo queryByDictKey(String dictKey) {
+		String condition = Restrictions.equal(ConfigDictPo.Key, "?").toString();
 		Object[] args = new Object[] { dictKey };
 		return this.queryOne(condition, args);
 	}
 
-	public List<ConfigDict> queryByPid(int pid) {
-		String condition = Restrictions.equal(ConfigDict.Pid, "?").toString();
+	public List<ConfigDictPo> queryByPid(int pid) {
+		String condition = Restrictions.equal(ConfigDictPo.Pid, "?").toString();
 		Object[] args = new Object[] { pid };
 		return this.query(condition, args);
 	}
 
-	public List<ConfigDict> queryByParentDictKey(String parentDictKey) {
+	public List<ConfigDictPo> queryByParentDictKey(String parentDictKey) {
 		String columnValue = String.format("select %s from %s where `%s` = ?",
-				ConfigDict.Id, this.tableName, ConfigDict.Key);
-		String condition = Restrictions.in(ConfigDict.Pid, columnValue).toString();
+				ConfigDictPo.Id, this.tableName, ConfigDictPo.Key);
+		String condition = Restrictions.in(ConfigDictPo.Pid, columnValue).toString();
 		Object[] args = new Object[] { parentDictKey };
 		return this.query(condition, args);
 	}
 
-	public List<ConfigDict> queryInByParentDictKeys(String parentDictKeys) {
+	public List<ConfigDictPo> queryInByParentDictKeys(String parentDictKeys) {
 		String columnValue = String.format("select %s from %s where `%s` in(%s)",
-				ConfigDict.Id, this.tableName, ConfigDict.Key, parentDictKeys);
-		String condition = Restrictions.in(ConfigDict.Pid, columnValue).toString();
+				ConfigDictPo.Id, this.tableName, ConfigDictPo.Key, parentDictKeys);
+		String condition = Restrictions.in(ConfigDictPo.Pid, columnValue).toString();
 		return this.query(condition);
 	}
 
-	public Map<String, ConfigDict> queryForMap(int pid) {
+	public Map<String, ConfigDictPo> queryForMap(int pid) {
 		return this.listToMap(this.queryByPid(pid));
 	}
 
-	public Map<String, ConfigDict> queryForMap(String parentDictKey) {
+	public Map<String, ConfigDictPo> queryForMap(String parentDictKey) {
 		return this.listToMap(this.queryByParentDictKey(parentDictKey));
 	}
 
-	private Map<String, ConfigDict> listToMap(List<ConfigDict> configDicts) {
+	private Map<String, ConfigDictPo> listToMap(List<ConfigDictPo> configDicts) {
 		if (configDicts == null || configDicts.size() == 0) {
-			return new HashMap<String, ConfigDict>(0);
+			return new HashMap<String, ConfigDictPo>(0);
 		}
 
-		Map<String, ConfigDict> configDictMap = new HashMap<>(configDicts.size());
-		for (ConfigDict po : configDicts) {
+		Map<String, ConfigDictPo> configDictMap = new HashMap<>(configDicts.size());
+		for (ConfigDictPo po : configDicts) {
 			String key = po.getKey().trim().toLowerCase();
 			if (!configDictMap.containsKey(key)) {
 				configDictMap.put(key, po);

@@ -10,7 +10,7 @@ import java.util.Set;
 public class ReportMetaDataSet {
 	private final List<ReportMetaDataRow> rows;
 	private final List<ReportMetaDataColumn> columns;
-	private List<ReportMetaDataColumn> sqlColumns;
+	private List<ReportMetaDataColumn> nonComputeColumns;
 	private List<ReportMetaDataColumn> layoutColumns;
 	private List<ReportMetaDataColumn> dimColumns;
 	private List<ReportMetaDataColumn> statColumns;
@@ -18,9 +18,12 @@ public class ReportMetaDataSet {
 	/**
 	 * 构造函数
 	 * 
-	 * @param rows 报表元数据行集合
-	 * @param columns 报表元数据列集合
-	 * @param displayedStatColumns 报表中需要显示统计列
+	 * @param rows
+	 *            报表元数据行集合
+	 * @param columns
+	 *            报表元数据列集合
+	 * @param displayedStatColumns
+	 *            报表中需要显示统计列
 	 */
 	public ReportMetaDataSet(List<ReportMetaDataRow> rows, List<ReportMetaDataColumn> columns,
 			Set<String> displayedStatColumns) {
@@ -48,10 +51,10 @@ public class ReportMetaDataSet {
 	}
 
 	/**
-	 * 获取报表的SQL语句对应的元数据列(不包含计算列)
+	 * 获取报表的所有非计算元数据列
 	 */
-	public List<ReportMetaDataColumn> getSqlColumns() {
-		return this.sqlColumns;
+	public List<ReportMetaDataColumn> getNonComputeColumns() {
+		return this.nonComputeColumns;
 	}
 
 	/**
@@ -76,14 +79,14 @@ public class ReportMetaDataSet {
 	}
 
 	private void initilizeColumn(Set<String> displayedStatColumns) {
-		this.sqlColumns = new ArrayList<ReportMetaDataColumn>();
+		this.nonComputeColumns = new ArrayList<ReportMetaDataColumn>();
 		this.layoutColumns = new ArrayList<ReportMetaDataColumn>();
 		this.dimColumns = new ArrayList<ReportMetaDataColumn>();
 		this.statColumns = new ArrayList<ReportMetaDataColumn>();
 
 		for (ReportMetaDataColumn column : this.columns) {
 			if (column.getType() != ColumnType.COMPUTED) {
-				this.sqlColumns.add(column);
+				this.nonComputeColumns.add(column);
 			}
 			if (column.getType() == ColumnType.LAYOUT) {
 				this.layoutColumns.add(column);

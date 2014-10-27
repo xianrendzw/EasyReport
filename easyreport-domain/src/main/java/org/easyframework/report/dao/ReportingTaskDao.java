@@ -1,7 +1,7 @@
-﻿package org.easyframework.report.dao;
+package org.easyframework.report.dao;
 
 import org.easyframework.report.data.jdbc.BaseDao;
-import org.easyframework.report.entity.ReportingTask;
+import org.easyframework.report.po.ReportingTaskPo;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository
-public class ReportingTaskDao extends BaseDao<ReportingTask> {
+public class ReportingTaskDao extends BaseDao<ReportingTaskPo> {
 
 	public ReportingTaskDao() {
-		super(ReportingTask.EntityName, ReportingTask.Id);
+		super(ReportingTaskPo.EntityName, ReportingTaskPo.Id);
 	}
 }

@@ -14,7 +14,7 @@ import org.easyframework.report.engine.util.AviatorExprUtils;
 import org.easyframework.report.engine.util.ComparatorUtils;
 
 /**
- * 报表数据类,包含生成报表所需的数据集，配置及元数据。
+ * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
  */
 public class ReportDataSet {
 	private final String separatorChar = "$";
@@ -363,14 +363,16 @@ public class ReportDataSet {
 	/**
 	 * 按列的先后顺序做为树的层次，构建出一棵层次树，其中层次数为key(根层次为0),当前层次列的值(即对应的行列Cell中的值)为树节点集合
 	 * 
-	 * @param columns 列集合
-	 * @param isInitSpansAndDepth 是否初始树的spans与深度属性
+	 * @param columns
+	 *            列集合
+	 * @param isInitSpansAndDepth
+	 *            是否初始树的spans与深度属性
 	 * @return ColumnTree
 	 */
 	private ColumnTree buildColumnTreeByLevel(List<ReportDataColumn> columns, boolean isInitSpansAndDepth) {
 		Map<Integer, List<ColumnTreeNode>> levelNodeMap = new HashMap<Integer, List<ColumnTreeNode>>();
-		int depth = columns.size();
 
+		int depth = columns.size();
 		for (int level = 0; level < depth; level++) {
 			levelNodeMap.put(level, this.getTreeNodesByLevel(columns, level));
 		}
@@ -388,8 +390,10 @@ public class ReportDataSet {
 	/**
 	 * 按层次遍历树并设置节点的父子关系, 同时返回树节点的所有叶子节点
 	 * 
-	 * @param levelNodeMap 层次树HashMap集合
-	 * @param depth 树的层次深度（根层次为0)
+	 * @param levelNodeMap
+	 *            层次树HashMap集合
+	 * @param depth
+	 *            树的层次深度（根层次为0)
 	 * @return {@link List<ColumnTreeNode>}
 	 */
 	private List<ColumnTreeNode> getAllLeafNodes(Map<Integer, List<ColumnTreeNode>> levelNodeMap, int depth) {

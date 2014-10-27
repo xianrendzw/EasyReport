@@ -4,8 +4,11 @@ public class ComparatorUtils {
 
 	/**
 	 * 按数字大小优先的字符串比较方法
-	 * @param x 字符串1
-	 * @param y 字符串2 
+	 * 
+	 * @param x
+	 *            字符串1
+	 * @param y
+	 *            字符串2
 	 * @return x == y 为0，x>y为1，x<y为-1
 	 */
 	public static int CompareByDigitPriority(String x, String y) {

@@ -59,7 +59,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置报表树型列的值
 	 * 
-	 * @param value 报表树型列的值
+	 * @param value
+	 *            报表树型列的值
 	 */
 	public void setValue(String value) {
 		this.value = value;
@@ -77,7 +78,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置报表树型列的父列节点
 	 * 
-	 * @param parent 父列节点
+	 * @param parent
+	 *            父列节点
 	 */
 	public void setParent(ColumnTreeNode parent) {
 		this.parent = parent;
@@ -95,7 +97,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置报表树型列宽(单位:像素)
 	 * 
-	 * @param width 列宽(单位:像素)
+	 * @param width
+	 *            列宽(单位:像素)
 	 */
 	public void setWidth(final int width) {
 		this.width = width;
@@ -113,7 +116,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置报表树型列在当前树中的深度(0表示第一层)
 	 * 
-	 * @param depth 列在当前树中的深度(0表示第一层)
+	 * @param depth
+	 *            列在当前树中的深度(0表示第一层)
 	 */
 	public void setDepth(int depth) {
 		this.depth = depth;
@@ -131,7 +135,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置报表树型列对应的html表格中的colspan或rowspan的总数
 	 * 
-	 * @param spans html表格中的colspan或rowspan的总数
+	 * @param spans
+	 *            html表格中的colspan或rowspan的总数
 	 */
 	public void setSpans(int spans) {
 		this.spans = spans;
@@ -167,7 +172,8 @@ public class ColumnTreeNode {
 	/**
 	 * 设置当前报表树型列对应报表列对象
 	 * 
-	 * @param column {@link ReportDataColumn}
+	 * @param column
+	 *            {@link ReportDataColumn}
 	 */
 	public void setColumn(ReportDataColumn column) {
 		this.column = column;

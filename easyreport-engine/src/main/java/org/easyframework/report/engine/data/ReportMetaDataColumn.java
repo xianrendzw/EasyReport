@@ -80,7 +80,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置报表元数据列数据类型名称
 	 * 
-	 * @param dataType java.sql.Types中的类型名称
+	 * @param dataType
+	 *            java.sql.Types中的类型名称
 	 */
 	public void setDataType(final String dataType) {
 		this.dataType = dataType;
@@ -98,7 +99,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置报表元数据计算列的计算表达式
 	 * 
-	 * @param expression 计算表达式
+	 * @param expression
+	 *            计算表达式
 	 */
 	public void setExpression(String expression) {
 		this.expression = expression;
@@ -116,7 +118,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置报表元数据列的格式
 	 * 
-	 * @param format 格式化字符串
+	 * @param format
+	 *            格式化字符串
 	 */
 	public void setFormat(String format) {
 		this.format = format;
@@ -152,7 +155,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置报表元数据列的精度（即保留多少位小数,默认浮点数为4位，百分比为2位，其他为0)
 	 * 
-	 * @param decimals 小数精度,默认浮点数为4位，百分比为2位，其他为0
+	 * @param decimals
+	 *            小数精度,默认浮点数为4位，百分比为2位，其他为0
 	 */
 	public void setDecimals(int decimals) {
 		this.decimals = decimals;
@@ -170,7 +174,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置报表元数据列类型
 	 * 
-	 * @param type(1：布局列,2:维度列，3:统计列,4:计算列)
+	 * @param type
+	 *            (1：布局列,2:维度列，3:统计列,4:计算列)
 	 */
 	public void setType(final int type) {
 		this.type = ColumnType.valueOf(type);
@@ -187,7 +192,8 @@ public class ReportMetaDataColumn {
 	/**
 	 * 设置列排序类型
 	 * 
-	 * @param sortType (0:默认,1：数字优先升序,2:数字优先降序,3：字符优先升序,4:字符优先降序)
+	 * @param sortType
+	 *            (0:默认,1：数字优先升序,2:数字优先降序,3：字符优先升序,4:字符优先降序)
 	 */
 	public void setSortType(int sortType) {
 		this.sortType = ColumnSortType.valueOf(sortType);

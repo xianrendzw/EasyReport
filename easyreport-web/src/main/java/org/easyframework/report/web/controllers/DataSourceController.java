@@ -8,66 +8,62 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.easyframework.report.common.util.CheckUtils;
+import org.easyframework.report.common.viewmodel.JsonResult;
 import org.easyframework.report.data.PageInfo;
-import org.easyframework.report.entity.DataSource;
+import org.easyframework.report.po.DataSourcePo;
 import org.easyframework.report.service.DataSourceService;
-import org.easyframework.report.web.models.JsonResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * DataSource控制器
+ * 报表数据源控制器
  */
 @Controller
-@RequestMapping(value = "/ds")
+@RequestMapping(value = "report/ds")
 public class DataSourceController extends AbstractController {
 	@Resource
 	private DataSourceService datasourceService;
 
-	@RequestMapping(value = { "/", "/index" })
+	@RequestMapping(value = { "", "/", "/index" })
 	public String index() {
-		return "/datasource/index";
+		return "/ds";
 	}
 
 	@RequestMapping(value = "/getall")
 	@ResponseBody
-	public List<DataSource> getAll() {
+	public List<DataSourcePo> getAll(HttpServletRequest request) {
 		return this.datasourceService.getAll();
 	}
 
-	@RequestMapping(value = "/getpage")
+	@RequestMapping(value = "/query")
 	@ResponseBody
-	public Map<String, Object> getPage(Integer page, Integer rows, HttpServletRequest request) {
-		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+	public Map<String, Object> query(Integer page, Integer rows, HttpServletRequest request) {
+		if (page == null)
+			page = 1;
+		if (rows == null)
+			rows = 50;
 
-		try {
-			page = CheckUtils.validateNull(page, 1);
-			rows = CheckUtils.validateNull(rows, 50);
-			PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
-			List<DataSource> list = this.datasourceService.getByPage(pageInfo);
-			modelMap.put("total", pageInfo.getTotals());
-			modelMap.put("rows", list);
-			return modelMap;
-		} catch (Exception ex) {
-			logger.error(ex.toString());
-			modelMap.put("total", 0);
-			modelMap.put("rows", "[]");
-			return modelMap;
-		}
+		PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
+		List<DataSourcePo> list = this.datasourceService.getByPage(pageInfo);
+
+		Map<String, Object> modelMap = new HashMap<String, Object>(2);
+		modelMap.put("total", pageInfo.getTotals());
+		modelMap.put("rows", list);
+		return modelMap;
 	}
 
 	@RequestMapping(value = "/add")
 	@ResponseBody
-	public JsonResult add(DataSource model, HttpServletRequest request) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult add(DataSourcePo po, HttpServletRequest request) {
+		JsonResult result = new JsonResult(false, "");
 
 		try {
-			model.setUid(UUID.randomUUID().toString());
-			this.datasourceService.addWithId(model);
+			po.setUid(UUID.randomUUID().toString());
+			this.datasourceService.add(po);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -75,13 +71,28 @@ public class DataSourceController extends AbstractController {
 
 	@RequestMapping(value = "/edit")
 	@ResponseBody
-	public JsonResult edit(DataSource model, HttpServletRequest request) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult edit(DataSourcePo po, HttpServletRequest request) {
+		JsonResult result = new JsonResult(false, "");
 
 		try {
-			this.datasourceService.edit(model);
+			this.datasourceService.edit(po);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/testconnection")
+	@ResponseBody
+	public JsonResult testConnection(String url, String pass, String user) {
+		JsonResult result = new JsonResult(false, "");
+
+		try {
+			result.setSuccess(this.datasourceService.getDao().testConnection(url, pass, user));
+		} catch (Exception ex) {
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -90,13 +101,13 @@ public class DataSourceController extends AbstractController {
 	@RequestMapping(value = "/remove")
 	@ResponseBody
 	public JsonResult remove(int id, HttpServletRequest request) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+		JsonResult result = new JsonResult(false, "");
 
 		try {
 			this.datasourceService.remove(id);
-			result.setMsg("操作成功！");
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;
@@ -104,28 +115,14 @@ public class DataSourceController extends AbstractController {
 
 	@RequestMapping(value = "/batchremove")
 	@ResponseBody
-	public JsonResult batchRemove(String ids, HttpServletRequest request) {
-		JsonResult result = new JsonResult(true, "操作成功！");
+	public JsonResult remove(String ids, HttpServletRequest request) {
+		JsonResult result = new JsonResult(false, "您没有权限执行该操作!");
 
 		try {
 			this.datasourceService.remove(ids);
+			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
-		}
-
-		return result;
-	}
-
-	@RequestMapping(value = "/connect")
-	@ResponseBody
-	public JsonResult testConnection(String url, String pass, String user) {
-		JsonResult result = new JsonResult(true, "操作成功！");
-
-		try {
-			boolean success = this.datasourceService.getDao().testConnection(url, pass, user);
-			result.setMsg(success ? "连接成功！" : "连接失败！");
-		} catch (Exception ex) {
-			this.setErrorResult(result, ex);
+			this.setExceptionResult(result, ex);
 		}
 
 		return result;

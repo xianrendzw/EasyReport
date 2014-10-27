@@ -3,20 +3,20 @@ package org.easyframework.report.engine;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
 import org.easyframework.report.engine.data.ReportDataColumn;
 import org.easyframework.report.engine.data.ReportDataRow;
 import org.easyframework.report.engine.data.ReportDataSet;
+import org.easyframework.report.engine.data.ReportParameter;
 
 /**
  * 横向布局形式的报表生成类
  */
 public class HorizontalLayoutReportBuilder extends AbstractReportBuilder implements ReportBuilder {
 
-	public HorizontalLayoutReportBuilder(ReportDataSet reportData) {
-		super(reportData);
+	public HorizontalLayoutReportBuilder(ReportDataSet reportData, ReportParameter reportParameter) {
+		super(reportData, reportParameter);
 	}
 
 	@Override
@@ -66,14 +66,8 @@ public class HorizontalLayoutReportBuilder extends AbstractReportBuilder impleme
 		this.tableRows.append("<tbody>");
 		for (ColumnTreeNode dimLeafNode : dimColumnTree.getLastLevelNodes()) {
 			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"c\"" : "").append(">");
-			// if (reportData.getDimColumnCount() > 0) {
-			// lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap,
-			// lastNodePaths, dimLeafNode);
-			// }
-			String[] paths = StringUtils.splitPreserveAllTokens(dimLeafNode.getPath(),
-					this.reportData.getSeparatorChars());
-			for (String path : paths) {
-				this.tableRows.append("<td class=\"back\">").append(path).append("</td>");
+			if (reportData.getDimColumnCount() > 0) {
+				lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap, lastNodePaths, dimLeafNode);
 			}
 			for (ColumnTreeNode layoutLeafNode : layoutLeafNodes) {
 				String rowKey = layoutLeafNode.getPath() + dimLeafNode.getPath();

@@ -1,11 +1,11 @@
-﻿package org.easyframework.report.dao;
+package org.easyframework.report.dao;
 
 import java.util.List;
 
 import org.easyframework.report.data.PageInfo;
 import org.easyframework.report.data.criterion.Restrictions;
 import org.easyframework.report.data.jdbc.BaseDao;
-import org.easyframework.report.entity.ReportingSqlHistory;
+import org.easyframework.report.po.ReportingSqlHistoryPo;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository
-public class ReportingSqlHistoryDao extends BaseDao<ReportingSqlHistory> {
+public class ReportingSqlHistoryDao extends BaseDao<ReportingSqlHistoryPo> {
 
 	public ReportingSqlHistoryDao() {
-		super(ReportingSqlHistory.EntityName, ReportingSqlHistory.Id);
+		super(ReportingSqlHistoryPo.EntityName, ReportingSqlHistoryPo.Id);
 	}
 
-	public List<ReportingSqlHistory> queryByPage(PageInfo page, int reportId) {
-		String condition = Restrictions.equal(ReportingSqlHistory.ReportId, "?").toString();
+	public List<ReportingSqlHistoryPo> queryByPage(PageInfo page, int reportId) {
+		String condition = Restrictions.equal(ReportingSqlHistoryPo.ReportId, "?").toString();
 		Object[] args = new Object[] { reportId };
 		return this.query(condition, page, args);
 	}

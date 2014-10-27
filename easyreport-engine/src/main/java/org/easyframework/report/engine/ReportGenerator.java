@@ -28,7 +28,7 @@ public class ReportGenerator {
 	 * @return
 	 */
 	public static String generate(ReportDataSet dataSet, ReportParameter parameter) {
-		ReportBuilder builder = createBuilder(parameter.getLayout(), dataSet);
+		ReportBuilder builder = createBuilder(dataSet, parameter);
 		ReportDirector director = new ReportDirector(builder);
 		director.build();
 		return builder.getTable();
@@ -44,10 +44,10 @@ public class ReportGenerator {
 		return new DataExecution(ds, parameter).execute();
 	}
 
-	private static ReportBuilder createBuilder(LayoutType layoutType, ReportDataSet reportData) {
-		if (layoutType == LayoutType.HORIZONTAL) {
-			return new HorizontalLayoutReportBuilder(reportData);
+	private static ReportBuilder createBuilder(ReportDataSet reportData, ReportParameter parameter) {
+		if (parameter.getLayout() == LayoutType.HORIZONTAL) {
+			return new HorizontalLayoutReportBuilder(reportData, parameter);
 		}
-		return new VerticalLayoutReportBuilder(reportData);
+		return new VerticalLayoutReportBuilder(reportData, parameter);
 	}
 }

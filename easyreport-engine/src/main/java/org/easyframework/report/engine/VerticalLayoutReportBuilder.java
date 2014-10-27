@@ -8,14 +8,15 @@ import org.easyframework.report.engine.data.ColumnTreeNode;
 import org.easyframework.report.engine.data.ReportDataColumn;
 import org.easyframework.report.engine.data.ReportDataRow;
 import org.easyframework.report.engine.data.ReportDataSet;
+import org.easyframework.report.engine.data.ReportParameter;
 
 /**
  * 纵向布局形式的报表生成类
  */
 public class VerticalLayoutReportBuilder extends AbstractReportBuilder implements ReportBuilder {
 
-	public VerticalLayoutReportBuilder(ReportDataSet reportData) {
-		super(reportData);
+	public VerticalLayoutReportBuilder(ReportDataSet reportData, ReportParameter reportParameter) {
+		super(reportData, reportParameter);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import org.easyframework.report.dao.ConfigDictDao;
 import org.easyframework.report.data.jdbc.BaseService;
 import org.easyframework.report.engine.data.ColumnType;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
-import org.easyframework.report.entity.ConfigDict;
+import org.easyframework.report.po.ConfigDictPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * 配置字典表服务类
  */
 @Service
-public class ConfigDictService extends BaseService<ConfigDictDao, ConfigDict> {
+public class ConfigDictService extends BaseService<ConfigDictDao, ConfigDictPo> {
 
 	/**
 	 * 统计列对应的配置字典表中的Key
@@ -55,14 +55,14 @@ public class ConfigDictService extends BaseService<ConfigDictDao, ConfigDict> {
 		return this.listToMap(this.dao.queryByParentDictKey(OPTION_COLUMN), ColumnType.STATISTICAL, true);
 	}
 
-	private Map<String, ReportMetaDataColumn> listToMap(List<ConfigDict> configDicts, ColumnType type,
+	private Map<String, ReportMetaDataColumn> listToMap(List<ConfigDictPo> configDicts, ColumnType type,
 			boolean isOptional) {
 		if (configDicts == null || configDicts.size() == 0) {
 			return new HashMap<String, ReportMetaDataColumn>(0);
 		}
 
 		Map<String, ReportMetaDataColumn> optionalColumnMap = new HashMap<>(configDicts.size());
-		for (ConfigDict configDict : configDicts) {
+		for (ConfigDictPo configDict : configDicts) {
 			String key = configDict.getKey().trim().toLowerCase();
 			if (!optionalColumnMap.containsKey(key)) {
 				ReportMetaDataColumn metaDataColumn = new ReportMetaDataColumn(configDict.getKey(),
