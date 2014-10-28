@@ -24,11 +24,11 @@ public abstract class AbstractController {
 		this.logException(ex);
 	}
 
-	protected void logException(String msg, Exception ex) {
-		this.logException(msg, ex);
+	protected void logException(Exception ex) {
+		this.logException("系统异常", ex);
 	}
 
-	protected void logException(Exception ex) {
-		logger.error("系统异常", ex);
+	protected void logException(String msg, Exception ex) {
+		logger.error(msg, ex);
 	}
 }
