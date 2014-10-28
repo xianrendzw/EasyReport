@@ -89,6 +89,14 @@ ReportCommon.save = function(dlgId, formId, actId, gridId, gridUrl) {
 	});
 };
 
+ReportCommon.saveWithActUrl = function(dlgId, formId, actId, gridId, gridUrl,actRootUrl) {
+	var action = actRootUrl + $(actId).val();
+	ReportCommon.saveWithCallback(dlgId, formId, action, function() {
+		ReportCommon.loadDataToGrid(gridId, gridUrl);
+	});
+};
+
+
 ReportCommon.saveWithCallback = function(dlgId, formId, actUrl, callback) {
 	$(formId).form('submit', {
 		url : actUrl,

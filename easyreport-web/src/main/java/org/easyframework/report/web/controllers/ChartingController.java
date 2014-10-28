@@ -54,8 +54,8 @@ public class ChartingController extends AbstractController {
 		} catch (QueryParamsException ex) {
 			modelAndView.addObject("message", String.format("<div>%s</div>", ex.getMessage()));
 		} catch (Exception ex) {
-			logger.error(ex.toString());
-			modelAndView.addObject("message", "报表生成失败！请联系管理员.");
+			modelAndView.addObject("message", "报表查询参数生成失败！请联系管理员.");
+			this.logException("报表查询参数生成失败", ex);
 		}
 
 		return modelAndView;
@@ -83,15 +83,11 @@ public class ChartingController extends AbstractController {
 			jsonObject.put("dimColumns", reportChartService.getDimColumns(reportData));
 			jsonObject.put("statColumns", reportChartService.getStatColumns(reportData));
 			jsonObject.put("dataRows", reportChartService.getDataRows(reportData));
-		} catch (QueryParamsException ex) {
-			jsonObject.put("msg", ex.getMessage());
-		} catch (NotFoundLayoutColumnException ex) {
-			jsonObject.put("msg", ex.getMessage());
-		} catch (SQLQueryException ex) {
+		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException ex) {
 			jsonObject.put("msg", ex.getMessage());
 		} catch (Exception ex) {
-			logger.error(ex.toString(), ex);
-			jsonObject.put("msg", "报表生成失败！请联系管理员");
+			jsonObject.put("msg", "报表生成失败！请联系管理员。");
+			this.logException("报表生成失败", ex);
 		}
 
 		return jsonObject;

@@ -3,7 +3,7 @@ $(function() {
 	// 数据源grid
 	$('#datasourceGrid').datagrid({
 		method : 'get',
-		url : 'getpage',
+		url : XFrame.getContextPath() + '/report/ds/query',
 		idField : 'id',
 		pageSize : 30,
 		fit : true,
@@ -122,15 +122,16 @@ Datasource.edit = function() {
 };
 
 Datasource.remove = function() {
-	ReportCommon.remove('#datasourceGrid', 'getpage');
+	ReportCommon.remove('#datasourceGrid', XFrame.getContextPath() + '/report/ds/query');
 };
 
 Datasource.batchRemove = function() {
-	ReportCommon.batchRemove('#datasourceGrid', 'getpage');
+	ReportCommon.batchRemove('#datasourceGrid', XFrame.getContextPath() + '/report/ds/query');
 };
 
 Datasource.save = function() {
-	ReportCommon.save('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', 'query');
+	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', XFrame.getContextPath() + '/report/ds/query',
+			XFrame.getContextPath() + '/report/ds/');
 };
 
 Datasource.dblclick = function(row) {
@@ -154,7 +155,7 @@ Datasource.applyConnection = function(index) {
 	$('#datasourceGrid').datagrid('selectRow', index);
 	var row = $('#datasourceGrid').datagrid('getSelected');
 
-	$.post(XFrame.getContextPath() + "/ds/connect", {
+	$.post(XFrame.getContextPath() + '/report/ds/testconnection', {
 		url : row.jdbcUrl,
 		pass : row.password,
 		user : row.user
@@ -168,7 +169,7 @@ Datasource.applyConnection = function(index) {
 };
 
 Datasource.testConnection = function() {
-	$.post(XFrame.getContextPath() + "/ds/connect", {
+	$.post(XFrame.getContextPath() + '/report/ds/testconnection', {
 		url : $("#configJdbcUrl").val(),
 		pass : $("#configPassword").val(),
 		user : $("#configUser").val()

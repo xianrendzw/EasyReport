@@ -67,8 +67,8 @@ public class ReportingController extends AbstractController {
 		} catch (QueryParamsException ex) {
 			modelAndView.addObject("formHtmlText", String.format("<div>%s</div>", ex.getMessage()));
 		} catch (Exception ex) {
-			this.logException(ex);
 			modelAndView.addObject("formHtmlText", "<div>报表查询参数生成失败！请联系管理员.</div>");
+			this.logException("报表查询参数生成失败", ex);
 		}
 
 		return modelAndView;
@@ -88,15 +88,11 @@ public class ReportingController extends AbstractController {
 			Map<String, Object> formParams = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
 			String htmlTable = generationService.getHtmlTable(po, formParams);
 			jsonObject.put("htmlTable", htmlTable);
-		} catch (QueryParamsException ex) {
-			jsonObject.put("htmlTable", String.format("<div>%s</div>", ex.getMessage()));
-		} catch (NotFoundLayoutColumnException ex) {
-			jsonObject.put("htmlTable", String.format("<div>%s</div>", ex.getMessage()));
-		} catch (SQLQueryException ex) {
+		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException ex) {
 			jsonObject.put("htmlTable", String.format("<div>%s</div>", ex.getMessage()));
 		} catch (Exception ex) {
-			this.logException(ex);
 			jsonObject.put("htmlTable", "<table><tr><td>报表生成失败！请联系管理员.</div>");
+			this.logException("报表生成失败", ex);
 		}
 
 		return jsonObject;

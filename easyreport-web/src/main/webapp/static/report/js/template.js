@@ -12,9 +12,11 @@ $(function() {
 	$('#btnShowComment').mouseleave(function(e) {
 		ReportTemplate.closeComment(e);
 	});
+	$('#checkAllStatColumn').click(ReportTemplate.checkedAllStatColumn);
+	
 	$('#btnExportToExcel').on("click", ReportTemplate.exportToExcel);
 	$('#btnFullScreen').on("click", ReportTemplate.fullScreen);
-
+	
 	ReportTemplate.generate();
 });
 
@@ -22,61 +24,37 @@ var ReportTemplate = function() {
 };
 
 ReportTemplate.initTable = function() {
-	$("#report").fixScroll();
+	var table = $("#report");
 	ReportTemplate.addToggleRowEvents();
 	// 暂时不支持跨行排序
 	var rowspans = $("#report>tbody>tr>td[rowspan][rowspan != '1']");
+	table.data('isSort', rowspans.length === 0).fixScroll();
 	if (rowspans && rowspans.length > 0) {
 		return;
 	}
 
-	$('#report').tablesorter({
+	table.tablesorter({
 		sortInitialOrder : 'desc'
 	});
-	$('#report>thead>tr').attr({
+
+	table.find('>thead>tr').attr({
 		title : "点击可以排序"
-	});
-	$('#report>thead>tr').css({
+	}).css({
 		cursor : "pointer"
 	});
 };
 
 ReportTemplate.addToggleRowEvents = function() {
 	$("#report>tbody>tr").click(function() {
-		$.each($("#report>tbody>tr"), function(i, n) {
-			$(n).css({
-				"background" : ""
-			});
-			$(n).removeAttr("title");
-		});
-		$(this).css({
-			"background" : "#fddc30"
-		});
-		$(this).attr({
-			title : "selected"
-		});
-	});
-
-	$('#report>tbody>tr').mouseover(function(e) {
-		$(this).css({
-			"background" : "#fddc30"
-		});
-	});
-	$('#report>tbody>tr').mouseleave(function(e) {
-		var title = $(this).attr("title");
-		if (title && title == "selected") {
-			return;
-		}
-		$(this).css({
-			"background" : ""
-		});
+		$('#report .selected').removeClass('selected').removeAttr('title');
+		$(this).addClass('selected').attr('title', 'selected');
 	});
 };
 
 ReportTemplate.generate = function() {
 	$.ajax({
 		type : "POST",
-		url : XFrame.getContextPath() + '/reporting/generate',
+		url : XFrame.getContextPath() + '/report/generate',
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
@@ -86,6 +64,7 @@ ReportTemplate.generate = function() {
 		success : function(result) {
 			$('#reportDiv').html(result.htmlTable);
 			ReportTemplate.initTable();
+			ReportTemplate.filterTable = ReportTemplate.renderFilterTable();
 		},
 		complete : function() {
 			$('#loading').hide();
@@ -93,14 +72,44 @@ ReportTemplate.generate = function() {
 	});
 };
 
+// 讲报表上面的过滤信息拼成table，用于写入excel中
+ReportTemplate.renderFilterTable = function() {
+	var html = '<table>';
+	html += '<tr><td><h3>表报名称</h3></td><td><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
+	$('#templateFrom .j-item').each(
+			function() {
+				var type = $(this).attr('data-type');
+				if (type === 'date-range') {
+					var input = $(this).find('.combo-text');
+					html += '<tr><td><strong>时间范围</strong></td><td>' + input.eq(0).val() + '~' + input.eq(1).val()
+							+ '</td></tr>';
+				} else if (type === 'checkbox') {
+					html += '<tr><td><strong>筛选统计列</strong></td><td>';
+					var rowChoose = [];
+					$(this).find('input[type="checkbox"]:checked').each(function() {
+						rowChoose.push($(this).attr('data-name'));
+					})
+					html += rowChoose.join('、');
+					html += '</td></tr>';
+				} else {
+					var label = $(this).find('label').text().replace(':', '');
+					var val = $(this).find('.combo-text').val();
+					html += '<tr><td><strong>' + label + '</strong></td><td>' + val + '</td></tr>';
+				}
+			})
+	html += '<tr></tr><tr></tr><tr></tr></table>';
+	return html;
+};
+
 ReportTemplate.exportToExcel = function(e) {
-	var htmlText = $('#reportDiv').html();
+	var htmlText = '';
+	htmlText += (ReportTemplate.filterTable || '');
+	htmlText += '<table>' + $('#report').html() + '</table>';
 	var bytes = ReportTemplate.getBytes(htmlText);
 	if (bytes > 2000000) {
 		htmlText = "large";
 	}
-
-	var postUrl = XFrame.getContextPath() + '/reporting/exportexcel';
+	var postUrl = XFrame.getContextPath() + '/report/exportexcel';
 	var postData = $('#templateFrom').serializeObject();
 	postData["htmlText"] = htmlText;
 
@@ -144,7 +153,7 @@ ReportTemplate.toggleSkin = function(e) {
 
 ReportTemplate.fullScreen = function() {
 	var uid = $('#rpUid').val();
-	var url = XFrame.getContextPath() + '/reporting/uid/' + uid;
+	var url = XFrame.getContextPath() + '/report/uid/' + uid;
 	ReportTemplate.winOpen(url, uid);
 };
 
@@ -155,7 +164,7 @@ ReportTemplate.showChart = function(e) {
 	parent.showChart(title, id, uid);
 };
 
-ReportTemplate.checkedAllStatColumn = function() {
+ReportTemplate.checkedAllStatColumn = function(e) {
 	var checked = $("input[name='checkAllStatColumn']").prop("checked");
 	$("input[name='statColumns']").prop("checked", checked);
 };
