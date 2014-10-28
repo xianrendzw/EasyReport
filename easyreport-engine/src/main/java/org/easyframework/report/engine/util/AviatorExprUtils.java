@@ -22,7 +22,7 @@ public class AviatorExprUtils {
 			Expression compiledExp = AviatorEvaluator.compile(expression, true);
 			value = compiledExp.execute(context);
 		} catch (ExpressionRuntimeException ex) {
-			logger.error(ex.toString());
+			logger.error(ex.getMessage());
 		}
 
 		return value;
