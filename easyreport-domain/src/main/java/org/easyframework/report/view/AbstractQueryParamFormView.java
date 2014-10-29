@@ -56,12 +56,14 @@ public abstract class AbstractQueryParamFormView {
 
 	public String getFormHtmlText(List<HtmlFormElement> formElements) {
 		List<NameTextPair> list = this.getTextList(formElements);
-		int pageSize = 3;
+		// int pageSize = 3;
 		int count = list.size();
 		StringBuilder htmlTextBuilder = new StringBuilder();
 		for (int index = 1; index <= count; index++) {
 			htmlTextBuilder.append(list.get(index - 1).getText());
-			htmlTextBuilder.append((index % pageSize == 0) ? "<br/><br/>" : "&nbsp;&nbsp;");
+			htmlTextBuilder.append("&nbsp;");
+			// htmlTextBuilder.append((index % pageSize == 0) ? "<br/><br/>" :
+			// "&nbsp;&nbsp;");
 		}
 		return htmlTextBuilder.toString();
 	}

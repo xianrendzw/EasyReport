@@ -100,9 +100,8 @@ public class ReportingController extends AbstractController {
 
 	@RequestMapping(value = "/exportexcel", method = RequestMethod.POST)
 	public void exportToExcel(Integer id, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
-		OutputStream os = null;
 
-		try {
+		try (OutputStream out = response.getOutputStream()) {
 			String fileName = name + "_" + DateUtils.getNow("yyyyMMddHHmmss");
 			fileName = new String(fileName.getBytes(), "ISO8859-1") + ".xls";
 
@@ -111,25 +110,15 @@ public class ReportingController extends AbstractController {
 				Map<String, Object> formParameters = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
 				htmlText = generationService.getHtmlTable(po, formParameters);
 			}
-
-			os = response.getOutputStream();
 			response.reset();
 			response.setHeader("Content-Disposition", String.format("attachment; filename=%s", fileName));
 			response.setContentType("application/vnd.ms-excel; charset=utf-8");
 			response.addCookie(new Cookie("fileDownload", "true"));
-			os.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF }); // 生成带bom的utf8文件
-			os.write(htmlText.getBytes());
-			os.flush();
+			out.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF }); // 生成带bom的utf8文件
+			out.write(htmlText.getBytes());
+			out.flush();
 		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (os != null) {
-				try {
-					os.close();
-				} catch (Exception e) {
-					logger.error("", e);
-				}
-			}
+			this.logException("导出excel失败", ex);
 		}
 	}
 }

@@ -65,7 +65,7 @@ public class DataExecution {
 			rs = stmt.executeQuery();
 			return this.getMetaDataRows(rs, sqlCcolumns);
 		} catch (SQLException ex) {
-			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex.toString()));
+			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
 			throw new SQLQueryException(ex);
 		} finally {
 			this.releaseJdbcResource(conn, stmt, rs);
