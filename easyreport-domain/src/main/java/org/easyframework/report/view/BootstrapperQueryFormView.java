@@ -75,15 +75,20 @@ public class BootstrapperQueryFormView extends AbstractQueryParamFormView implem
 
 	@Override
 	protected String getCheckboxListText(HtmlCheckBoxList checkBoxList) {
+		boolean isCheckedAll = true;
 		StringBuilder htmlText = new StringBuilder("");
 		for (HtmlCheckBox checkBox : checkBoxList.getValue()) {
+			if (!checkBox.isChecked())
+				isCheckedAll = false;
 			String checked = checkBox.isChecked() ? "checked=\"checked\"" : "";
 			htmlText.append(String.format("<label class=\"checkbox\">%s", checkBox.getText()));
 			htmlText.append(String.format("<input class=\"checkbox-item\" type=\"checkbox\" name=\"%s\" value=\"%s\" %s />",
 					checkBoxList.getName(), checkBox.getName(), checked));
 			htmlText.append("<i></i></label>");
 		}
-		htmlText.append("<label class=\"checkbox\">全选 <input type=\"checkbox\" name=\"checkAllStatColumn\" id=\"checkAllStatColumn\"><i></i></label>");
+		htmlText.append("<label class=\"checkbox\">全选 ");
+		htmlText.append(String.format("<input type=\"checkbox\" name=\"checkAllStatColumn\" id=\"checkAllStatColumn\" %s /><i></i></label>",
+				isCheckedAll ? "checked=\"checked\"" : ""));
 		return htmlText.toString();
 	}
 
