@@ -1,24 +1,27 @@
+var configPageRootUrl = XFrame.getContextPath() + '/report/config/';
 $(function() {
 	// 左边字典树
-	var treeTitle = $('.panel-title');
-	treeTitle.css({
-		cursor : "pointer",
-	});
-	treeTitle.html("<span>字典树</span><span style='float:right;width:90px'>"
-			+ "<a href='javascript:ConfigDict.add()' title='点击增加根节点'>增加根节点</a></span>");
-	treeTitle.click(function() {
-		$('#configDictTree').tree('reload');
-		ReportCommon.loadDataToGrid('#configDictGrid', XFrame.getContextPath() + '/report/config/query?id=0');
+	$('#west').panel({
+		tools : [ {
+			iconCls : 'icon-add',
+			handler : ConfigDict.add
+		}, {
+			iconCls : 'icon-reload',
+			handler : function() {
+				$('#configDictTree').tree('reload');
+				ReportCommon.loadDataToGrid('#configDictGrid', configPageRootUrl + 'query?id=0');
+			}
+		} ]
 	});
 
 	$('#configDictTree').tree({
 		checkbox : false,
 		method : 'get',
-		url : XFrame.getContextPath() + '/report/config/listchildnodes',
+		url : configPageRootUrl + 'listchildnodes',
 		onClick : function(node) {
 			$('#configDictTree').tree('expand', node.target);
-			$('#configDictTree').tree('options').url = XFrame.getContextPath() + '/report/config/listchildnodes';
-			ReportCommon.loadDataToGrid('#configDictGrid', XFrame.getContextPath() + '/report/config/query?id=' + node.id);
+			$('#configDictTree').tree('options').url = configPageRootUrl + 'listchildnodes';
+			ReportCommon.loadDataToGrid('#configDictGrid', configPageRootUrl + 'query?id=' + node.id);
 		},
 		onContextMenu : function(e, node) {
 			e.preventDefault();
@@ -32,7 +35,7 @@ $(function() {
 
 	// 配置字典grid
 	$('#configDictGrid').datagrid({
-		url : XFrame.getContextPath() + '/report/config/query',
+		url : configPageRootUrl + 'query',
 		method : 'get',
 		idField : 'id',
 		pageSize : 30,
@@ -82,13 +85,18 @@ $(function() {
 			field : 'updateTime',
 			title : '更新时间',
 			width : 100
-		} ] ]
+		} ] ],
+		onDblClickRow : function(index, row) {
+			ConfigDict.edit();
+		}
 	});
 
 	// 初始化配置字典dialog
 	$('#configDictDlg').dialog({
 		closed : true,
 		modal : true,
+		width: 500,
+		height: 310,
 		buttons : [ {
 			text : '关闭',
 			iconCls : 'icon-no',
@@ -101,8 +109,6 @@ $(function() {
 			handler : ConfigDict.save
 		} ]
 	});
-
-	// TODO
 });
 
 var ConfigDict = function() {
@@ -129,10 +135,7 @@ ConfigDict.add = function() {
 		name = configNode.name;
 		id = configNode.id;
 	}
-
-	ReportCommon.add('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '新增[' + name
-			+ ']配置字典的子项');
-
+	ReportCommon.add('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '新增[' + name + ']配置字典的子项');
 	$("#configDictPid").val(id);
 	$("#configDictPNameDiv").show();
 	$("#configDictPName").html(name);
@@ -144,8 +147,7 @@ ConfigDict.edit = function() {
 	var node = $('#configDictTree').tree('getSelected');
 	node = node ? node.attributes : null;
 	row = row || node;
-	ReportCommon.editWithData('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '修改ID配置字典项',
-			row);
+	ReportCommon.editWithData('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '修改ID配置字典项',row);
 };
 
 ConfigDict.remove = function() {
@@ -154,11 +156,11 @@ ConfigDict.remove = function() {
 	node = node ? node.attributes : null;
 	row = row || node;
 	
-	ReportCommon.removeWithCallback(row, XFrame.getContextPath() + '/report/config/remove', {
+	ReportCommon.removeWithCallback(row, configPageRootUrl + 'remove', {
 		id : row ? row.id : 0
 	}, function(data) {
 		ConfigDict.refreshNode(data.pid);
-		ReportCommon.loadDataToGrid('#configDictGrid', XFrame.getContextPath() + '/report/config/query?id=' + data.pid);
+		ReportCommon.loadDataToGrid('#configDictGrid', configPageRootUrl + 'query?id=' + data.pid);
 	});
 };
 
@@ -167,18 +169,17 @@ ConfigDict.batchRemove = function() {
 	var ids = $.map(rows, function(row) {
 		return row.id;
 	}).join();
-	ReportCommon.removeWithCallback(rows, XFrame.getContextPath() + '/report/config/batchRemove', {
+	ReportCommon.removeWithCallback(rows, configPageRootUrl + 'batchRemove', {
 		id : ids
 	}, function(data) {
-		ReportCommon.loadDataToGrid('#configDictGrid', XFrame.getContextPath() + '/report/config/query?id=' + data[0].pid);
+		ReportCommon.loadDataToGrid('#configDictGrid', configPageRootUrl + 'query?id=' + data[0].pid);
 	});
 };
 
 ConfigDict.save = function() {
 	var pid = $("#configDictPid").val();
-	var url = XFrame.getContextPath() + '/report/config/query?id=' + pid;
-	var actUrl = $('#configDictAction').val();
-
+	var url = configPageRootUrl + 'query?id=' + pid;
+	var actUrl =configPageRootUrl +  $('#configDictAction').val();
 	ReportCommon.saveWithCallback('#configDictDlg', '#configDictForm', actUrl, function() {
 		ConfigDict.refreshNode(pid);
 		ReportCommon.loadDataToGrid('#configDictGrid', url);

@@ -5,6 +5,7 @@ import java.util.List;
 public class HtmlComboBox extends HtmlFormElement {
 	private final List<HtmlSelectOption> value;
 	private boolean multipled;
+	private boolean autoComplete;
 
 	public HtmlComboBox(String name, String text, List<HtmlSelectOption> value) {
 		super(name, text);
@@ -18,6 +19,14 @@ public class HtmlComboBox extends HtmlFormElement {
 
 	public void setMultipled(boolean multipled) {
 		this.multipled = multipled;
+	}
+
+	public boolean isAutoComplete() {
+		return autoComplete;
+	}
+
+	public void setAutoComplete(boolean autoComplete) {
+		this.autoComplete = autoComplete;
 	}
 
 	public List<HtmlSelectOption> getValue() {

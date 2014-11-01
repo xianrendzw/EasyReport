@@ -11,7 +11,7 @@ import org.easyframework.report.viewmodel.HtmlFormElement;
  * 报表的查询参数表单视图接口
  *
  */
-interface QueryParamFormView {
+public interface QueryParamFormView {
 
 	List<NameTextPair> getTextList(List<HtmlFormElement> formElements);
 

@@ -18,6 +18,7 @@ public class QueryParameterPo implements Serializable {
 	private int width = 100;
 	private int height = 25;
 	private boolean isRequired;
+	private boolean autoComplete;
 
 	/**
 	 * 获取报表查询参数名称
@@ -231,5 +232,24 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public void setRequired(boolean isRequired) {
 		this.isRequired = isRequired;
+	}
+
+	/**
+	 * 获取报表查询参数的是否自动提示(主要用于下拉列表控件中)
+	 * 
+	 * @return true|false
+	 */
+	public boolean isAutoComplete() {
+		return autoComplete;
+	}
+
+	/**
+	 * 设置报表查询参数的是否自动提示(主要用于下拉列表控件中)
+	 * 
+	 * @param autoComplete
+	 *            true|false
+	 */
+	public void setAutoComplete(boolean autoComplete) {
+		this.autoComplete = autoComplete;
 	}
 }

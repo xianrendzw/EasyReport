@@ -61,9 +61,7 @@ public abstract class AbstractQueryParamFormView {
 		StringBuilder htmlTextBuilder = new StringBuilder();
 		for (int index = 1; index <= count; index++) {
 			htmlTextBuilder.append(list.get(index - 1).getText());
-			htmlTextBuilder.append("&nbsp;");
-			// htmlTextBuilder.append((index % pageSize == 0) ? "<br/><br/>" :
-			// "&nbsp;&nbsp;");
+			// htmlTextBuilder.append((index % pageSize == 0) ? "<br/><br/>" : "&nbsp;&nbsp;");
 		}
 		return htmlTextBuilder.toString();
 	}

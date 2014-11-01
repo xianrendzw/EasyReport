@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>报表管理</title>
 <%@ include file="/WEB-INF/jsp-views/frame/pageHeader.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/reporting.js?v=<%=Math.random()%>"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/designer.js?v=<%=Math.random()%>"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/reporting.validate.js?v=<%=Math.random()%>"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/codemirror.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/theme/rubyblue.css" />
@@ -14,11 +14,10 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/codemirror.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/mode/sql.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/addon/display/fullscreen.js"></script>
-<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.edatagrid.js"></script>
 </head>
 <body id="layout" class="easyui-layout" style="text-align: left">
 	<!-- 左边tree -->
-	<div id="west" region="west" border="false" split="true" title="报表列表" style="width: 250px; padding: 5px; cursor: pointer;">
+	<div id="west" region="west" border="false" split="true" title=" " style="width: 250px; padding: 5px; cursor: pointer;">
 		<ul id="reportingTree"></ul>
 		<input type="hidden" id="copyNodeId" name="copyNodeId" value="0" />
 	</div>
@@ -37,8 +36,7 @@
 									<option value="2">纵向布局</option>
 							</select></td>
 							<td class="text_r blueside">显示几天数据:</td>
-							<td><input type="text" id="reportingDataRange" name="dataRange" value="7" /><span style="float: right;"><img
-									style="cursor: pointer;" id="btnViewHelp" title="查看使用说明" src="<%=request.getContextPath()%>/static/report/icons/question2_24.png" /></span></td>
+							<td><input type="text" id="reportingDataRange" name="dataRange" value="7" /></td>
 						</tr>
 						<tr>
 							<td class="text_r blueside">报表名称:</td>

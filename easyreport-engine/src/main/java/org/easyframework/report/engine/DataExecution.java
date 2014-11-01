@@ -79,6 +79,9 @@ public class DataExecution {
 			ReportMetaDataRow row = new ReportMetaDataRow();
 			for (ReportMetaDataColumn column : sqlCcolumns) {
 				Object value = rs.getObject(column.getName());
+				if (column.getDataType().contains("BINARY")) {
+					value = new String((byte[]) value);
+				}
 				row.add(new ReportMetaDataCell(column, column.getName(), value));
 			}
 			rows.add(row);

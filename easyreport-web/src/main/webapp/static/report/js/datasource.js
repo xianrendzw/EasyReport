@@ -1,9 +1,9 @@
+var dsPageRootUrl = XFrame.getContextPath() + '/report/ds/';
 $(function() {
-	
 	// 数据源grid
 	$('#datasourceGrid').datagrid({
 		method : 'get',
-		url : XFrame.getContextPath() + '/report/ds/query',
+		url : dsPageRootUrl + 'query',
 		idField : 'id',
 		pageSize : 30,
 		fit : true,
@@ -65,8 +65,8 @@ $(function() {
 			}
 		} ] ],
 		onDblClickRow : function(index, row) {
-			Datasource.dblclick(row);
-		},
+			Datasource.edit();
+		}
 	});
 
 	
@@ -122,27 +122,16 @@ Datasource.edit = function() {
 };
 
 Datasource.remove = function() {
-	ReportCommon.remove('#datasourceGrid', XFrame.getContextPath() + '/report/ds/query');
+	ReportCommon.removeWithActUrl('#datasourceGrid', dsPageRootUrl + 'query',dsPageRootUrl + 'remove');
 };
 
 Datasource.batchRemove = function() {
-	ReportCommon.batchRemove('#datasourceGrid', XFrame.getContextPath() + '/report/ds/query');
+	ReportCommon.batchRemoveWithActUrl('#datasourceGrid', dsPageRootUrl + 'query',dsPageRootUrl + 'remove');
 };
 
 Datasource.save = function() {
-	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', XFrame.getContextPath() + '/report/ds/query',
-			XFrame.getContextPath() + '/report/ds/');
-};
-
-Datasource.dblclick = function(row) {
-	$("#checkDlg").dialog('open');
-	$("#checkname").val(row.name);
-	$("#checkuid").val(row.uid);
-	$("#checkuser").val(row.user);
-	$("#checkJdbcUrl").val(row.jdbcUrl);
-	$("#checkPassword").val(row.password);
-	$("#checkcreateTime").val(row.createTime);
-	$("#checkupdateTime").val(row.updateTime);
+	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', dsPageRootUrl + 'query',
+			dsPageRootUrl + '');
 };
 
 Datasource.optionsFormatter = function(value, row, index) {
@@ -155,7 +144,7 @@ Datasource.applyConnection = function(index) {
 	$('#datasourceGrid').datagrid('selectRow', index);
 	var row = $('#datasourceGrid').datagrid('getSelected');
 
-	$.post(XFrame.getContextPath() + '/report/ds/testconnection', {
+	$.post(dsPageRootUrl + 'testconnection', {
 		url : row.jdbcUrl,
 		pass : row.password,
 		user : row.user
@@ -169,7 +158,7 @@ Datasource.applyConnection = function(index) {
 };
 
 Datasource.testConnection = function() {
-	$.post(XFrame.getContextPath() + '/report/ds/testconnection', {
+	$.post(dsPageRootUrl + 'testconnection', {
 		url : $("#configJdbcUrl").val(),
 		pass : $("#configPassword").val(),
 		user : $("#configUser").val()

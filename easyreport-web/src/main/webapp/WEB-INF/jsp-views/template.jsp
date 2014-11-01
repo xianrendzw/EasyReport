@@ -47,20 +47,21 @@
 					<td colspan="2" id="rpTitle" style="font-size: 24px;">${name}</td>
 				</tr>
 				<tr style="height: 40px;">
-					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}
-					<a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
-					<td style="text-align: left; vertical-align: middle; white-space: normal;">
-						<img style="cursor: pointer;" id="btnFullScreen" title="全屏显示" src="<%=request.getContextPath()%>/static/report/icons/fullscreen_24.png" />&nbsp;<img
-						style="cursor: pointer;" id="btnExportToExcel" title="导出到Excel" src="<%=request.getContextPath()%>/static/report/icons/excel_24.png" />&nbsp;<img
-						style="cursor: pointer;" id="btnShowChart" title="图表展示" src="<%=request.getContextPath()%>/static/report/icons/chart_24.png" />&nbsp;<img
-						style="cursor: pointer;" id="btnToggleSkins" title="切换报表样式" src="<%=request.getContextPath()%>/static/report/icons/skins_24.png" />&nbsp;<img
-						style="cursor: pointer;" id="btnShowComment" title="报表说明" src="<%=request.getContextPath()%>/static/report/icons/comment_24.png" /><input
-						id="rpId" type="hidden" name="id" value="${id}" /><input id="rpName" type="hidden" name="name" value="${name}" /> <input id="uid"
-						type="hidden" name="uid" value="${uid}" /></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}<a id="btnGenarate" href="#"
+						class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal;"><img style="cursor: pointer;" id="btnFullScreen" title="全屏显示"
+						src="<%=request.getContextPath()%>/static/report/icons/fullscreen_24.png" />&nbsp;<img style="cursor: pointer;" id="btnExportToExcel"
+						title="导出到Excel" src="<%=request.getContextPath()%>/static/report/icons/excel_24.png" />&nbsp;<img style="cursor: pointer;" id="btnShowChart"
+						title="图表展示" src="<%=request.getContextPath()%>/static/report/icons/chart_24.png" />&nbsp;<img style="cursor: pointer;" id="btnToggleSkins"
+						title="切换报表样式" src="<%=request.getContextPath()%>/static/report/icons/skins_24.png" />&nbsp;<img style="cursor: pointer;" id="btnShowComment"
+						title="报表说明" src="<%=request.getContextPath()%>/static/report/icons/comment_24.png" /><input id="rpId" type="hidden" name="id" value="${id}" /><input
+						id="rpName" type="hidden" name="name" value="${name}" /> <input id="uid" type="hidden" name="uid" value="${uid}" /></td>
 				</tr>
-				<tr style="height: 40px;">
-					<td colspan="2" style="text-align: middle; vertical-align: middle; white-space: normal; word-wrap: break-word;">${statColumHtmlText}</td>
-				</tr>
+				<c:if test="${not empty statColumHtmlText}">
+					<tr style="height: 40px;">
+						<td colspan="2" style="text-align: middle; vertical-align: middle; white-space: normal; word-wrap: break-word;">${statColumHtmlText}</td>
+					</tr>
+				</c:if>
 			</table>
 		</form>
 	</div>

@@ -282,20 +282,18 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		List<HtmlFormElement> formElements = new ArrayList<HtmlFormElement>(3);
 
 		for (QueryParameterPo queryParam : queryParams) {
+			HtmlFormElement htmlFormElement = null;
 			String formElement = queryParam.getFormElement().toLowerCase();
 			if (formElement.equals("select") || formElement.equals("selectMul")) {
-				formElements.add(this.getComboBoxFormElements(queryParam, ds, buildinParams));
+				htmlFormElement = this.getComboBoxFormElements(queryParam, ds, buildinParams);
 			} else if (formElement.equals("checkbox")) {
-				HtmlCheckBox checkbox = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
-				checkbox.setChecked(queryParam.isRequired());
-				formElements.add(checkbox);
+				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
 			} else if (formElement.equals("text")) {
-				HtmlTextBox textbox = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
-				textbox.setDataType(queryParam.getDataType());
-				textbox.setHeight(queryParam.getHeight());
-				textbox.setWidth(queryParam.getWidth());
-				textbox.setRequired(queryParam.isRequired());
-				formElements.add(textbox);
+				htmlFormElement = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
+			}
+			if (htmlFormElement != null) {
+				this.setElementCommonProperities(queryParam, htmlFormElement);
+				formElements.add(htmlFormElement);
 			}
 		}
 		return formElements;
@@ -314,11 +312,17 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 
 		HtmlComboBox htmlComboBox = new HtmlComboBox(queryParam.getName(), queryParam.getText(), htmlSelectOptions);
 		htmlComboBox.setMultipled(queryParam.getFormElement().equals("selectMul"));
-		htmlComboBox.setDataType(queryParam.getDataType());
-		htmlComboBox.setHeight(queryParam.getHeight());
-		htmlComboBox.setWidth(queryParam.getWidth());
-		htmlComboBox.setRequired(queryParam.isRequired());
+		htmlComboBox.setAutoComplete(queryParam.isAutoComplete());
 		return htmlComboBox;
+	}
+
+	private void setElementCommonProperities(QueryParameterPo queryParam, HtmlFormElement htmlFormElement) {
+		htmlFormElement.setDataType(queryParam.getDataType());
+		htmlFormElement.setHeight(queryParam.getHeight());
+		htmlFormElement.setWidth(queryParam.getWidth());
+		htmlFormElement.setRequired(queryParam.isRequired());
+		htmlFormElement.setDefaultText(queryParam.getDefaultText());
+		htmlFormElement.setDefaultValue(queryParam.getDefaultValue());
 	}
 
 	private List<NameTextPair> getOptions(QueryParameterPo queryParam, DataSourcePo ds,
@@ -329,8 +333,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		}
 
 		List<NameTextPair> options = new ArrayList<NameTextPair>();
-		if (queryParam.getDataSource().equals("text") &&
-				StringUtils.isNoneBlank(queryParam.getContent())) {
+		if (queryParam.getDataSource().equals("text") && StringUtils.isNoneBlank(queryParam.getContent())) {
 			HashSet<String> set = new HashSet<String>();
 			String[] optionSplits = StringUtils.split(queryParam.getContent(), '|');
 			for (String option : optionSplits) {

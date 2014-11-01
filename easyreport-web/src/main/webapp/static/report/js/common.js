@@ -14,6 +14,7 @@ ReportCommon.add = function(dlgId, formId, actId, rowId, title) {
 	$(actId).val("add");
 	$(rowId).val(0);
 	$(dlgId).dialog('open').dialog('setTitle', title);
+	$(dlgId).dialog('center');
 };
 
 ReportCommon.edit = function(dlgId, formId, actId, gridId, rowId, title) {
@@ -32,6 +33,7 @@ ReportCommon.editWithCallback = function(dlgId, formId, actId, rowId, title, dat
 		$(actId).val("edit");
 		$(rowId).val(data.id);
 		$(dlgId).dialog('open').dialog('setTitle', title);
+		$(dlgId).dialog('center');
 		$(formId).form('load', data);
 		callback(data);
 	} else {
@@ -42,6 +44,15 @@ ReportCommon.editWithCallback = function(dlgId, formId, actId, rowId, title, dat
 ReportCommon.remove = function(gridId, gridUrl) {
 	var row = $(gridId).datagrid('getSelected');
 	ReportCommon.removeWithCallback(row, 'remove', {
+		id : row.id
+	}, function(data) {
+		ReportCommon.loadDataToGrid(gridId, gridUrl);
+	});
+};
+
+ReportCommon.removeWithActUrl = function(gridId, gridUrl,actUrl) {
+	var row = $(gridId).datagrid('getSelected');
+	ReportCommon.removeWithCallback(row, actUrl, {
 		id : row.id
 	}, function(data) {
 		ReportCommon.loadDataToGrid(gridId, gridUrl);
@@ -76,6 +87,18 @@ ReportCommon.batchRemove = function(gridId, gridUrl) {
 		return row.id;
 	}).join();
 	ReportCommon.removeWithCallback(rows, 'batchRemove', {
+		id : ids
+	}, function(data) {
+		ReportCommon.loadDataToGrid(gridId, gridUrl);
+	});
+};
+
+ReportCommon.batchRemoveWithActUrl = function(gridId, gridUrl,actUrl) {
+	var rows = $(gridId).datagrid('getChecked');
+	var ids = $.map(rows, function(row) {
+		return row.id;
+	}).join();
+	ReportCommon.removeWithCallback(rows, actUrl, {
 		id : ids
 	}, function(data) {
 		ReportCommon.loadDataToGrid(gridId, gridUrl);

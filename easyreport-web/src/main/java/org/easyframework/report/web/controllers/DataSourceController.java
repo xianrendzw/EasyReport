@@ -75,7 +75,10 @@ public class DataSourceController extends AbstractController {
 		JsonResult result = new JsonResult(false, "");
 
 		try {
-			this.datasourceService.edit(po);
+			String[] columnNames = new String[] {
+					DataSourcePo.Name, DataSourcePo.User,
+					DataSourcePo.Password, DataSourcePo.JdbcUrl };
+			this.datasourceService.edit(po, columnNames);
 			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
 			this.setExceptionResult(result, ex);

@@ -7,9 +7,6 @@
 .icon-edit{
 	background:url('icons/pencil.png') no-repeat center center;
 }
-.icon-clear{
-	background:url('icons/clear.png') no-repeat center center;
-}
 .icon-remove{
 	background:url('icons/edit_remove.png') no-repeat center center;
 }
@@ -58,13 +55,39 @@
 .icon-filter{
 	background:url('icons/filter.png') no-repeat center center;
 }
-.icon-man{
-	background:url('icons/man.png') no-repeat center center;
+.icon-comment1{
+	background:url('icons/comment1.png') no-repeat center center;
 }
-.icon-lock{
-	background:url('icons/lock.png') no-repeat center center;
+.icon-comment2{
+	background:url('icons/comment2.png') no-repeat center center;
 }
-
+.icon-preview{
+	background:url('icons/preview.png') no-repeat center center;
+}
+.icon-copy{
+	background:url('icons/copy.png') no-repeat center center;
+}
+.icon-paste{
+	background:url('icons/paste.png') no-repeat center center;
+}
+.icon-privilage{
+	background:url('icons/privilage.png') no-repeat center center;
+}
+.icon-contacts{
+	background:url('icons/contacts.png') no-repeat center center;
+}
+.icon-up{
+	background:url('icons/up.png') no-repeat center center;
+}
+.icon-down{
+	background:url('icons/down.png') no-repeat center center;
+}
+.icon-toggle{
+	background:url('icons/toggle.png') no-repeat center center;
+}
+.icon-explain{
+	background:url('icons/explain.png') no-repeat center center;
+}
 
 .icon-mini-add{
 	background:url('icons/mini_add.png') no-repeat center center;
@@ -75,19 +98,18 @@
 .icon-mini-refresh{
 	background:url('icons/mini_refresh.png') no-repeat center center;
 }
-
-.icon-large-picture{
-	background:url('icons/large_picture.png') no-repeat center center;
+.icon-savingUser{
+	background:url('icons/savingUser.png') no-repeat center left;
 }
-.icon-large-clipart{
-	background:url('icons/large_clipart.png') no-repeat center center;
+.icon-refresh{
+	background:url('icons/refresh.png') no-repeat center left;
 }
-.icon-large-shapes{
-	background:url('icons/large_shapes.png') no-repeat center center;
+.icon-table{
+	background:url('icons/table.png') no-repeat center left;
 }
-.icon-large-smartart{
-	background:url('icons/large_smartart.png') no-repeat center center;
+.icon-ds{
+	background:url('icons/ds.png') no-repeat center left;
 }
-.icon-large-chart{
-	background:url('icons/large_chart.png') no-repeat center center;
+.icon-config{
+	background:url('icons/config.png') no-repeat center left;
 }

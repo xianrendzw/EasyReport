@@ -3,6 +3,8 @@ package org.easyframework.report.viewmodel;
 public abstract class HtmlFormElement {
 	protected final String name;
 	protected final String text;
+	private String defaultText;
+	private String defaultValue;
 	protected String type;
 	protected String dataType = "string";
 	protected int width = 100;
@@ -15,18 +17,18 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数名称
+	 * 获取Html表单(Form)元素名称
 	 * 
-	 * @return 报表查询参数名称
+	 * @return Html表单(Form)元素名称
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * 获取报表查询参数对应的标题(中文名)
+	 * 获取Html表单(Form)元素对应的标题(中文名)
 	 * 
-	 * @return 报表查询参数对应的标题(中文名)
+	 * @return Html表单(Form)元素对应的标题(中文名)
 	 */
 	public String getText() {
 		if (this.text == null || this.text.trim().length() == 0) {
@@ -36,7 +38,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数对应的控件类型
+	 * 获取Html表单(Form)元素对应的控件类型
 	 * 
 	 * @return text|select|checkbox|datebox|checkboxlist
 	 */
@@ -45,7 +47,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数表单控件的宽度(单位：像素)
+	 * 获取Html表单(Form)元素表单控件的宽度(单位：像素)
 	 * 
 	 * @return
 	 */
@@ -54,7 +56,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数的数据来源
+	 * 获取Html表单(Form)元素的数据来源
 	 * 
 	 * @param dataType
 	 */
@@ -63,7 +65,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数的数据来源
+	 * 获取Html表单(Form)元素的数据来源
 	 * 
 	 * @return 宽度的像素值,默认为100
 	 */
@@ -72,7 +74,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 设置报表查询参数表单控件的宽度(单位：像素)
+	 * 设置Html表单(Form)元素表单控件的宽度(单位：像素)
 	 * 
 	 * @param width
 	 *            宽度的像素值
@@ -82,7 +84,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数表单控件的高度(单位：像素)
+	 * 获取Html表单(Form)元素表单控件的高度(单位：像素)
 	 * 
 	 * @return 高度的像素值,默认为25
 	 */
@@ -91,7 +93,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 设置报表查询参数表单控件的高度(单位：像素)
+	 * 设置Html表单(Form)元素表单控件的高度(单位：像素)
 	 * 
 	 * @param height
 	 *            高度的像素
@@ -101,7 +103,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 获取报表查询参数的是否必选
+	 * 获取Html表单(Form)元素的是否必选
 	 * 
 	 * @return
 	 */
@@ -110,7 +112,7 @@ public abstract class HtmlFormElement {
 	}
 
 	/**
-	 * 设置报表查询参数是否必选
+	 * 设置Html表单(Form)元素是否必选
 	 * 
 	 * @param isRequired
 	 *            true|false
@@ -119,4 +121,41 @@ public abstract class HtmlFormElement {
 		this.isRequired = isRequired;
 	}
 
+	/**
+	 * 获取Html表单(Form)元素对应的默认值
+	 * 
+	 * @return Html表单(Form)元素对应的默认值
+	 */
+	public String getDefaultValue() {
+		return this.defaultValue;
+	}
+
+	/**
+	 * 设置Html表单(Form)元素对应的默认值
+	 * 
+	 * @param defaultValue
+	 *            Html表单(Form)元素对应的默认值
+	 */
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	/**
+	 * 获取Html表单(Form)元素的默认值对应的标题
+	 * 
+	 * @return Html表单(Form)元素的默认值对应的标题
+	 */
+	public String getDefaultText() {
+		return this.defaultText;
+	}
+
+	/**
+	 * 设置Html表单(Form)元素的默认值对应的标题
+	 * 
+	 * @param defaultText
+	 *            Html表单(Form)元素的默认值对应的标题
+	 */
+	public void setDefaultText(String defaultText) {
+		this.defaultText = defaultText;
+	}
 }

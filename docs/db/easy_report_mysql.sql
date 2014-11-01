@@ -25,6 +25,7 @@ CREATE TABLE `config_dict` (
   `name` varchar(50) NOT NULL COMMENT '名称',
   `key` varchar(50) NOT NULL,
   `value` varchar(1000) NOT NULL,
+  `sequence` int(11) NOT NULL COMMENT '节点在其父节点中的顺序',
   `comment` varchar(50) NOT NULL,
   `create_time` datetime NOT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

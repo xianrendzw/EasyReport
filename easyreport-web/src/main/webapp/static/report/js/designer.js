@@ -1,5 +1,4 @@
-var pageRootUrl = XFrame.getContextPath() + '/report/designer';
-
+var designerPageRootUrl = XFrame.getContextPath() + '/report/designer/';
 $(function() {
 	Reporting.init();
 	
@@ -10,6 +9,9 @@ $(function() {
 		}, {
 			iconCls : 'icon-add',
 			handler : Reporting.addRootTreeNode
+		}, {
+			iconCls : 'icon-reload',
+			handler : Reporting.reloadTree
 		} ]
 	});
 
@@ -18,7 +20,7 @@ $(function() {
 		method : 'get',
 		animate : true,
 		dnd : true,
-		url : pageRootUrl + '/listchildnodes',
+		url : designerPageRootUrl + 'listchildnodes',
 		onLoadSuccess : function(node, data) {
 			if (Reporting.treeNodePathIds && Reporting.treeNodePathIds.length > 0) {
 				var id = Reporting.treeNodePathIds.shift();
@@ -789,7 +791,7 @@ Reporting.removeTreeNode = function() {
 			if (!isConfirm) {
 				return;
 			}
-			$.post(pageRootUrl + '/remove', {
+			$.post(designerPageRootUrl + 'remove', {
 				id : data.id,
 				pid : data.pid
 			}, function(data) {
@@ -805,7 +807,7 @@ Reporting.removeTreeNode = function() {
 
 Reporting.saveTreeNode = function() {
 	var act = $("#treeNodeAction").val();
-	var actUrl = act == "add" ? pageRootUrl + "/addtreenode" :pageRootUrl  + "/edittreenode";
+	var actUrl = act == "add" ? designerPageRootUrl + "/addtreenode" :designerPageRootUrl  + "/edittreenode";
 	$('#setTreeNodeForm').form('submit', {
 		url : actUrl,
 		onSubmit : function() {
@@ -846,7 +848,7 @@ Reporting.clickTreeNodeHandler = function(currNode) {
 };
 
 Reporting.selectTreeNodeHandler = function(node) {
-	$('#reportingTree').tree('options').url = pageRootUrl + '/listchildnodes';
+	$('#reportingTree').tree('options').url = designerPageRootUrl + 'listchildnodes';
 	$('#reportingTree').tree('expand', node.target);
 
 	Reporting.clearAllTab();
@@ -862,7 +864,7 @@ Reporting.selectTreeNodeHandler = function(node) {
 Reporting.treeNodeOnDrop = function(target, source, point) {
 	var targetNode = $('#reportingTree').tree('getNode', target);
 	if (targetNode) {
-		$.post(pageRootUrl + '/dragtreenode', {
+		$.post(designerPageRootUrl + 'dragtreenode', {
 			sourceId : source.id,
 			targetId : targetNode.id,
 			sourcePid : source.attributes.pid
@@ -886,7 +888,7 @@ Reporting.copyTreeNode = function() {
 Reporting.pasteTreeNode = function() {
 	var node = Reporting.getSelectedTreeNode();
 	if (node) {
-		$.post(pageRootUrl + '/pastetreenode', {
+		$.post(designerPageRootUrl + 'pastetreenode', {
 			sourceId : $('#copyNodeId').val(),
 			targetId : node.id
 		}, function(result) {
@@ -977,7 +979,7 @@ Reporting.openSearchReportDlg = function() {
 Reporting.search = function() {
 	var fieldName = $('#searchReportFieldName').val();
 	var keyword = $('#searchReportKeyword').val();
-	var url = pageRootUrl + '/search?fieldName=' + fieldName + '&keyword=' + keyword;
+	var url = designerPageRootUrl + 'search?fieldName=' + fieldName + '&keyword=' + keyword;
 	return ReportCommon.loadDataToGrid('#searchReportGrid', url);
 };
 
@@ -1056,7 +1058,7 @@ Reporting.viewSqlText = function() {
 
 	var queryParamRows = $("#queryParamGrid").datagrid('getRows');
 	var jsonQueryParams = queryParamRows ? JSON.stringify(queryParamRows) : "";
-	$.post(pageRootUrl + '/viewsqltext', {
+	$.post(designerPageRootUrl + 'viewsqltext', {
 		dsId : dsId,
 		sqlText : sqlText,
 		dataRange : dataRange,
@@ -1074,7 +1076,7 @@ Reporting.viewSqlText = function() {
 Reporting.viewSqlHistory = function() {
 	$('#viewSqlTextHistoryDlg').dialog('open');
 	var reportId = $("#reportingId").val();
-	var url = pageRootUrl + '/getallhistorysql?reportId=' + reportId;
+	var url = designerPageRootUrl + 'getallhistorysql?reportId=' + reportId;
 	ReportCommon.loadDataToGrid('#viewSqlTextHistoryGrid', url);
 	viewSqlHistoryCmEditor.setValue("");
 	viewSqlHistoryCmEditor.refresh();
@@ -1101,7 +1103,7 @@ Reporting.executeSql = function() {
 
 	var queryParamRows = $("#queryParamGrid").datagrid('getRows');
 	var jsonQueryParams = queryParamRows ? JSON.stringify(queryParamRows) : "";
-	$.post(pageRootUrl + '/loadsqlcolumns', {
+	$.post(designerPageRootUrl + 'loadsqlcolumns', {
 		sqlText : sqlText,
 		dsId : $('#reportingDsId').combobox('getValue'),
 		jsonQueryParams : jsonQueryParams
@@ -1214,7 +1216,7 @@ Reporting.addSqlColumnRow = function() {
 		}
 	}
 
-	$.post(pageRootUrl + '/getsqlcolumn', function(row) {
+	$.post(designerPageRootUrl + 'getsqlcolumn', function(row) {
 		row.name = row.name + index;
 		row.text = row.name;
 		$('#sqlColumnGrid').datagrid('appendRow', row);
@@ -1283,7 +1285,7 @@ Reporting.save = function() {
 
 	var reportId = $("#reportingId").val();
 	var act = $('#reportingAction').val();
-	$.post(pageRootUrl + '/' + act, {
+	$.post(designerPageRootUrl + '' + act, {
 		id : reportId,
 		pid : $('#reportingPid').val(),
 		dsId : $('#reportingDsId').combobox('getValue'),
@@ -1356,7 +1358,7 @@ Reporting.saveQueryParam = function() {
 		text : '正在处理中...',
 	});
 
-	$.post(pageRootUrl + '/setqueryparam', {
+	$.post(designerPageRootUrl + 'setqueryparam', {
 		id : id,
 		jsonQueryParams : $('#jsonQueryParams').val()
 	}, function(result) {
@@ -1371,7 +1373,6 @@ Reporting.saveQueryParam = function() {
 Reporting.editQueryParam = function(index, row) {
 	$("#queryParamGridIndex").val(index);
 	$("#queryParamContent").val('');
-
 	$("#queryParamName").val(row.name);
 	$("#queryParamText").val(row.text);
 	$("#queryParamDefaultValue").val(row.defaultValue);

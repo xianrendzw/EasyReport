@@ -1,23 +1,13 @@
 package org.easyframework.report.web.controllers;
 
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.easyframework.report.common.util.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.engine.exception.NotFoundLayoutColumnException;
 import org.easyframework.report.engine.exception.SQLQueryException;
 import org.easyframework.report.exception.QueryParamsException;
-import org.easyframework.report.po.ReportingPo;
-import org.easyframework.report.service.ReportingGenerationService;
-import org.easyframework.report.service.ReportingService;
 import org.easyframework.report.view.EasyUIQueryFormView;
-import org.easyframework.report.viewmodel.HtmlFormElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +23,6 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 @RequestMapping(value = "/report")
 public class ReportingController extends AbstractController {
-	@Resource
-	private ReportingService reportingService;
-	@Resource
-	private ReportingGenerationService generationService;
-
 	@RequestMapping(value = "/home")
 	public String home() {
 		return "/home";
@@ -48,26 +33,33 @@ public class ReportingController extends AbstractController {
 		return "/designer";
 	}
 
-	@RequestMapping(value = { "/uid/{uid}" })
-	public ModelAndView generateReport(@PathVariable String uid, HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView("/template");
+	@RequestMapping(value = { "/preview/{uid}" })
+	public ModelAndView preview(@PathVariable String uid, String viewName, HttpServletRequest request) {
+		if (StringUtils.isBlank(viewName)) {
+			return this.preview(uid, request);
+		}
 
+		ModelAndView modelAndView = new ModelAndView(viewName);
 		try {
-			ReportingPo po = reportingService.getByUid(uid);
-			Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), po.getDataRange());
-			List<HtmlFormElement> dateAndQueryElements = generationService.getDateAndQueryParamFormElements(po, buildinParams);
-			HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(po.getMetaColumnList(), 1);
-			EasyUIQueryFormView formView = new EasyUIQueryFormView();
-			modelAndView.addObject("uid", uid);
-			modelAndView.addObject("id", po.getId());
-			modelAndView.addObject("name", po.getName());
-			modelAndView.addObject("comment", po.getComment().trim());
-			modelAndView.addObject("formHtmlText", formView.getFormHtmlText(dateAndQueryElements));
-			modelAndView.addObject("statColumHtmlText", formView.getFormHtmlText(statColumnFormElements));
+			ReportingContollerUtils.previewByFormMap(uid, modelAndView, request);
 		} catch (QueryParamsException ex) {
-			modelAndView.addObject("formHtmlText", String.format("<div>%s</div>", ex.getMessage()));
+			modelAndView.addObject("formHtmlText", ex.getMessage());
 		} catch (Exception ex) {
-			modelAndView.addObject("formHtmlText", "<div>报表查询参数生成失败！请联系管理员.</div>");
+			modelAndView.addObject("formHtmlText", "页面加载出错！请联系管理员");
+			this.logException("页面加载出错", ex);
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = { "/uid/{uid}" })
+	public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("/template");
+		try {
+			ReportingContollerUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
+		} catch (QueryParamsException ex) {
+			modelAndView.addObject("formHtmlText", ex.getMessage());
+		} catch (Exception ex) {
+			modelAndView.addObject("formHtmlText", "报表查询参数生成失败！请联系管理员.");
 			this.logException("报表查询参数生成失败", ex);
 		}
 
@@ -76,22 +68,14 @@ public class ReportingController extends AbstractController {
 
 	@RequestMapping(value = "/generate", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject generateReport(String uid, Integer id, HttpServletRequest request) {
+	public JSONObject generate(String uid, Integer id, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
-
-		if (id == null) {
-			return jsonObject;
-		}
-
 		try {
-			ReportingPo po = reportingService.getByUid(uid);
-			Map<String, Object> formParams = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
-			String htmlTable = generationService.getHtmlTable(po, formParams);
-			jsonObject.put("htmlTable", htmlTable);
+			ReportingContollerUtils.generate(uid, jsonObject, request);
 		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException ex) {
-			jsonObject.put("htmlTable", String.format("<div>%s</div>", ex.getMessage()));
+			jsonObject.put("htmlTable", ex.getMessage());
 		} catch (Exception ex) {
-			jsonObject.put("htmlTable", "<table><tr><td>报表生成失败！请联系管理员.</div>");
+			jsonObject.put("htmlTable", "报表生成失败！请联系管理员");
 			this.logException("报表生成失败", ex);
 		}
 
@@ -99,26 +83,11 @@ public class ReportingController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/exportexcel", method = RequestMethod.POST)
-	public void exportToExcel(Integer id, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
-
-		try (OutputStream out = response.getOutputStream()) {
-			String fileName = name + "_" + DateUtils.getNow("yyyyMMddHHmmss");
-			fileName = new String(fileName.getBytes(), "ISO8859-1") + ".xls";
-
-			if ("large".equals(htmlText)) {
-				ReportingPo po = reportingService.getById(id);
-				Map<String, Object> formParameters = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
-				htmlText = generationService.getHtmlTable(po, formParameters);
-			}
-			response.reset();
-			response.setHeader("Content-Disposition", String.format("attachment; filename=%s", fileName));
-			response.setContentType("application/vnd.ms-excel; charset=utf-8");
-			response.addCookie(new Cookie("fileDownload", "true"));
-			out.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF }); // 生成带bom的utf8文件
-			out.write(htmlText.getBytes());
-			out.flush();
+	public void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ReportingContollerUtils.exportToExcel(uid, name, htmlText, request, response);
 		} catch (Exception ex) {
-			this.logException("导出excel失败", ex);
+			this.logException("报表导出Excel失败", ex);
 		}
 	}
 }

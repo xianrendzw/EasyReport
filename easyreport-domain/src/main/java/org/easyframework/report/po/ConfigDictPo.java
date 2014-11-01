@@ -67,17 +67,17 @@ public class ConfigDictPo implements Serializable {
 	@Column(name = "id", isIgnored = true, isPrimaryKey = true)
 	private Integer id;
 	@Column(name = "pid")
-	private Integer pid;
+	private Integer pid = 0;
 	@Column(name = "name")
 	private String name;
-	@Column(name = "key")
+	@Column(name = "`key`")
 	private String key;
-	@Column(name = "value")
+	@Column(name = "`value`")
 	private String value;
 	@Column(name = "sequence")
-	private Integer sequence;
+	private Integer sequence = 100;
 	@Column(name = "comment")
-	private String comment;
+	private String comment = "";
 	@Column(name = "create_time")
 	private Date createTime = Calendar.getInstance().getTime();
 	@Column(name = "update_time")

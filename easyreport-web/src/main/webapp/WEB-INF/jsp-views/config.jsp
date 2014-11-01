@@ -10,7 +10,7 @@
 </head>
 <body class="easyui-layout" style="text-align: left">
 	<!-- 左边tree -->
-	<div id="west" region="west" border="false" split="true" title="字典树" style="width: 250px; padding: 5px; cursor: pointer;">
+	<div id="west" region="west" border="false" split="true" title=" " style="width: 250px; padding: 5px; cursor: pointer;">
 		<ul id="configDictTree"></ul>
 	</div>
 	<!-- 右边tabs -->
@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<!-- 新增与修改配置字典dialog  -->
-	<div id="configDictDlg" style="width: 500px; height: 310px; padding: 5px">
+	<div id="configDictDlg">
 		<form id="configDictForm" method="post" novalidate>
 			<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
 				<tr id="configDictPNameDiv">
@@ -29,15 +29,15 @@
 				</tr>
 				<tr>
 					<td class="text_r blueside" width="80">名称:</td>
-					<td><input name="name" class="easyui-validatebox" required="true" /></td>
+					<td><input name="name" class="easyui-validatebox" required="true" style="width:200px" /></td>
 				</tr>
 				<tr>
 					<td class="text_r blueside" width="80">键(Key):</td>
-					<td><input name="key" class="easyui-validatebox" required="true" /></td>
+					<td><input name="key" class="easyui-validatebox" required="true" style="width:200px" /></td>
 				</tr>
 				<tr>
 					<td class="text_r blueside" width="80">值(Value):</td>
-					<td><input name="value" class="easyui-validatebox" required="true" /></td>
+					<td><input name="value" class="easyui-validatebox" required="true" style="width:200px" /></td>
 				</tr>
 				<tr>
 					<td class="text_r blueside top" width="80">说明:</td>
