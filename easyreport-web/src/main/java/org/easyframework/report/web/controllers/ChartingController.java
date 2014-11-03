@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.exception.NotFoundLayoutColumnException;
 import org.easyframework.report.engine.exception.SQLQueryException;
+import org.easyframework.report.engine.exception.TemplatePraseException;
 import org.easyframework.report.exception.QueryParamsException;
 import org.easyframework.report.po.ReportingPo;
 import org.easyframework.report.service.ReportingChartService;
@@ -52,11 +53,12 @@ public class ChartingController extends AbstractController {
 			modelAndView.addObject("name", po.getName());
 			modelAndView.addObject("comment", po.getComment().trim());
 			modelAndView.addObject("formHtmlText", formView.getFormHtmlText(formElements));
-		} catch (QueryParamsException ex) {
-			modelAndView.addObject("message", String.format("<div>%s</div>", ex.getMessage()));
+		} catch (QueryParamsException | TemplatePraseException ex) {
+			modelAndView.addObject("message", ex.getMessage());
+			this.logException("查询参数生成失败", ex);
 		} catch (Exception ex) {
-			modelAndView.addObject("message", "报表查询参数生成失败！请联系管理员.");
-			this.logException("报表查询参数生成失败", ex);
+			modelAndView.addObject("message", "查询参数生成失败！请联系管理员.");
+			this.logException("查询参数生成失败", ex);
 		}
 
 		return modelAndView;
@@ -84,8 +86,9 @@ public class ChartingController extends AbstractController {
 			jsonObject.put("dimColumns", reportChartService.getDimColumns(reportData));
 			jsonObject.put("statColumns", reportChartService.getStatColumns(reportData));
 			jsonObject.put("dataRows", reportChartService.getDataRows(reportData));
-		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException ex) {
+		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
 			jsonObject.put("msg", ex.getMessage());
+			this.logException("报表生成失败", ex);
 		} catch (Exception ex) {
 			jsonObject.put("msg", "报表生成失败！请联系管理员。");
 			this.logException("报表生成失败", ex);

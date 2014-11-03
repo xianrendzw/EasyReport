@@ -8,7 +8,7 @@ import org.easyframework.report.engine.exception.NotFoundLayoutColumnException;
 import org.easyframework.report.engine.exception.SQLQueryException;
 import org.easyframework.report.engine.exception.TemplatePraseException;
 import org.easyframework.report.exception.QueryParamsException;
-import org.easyframework.report.view.BootstrapQueryFormView;
+import org.easyframework.report.view.EasyUIQueryFormView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +57,7 @@ public class ReportingController extends AbstractController {
 	public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("/template");
 		try {
-			ReportingContollerUtils.previewByTemplate(uid, modelAndView, new BootstrapQueryFormView(), request);
+			ReportingContollerUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
 		} catch (QueryParamsException | TemplatePraseException ex) {
 			modelAndView.addObject("formHtmlText", ex.getMessage());
 			this.logException("查询参数生成失败", ex);

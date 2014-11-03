@@ -285,6 +285,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			HtmlFormElement htmlFormElement = null;
 			queryParam.setDefaultText(VelocityUtils.prase(queryParam.getDefaultText(), buildinParams));
 			queryParam.setDefaultValue(VelocityUtils.prase(queryParam.getDefaultValue(), buildinParams));
+			queryParam.setContent(VelocityUtils.prase(queryParam.getContent(), buildinParams));
 			String formElement = queryParam.getFormElement().toLowerCase();
 			if (formElement.equals("select") || formElement.equals("selectMul")) {
 				htmlFormElement = this.getComboBoxFormElements(queryParam, ds, buildinParams);
@@ -330,8 +331,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 	private List<NameTextPair> getOptions(QueryParameterPo queryParam, DataSourcePo ds,
 			Map<String, Object> buildinParams) {
 		if (queryParam.getDataSource().equals("sql")) {
-			String sqlText = VelocityUtils.prase(queryParam.getContent(), buildinParams);
-			return this.reportingService.getDao().executeQueryParamSqlText(ds.getJdbcUrl(), ds.getUser(), ds.getPassword(), sqlText);
+			return this.reportingService.getDao().executeQueryParamSqlText(ds.getJdbcUrl(), ds.getUser(), ds.getPassword(), queryParam.getContent());
 		}
 
 		List<NameTextPair> options = new ArrayList<NameTextPair>();

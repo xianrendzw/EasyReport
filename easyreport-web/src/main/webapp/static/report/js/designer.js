@@ -130,6 +130,14 @@ $(function() {
 		method : 'get',
 		fit : true,
 		singleSelect : true,
+		rownumbers : true,
+		tools : [ {
+			iconCls : 'icon-up',
+			handler : Reporting.upQueryParamRow
+		}, '-', {
+			iconCls : 'icon-down',
+			handler : Reporting.downQueryParamRow
+		} ],
 		columns : [ [ {
 			field : 'name',
 			title : '参数名',
@@ -161,6 +169,22 @@ $(function() {
 					return "文本字符串";
 				return "无内容";
 			}
+		}, {
+			field : 'dataType',
+			title : '数据类型',
+			width : 80
+		}, {
+			field : 'width',
+			title : '数据长度',
+			width : 80
+		}, {
+			field : 'required',
+			title : '是否必选',
+			width : 80
+		}, {
+			field : 'autoComplete',
+			title : '是否自动提示',
+			width : 80
 		}, {
 			field : 'content',
 			title : '内容',
@@ -294,6 +318,18 @@ $(function() {
 		name : "footings",
 		text : "合计",
 		type : 1
+	}, {
+		name : "dayHuanRatio",
+		text : "日环比",
+		type : 2
+	}, {
+		name : "weekTongRatio",
+		text : "周同比",
+		type : 2
+	}, {
+		name : "monthTongRatio",
+		text : "月同比",
+		type : 2
 	}, {
 		name : "extensions",
 		text : "小计",
@@ -468,7 +504,7 @@ Reporting.init = function() {
 		var formElement = $("#queryParamFormElement").val();
 		if (formElement == "select" || formElement == "selectMul") {
 			$("#queryParamContent").removeAttr("disabled");
-			$("#queryParamDataSource").val("0");
+			$("#queryParamDataSource").val("sql");
 			return;
 		}
 
@@ -476,7 +512,7 @@ Reporting.init = function() {
 		$("#queryParamContent").attr({
 			"disabled" : "disabled"
 		});
-		$("#queryParamDataSource").val("2");
+		$("#queryParamDataSource").val("none");
 	});
 
 	// 绑定报表状态select的onchange事件
@@ -488,8 +524,8 @@ Reporting.init = function() {
 };
 
 Reporting.initValidateOptions = function() {
-	//ReportingValidate.configOptions();
-	//ReportingValidate.queryParamOptions();
+	ReportingValidate.configOptions();
+	ReportingValidate.queryParamOptions();
 };
 
 Reporting.initDsCombox = function() {
@@ -1367,6 +1403,10 @@ Reporting.editQueryParam = function(index, row) {
 	$("#queryParamDefaultText").val(row.defaultText);
 	$("#queryParamFormElement").val(row.formElement);
 	$("#queryParamDataSource").val(row.dataSource);
+	$("#queryParamDataType").val(row.dataType);
+	$("#queryParamWidth").val(row.width);
+	$("#queryParamIsRequired").prop("checked",row.required);
+	$("#queryParamIsAutoComplete").prop("checked",row.autoComplete);
 	if (row.formElement == "select" || row.formElement == "selectMul") {
 		$("#queryParamContent").removeAttr("disabled");
 		$("#queryParamContent").val(row.content);
@@ -1391,12 +1431,29 @@ Reporting.setQueryParam = function(act) {
 		$('#queryParamGrid').datagrid('appendRow', $('#queryParamForm').serializeObject());
 	} else if (act == "edit") {
 		var index = $("#queryParamGridIndex").val();
+		var row = $('#queryParamForm').serializeObject()
+		row.required = $("#queryParamIsRequired").prop("checked");
+		row.autoComplete = $("#queryParamIsAutoComplete").prop("checked");
 		$('#queryParamGrid').datagrid('updateRow', {
 			index : index,
-			row : $('#queryParamForm').serializeObject()
+			row : row
 		});
 	}
 	$('#queryParamForm').form('reset');
+};
+
+Reporting.upQueryParamRow = function() {
+	var grid = $("#queryParamGrid");
+	var row = grid.datagrid('getSelected');
+	var index = grid.datagrid('getRowIndex', row);
+	Reporting.resortSqlColumnGrid(index, 'up', grid);
+};
+
+Reporting.downQueryParamRow = function() {
+	var grid = $("#queryParamGrid");
+	var row = grid.datagrid('getSelected');
+	var index = grid.datagrid('getRowIndex', row);
+	Reporting.resortSqlColumnGrid(index, 'down', grid);
 };
 
 //
@@ -1670,7 +1727,7 @@ function showChart(title, id, uid) {
 		var tab = $('#tabs').tabs('getSelected');
 		return tab.panel('refresh');
 	}
-	var url = XFrame.getContextPath() + '/report/chart/'+uid;
+	var url = XFrame.getContextPath() + '/report/chart/' + uid;
 	$('#tabs').tabs(
 			'add',
 			{

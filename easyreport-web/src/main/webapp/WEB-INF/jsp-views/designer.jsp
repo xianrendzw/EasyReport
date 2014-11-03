@@ -84,23 +84,38 @@
 							<td><input id="queryParamName" name="name" type="text" /></td>
 							<td class="text_r blueside">标题:</td>
 							<td><input type="text" id="queryParamText" name="text" /></td>
-						</tr>
-						<tr>
 							<td class="text_r blueside">默认值:</td>
 							<td><input type="text" id="queryParamDefaultValue" name="defaultValue" /></td>
 							<td class="text_r blueside">默认标题:</td>
 							<td><input type="text" id="queryParamDefaultText" name="defaultText" /></td>
 						</tr>
 						<tr>
+							<td class="text_r blueside" width="60">数据类型:</td>
+							<td><select id="queryParamDataType" name="dataType">
+									<option value="string" selected="selected">字符串</option>
+									<option value="number">数字（包括整数、浮点数)</option>
+									<option value="digits">正整数</option>
+									<option value="date">日期</option>
+									<option value="url">URL</option>
+									<option value="email">电子邮箱</option>
+							</select></td>
+							<td class="text_r blueside">数据长度:</td>
+							<td><input type="text" id="queryParamWidth" name="width" value="100" /></td>
+							<td class="text_r blueside">是否必选:</td>
+							<td><input type="checkbox" id="queryParamIsRequired" name="required" /></td>
+							<td class="text_r blueside">是否自动提示:</td>
+							<td><input type="checkbox" id="queryParamIsAutoComplete" name="autoComplete" /></td>
+						</tr>
+						<tr>
 							<td class="text_r blueside top">表单控件:</td>
 							<td><select id="queryParamFormElement" name="formElement">
-									<option value="select">下拉框</option>
-									<option value="selectMul">下拉框多选</option>
+									<option value="select">下拉单选</option>
+									<option value="selectMul">下拉多选</option>
 									<option value="checkbox">复选框</option>
 									<option value="text">文本框</option>
 							</select></td>
 							<td class="text_r blueside">内容来源类型</td>
-							<td><select id="queryParamDataSource" name="dataSource">
+							<td colspan="5"><select id="queryParamDataSource" name="dataSource">
 									<option value="sql">SQL语句</option>
 									<option value="text">文本字符串</option>
 									<option value="none">无内容</option>
@@ -108,19 +123,18 @@
 						</tr>
 						<tr>
 							<td class="text_r blueside top">内容:</td>
-							<td colspan="3"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea> </br>
-							<!-- 	<p style="color: red; bold: true">注意：如为SQL则必须包含两列且列名必须为name与text.(eg:select col1 as name,col1 as text from
-									table);如为文本字符串则格式为:name1,text1|name2,text2|...,如果name与text相同格式为：name1|name2|...</p> --> <input id="queryParamGridIndex" type="hidden" value="" /> <input
-								type="hidden" id="jsonQueryParams" /><input id="queryParamReportId" type="hidden" value="0" /></td>
+							<td colspan="7"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea> </br> <!-- <p style="color: red; bold: true">注意：如为SQL则必须包含两列且列名必须为name与text.(eg:select col1 as name,col1 as text from
+									table);如为文本字符串则格式为:name1,text1|name2,text2|...,如果name与text相同格式为：name1|name2|...</p> --> <input id="queryParamGridIndex" type="hidden"
+								value="" /> <input type="hidden" id="jsonQueryParams" /><input id="queryParamReportId" type="hidden" value="0" /></td>
 						</tr>
 						<tr>
-							<td colspan="4" style="text-align: center;"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add"
+							<td colspan="8" style="text-align: center;"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add"
 								onclick="javascript:Reporting.setQueryParam('add')">增加</a> &nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit"
 								onclick="javascript:Reporting.setQueryParam('edit')">修改</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-save"
 								onclick="javascript:Reporting.saveQueryParam()">保存</a></td>
 						</tr>
 						<tr>
-							<td id="queryParamGridTd" colspan="4"><div id="queryParamGrid" title="查询参数列表"></div></td>
+							<td id="queryParamGridTd" colspan="8"><div id="queryParamGrid" title="查询参数列表"></div></td>
 						</tr>
 					</table>
 				</form>
