@@ -57,7 +57,7 @@ public class ReportingContollerUtils {
 
 	public static void generate(String uid, JSONObject jsonObject, HttpServletRequest request) {
 		if (StringUtils.isBlank(uid)) {
-			jsonObject.put("htmlTable", "没有找到该报表！");
+			jsonObject.put("htmlTable", "uid参数为空导致数据不能加载！");
 			return;
 		}
 

@@ -2,14 +2,15 @@ package org.easyframework.report.engine.util;
 
 import java.io.StringWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.easyframework.report.engine.exception.TemplatePraseException;
 
 public class VelocityUtils {
-
 	/**
 	 * 替换的模板中的参数
 	 * 
@@ -18,6 +19,39 @@ public class VelocityUtils {
 	 * @return 替换后的文本
 	 */
 	public static String prase(String template, Map<String, Object> parameters) {
+		return prase(template, parameters, "report");
+	}
+
+	/**
+	 * 替换的模板中的参数
+	 * 
+	 * @param template
+	 * @return 替换后的文本
+	 */
+	public static String prase(String template) {
+		return prase(template, "report");
+	}
+
+	/**
+	 * 替换的模板中的参数
+	 * 
+	 * @param template
+	 * @param logTag
+	 * @return 替换后的文本
+	 */
+	public static String prase(String template, String logTag) {
+		return prase(template, new HashMap<String, Object>(0), logTag);
+	}
+
+	/**
+	 * 替换的模板中的参数
+	 * 
+	 * @param template
+	 * @param parameters
+	 * @param logTag
+	 * @return 替换后的文本
+	 */
+	public static String prase(String template, Map<String, Object> parameters, String logTag) {
 		try (StringWriter writer = new StringWriter()) {
 			Velocity.init();
 			VelocityContext context = new VelocityContext();
@@ -26,10 +60,10 @@ public class VelocityUtils {
 			}
 			context.put("Calendar", Calendar.getInstance());
 			context.put("DateUtils", DateUtils.class);
-			Velocity.evaluate(context, writer, "report_sql_text", template);
+			Velocity.evaluate(context, writer, logTag, template);
 			return writer.toString();
 		} catch (Exception ex) {
-			throw new RuntimeException(ex);
+			throw new TemplatePraseException(ex);
 		}
 	}
 }

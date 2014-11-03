@@ -11,7 +11,7 @@ import org.easyframework.report.viewmodel.HtmlTextBox;
  * Bootstrapper风格控件报表查询参数表单视图
  *
  */
-public class BootstrapperQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
+public class BootstrapQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
 	@Override
 	protected String getDateBoxText(HtmlDateBox dateBox) {
 		StringBuilder htmlText = new StringBuilder("");
