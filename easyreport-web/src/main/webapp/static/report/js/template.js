@@ -152,7 +152,7 @@ ReportTemplate.toggleSkin = function(e) {
 };
 
 ReportTemplate.fullScreen = function() {
-	var uid = $('#rpUid').val();
+	var uid = $('#uid').val();
 	var url = XFrame.getContextPath() + '/report/uid/' + uid;
 	ReportTemplate.winOpen(url, uid);
 };
@@ -160,7 +160,7 @@ ReportTemplate.fullScreen = function() {
 ReportTemplate.showChart = function(e) {
 	var title = $('#rpName').val() + "(图表)";
 	var id = $('#rpId').val();
-	var uid = $('#rpUid').val();
+	var uid = $('#uid').val();
 	parent.showChart(title, id, uid);
 };
 

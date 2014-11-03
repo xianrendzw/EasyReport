@@ -295,18 +295,6 @@ $(function() {
 		text : "合计",
 		type : 1
 	}, {
-		name : "dayHuanRatio",
-		text : "日环比",
-		type : 2
-	}, {
-		name : "weekTongRatio",
-		text : "周同比",
-		type : 2
-	}, {
-		name : "monthTongRatio",
-		text : "月同比",
-		type : 2
-	}, {
 		name : "extensions",
 		text : "小计",
 		type : 3
@@ -500,8 +488,8 @@ Reporting.init = function() {
 };
 
 Reporting.initValidateOptions = function() {
-	ReportingValidate.configOptions();
-	ReportingValidate.queryParamOptions();
+	//ReportingValidate.configOptions();
+	//ReportingValidate.queryParamOptions();
 };
 
 Reporting.initDsCombox = function() {
@@ -1682,7 +1670,7 @@ function showChart(title, id, uid) {
 		var tab = $('#tabs').tabs('getSelected');
 		return tab.panel('refresh');
 	}
-	var url = XFrame.getContextPath() + '/chart/index?rpUid=' + uid;
+	var url = XFrame.getContextPath() + '/report/chart/'+uid;
 	$('#tabs').tabs(
 			'add',
 			{

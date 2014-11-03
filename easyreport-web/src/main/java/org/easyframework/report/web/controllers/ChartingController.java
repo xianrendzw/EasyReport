@@ -17,6 +17,7 @@ import org.easyframework.report.service.ReportingService;
 import org.easyframework.report.view.EasyUIQueryFormView;
 import org.easyframework.report.viewmodel.HtmlFormElement;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,8 +38,8 @@ public class ChartingController extends AbstractController {
 	@Resource
 	private ReportingChartService reportChartService;
 
-	@RequestMapping(value = { "", "/", "/index" })
-	public ModelAndView index(String uid, HttpServletRequest request) {
+	@RequestMapping(value = { "/{uid}" })
+	public ModelAndView index(@PathVariable String uid, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("/chart");
 
 		try {

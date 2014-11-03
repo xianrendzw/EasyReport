@@ -16,7 +16,7 @@ ReportChart.metaData = null;
 ReportChart.generate = function(e) {
 	$.ajax({
 		type : "POST",
-		url : XFrame.getContextPath() + '/chart/getdata',
+		url : XFrame.getContextPath() + '/report/chart/getdata',
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {

@@ -7,7 +7,6 @@
 <title>报表管理</title>
 <%@ include file="/WEB-INF/jsp-views/frame/pageHeader.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/designer.js?v=<%=Math.random()%>"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/reporting.validate.js?v=<%=Math.random()%>"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/codemirror.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/theme/rubyblue.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/addon/display/fullscreen.css" />
@@ -28,19 +27,24 @@
 				<form id="reportingForm" method="post">
 					<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
 						<tr>
-							<td class="text_r blueside" width="60">数据源:</td>
-							<td><input id="reportingDsId" name="dsId" /></td>
-							<td class="text_r blueside">布局形式:</td>
-							<td><select id="reportingLayout" name="layout">
-									<option value="1">横向布局</option>
-									<option value="2">纵向布局</option>
-							</select></td>
-							<td class="text_r blueside">显示几天数据:</td>
-							<td><input type="text" id="reportingDataRange" name="dataRange" value="7" /></td>
-						</tr>
-						<tr>
 							<td class="text_r blueside">报表名称:</td>
 							<td><input type="text" id="reportingName" name="name" style="width: 99%;" /></td>
+							<td class="text_r blueside" width="60">数据源:</td>
+							<td><input id="reportingDsId" name="dsId" /></td>
+							<td class="text_r blueside">布局列:</td>
+							<td><select id="reportingLayout" name="layout">
+									<option value="1">横向展示</option>
+									<option value="2">纵向展示</option>
+							</select></td>
+							<td class="text_r blueside">统计列:</td>
+							<td><select id="reportingStatColumnLayout" name="StatColumnLayout">
+									<option value="1">横向展示</option>
+									<option value="2">纵向展示</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="text_r blueside">显示几天数据:</td>
+							<td><input type="text" id="reportingDataRange" name="dataRange" value="7" /></td>
 							<td class="text_r blueside">状态:</td>
 							<td><select id="reportingStatus" name="status">
 									<option value="0">编辑</option>
@@ -48,13 +52,13 @@
 									<option value="2">隐藏</option>
 							</select></td>
 							<td class="text_r blueside">显示顺序:</td>
-							<td><input type="text" id="reportingSequence" name="sequence" value="100" /><input id="reportingId" type="hidden" name="id" value="0" />
-								<input id="reportingAction" type="hidden" name="action" value="add" /><input type="hidden" id="reportingUid" name="uid" /> <input
+							<td colspan="3"><input type="text" id="reportingSequence" name="sequence" value="100" /><input id="reportingId" type="hidden" name="id"
+								value="0" /> <input id="reportingAction" type="hidden" name="action" value="add" /><input type="hidden" id="reportingUid" name="uid" /> <input
 								type="hidden" id="reportingPid" name="pid" value="0" /><input type="hidden" id="reportingIsChange" name="isChange" value="0" /></td>
 						</tr>
 						<tr>
 							<td class="text_r blueside top">报表SQL:</td>
-							<td id="reportingSqlTextTd" colspan="5"><textarea id="reportingSqlText" name="sqlText"></textarea></td>
+							<td id="reportingSqlTextTd" colspan="7"><textarea id="reportingSqlText" name="sqlText"></textarea></td>
 						</tr>
 						<tr>
 							<td colspan="6" style="text-align: center;"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok"
@@ -67,7 +71,7 @@
 								onclick="javascript:Reporting.previewInNewTab()">报表预览</a></td>
 						</tr>
 						<tr>
-							<td id="sqlColumnGridTd" colspan="6"><div id="sqlColumnGrid" title="SQL列配置"></div></td>
+							<td id="sqlColumnGridTd" colspan="8"><div id="sqlColumnGrid" title="SQL列配置"></div></td>
 						</tr>
 					</table>
 				</form>
@@ -105,8 +109,8 @@
 						<tr>
 							<td class="text_r blueside top">内容:</td>
 							<td colspan="3"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea> </br>
-								<p style="color: red; bold: true">注意：如为SQL则必须包含两列且列名必须为name与text.(eg:select col1 as name,col1 as text from
-									table);如为文本字符串则格式为:name1,text1|name2,text2|...,如果name与text相同格式为：name1|name2|...</p> <input id="queryParamGridIndex" type="hidden" value="" /> <input
+							<!-- 	<p style="color: red; bold: true">注意：如为SQL则必须包含两列且列名必须为name与text.(eg:select col1 as name,col1 as text from
+									table);如为文本字符串则格式为:name1,text1|name2,text2|...,如果name与text相同格式为：name1|name2|...</p> --> <input id="queryParamGridIndex" type="hidden" value="" /> <input
 								type="hidden" id="jsonQueryParams" /><input id="queryParamReportId" type="hidden" value="0" /></td>
 						</tr>
 						<tr>
@@ -208,7 +212,7 @@
 				</tr>
 				<tr>
 					<td class="text_r blueside" width="60">显示顺序:</td>
-					<td><input type="text" id="setTreeNodeSequence" name="sequence" value="100" /><input id="hiddenFormId"  type="hidden"/></td>
+					<td><input type="text" id="setTreeNodeSequence" name="sequence" value="100" /><input id="hiddenFormId" type="hidden" /></td>
 				</tr>
 				<tr id="setTreeNodeHasChildTr">
 					<td class="text_r blueside" width="60">子节点:</td>
