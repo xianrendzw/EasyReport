@@ -319,18 +319,6 @@ $(function() {
 		text : "合计",
 		type : 1
 	}, {
-		name : "dayHuanRatio",
-		text : "日环比",
-		type : 2
-	}, {
-		name : "weekTongRatio",
-		text : "周同比",
-		type : 2
-	}, {
-		name : "monthTongRatio",
-		text : "月同比",
-		type : 2
-	}, {
 		name : "extensions",
 		text : "小计",
 		type : 3
@@ -640,6 +628,7 @@ Reporting.resetForm = function() {
 	$("#reportingLayout").val("1");
 	$("#reportingDataRange").val("7");
 	$("#reportingName").val("");
+	$("#reportingStatColumnLayout").val("1")
 	$("#reportingStatus").val("0");
 	$("#reportingSequence").val("100");
 	$("#reportingId").val("0");
@@ -1317,6 +1306,7 @@ Reporting.save = function() {
 		name : $("#reportingName").val(),
 		uid : $("#reportingUid").val(),
 		layout : $("#reportingLayout").val(),
+		statColumnLayout:$("#reportingStatColumnLayout").val(),
 		sqlText : exceSqlCmEditor.getValue(),
 		metaColumns : JSON.stringify(sqlColumnRows),
 		status : $("#reportingStatus").val(),

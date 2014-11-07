@@ -47,8 +47,8 @@
 					<td colspan="2" id="rpTitle" style="font-size: 24px;">${name}</td>
 				</tr>
 				<tr style="height: 40px;">
-					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}<a id="btnGenarate" href="#"
-						class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}<input type="checkbox" name="isRowSpan"
+						checked="checked" />表格是否合并相同行 <a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
 					<td style="text-align: left; vertical-align: middle; white-space: normal;"><img style="cursor: pointer;" id="btnFullScreen" title="全屏显示"
 						src="<%=request.getContextPath()%>/static/report/icons/fullscreen_24.png" />&nbsp;<img style="cursor: pointer;" id="btnExportToExcel"
 						title="导出到Excel" src="<%=request.getContextPath()%>/static/report/icons/excel_24.png" />&nbsp;<img style="cursor: pointer;" id="btnShowChart"

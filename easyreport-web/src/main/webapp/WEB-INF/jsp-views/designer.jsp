@@ -37,7 +37,7 @@
 									<option value="2">纵向展示</option>
 							</select></td>
 							<td class="text_r blueside">统计列:</td>
-							<td><select id="reportingStatColumnLayout" name="StatColumnLayout">
+							<td><select id="reportingStatColumnLayout" name="statColumnLayout">
 									<option value="1">横向展示</option>
 									<option value="2">纵向展示</option>
 							</select></td>
