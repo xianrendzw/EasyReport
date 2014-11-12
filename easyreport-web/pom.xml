@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.ijinshan</groupId>
 		<artifactId>easyreport</artifactId>
-		<version>1.0</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>easyreport-web</artifactId>
 	<packaging>war</packaging>
@@ -110,8 +110,44 @@
 
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<env>prod</env>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<finalName>easyreport-web</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>dev/*</exclude>
+					<exclude>test/*</exclude>
+					<exclude>prod/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/${env}</directory>
+			</resource>
+		</resources>
 	</build>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>

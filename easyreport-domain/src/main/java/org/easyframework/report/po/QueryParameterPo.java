@@ -15,6 +15,7 @@ public class QueryParameterPo implements Serializable {
 	private String defaultText;
 	private String dataSource;
 	private String dataType = "string";
+	private String comment;
 	private int width = 100;
 	private int height = 25;
 	private boolean isRequired;
@@ -175,6 +176,24 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+	}
+
+	/**
+	 * 获取报表查询参数备注
+	 * 
+	 * @return
+	 */
+	public String getComment() {
+		return this.comment == null ? "" : this.comment;
+	}
+
+	/**
+	 * 设置报表查询参数备注
+	 * 
+	 * @param comment
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	/**

@@ -1,5 +1,10 @@
 package org.easyframework.report.engine.data;
 
+
+/**
+ * 报表元数据列类
+ */
+
 /**
  * 报表元数据列类
  */
@@ -9,6 +14,7 @@ public class ReportMetaDataColumn {
 	private String dataType;
 	private String expression;
 	private String format;
+	private String comment;
 	private int width;
 	private int decimals;
 	private ColumnType type;
@@ -112,7 +118,7 @@ public class ReportMetaDataColumn {
 	 * @return 格式化字符串
 	 */
 	public String getFormat() {
-		return format;
+		return format == null ? "" : this.format;
 	}
 
 	/**
@@ -307,6 +313,24 @@ public class ReportMetaDataColumn {
 		this.isHidden = isHidden;
 	}
 
+	/**
+	 * 获取元数据列备注
+	 * 
+	 * @return
+	 */
+	public String getComment() {
+		return this.comment == null ? "" : this.comment;
+	}
+
+	/**
+	 * 设置元数据列备注
+	 * 
+	 * @param comment
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public ReportMetaDataColumn clone() {
 		return this.clone(this.name, this.text);
@@ -331,6 +355,7 @@ public class ReportMetaDataColumn {
 		column.setDecimals(this.decimals);
 		column.setOptional(this.isOptional);
 		column.setDisplayInMail(this.isDisplayInMail);
+		column.setComment(this.comment);
 		return column;
 	}
 }

@@ -68,7 +68,9 @@
 								class="easyui-linkbutton" icon="icon-add" onclick="javascript:Reporting.save()">新增</a> &nbsp;&nbsp; <a id="reportingEditBtn"
 								href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:Reporting.save()">修改</a>&nbsp;&nbsp; <a
 								id="reportingPreviewBtn" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview"
-								onclick="javascript:Reporting.previewInNewTab()">报表预览</a></td>
+								onclick="javascript:Reporting.previewInNewTab()">报表预览</a>&nbsp;&nbsp; <a
+								id="reportingFullScreenBtn" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview"
+								onclick="javascript:Reporting.previewInNewTab()">全屏编辑</a></td>
 						</tr>
 						<tr>
 							<td id="sqlColumnGridTd" colspan="8"><div id="sqlColumnGrid" title="SQL列配置"></div></td>

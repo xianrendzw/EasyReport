@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.ijinshan</groupId>
 		<artifactId>easyreport</artifactId>
-		<version>1.0</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>easyreport-data</artifactId>
 	<packaging>jar</packaging>

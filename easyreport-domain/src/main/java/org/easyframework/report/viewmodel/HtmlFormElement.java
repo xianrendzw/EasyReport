@@ -7,6 +7,7 @@ public abstract class HtmlFormElement {
 	private String defaultValue;
 	protected String type;
 	protected String dataType = "string";
+	protected String comment;
 	protected int width = 100;
 	protected int height = 25;
 	protected boolean isRequired;
@@ -62,6 +63,24 @@ public abstract class HtmlFormElement {
 	 */
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+	}
+
+	/**
+	 * 获取Html表单(Form)元素的备注
+	 * 
+	 * @return
+	 */
+	public String getComment() {
+		return this.comment == null ? "" : this.comment;
+	}
+
+	/**
+	 * 设置Html表单(Form)元素的备注
+	 * 
+	 * @param comment
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	/**

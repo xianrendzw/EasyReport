@@ -326,6 +326,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		htmlFormElement.setRequired(queryParam.isRequired());
 		htmlFormElement.setDefaultText(queryParam.getDefaultText());
 		htmlFormElement.setDefaultValue(queryParam.getDefaultValue());
+		htmlFormElement.setComment(queryParam.getComment());
 	}
 
 	private List<NameTextPair> getOptions(QueryParameterPo queryParam, DataSourcePo ds,
