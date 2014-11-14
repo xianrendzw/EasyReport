@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.easyframework.report.engine.exception.TemplatePraseException;
@@ -60,6 +61,7 @@ public class VelocityUtils {
 			}
 			context.put("Calendar", Calendar.getInstance());
 			context.put("DateUtils", DateUtils.class);
+			context.put("StringUtils", StringUtils.class);
 			Velocity.evaluate(context, writer, logTag, template);
 			return writer.toString();
 		} catch (Exception ex) {
