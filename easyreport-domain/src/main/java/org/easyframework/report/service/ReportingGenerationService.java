@@ -306,14 +306,13 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		List<NameTextPair> options = this.getOptions(queryParam, ds, buildinParams);
 		List<HtmlSelectOption> htmlSelectOptions = new ArrayList<HtmlSelectOption>(options.size());
 
-		boolean notDefaultValue = "notDefaultValue".equals(queryParam.getDefaultValue());
-		if (!notDefaultValue) {
+		if (queryParam.hasDefaultValue()) {
 			htmlSelectOptions.add(new HtmlSelectOption(queryParam.getDefaultText(), queryParam.getDefaultValue(), true));
 		}
 		for (int i = 0; i < options.size(); i++) {
 			NameTextPair option = options.get(i);
 			if (!option.getName().equals(queryParam.getDefaultValue())) {
-				htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName(), (notDefaultValue && i == 0)));
+				htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName(), (!queryParam.hasDefaultValue() && i == 0)));
 			}
 		}
 
@@ -328,8 +327,8 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		htmlFormElement.setHeight(queryParam.getHeight());
 		htmlFormElement.setWidth(queryParam.getWidth());
 		htmlFormElement.setRequired(queryParam.isRequired());
-		htmlFormElement.setDefaultText(queryParam.getDefaultText());
-		htmlFormElement.setDefaultValue(queryParam.getDefaultValue());
+		htmlFormElement.setDefaultText(queryParam.hasDefaultValue() ? queryParam.getDefaultText() : "");
+		htmlFormElement.setDefaultValue(queryParam.hasDefaultValue() ? queryParam.getDefaultValue() : "");
 		htmlFormElement.setComment(queryParam.getComment());
 	}
 

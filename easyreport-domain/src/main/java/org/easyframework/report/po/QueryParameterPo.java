@@ -47,7 +47,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getText() {
 		if (this.text == null || this.text.trim().length() == 0) {
-			return "EmptyTitle";
+			return "NoTitle";
 		}
 		return this.text.trim();
 	}
@@ -107,7 +107,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getDefaultValue() {
 		return (this.defaultValue == null || this.defaultValue.trim().length() == 0)
-				? "notDefaultValue" : this.defaultValue.trim();
+				? "noDefaultValue" : this.defaultValue.trim();
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getDefaultText() {
 		return (this.defaultText == null || this.defaultText.trim().length() == 0)
-				? "notDefaultText" : this.defaultText.trim();
+				? "noDefaultText" : this.defaultText.trim();
 	}
 
 	/**
@@ -270,5 +270,14 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public void setAutoComplete(boolean isAutoComplete) {
 		this.isAutoComplete = isAutoComplete;
+	}
+
+	/**
+	 * 获取当前查询参数是否设置了默认值
+	 * 
+	 * @return true|false
+	 */
+	public boolean hasDefaultValue() {
+		return !this.getDefaultValue().equals("noDefaultValue");
 	}
 }
