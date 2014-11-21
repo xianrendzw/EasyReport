@@ -2,6 +2,8 @@ package org.easyframework.report.po;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * 报表查询参数类
  */
@@ -277,7 +279,38 @@ public class QueryParameterPo implements Serializable {
 	 * 
 	 * @return true|false
 	 */
+	@JsonIgnore
 	public boolean hasDefaultValue() {
 		return !this.getDefaultValue().equals("noDefaultValue");
+	}
+
+	/**
+	 * 获取当前查询参数是否设置了默认标题
+	 * 
+	 * @return true|false
+	 */
+	@JsonIgnore
+	public boolean hasDefaultText() {
+		return !this.getDefaultText().equals("noDefaultText");
+	}
+
+	/**
+	 * 获取当前查询参数的真实默认标题
+	 * 
+	 * @return
+	 */
+	@JsonIgnore
+	public String getRealDefaultText() {
+		return this.hasDefaultText() ? this.getDefaultText() : "";
+	}
+
+	/**
+	 * 获取当前查询参数的真实默认值
+	 * 
+	 * @return
+	 */
+	@JsonIgnore
+	public String getRealDefaultValue() {
+		return this.hasDefaultValue() ? this.getDefaultValue() : "";
 	}
 }

@@ -290,9 +290,9 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			if (formElement.equals("select") || formElement.equals("selectMul")) {
 				htmlFormElement = this.getComboBoxFormElements(queryParam, ds, buildinParams);
 			} else if (formElement.equals("checkbox")) {
-				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
+				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			} else if (formElement.equals("text")) {
-				htmlFormElement = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getDefaultValue());
+				htmlFormElement = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			}
 			if (htmlFormElement != null) {
 				this.setElementCommonProperities(queryParam, htmlFormElement);
@@ -327,8 +327,8 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		htmlFormElement.setHeight(queryParam.getHeight());
 		htmlFormElement.setWidth(queryParam.getWidth());
 		htmlFormElement.setRequired(queryParam.isRequired());
-		htmlFormElement.setDefaultText(queryParam.hasDefaultValue() ? queryParam.getDefaultText() : "");
-		htmlFormElement.setDefaultValue(queryParam.hasDefaultValue() ? queryParam.getDefaultValue() : "");
+		htmlFormElement.setDefaultText(queryParam.getRealDefaultText());
+		htmlFormElement.setDefaultValue(queryParam.getRealDefaultValue());
 		htmlFormElement.setComment(queryParam.getComment());
 	}
 
