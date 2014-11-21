@@ -47,7 +47,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getText() {
 		if (this.text == null || this.text.trim().length() == 0) {
-			return this.name;
+			return "EmptyTitle";
 		}
 		return this.text.trim();
 	}
@@ -107,7 +107,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getDefaultValue() {
 		return (this.defaultValue == null || this.defaultValue.trim().length() == 0)
-				? "" : this.defaultValue.trim();
+				? "notDefaultValue" : this.defaultValue.trim();
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class QueryParameterPo implements Serializable {
 	 */
 	public String getDefaultText() {
 		return (this.defaultText == null || this.defaultText.trim().length() == 0)
-				? "全部" : this.defaultText.trim();
+				? "notDefaultText" : this.defaultText.trim();
 	}
 
 	/**

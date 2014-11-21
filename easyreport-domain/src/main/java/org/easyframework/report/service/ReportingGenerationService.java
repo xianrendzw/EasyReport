@@ -305,11 +305,15 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 	private HtmlComboBox getComboBoxFormElements(QueryParameterPo queryParam, DataSourcePo ds, Map<String, Object> buildinParams) {
 		List<NameTextPair> options = this.getOptions(queryParam, ds, buildinParams);
 		List<HtmlSelectOption> htmlSelectOptions = new ArrayList<HtmlSelectOption>(options.size());
-		htmlSelectOptions.add(new HtmlSelectOption(queryParam.getDefaultText(), queryParam.getDefaultValue(), true));
 
-		for (NameTextPair option : options) {
+		boolean notDefaultValue = "notDefaultValue".equals(queryParam.getDefaultValue());
+		if (!notDefaultValue) {
+			htmlSelectOptions.add(new HtmlSelectOption(queryParam.getDefaultText(), queryParam.getDefaultValue(), true));
+		}
+		for (int i = 0; i < options.size(); i++) {
+			NameTextPair option = options.get(i);
 			if (!option.getName().equals(queryParam.getDefaultValue())) {
-				htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName()));
+				htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName(), (notDefaultValue && i == 0)));
 			}
 		}
 
