@@ -195,11 +195,11 @@
 			</tr>
 			<tr>
 				<td class="text_r blueside top">报表SQL列配置:</td>
-				<td colspan="5" class="code"><label id="reportingProp_jsonColumns" /></td>
+				<td colspan="5" class="code"><label id="reportingProp_metaColumns" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside top">报表查询参数:</td>
-				<td colspan="5" class="code"><label id="reportingProp_jsonQueryParams" /></td>
+				<td colspan="5" class="code"><label id="reportingProp_queryParams" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">说明:</td>
