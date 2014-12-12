@@ -34,7 +34,7 @@ public class ConfigDictDao extends BaseDao<ConfigDictPo> {
 	}
 
 	public List<ConfigDictPo> queryByParentDictKey(String parentDictKey) {
-		String columnValue = String.format("select %s from %s where `%s` = ?",
+		String columnValue = String.format("select %s from %s where %s = ?",
 				ConfigDictPo.Id, this.tableName, ConfigDictPo.Key);
 		String condition = Restrictions.in(ConfigDictPo.Pid, columnValue).toString();
 		Object[] args = new Object[] { parentDictKey };
@@ -42,7 +42,7 @@ public class ConfigDictDao extends BaseDao<ConfigDictPo> {
 	}
 
 	public List<ConfigDictPo> queryInByParentDictKeys(String parentDictKeys) {
-		String columnValue = String.format("select %s from %s where `%s` in(%s)",
+		String columnValue = String.format("select %s from %s where %s in(%s)",
 				ConfigDictPo.Id, this.tableName, ConfigDictPo.Key, parentDictKeys);
 		String condition = Restrictions.in(ConfigDictPo.Pid, columnValue).toString();
 		return this.query(condition);
