@@ -93,6 +93,12 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
 	}
 
 	private String getAutoCompleteComboBoxText(HtmlComboBox comboBox) {
+		// 如果下拉框的option在1000以内就用jquery select2 插件显示
+		// 否则用bootstrap的下拉框显示
+		// 因为jquery select2 在option很多时比较卡
+		if (comboBox.getValue().size() <= 1000) {
+			return this.getSelect2AutoCompleteComboBoxText(comboBox);
+		}
 		StringBuilder htmlText = new StringBuilder("");
 		htmlText.append("<div class=\"form-group\">");
 		htmlText.append(String.format("<label>%s:</label>", comboBox.getText()));
@@ -105,6 +111,20 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
 		}
 		htmlText.append("</datalist>");
 		htmlText.append("</label>");
+		htmlText.append("</div> ");
+		return htmlText.toString();
+	}
+
+	private String getSelect2AutoCompleteComboBoxText(HtmlComboBox comboBox) {
+		StringBuilder htmlText = new StringBuilder("");
+		htmlText.append("<div class=\"form-group\">");
+		htmlText.append(String.format("<label>%s:</label>", comboBox.getText()));
+		htmlText.append(String.format("<select class=\"select2AutoComplete\" id=\"%1$s\" name=\"%1$s\">", comboBox.getName()));
+		for (HtmlSelectOption option : comboBox.getValue()) {
+			String selected = option.isSelected() ? "selected=\"selected\"" : "";
+			htmlText.append(String.format("<option value=\"%s\" %s>%s</option>", option.getValue(), selected, option.getText()));
+		}
+		htmlText.append("</select>");
 		htmlText.append("</div> ");
 		return htmlText.toString();
 	}
