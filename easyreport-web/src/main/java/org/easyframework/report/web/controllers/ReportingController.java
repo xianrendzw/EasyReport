@@ -9,6 +9,7 @@ import org.easyframework.report.engine.exception.SQLQueryException;
 import org.easyframework.report.engine.exception.TemplatePraseException;
 import org.easyframework.report.exception.QueryParamsException;
 import org.easyframework.report.view.EasyUIQueryFormView;
+import org.easyframework.report.web.util.ReportingUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ public class ReportingController extends AbstractController {
 
 		ModelAndView modelAndView = new ModelAndView(viewName);
 		try {
-			ReportingContollerUtils.previewByFormMap(uid, modelAndView, request);
+			ReportingUtils.previewByFormMap(uid, modelAndView, request);
 		} catch (QueryParamsException | TemplatePraseException ex) {
 			modelAndView.addObject("formHtmlText", ex.getMessage());
 			this.logException("查询参数生成失败", ex);
@@ -57,7 +58,7 @@ public class ReportingController extends AbstractController {
 	public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("/template");
 		try {
-			ReportingContollerUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
+			ReportingUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
 		} catch (QueryParamsException | TemplatePraseException ex) {
 			modelAndView.addObject("formHtmlText", ex.getMessage());
 			this.logException("查询参数生成失败", ex);
@@ -74,7 +75,7 @@ public class ReportingController extends AbstractController {
 	public JSONObject generate(String uid, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			ReportingContollerUtils.generate(uid, jsonObject, request);
+			ReportingUtils.generate(uid, jsonObject, request);
 		} catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
 			jsonObject.put("htmlTable", ex.getMessage());
 			this.logException("报表生成失败", ex);
@@ -89,7 +90,7 @@ public class ReportingController extends AbstractController {
 	@RequestMapping(value = "/exportexcel", method = RequestMethod.POST)
 	public void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			ReportingContollerUtils.exportToExcel(uid, name, htmlText, request, response);
+			ReportingUtils.exportToExcel(uid, name, htmlText, request, response);
 		} catch (Exception ex) {
 			this.logException("导出Excel失败", ex);
 		}

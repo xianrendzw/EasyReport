@@ -52,7 +52,7 @@ public class DataExecution {
 		return new ReportDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());
 	}
 
-	private List<ReportMetaDataRow> getMetaDataRows(List<ReportMetaDataColumn> sqlCcolumns) {
+	private List<ReportMetaDataRow> getMetaDataRows(List<ReportMetaDataColumn> sqlColumns) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -63,7 +63,7 @@ public class DataExecution {
 					this.dataSource.getPassword());
 			stmt = conn.prepareStatement(this.parameter.getSqlText());
 			rs = stmt.executeQuery();
-			return this.getMetaDataRows(rs, sqlCcolumns);
+			return this.getMetaDataRows(rs, sqlColumns);
 		} catch (SQLException ex) {
 			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
 			throw new SQLQueryException(ex);
@@ -72,12 +72,12 @@ public class DataExecution {
 		}
 	}
 
-	private List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlCcolumns)
+	private List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns)
 			throws SQLException {
 		List<ReportMetaDataRow> rows = new ArrayList<ReportMetaDataRow>();
 		while (rs.next()) {
 			ReportMetaDataRow row = new ReportMetaDataRow();
-			for (ReportMetaDataColumn column : sqlCcolumns) {
+			for (ReportMetaDataColumn column : sqlColumns) {
 				Object value = rs.getObject(column.getName());
 				if (column.getDataType().contains("BINARY")) {
 					value = new String((byte[]) value);
