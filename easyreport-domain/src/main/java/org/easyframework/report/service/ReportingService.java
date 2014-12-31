@@ -120,4 +120,9 @@ public class ReportingService extends BaseService<ReportingDao, ReportingPo> {
 
 		return metaDataColumns;
 	}
+
+	public void explainSqlText(int dsId, String sqlText) {
+		DataSourcePo ds = this.dataSourceService.getById(dsId);
+		this.dao.executeSqlText(ds.getJdbcUrl(), ds.getUser(), ds.getPassword(), sqlText);
+	}
 }

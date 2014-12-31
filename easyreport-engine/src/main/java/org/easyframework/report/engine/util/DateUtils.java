@@ -2,8 +2,10 @@ package org.easyframework.report.engine.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -205,5 +207,85 @@ public class DateUtils {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * 获取两个日期之间的相隔的天数
+	 * 
+	 * @param startDt
+	 *            开始日期(yyyy-MM-dd格式)
+	 * @param endDt
+	 *            结束日期 (yyyy-MM-dd格式)
+	 * @return 相隔的天数
+	 */
+	public static long getDateDiff(String startDt, String endDt) {
+		return getDateDiff(startDt, endDt, "yyyy-MM-dd");
+	}
+
+	/**
+	 * 获取两个日期之间的相隔的天数
+	 * 
+	 * @param startDt
+	 *            开始日期(格式必须与pattern一致)
+	 * @param endDt
+	 *            结束日期 (格式必须与pattern一致)
+	 * @param pattern
+	 *            日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
+	 * @return 相隔的天数
+	 */
+	public static long getDateDiff(String startDt, String endDt, String pattern) {
+		SimpleDateFormat sd = new SimpleDateFormat(pattern);
+		long nd = 1000 * 24 * 60 * 60;
+		try {
+			long diff = sd.parse(endDt).getTime() - sd.parse(startDt).getTime();
+			return diff / nd;
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 获取两个日期之间的所有日期列表(包含开始与结束日期)
+	 * 
+	 * @param startDt
+	 *            开始日期(yyyy-MM-dd格式)
+	 * @param endDt
+	 *            结束日期 (yyyy-MM-dd格式)
+	 * @return 日期列表(包含开始与结束日期)
+	 * @throws ParseException
+	 */
+	public static List<String> getDateList(String startDt, String endDt) throws ParseException {
+		return getDateList(startDt, endDt, "yyyy-MM-dd");
+	}
+
+	/**
+	 * 获取两个日期之间的所有日期列表(包含开始与结束日期)
+	 * 
+	 * @param startDt
+	 *            开始日期(格式必须与pattern一致)
+	 * @param endDt
+	 *            结束日期 (格式必须与pattern一致)
+	 * @param pattern
+	 *            日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
+	 * @return 日期列表(包含开始与结束日期)
+	 * @throws ParseException
+	 */
+	public static List<String> getDateList(String startDt, String endDt, String pattern) throws ParseException {
+		SimpleDateFormat sd = new SimpleDateFormat(pattern);
+		List<String> dateList = new ArrayList<String>();
+
+		dateList.add(startDt);
+		Calendar startCalendar = Calendar.getInstance();
+		startCalendar.setTime(sd.parse(startDt));
+		Calendar endCalendar = Calendar.getInstance();
+		endCalendar.setTime(sd.parse(endDt));
+		startCalendar.add(Calendar.DAY_OF_YEAR, 1);
+		while (startCalendar.before(endCalendar)) {
+			dateList.add(sd.format(startCalendar.getTime()));
+			startCalendar.add(Calendar.DAY_OF_YEAR, 1);
+		}
+		dateList.add(endDt);
+
+		return dateList;
 	}
 }

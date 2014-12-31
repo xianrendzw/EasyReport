@@ -103,7 +103,7 @@ public class DesignerController extends AbstractController {
 
 		try {
 			sqlText = this.getSqlText(sqlText, dataRange, jsonQueryParams, request);
-			this.reportingService.getReportMetaDataColumns(dsId, sqlText);
+			this.reportingService.explainSqlText(dsId, sqlText);
 			result.setData(sqlText);
 			this.setSuccessResult(result, "");
 		} catch (Exception ex) {
@@ -119,7 +119,7 @@ public class DesignerController extends AbstractController {
 			for (QueryParameterPo queryParam : queryParams) {
 				if (formParameters.containsKey(queryParam.getName()))
 					continue;
-				formParameters.put(queryParam.getName(), queryParam.getDefaultValue());
+				formParameters.put(queryParam.getName(), queryParam.getRealDefaultValue());
 			}
 		}
 		return VelocityUtils.prase(sqlText, formParameters);
