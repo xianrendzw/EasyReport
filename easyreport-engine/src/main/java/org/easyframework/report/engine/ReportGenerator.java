@@ -45,9 +45,9 @@ public class ReportGenerator {
 	}
 
 	private static ReportBuilder createBuilder(ReportDataSet reportData, ReportParameter parameter) {
-		if (parameter.getLayout() == LayoutType.HORIZONTAL) {
-			return new HorizontalLayoutReportBuilder(reportData, parameter);
+		if (parameter.getStatColumnLayout() == LayoutType.HORIZONTAL) {
+			return new HorizontalStatColumnReportBuilder(reportData, parameter);
 		}
-		return new VerticalLayoutReportBuilder(reportData, parameter);
+		return new VerticalStatColumnReportBuilder(reportData, parameter);
 	}
 }

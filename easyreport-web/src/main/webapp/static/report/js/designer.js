@@ -1,7 +1,7 @@
 var designerPageRootUrl = XFrame.getContextPath() + '/report/designer/';
 $(function() {
 	Reporting.init();
-	
+
 	$('#west').panel({
 		tools : [ {
 			iconCls : 'icon-search',
@@ -163,10 +163,12 @@ $(function() {
 			title : '来源类型',
 			width : 80,
 			formatter : function(value, row, index) {
-				if (value == "sql")
+				if (value == "sql") {
 					return "SQL语句";
-				if (value == "text")
+				}
+				if (value == "text") {
 					return "文本字符串";
+				}
 				return "无内容";
 			}
 		}, {
@@ -430,8 +432,7 @@ $(function() {
 				cm.setOption("fullScreen", !cm.getOption("fullScreen"));
 			},
 			"Esc" : function(cm) {
-				if (cm.getOption("fullScreen"))
-					cm.setOption("fullScreen", false);
+				if (cm.getOption("fullScreen")){cm.setOption("fullScreen", false);}
 			}
 		}
 	});
@@ -461,13 +462,12 @@ $(function() {
 				cm.setOption("fullScreen", !cm.getOption("fullScreen"));
 			},
 			"Esc" : function(cm) {
-				if (cm.getOption("fullScreen"))
-					cm.setOption("fullScreen", false);
+				if (cm.getOption("fullScreen")){cm.setOption("fullScreen", false);}
 			}
 		}
 	});
 
-	Reporting.initValidateOptions();
+	// Reporting.initValidateOptions();
 });
 
 var Reporting = function() {
@@ -535,32 +535,45 @@ Reporting.setExceSqlCmEditorStatus = function() {
 
 // 树右键菜单相关操作
 Reporting.treeContextMenu = function(item) {
-	if (item.name == "addRp")
+	if (item.name == "addRp") {
 		return Reporting.add();
-	if (item.name == "add")
+	}
+	if (item.name == "add") {
 		return Reporting.addChildTreeNode();
-	if (item.name == "edit")
+	}
+	if (item.name == "edit") {
 		return Reporting.editTreeNode();
-	if (item.name == "comment")
+	}
+	if (item.name == "comment") {
 		return Reporting.setTreeNodeComment();
-	if (item.name == "remove")
+	}
+	if (item.name == "remove") {
 		return Reporting.removeTreeNode();
-	if (item.name == "search")
+	}
+	if (item.name == "search") {
 		return Reporting.openSearchReportDlg();
-	if (item.name == "refresh")
+	}
+	if (item.name == "refresh") {
 		return Reporting.reloadTree();
-	if (item.name == "copy")
+	}
+	if (item.name == "copy") {
 		return Reporting.copyTreeNode();
-	if (item.name == "paste")
+	}
+	if (item.name == "paste") {
 		return Reporting.pasteTreeNode();
-	if (item.name == "privilage")
+	}
+	if (item.name == "privilage") {
 		return Reporting.privilegeSettings();
-	if (item.name == "contacts")
+	}
+	if (item.name == "contacts") {
 		return Reporting.contactsSettings();
-	if (item.name == "info")
+	}
+	if (item.name == "info") {
 		return Reporting.showProperties();
-	if (item.name == "chown")
+	}
+	if (item.name == "chown") {
 		return Reporting.changeOwner();
+	}
 	return;
 };
 
@@ -641,7 +654,7 @@ Reporting.resetForm = function() {
 Reporting.clearAllCheckedNode = function(target) {
 	var nodes = $(target).tree('getChecked');
 	if (nodes) {
-		for ( var i = 0; i < nodes.length; i++) {
+		for (var i = 0; i < nodes.length; i++) {
 			$(target).tree('uncheck', nodes[i].target);
 		}
 	}
@@ -664,12 +677,15 @@ Reporting.reloadSelectedTab = function() {
 };
 
 Reporting.tabContextMenu = function(item) {
-	if (item.name == "current")
+	if (item.name == "current") {
 		return Reporting.closeCurrentTab();
-	if (item.name == "others")
+	}
+	if (item.name == "others") {
 		return Reporting.closeOthersTab();
-	if (item.name == "all")
+	}
+	if (item.name == "all") {
 		return Reporting.closeAllTab();
+	}
 	return;
 };
 
@@ -820,7 +836,7 @@ Reporting.removeTreeNode = function() {
 
 Reporting.saveTreeNode = function() {
 	var act = $("#treeNodeAction").val();
-	var actUrl = act == "add" ? designerPageRootUrl + "/addtreenode" :designerPageRootUrl  + "/edittreenode";
+	var actUrl = act == "add" ? designerPageRootUrl + "/addtreenode" : designerPageRootUrl + "/edittreenode";
 	$('#setTreeNodeForm').form('submit', {
 		url : actUrl,
 		onSubmit : function() {
@@ -1000,7 +1016,7 @@ Reporting.treeNodePathIds = [];
 Reporting.locateTreeNode = function(index, row) {
 	Reporting.treeNodePathIds = row.path.split(',');
 	var ids = row.path.split(',');
-	for ( var i = 0; i < ids.length; i++) {
+	for (var i = 0; i < ids.length; i++) {
 		var id = ids[i];
 		var node = Reporting.getTreeNodeById(id);
 		if (node) {
@@ -1035,7 +1051,7 @@ Reporting.edit = function(data) {
 	$("#sqlColumnGrid").datagrid('loadData', eval(data.metaColumns));
 	exceSqlCmEditor.setValue(data.sqlText);
 	$('#reportingIsChange').val(0);
-	
+
 };
 
 Reporting.toggleButton = function(action) {
@@ -1138,11 +1154,11 @@ Reporting.loadSqlColumns = function(data) {
 
 	Reporting.setSqlColumnRows(sqlColumnRows);
 	var oldColumnMap = {};
-	for ( var i = 0; i < sqlColumnRows.length; i++) {
+	for (var i = 0; i < sqlColumnRows.length; i++) {
 		var name = sqlColumnRows[i].name;
 		oldColumnMap[name] = sqlColumnRows[i];
 	}
-	for ( var i = 0; i < data.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		var name = data[i].name;
 		if (oldColumnMap[name]) {
 			oldColumnMap[name].dataType = data[i].dataType;
@@ -1154,10 +1170,10 @@ Reporting.loadSqlColumns = function(data) {
 };
 
 Reporting.setSqlColumnRows = function(rows) {
-	for ( var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+	for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
 		var row = rows[rowIndex];
 		var subOptions = Reporting.getSqlColumnOptions(row.type);
-		for ( var optIndex = 0; optIndex < subOptions.length; optIndex++) {
+		for (var optIndex = 0; optIndex < subOptions.length; optIndex++) {
 			var option = subOptions[optIndex];
 			var optionId = "#" + option.name + rowIndex;
 			row[option.name] = $(optionId).prop("checked");
@@ -1221,7 +1237,7 @@ Reporting.addSqlColumnRow = function() {
 	var index = 1;
 	var rows = $("#sqlColumnGrid").datagrid('getRows');
 	if (rows && rows.length > 0) {
-		for ( var i = 0; i < rows.length; i++) {
+		for (var i = 0; i < rows.length; i++) {
 			var type = $("#type" + i).val();
 			if (type == 4) {
 				index++;
@@ -1261,7 +1277,7 @@ Reporting.saveExpression = function() {
 
 Reporting.getEmptyExprColumns = function(sqlColumnRows) {
 	var emptyColumns = [];
-	for ( var i = 0; i < sqlColumnRows.length; i++) {
+	for (var i = 0; i < sqlColumnRows.length; i++) {
 		var row = sqlColumnRows[i];
 		if (row.type == 4 && $.trim(row.expression) == "") {
 			emptyColumns.push(row.name);
@@ -1306,7 +1322,7 @@ Reporting.save = function() {
 		name : $("#reportingName").val(),
 		uid : $("#reportingUid").val(),
 		layout : $("#reportingLayout").val(),
-		statColumnLayout:$("#reportingStatColumnLayout").val(),
+		statColumnLayout : $("#reportingStatColumnLayout").val(),
 		sqlText : exceSqlCmEditor.getValue(),
 		metaColumns : JSON.stringify(sqlColumnRows),
 		status : $("#reportingStatus").val(),
@@ -1329,15 +1345,8 @@ Reporting.getSqlColumnCountByType = function(rows) {
 		"stat" : 0,
 		"computed" : 0
 	};
-	for ( var i = 0; i < rows.length; i++) {
-		if (rows[i].type == 1)
-			typeColumn.layout += 1;
-		else if (rows[i].type == 2)
-			typeColumn.dim += 1;
-		else if (rows[i].type == 3)
-			typeColumn.stat += 1;
-		else if (rows[i].type == 4)
-			typeColumn.computed += 1;
+	for (var i = 0; i < rows.length; i++) {
+		if (rows[i].type == 1){typeColumn.layout += 1;}else if (rows[i].type == 2){typeColumn.dim += 1;}else if (rows[i].type == 3){typeColumn.stat += 1;}else if (rows[i].type == 4){typeColumn.computed += 1;}
 	}
 	return typeColumn;
 };
@@ -1395,8 +1404,8 @@ Reporting.editQueryParam = function(index, row) {
 	$("#queryParamDataSource").val(row.dataSource);
 	$("#queryParamDataType").val(row.dataType);
 	$("#queryParamWidth").val(row.width);
-	$("#queryParamIsRequired").prop("checked",row.required);
-	$("#queryParamIsAutoComplete").prop("checked",row.autoComplete);
+	$("#queryParamIsRequired").prop("checked", row.required);
+	$("#queryParamIsAutoComplete").prop("checked", row.autoComplete);
 	if (row.formElement == "select" || row.formElement == "selectMul") {
 		$("#queryParamContent").removeAttr("disabled");
 		$("#queryParamContent").val(row.content);
@@ -1501,8 +1510,9 @@ Reporting.loadDataToPreviewTab = function(data) {
 	var previewUrl = XFrame.getContextPath() + "/report/uid/" + data.uid;
 	var tab = $('#tabs').tabs('getSelected');
 	var index = $('#tabs').tabs('getTabIndex', tab);
-	if (index != 5)
+	if (index != 5) {
 		return;
+	}
 
 	$('#tabs').tabs('update', {
 		tab : tab,
@@ -1523,15 +1533,12 @@ Reporting.previewInNewTab = function() {
 			return tab.panel('refresh');
 		}
 		var previewUrl = XFrame.getContextPath() + "/report/uid/" + node.attributes.uid;
-		$('#tabs').tabs(
-				'add',
-				{
-					id : node.id,
-					title : title,
-					content : '<iframe scrolling="yes" frameborder="0" src="' + previewUrl
-							+ '" style="width:100%;height:100%;"></iframe>',
-					closable : true
-				});
+		$('#tabs').tabs('add', {
+			id : node.id,
+			title : title,
+			content : '<iframe scrolling="yes" frameborder="0" src="' + previewUrl + '" style="width:100%;height:100%;"></iframe>',
+			closable : true
+		});
 	}
 };
 
@@ -1540,8 +1547,7 @@ Reporting.previewInNewTab = function() {
 //
 Reporting.queryParamOptionFormatter = function(value, row, index) {
 	var path = XFrame.getContextPath() + '/static/report/icons/';
-	return '<a href="#" title ="删除" onclick="javascript:Reporting.deleteQueryParam(' + index + ')"><img src="' + path
-			+ 'remove.png" alt="删除"/"></a>';
+	return '<a href="#" title ="删除" onclick="javascript:Reporting.deleteQueryParam(' + index + ')"><img src="' + path + 'remove.png" alt="删除"/"></a>';
 };
 
 Reporting.optionsFormatter = function(value, row, index) {
@@ -1562,7 +1568,7 @@ Reporting.optionsFormatter = function(value, row, index) {
 	}
 
 	var htmlOptions = [];
-	for ( var i = 0; i < subOptions.length; i++) {
+	for (var i = 0; i < subOptions.length; i++) {
 		var name = subOptions[i].name;
 		var id = name + index;
 		var text = subOptions[i].text;
@@ -1571,11 +1577,9 @@ Reporting.optionsFormatter = function(value, row, index) {
 		if (name == "expression") {
 			var imgSrc = XFrame.getContextPath() + "/static/report/icons/formula.png";
 			var onClick = " onclick =\"Reporting.expressionSettings('" + id + "')\"";
-			html = "<img style=\"cursor: pointer;\" id=\"" + id + "\" title=\"" + text + "\" src=\"" + imgSrc + "\""
-					+ onClick + "/>";
+			html = "<img style=\"cursor: pointer;\" id=\"" + id + "\" title=\"" + text + "\" src=\"" + imgSrc + "\"" + onClick + "/>";
 		} else {
-			html = "<input type=\"checkbox\" id=\"" + id + "\" name=\"" + name + "\"" + checked + ">" + text
-					+ "</input>";
+			html = "<input type=\"checkbox\" id=\"" + id + "\" name=\"" + name + "\"" + checked + ">" + text + "</input>";
 		}
 		htmlOptions.push(html);
 	}
@@ -1597,8 +1601,7 @@ Reporting.decimalsFormatter = function(value, row, index) {
 	if (!row.decimals) {
 		row.decimals = 0;
 	}
-	return "<input style=\"width:42px;\" type=\"text\" id=\"" + id + "\" name=\"text\" value=\"" + row.decimals
-			+ "\" />";
+	return "<input style=\"width:42px;\" type=\"text\" id=\"" + id + "\" name=\"text\" value=\"" + row.decimals + "\" />";
 };
 
 Reporting.expressionFormatter = function(value, row, index) {
@@ -1630,10 +1633,9 @@ Reporting.typeFormatter = function(value, row, index) {
 	var id = "type" + index;
 	var count = options.length;
 	var selectHtmlText = "<select id=\"" + id + "\" name=\"type\">";
-	for ( var i = 0; i < count; i++) {
+	for (var i = 0; i < count; i++) {
 		var selected = options[i].value == value ? 'selected="selected"' : '';
-		selectHtmlText += "<option value=\"" + options[i].value + "\" " + selected + ">" + options[i].text
-				+ "</option>";
+		selectHtmlText += "<option value=\"" + options[i].value + "\" " + selected + ">" + options[i].text + "</option>";
 	}
 	selectHtmlText += "</select>";
 
@@ -1661,10 +1663,9 @@ Reporting.sortTypeFormatter = function(value, row, index) {
 	var id = "sortType" + index;
 	var count = options.length;
 	var selectHtmlText = "<select id=\"" + id + "\" name=\"sortType\">";
-	for ( var i = 0; i < count; i++) {
+	for (var i = 0; i < count; i++) {
 		var selected = options[i].value == row.sortType ? 'selected="selected"' : '';
-		selectHtmlText += "<option value=\"" + options[i].value + "\" " + selected + ">" + options[i].text
-				+ "</option>";
+		selectHtmlText += "<option value=\"" + options[i].value + "\" " + selected + ">" + options[i].text + "</option>";
 	}
 	selectHtmlText += "</select>";
 	return selectHtmlText;
@@ -1697,7 +1698,7 @@ Reporting.getDatasource = function(dsId) {
 	var dataSources = $('#reportingDsId').combobox('getData');
 	var currDs = null;
 
-	for ( var i = 0; i < dataSources.length; i++) {
+	for (var i = 0; i < dataSources.length; i++) {
 		if (dataSources[i].id == dsId) {
 			currDs = dataSources[i];
 			break;
@@ -1707,8 +1708,8 @@ Reporting.getDatasource = function(dsId) {
 	if (currDs == null) {
 		return dsId;
 	}
-	return "<p>UID：" + currDs.uid + "</p><p>名称：" + currDs.name + "</p><p>用户名：" + currDs.user + "</p><p>密码："
-			+ currDs.password + "</p><p>数据库连接字符串：" + currDs.jdbcUrl + "</p>";
+	return "<p>UID：" + currDs.uid + "</p><p>名称：" + currDs.name + "</p><p>用户名：" + currDs.user + "</p><p>密码：" + currDs.password + "</p><p>数据库连接字符串："
+			+ currDs.jdbcUrl + "</p>";
 };
 
 function showChart(title, id, uid) {
@@ -1718,13 +1719,10 @@ function showChart(title, id, uid) {
 		return tab.panel('refresh');
 	}
 	var url = XFrame.getContextPath() + '/report/chart/' + uid;
-	$('#tabs').tabs(
-			'add',
-			{
-				id : id,
-				title : title,
-				content : '<iframe scrolling="yes" frameborder="0" src="' + url
-						+ '" style="width:100%;height:100%;"></iframe>',
-				closable : true
-			});
+	$('#tabs').tabs('add', {
+		id : id,
+		title : title,
+		content : '<iframe scrolling="yes" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>',
+		closable : true
+	});
 }

@@ -11,18 +11,18 @@ import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
 
 /**
- * 横向布局形式的报表生成类
+ * 纵向展示统计列的报表生成类
  */
-public class HorizontalLayoutReportBuilder extends AbstractReportBuilder implements ReportBuilder {
+public class VerticalStatColumnReportBuilder extends AbstractReportBuilder implements ReportBuilder {
 
-	public HorizontalLayoutReportBuilder(ReportDataSet reportData, ReportParameter reportParameter) {
-		super(reportData, reportParameter);
+	public VerticalStatColumnReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
+		super(reportDataSet, reportParameter);
 	}
 
 	@Override
 	public String getTable() {
 		StringBuilder table = new StringBuilder();
-		table.append("<table id=\"report\" class=\"grid\">");
+		table.append("<table id=\"easyReport\" class=\"easy-report\">");
 		table.append(this.tableRows.toString());
 		table.append("</table>");
 		return table.toString();
@@ -30,18 +30,18 @@ public class HorizontalLayoutReportBuilder extends AbstractReportBuilder impleme
 
 	@Override
 	public void drawTableHeaderRows() {
-		ColumnTree headerColumnTree = this.reportData.getHeaderColumnTree();
-		List<ReportDataColumn> dimColumns = reportData.getDimColumns();
+		ColumnTree headerColumnTree = this.reportDataSet.getHeaderColumnTree();
+		List<ReportDataColumn> layoutColumns = reportDataSet.getLayoutColumns();
 		int rowCount = headerColumnTree.getDepth();
 
 		this.tableRows.append("<thead>");
 		for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 			this.tableRows.append("<tr class=\"caption\">");
 			if (rowIndex == 0) {
-				for (ReportDataColumn dimColumn : dimColumns) {
+				for (ReportDataColumn layoutColumn : layoutColumns) {
 					String rowspan = String.format("rowspan=\"%s\"", rowCount);
 					this.tableRows.append("<th ").append(rowspan).append(">");
-					this.tableRows.append(dimColumn.getText()).append("</th>");
+					this.tableRows.append(layoutColumn.getText()).append("</th>");
 				}
 			}
 			for (ColumnTreeNode treeNode : headerColumnTree.getNodesByLevel(rowIndex)) {
@@ -55,26 +55,24 @@ public class HorizontalLayoutReportBuilder extends AbstractReportBuilder impleme
 
 	@Override
 	public void drawTableBodyRows() {
-		List<ColumnTreeNode> layoutLeafNodes = reportData.getLayoutColumnTree().getLastLevelNodes();
-		ColumnTree dimColumnTree = reportData.getDimColumnTree();
-		Map<String, ReportDataRow> statRowMap = reportData.getDataRowMap();
-		List<ReportDataColumn> statColumns = reportData.getDisplayStatColumns();
-		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(dimColumnTree);
+		ColumnTree layoutColumnTree = reportDataSet.getLayoutColumnTree();
+		List<ColumnTreeNode> layoutLeafNodes = layoutColumnTree.getLastLevelNodes();
+		List<ColumnTreeNode> dimLeafNodes = reportDataSet.getDimColumnTree().getLastLevelNodes();
+		Map<String, ReportDataRow> statRowMap = reportDataSet.getDataRowMap();
+		List<ReportDataColumn> statColumns = reportDataSet.getDisplayStatColumns();
+		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(layoutColumnTree);
 
 		int rowIndex = 0;
 		String[] lastNodePaths = null;
 		this.tableRows.append("<tbody>");
-		for (ColumnTreeNode dimLeafNode : dimColumnTree.getLastLevelNodes()) {
+		for (ColumnTreeNode layoutLeafNode : layoutLeafNodes) {
 			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"c\"" : "").append(">");
-			if (reportData.getDimColumnCount() > 0) {
-				lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap, lastNodePaths, dimLeafNode);
-			}
-			for (ColumnTreeNode layoutLeafNode : layoutLeafNodes) {
+			lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap, lastNodePaths, layoutLeafNode);
+			for (ColumnTreeNode dimLeafNode : dimLeafNodes) {
 				String rowKey = layoutLeafNode.getPath() + dimLeafNode.getPath();
 				ReportDataRow statRow = statRowMap.get(rowKey);
-				if (statRow == null) {
+				if (statRow == null)
 					statRow = new ReportDataRow();
-				}
 				for (ReportDataColumn statColumn : statColumns) {
 					Object cell = statRow.getCell(statColumn.getName());
 					String value = (cell == null) ? "" : cell.toString();
@@ -89,5 +87,6 @@ public class HorizontalLayoutReportBuilder extends AbstractReportBuilder impleme
 
 	@Override
 	public void drawTableFooterRows() {
+		// TODO Auto-generated method stub
 	}
 }

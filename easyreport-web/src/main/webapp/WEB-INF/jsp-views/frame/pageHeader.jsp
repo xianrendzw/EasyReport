@@ -8,6 +8,7 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery.xframe.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/utils/XFrameUtils.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/jquery-validate/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/common.js?v=<%=Math.random()%>"></script>
 <script type="text/javascript">
 		var XFrame = {

@@ -7,12 +7,12 @@
 <title>报表管理</title>
 <%@ include file="/WEB-INF/jsp-views/frame/pageHeader.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/designer.js?v=<%=Math.random()%>"></script>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/codemirror.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/theme/rubyblue.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/plugins/codehighlight/addon/display/fullscreen.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/codemirror.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/mode/sql.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/plugins/codehighlight/addon/display/fullscreen.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/codemirror.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/theme/rubyblue.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/addon/display/fullscreen.css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/mode/sql/sql.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/addon/display/fullscreen.js"></script>
 </head>
 <body id="layout" class="easyui-layout" style="text-align: left">
 	<!-- 左边tree -->

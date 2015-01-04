@@ -10,12 +10,12 @@ import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
 
 public abstract class AbstractReportBuilder {
-	protected final ReportDataSet reportData;
+	protected final ReportDataSet reportDataSet;
 	protected final ReportParameter reportParameter;
 	protected final StringBuilder tableRows = new StringBuilder();
 
-	protected AbstractReportBuilder(ReportDataSet reportData, ReportParameter reportParameter) {
-		this.reportData = reportData;
+	protected AbstractReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
+		this.reportDataSet = reportDataSet;
 		this.reportParameter = reportParameter;
 	}
 
@@ -32,21 +32,20 @@ public abstract class AbstractReportBuilder {
 	 */
 	protected String[] drawRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths,
 			ColumnTreeNode rowSpanNode) {
-		String[] paths = StringUtils.splitPreserveAllTokens(rowSpanNode.getPath(), this.reportData.getSeparatorChars());
+		String[] paths = StringUtils.splitPreserveAllTokens(rowSpanNode.getPath(), this.reportDataSet.getSeparatorChars());
 		int level = paths.length > 1 ? paths.length - 1 : 1;
 		String[] currNodePaths = new String[level];
 		for (int i = 0; i < level; i++) {
-			String currPath = paths[i] + this.reportData.getSeparatorChars();
+			String currPath = paths[i] + this.reportDataSet.getSeparatorChars();
 			currNodePaths[i] = (i > 0 ? currNodePaths[i - 1] + currPath : currPath);
 			if (lastNodePaths != null && lastNodePaths[i].equals(currNodePaths[i]))
 				continue;
 			ColumnTreeNode treeNode = pathTreeNodeMap.get(currNodePaths[i]);
 			if (treeNode == null) {
-				this.tableRows.append("<td class=\"back\"></td>");
+				this.tableRows.append("<td class=\"easyreport-fixed-column\"></td>");
 			} else {
-				String rowspan = String.format("rowspan=\"%s\"", treeNode.getSpans());
-				this.tableRows.append("<td class=\"back\" ").append(rowspan).append(">");
-				this.tableRows.append(treeNode.getValue()).append("</td>");
+				String rowspan = treeNode.getSpans() > 1 ? String.format(" rowspan=\"%s\"", treeNode.getSpans()) : "";
+				this.tableRows.append(String.format("<td class=\"easyreport-fixed-column\"%s>%s</td>", rowspan, treeNode.getValue()));
 			}
 		}
 		lastNodePaths = currNodePaths;

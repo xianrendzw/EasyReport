@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.easyframework.report.engine.data.ColumnType;
+import org.easyframework.report.engine.data.HorizontalStatColumnDataSet;
+import org.easyframework.report.engine.data.LayoutType;
 import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportDataSource;
 import org.easyframework.report.engine.data.ReportMetaDataCell;
@@ -17,6 +19,7 @@ import org.easyframework.report.engine.data.ReportMetaDataColumn;
 import org.easyframework.report.engine.data.ReportMetaDataRow;
 import org.easyframework.report.engine.data.ReportMetaDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
+import org.easyframework.report.engine.data.VerticalStatColumnDataSet;
 import org.easyframework.report.engine.exception.SQLQueryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +52,9 @@ public class DataExecution {
 		List<ReportMetaDataRow> metaDataRows = this.getMetaDataRows(this.getSqlColumns(metaDataColumns));
 		ReportMetaDataSet metaDataSet = new ReportMetaDataSet(
 				metaDataRows, metaDataColumns, this.parameter.getDisplayedStatColumns());
-		return new ReportDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());
+		return this.parameter.getStatColumnLayout() == LayoutType.VERTICAL ?
+				new VerticalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout()) :
+				new HorizontalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());
 	}
 
 	private List<ReportMetaDataRow> getMetaDataRows(List<ReportMetaDataColumn> sqlColumns) {

@@ -16,21 +16,21 @@ import org.easyframework.report.engine.util.ComparatorUtils;
 /**
  * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
  */
-public class ReportDataSet {
-	private final String separatorChar = "$";
-	private final ReportMetaDataSet metaDataSet;
-	private final LayoutType layout;
-	private final LayoutType statColumnLayout;
-	private List<ReportDataColumn> layoutColumns;
-	private List<ReportDataColumn> dimColumns;
-	private List<ReportDataColumn> displayStatColumns;
-	private List<ReportDataColumn> computedColumns;
-	private List<ReportDataColumn> statColumns;
-	private List<ReportDataColumn> nonStatColumns;
-	private ColumnTree headerColumnTree;
-	private ColumnTree layoutColumnTree;
-	private ColumnTree dimColumnTree;
-	private ColumnTree statColumnTree;
+public abstract class ReportDataSet {
+	protected final String separatorChar = "$";
+	protected final ReportMetaDataSet metaDataSet;
+	protected final LayoutType layout;
+	protected final LayoutType statColumnLayout;
+	protected List<ReportDataColumn> layoutColumns;
+	protected List<ReportDataColumn> dimColumns;
+	protected List<ReportDataColumn> displayStatColumns;
+	protected List<ReportDataColumn> computedColumns;
+	protected List<ReportDataColumn> statColumns;
+	protected List<ReportDataColumn> nonStatColumns;
+	protected ColumnTree headerColumnTree;
+	protected ColumnTree layoutColumnTree;
+	protected ColumnTree dimColumnTree;
+	protected ColumnTree statColumnTree;
 
 	/**
 	 * 
@@ -68,98 +68,35 @@ public class ReportDataSet {
 	 * 
 	 * @return ColumnTree
 	 */
-	public ColumnTree getHeaderColumnTree() {
-		if (this.headerColumnTree != null) {
-			return this.headerColumnTree;
-		}
-		if (this.layout == LayoutType.VERTICAL) {
-			return this.getVerticalTableHeaderTree();
-		}
-		return this.getHorizontalTableHeaderTree();
-	}
+	public abstract ColumnTree getHeaderColumnTree();
 
 	/**
 	 * 获取布局列树
 	 * 
 	 * @return ColumnTree
 	 */
-	public ColumnTree getLayoutColumnTree() {
-		if (this.layoutColumnTree != null) {
-			return this.layoutColumnTree;
-		}
-		this.layoutColumnTree = this.buildColumnTreeByLevel(this.getLayoutColumns(), true);
-		return this.layoutColumnTree;
-	}
+	public abstract ColumnTree getLayoutColumnTree();
 
 	/**
 	 * 获取维度列树
 	 * 
-	 * @return {@link List<ColumnTreeNode>}
+	 * @return ColumnTree {@link ColumnTree}
 	 */
-	public ColumnTree getDimColumnTree() {
-		if (this.dimColumnTree != null) {
-			return this.dimColumnTree;
-		}
-
-		int depth = this.getDimColumnCount();
-		// 无维度列则直接设置树只有一个节点
-		if (depth == 0) {
-			List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
-			roots.add(new ColumnTreeNode("", "", ""));
-			this.dimColumnTree = new ColumnTree(roots, 1);
-			this.dimColumnTree.setLeafNodes(roots);
-			return this.dimColumnTree;
-		}
-
-		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(),
-				this.layout == LayoutType.HORIZONTAL);
-		return this.dimColumnTree;
-	}
+	public abstract ColumnTree getDimColumnTree();
 
 	/**
 	 * 获取报表统计列树
 	 * 
 	 * @return ColumnTree
 	 */
-	public ColumnTree getStatColumnTree() {
-		if (this.statColumnTree != null) {
-			return this.statColumnTree;
-		}
+	public abstract ColumnTree getStatColumnTree();
 
-		List<ColumnTreeNode> treeNodes = new ArrayList<ColumnTreeNode>();
-		// 当统计列只有一列时,如果维度列大于0
-		// 则表头列不显示出统计列，只显示布局列或维度列
-		if (this.getDisplayStatColumns().size() == 1) {
-			if (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0) {
-				this.statColumnTree = new ColumnTree(treeNodes, 0);
-				return this.statColumnTree;
-			}
-			if (this.statColumnLayout == LayoutType.HORIZONTAL) {
-				// todo
-			}
-		}
-
-		int depth = 1;
-		List<ReportDataStatColumn> roots = this.getReportDataStatColumns();
-		for (ReportDataStatColumn root : roots) {
-			if (root.getReportDataColumn().getMetaData().isHidden()) {
-				continue;
-			}
-			ColumnTreeNode treeNode = this.createColumnTreeNode(root.getReportDataColumn());
-			for (ReportDataColumn child : root.getChildren()) {
-				depth = 2;
-				ColumnTreeNode childNode = this.createColumnTreeNode(child);
-				if (root.getChildren().size() == 1) {
-					childNode.setValue("");
-				}
-				treeNode.getChildren().add(childNode);
-			}
-			treeNodes.add(treeNode);
-		}
-
-		this.statColumnTree = new ColumnTree(treeNodes, depth);
-		return this.statColumnTree;
-	}
+	/**
+	 * 获取报表所有维度列列表
+	 * 
+	 * @return {@link List<ReportDataColumn>}
+	 */
+	public abstract List<ReportDataColumn> getDimColumns();
 
 	/**
 	 * 获取报表布局列
@@ -179,24 +116,6 @@ public class ReportDataSet {
 			}
 		}
 		return this.layoutColumns;
-	}
-
-	/**
-	 * 获取报表所有维度列列表
-	 * 
-	 * @return {@link List<ReportDataColumn>}
-	 */
-	public List<ReportDataColumn> getDimColumns() {
-		if (this.dimColumns != null) {
-			return this.dimColumns;
-		}
-
-		this.dimColumns = new ArrayList<ReportDataColumn>();
-		List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
-		for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-			this.dimColumns.add(this.createColumn(metaDataColumn));
-		}
-		return this.dimColumns;
 	}
 
 	/**
@@ -369,7 +288,7 @@ public class ReportDataSet {
 	 *            是否初始树的spans与深度属性
 	 * @return ColumnTree
 	 */
-	private ColumnTree buildColumnTreeByLevel(List<ReportDataColumn> columns, boolean isInitSpansAndDepth) {
+	protected ColumnTree buildColumnTreeByLevel(List<ReportDataColumn> columns, boolean isInitSpansAndDepth) {
 		Map<Integer, List<ColumnTreeNode>> levelNodeMap = new HashMap<Integer, List<ColumnTreeNode>>();
 
 		int depth = columns.size();
@@ -396,7 +315,7 @@ public class ReportDataSet {
 	 *            树的层次深度（根层次为0)
 	 * @return {@link List<ColumnTreeNode>}
 	 */
-	private List<ColumnTreeNode> getAllLeafNodes(Map<Integer, List<ColumnTreeNode>> levelNodeMap, int depth) {
+	protected List<ColumnTreeNode> getAllLeafNodes(Map<Integer, List<ColumnTreeNode>> levelNodeMap, int depth) {
 		List<ColumnTreeNode> leafNodes = (depth > 1) ? new ArrayList<ColumnTreeNode>() : levelNodeMap.get(0);
 		for (int level = 0; level < depth - 1; level++) {
 			List<ColumnTreeNode> parentNodes = levelNodeMap.get(level);
@@ -414,7 +333,7 @@ public class ReportDataSet {
 		return leafNodes;
 	}
 
-	private List<ReportDataStatColumn> getReportDataStatColumns() {
+	protected List<ReportDataStatColumn> getReportDataStatColumns() {
 		int depth = 1;
 		List<ReportDataStatColumn> roots = new ArrayList<ReportDataStatColumn>();
 		List<ReportMetaDataColumn> metaDataStatColumns = this.metaDataSet.getStatColumns();
@@ -438,12 +357,12 @@ public class ReportDataSet {
 		return roots;
 	}
 
-	private List<ReportDataColumn> getChildStatColumns(ReportMetaDataColumn metaDataColumn) {
+	protected List<ReportDataColumn> getChildStatColumns(ReportMetaDataColumn metaDataColumn) {
 		List<ReportDataColumn> children = null;
 		return children;
 	}
 
-	private String getDataRowMapKey(ReportMetaDataRow metaDataRow, List<ReportDataColumn> nonStatColumns) {
+	protected String getDataRowMapKey(ReportMetaDataRow metaDataRow, List<ReportDataColumn> nonStatColumns) {
 		StringBuilder rowMapKeyBuilder = new StringBuilder("");
 		for (ReportDataColumn nonStatColumn : nonStatColumns) {
 			String value = this.getMetaCellValue(metaDataRow, nonStatColumn);
@@ -453,7 +372,7 @@ public class ReportDataSet {
 		return rowMapKeyBuilder.toString();
 	}
 
-	private List<ColumnTreeNode> getTreeNodesByLevel(List<ReportDataColumn> columns, int level) {
+	protected List<ColumnTreeNode> getTreeNodesByLevel(List<ReportDataColumn> columns, int level) {
 		List<ReportMetaDataRow> metaDataRows = this.metaDataSet.getRows();
 		Set<String> columnValueSet = new HashSet<String>();
 		List<ColumnTreeNode> depthTreeNodes = new ArrayList<ColumnTreeNode>();
@@ -468,21 +387,21 @@ public class ReportDataSet {
 		return depthTreeNodes;
 	}
 
-	private ReportDataColumn createColumn(ReportMetaDataColumn metaDataColumn) {
+	protected ReportDataColumn createColumn(ReportMetaDataColumn metaDataColumn) {
 		return new ReportDataColumn(metaDataColumn);
 	}
 
-	private ColumnTreeNode createColumnTreeNode(ReportDataColumn column) {
+	protected ColumnTreeNode createColumnTreeNode(ReportDataColumn column) {
 		return this.createColumnTreeNode(column.getName(), column.getText(), column);
 	}
 
-	private ColumnTreeNode createColumnTreeNode(String name, String text, ReportDataColumn column) {
+	protected ColumnTreeNode createColumnTreeNode(String name, String text, ReportDataColumn column) {
 		ColumnTreeNode treeNode = new ColumnTreeNode(name, text, text);
 		treeNode.setColumn(column);
 		return treeNode;
 	}
 
-	private ColumnTreeNode createColumnTreeNode(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns,
+	protected ColumnTreeNode createColumnTreeNode(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns,
 			int depth, String path) {
 		ColumnTreeNode parentNode = null;
 		if (depth > 0) {
@@ -504,7 +423,7 @@ public class ReportDataSet {
 		return treeNode;
 	}
 
-	private String getLevelPath(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns, int level) {
+	protected String getLevelPath(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns, int level) {
 		String path = "";
 		for (int i = 0; i <= level; i++) {
 			ReportDataColumn column = columns.get(i);
@@ -514,7 +433,7 @@ public class ReportDataSet {
 		return path;
 	}
 
-	private Object getStatCellValue(ReportMetaDataRow metaDataRow, ReportDataColumn statColumn) {
+	protected Object getStatCellValue(ReportMetaDataRow metaDataRow, ReportDataColumn statColumn) {
 		String columnName = statColumn.getName();
 		if (columnName.equals("dayhuan"))
 			return 0.10;
@@ -525,16 +444,16 @@ public class ReportDataSet {
 		return metaDataRow.getCellValue(statColumn.getName());
 	}
 
-	private String getMetaCellValue(ReportMetaDataRow metaDataRow, ReportDataColumn column) {
+	protected String getMetaCellValue(ReportMetaDataRow metaDataRow, ReportDataColumn column) {
 		Object cellValue = metaDataRow.getCellValue(column.getName());
 		return (cellValue == null) ? "" : cellValue.toString().trim();
 	}
 
-	private void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, List<ReportDataColumn> columns) {
+	protected void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, List<ReportDataColumn> columns) {
 		this.setTreeNodeSpansAndDepth(roots, true, columns);
 	}
 
-	private void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, boolean isSort, List<ReportDataColumn> columns) {
+	protected void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, boolean isSort, List<ReportDataColumn> columns) {
 		if (isSort) {
 			this.sortTreeNodesByLevel(roots, 0, columns);
 		}
@@ -545,7 +464,7 @@ public class ReportDataSet {
 		}
 	}
 
-	private int setSpansAndDepthByRecursion(ColumnTreeNode parentNode, int depth, boolean isSort,
+	protected int setSpansAndDepthByRecursion(ColumnTreeNode parentNode, int depth, boolean isSort,
 			List<ReportDataColumn> columns) {
 		if (parentNode.getChildren().size() == 0)
 			return 1;
@@ -563,43 +482,7 @@ public class ReportDataSet {
 		return spans;
 	}
 
-	private ColumnTree getHorizontalTableHeaderTree() {
-		ColumnTree statColumnTree = this.getStatColumnTree();
-
-		ColumnTree layoutColumnTree = this.getLayoutColumnTree();
-		for (ColumnTreeNode leafNode : layoutColumnTree.getLeafNodes()) {
-			leafNode.getChildren().addAll(statColumnTree.getRoots());
-		}
-
-		this.setTreeNodeSpansAndDepth(layoutColumnTree.getRoots(), this.getLayoutColumns());
-		int depth = layoutColumnTree.getDepth() + statColumnTree.getDepth();
-		this.headerColumnTree = new ColumnTree(layoutColumnTree.getRoots(), depth);
-		return this.headerColumnTree;
-	}
-
-	private ColumnTree getVerticalTableHeaderTree() {
-		ColumnTree statColumnTree = this.getStatColumnTree();
-
-		// 无维度列则表头列直接设置为统计列
-		if (this.getDimColumnCount() == 0) {
-			this.setTreeNodeSpansAndDepth(statColumnTree.getRoots(), false, this.getDisplayStatColumns());
-			this.headerColumnTree = new ColumnTree(statColumnTree.getRoots(), statColumnTree.getDepth());
-			this.headerColumnTree.setLeafNodes(statColumnTree.getRoots());
-			return this.headerColumnTree;
-		}
-
-		ColumnTree dimColumnTree = this.getDimColumnTree();
-		for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
-			leafNode.getChildren().addAll(statColumnTree.getRoots());
-		}
-
-		this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
-		int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
-		this.headerColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
-		return this.headerColumnTree;
-	}
-
-	private void sortTreeNodesByLevel(List<ColumnTreeNode> treeNodes, int level, List<ReportDataColumn> columns) {
+	protected void sortTreeNodesByLevel(List<ColumnTreeNode> treeNodes, int level, List<ReportDataColumn> columns) {
 		if (level >= columns.size()) {
 			return;
 		}
