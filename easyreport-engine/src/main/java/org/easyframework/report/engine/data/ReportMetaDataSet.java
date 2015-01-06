@@ -22,14 +22,14 @@ public class ReportMetaDataSet {
 	 *            报表元数据行集合
 	 * @param columns
 	 *            报表元数据列集合
-	 * @param displayedStatColumns
-	 *            报表中需要显示统计列
+	 * @param enabledStatColumns
+	 *            报表中启用的统计列
 	 */
 	public ReportMetaDataSet(List<ReportMetaDataRow> rows, List<ReportMetaDataColumn> columns,
-			Set<String> displayedStatColumns) {
+			Set<String> enabledStatColumns) {
 		this.rows = rows;
 		this.columns = columns;
-		this.initilizeColumn(displayedStatColumns);
+		this.initilizeColumn(enabledStatColumns);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ReportMetaDataSet {
 		return this.statColumns;
 	}
 
-	private void initilizeColumn(Set<String> displayedStatColumns) {
+	private void initilizeColumn(Set<String> enabledStatColumns) {
 		this.nonComputeColumns = new ArrayList<ReportMetaDataColumn>();
 		this.layoutColumns = new ArrayList<ReportMetaDataColumn>();
 		this.dimColumns = new ArrayList<ReportMetaDataColumn>();
@@ -96,7 +96,7 @@ public class ReportMetaDataSet {
 			}
 			else if (column.getType() == ColumnType.STATISTICAL ||
 					column.getType() == ColumnType.COMPUTED) {
-				if (displayedStatColumns.size() > 0 && !displayedStatColumns.contains(column.getName())) {
+				if (enabledStatColumns.size() > 0 && !enabledStatColumns.contains(column.getName())) {
 					column.setHidden(true);
 				}
 				this.statColumns.add(column);

@@ -151,11 +151,11 @@ public abstract class ReportDataSet {
 	}
 
 	/**
-	 * 获取报表所有显示的统计列列表
+	 * 获取报表所有启用的统计列列表
 	 * 
 	 * @return {@link List<ReportDataColumn>}
 	 */
-	public List<ReportDataColumn> getDisplayStatColumns() {
+	public List<ReportDataColumn> getEnabledStatColumns() {
 		if (this.displayStatColumns != null) {
 			return this.displayStatColumns;
 		}

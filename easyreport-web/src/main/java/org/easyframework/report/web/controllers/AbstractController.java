@@ -31,16 +31,4 @@ public abstract class AbstractController {
 	protected void logException(String msg, Exception ex) {
 		logger.error(msg, ex);
 	}
-
-	protected String getCuurentMethodName() {
-		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-		StackTraceElement stackTraceElement = (StackTraceElement) stackTraceElements[1];
-		return stackTraceElement.getMethodName();
-	}
-
-	protected String getCallMethodName() {
-		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-		StackTraceElement stackTraceElement = (StackTraceElement) stackTraceElements[2];
-		return stackTraceElement.getMethodName();
-	}
 }

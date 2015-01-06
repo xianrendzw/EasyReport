@@ -51,7 +51,7 @@ public class DataExecution {
 		List<ReportMetaDataColumn> metaDataColumns = this.getMetaDataColumns();
 		List<ReportMetaDataRow> metaDataRows = this.getMetaDataRows(this.getSqlColumns(metaDataColumns));
 		ReportMetaDataSet metaDataSet = new ReportMetaDataSet(
-				metaDataRows, metaDataColumns, this.parameter.getDisplayedStatColumns());
+				metaDataRows, metaDataColumns, this.parameter.getEnabledStatColumns());
 		return this.parameter.getStatColumnLayout() == LayoutType.VERTICAL ?
 				new VerticalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout()) :
 				new HorizontalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());

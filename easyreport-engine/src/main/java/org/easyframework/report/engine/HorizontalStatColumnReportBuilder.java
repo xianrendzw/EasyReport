@@ -60,7 +60,7 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 		List<ColumnTreeNode> rowNodes = leftFixedColumnTree.getLastLevelNodes();
 		List<ColumnTreeNode> columnNodes = this.reportDataSet.getBodyRightColumnNodes();
 		Map<String, ReportDataRow> statRowMap = reportDataSet.getRowMap();
-		List<ReportDataColumn> statColumns = reportDataSet.getDisplayStatColumns();
+		List<ReportDataColumn> statColumns = reportDataSet.getEnabledStatColumns();
 		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(leftFixedColumnTree);
 
 		int rowIndex = 0;

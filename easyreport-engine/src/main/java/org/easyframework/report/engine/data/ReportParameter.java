@@ -12,7 +12,7 @@ public class ReportParameter {
 	private LayoutType statColumnLayout;
 	private String sqlText;
 	private String metaColumns;
-	private Set<String> displayedStatColumns;
+	private Set<String> enabledStatColumns;
 	private boolean isRowSpan = true;
 
 	public ReportParameter() {
@@ -31,19 +31,19 @@ public class ReportParameter {
 	 *            报表sql查询语句
 	 * @param metaColumns
 	 *            JSON格式的报表元数据列集合
-	 * @param displayedStatColumns
-	 *            报表中展示的统计(含计算)列名集合
+	 * @param enabledStatColumns
+	 *            报表中启用的统计(含计算)列名集合
 	 * @param isRowSpan
 	 *            是否生成rowspan（跨行)的表格,默认为true
 	 */
 	public ReportParameter(String name, int layout, int statColumnLayout,
-			String sqlText, String metaColumns, Set<String> displayedStatColumns, boolean isRowSpan) {
+			String sqlText, String metaColumns, Set<String> enabledStatColumns, boolean isRowSpan) {
 		this.name = name;
 		this.layout = LayoutType.valueOf(layout);
 		this.statColumnLayout = LayoutType.valueOf(statColumnLayout);
 		this.sqlText = sqlText;
 		this.metaColumns = metaColumns;
-		this.displayedStatColumns = displayedStatColumns;
+		this.enabledStatColumns = enabledStatColumns;
 		this.isRowSpan = isRowSpan;
 	}
 
@@ -141,24 +141,24 @@ public class ReportParameter {
 	}
 
 	/**
-	 * 获取报表中展示的统计(含计算)列名集合。
+	 * 获取报表中启用的统计(含计算)列名集合。
 	 * 
-	 * 如果未设置任何列名，则在报表中显示全部统计统计(含计算)列
+	 * 如果未设置任何列名，则在报表中启用全部统计统计(含计算)列
 	 * 
-	 * @return 报表中展示的统计(含计算)列名集合
+	 * @return 报表中启用的统计(含计算)列名集合
 	 */
-	public Set<String> getDisplayedStatColumns() {
-		return displayedStatColumns == null ? new HashSet<String>(0) : this.displayedStatColumns;
+	public Set<String> getEnabledStatColumns() {
+		return enabledStatColumns == null ? new HashSet<String>(0) : this.enabledStatColumns;
 	}
 
 	/**
-	 * 设置报表中展示的统计(含计算)列名集合。
+	 * 设置报表中启用的统计(含计算)列名集合。
 	 * 
-	 * @param displayedStatColumns
-	 *            报表中展示的统计(含计算)列名集合
+	 * @param enabledStatColumns
+	 *            报表中启用的统计(含计算)列名集合
 	 */
-	public void setDisplayedStatColumns(Set<String> displayedStatColumns) {
-		this.displayedStatColumns = displayedStatColumns;
+	public void setEnabledStatColumns(Set<String> enabledStatColumns) {
+		this.enabledStatColumns = enabledStatColumns;
 	}
 
 	/**

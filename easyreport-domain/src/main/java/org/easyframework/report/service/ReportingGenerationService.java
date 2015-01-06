@@ -78,12 +78,12 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 
 	private ReportParameter createReportParameter(ReportingPo report, Map<String, Object> formParams) {
 		String sqlText = new ReportSqlTemplate(report.getSqlText(), formParams).execute();
-		Set<String> displayedStatColumns = this.getDisplayedStatColumns(formParams);
+		Set<String> enabledStatColumns = this.getEnabledStatColumns(formParams);
 		return new ReportParameter(report.getName(), report.getLayout(), report.getStatColumnLayout(), sqlText,
-				report.getMetaColumns(), displayedStatColumns, Boolean.valueOf(formParams.get("isRowSpan").toString()));
+				report.getMetaColumns(), enabledStatColumns, Boolean.valueOf(formParams.get("isRowSpan").toString()));
 	}
 
-	private Set<String> getDisplayedStatColumns(Map<String, Object> formParams) {
+	private Set<String> getEnabledStatColumns(Map<String, Object> formParams) {
 		Set<String> checkedSet = new HashSet<String>();
 		String checkedColumnNames = formParams.get("statColumns").toString();
 		if (StringUtils.isBlank(checkedColumnNames)) {

@@ -30,23 +30,24 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 
 	@Override
 	public void drawTableHeaderRows() {
-		ColumnTree headerColumnTree = this.reportDataSet.getHeaderRightColumnTree();
-		List<ReportDataColumn> layoutColumns = reportDataSet.getLayoutColumns();
-		int rowCount = headerColumnTree.getDepth();
+		// 获取表头左边的固定列集合
+		List<ReportDataColumn> leftFixedColumns = this.reportDataSet.getHeaderLeftFixedColumns();
+		// 获取表头右边列树型结构
+		ColumnTree rightColumnTree = this.reportDataSet.getHeaderRightColumnTree();
+		int rowCount = rightColumnTree.getDepth();
+		String rowSpan = rowCount > 1 ? String.format(" rowspan=\"%s\"", rowCount) : "";
 
 		this.tableRows.append("<thead>");
 		for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-			this.tableRows.append("<tr class=\"caption\">");
+			this.tableRows.append("<tr class=\"easyreport-header\">");
 			if (rowIndex == 0) {
-				for (ReportDataColumn layoutColumn : layoutColumns) {
-					String rowspan = String.format("rowspan=\"%s\"", rowCount);
-					this.tableRows.append("<th ").append(rowspan).append(">");
-					this.tableRows.append(layoutColumn.getText()).append("</th>");
+				for (ReportDataColumn leftColumn : leftFixedColumns) {
+					this.tableRows.append(String.format("<th%s>%s</th>", rowSpan, leftColumn.getText()));
 				}
 			}
-			for (ColumnTreeNode treeNode : headerColumnTree.getNodesByLevel(rowIndex)) {
-				this.tableRows.append(String.format("<th colspan=\"%s\">", treeNode.getSpans()));
-				this.tableRows.append(treeNode.getValue()).append("</th>");
+			for (ColumnTreeNode rightColumn : rightColumnTree.getNodesByLevel(rowIndex)) {
+				String colSpan = rightColumn.getSpans() > 1 ? String.format(" colspan=\"%s\"", rightColumn.getSpans()) : "";
+				this.tableRows.append(String.format("<th%s>%s</th>", colSpan, rightColumn.getValue()));
 			}
 			this.tableRows.append("</tr>");
 		}
@@ -55,24 +56,25 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 
 	@Override
 	public void drawTableBodyRows() {
-		ColumnTree layoutColumnTree = reportDataSet.getLayoutColumnTree();
-		List<ColumnTreeNode> layoutLeafNodes = layoutColumnTree.getLastLevelNodes();
-		List<ColumnTreeNode> dimLeafNodes = reportDataSet.getDimColumnTree().getLastLevelNodes();
+		ColumnTree leftFixedColumnTree = this.reportDataSet.getBodyLeftFixedColumnTree();
+		List<ColumnTreeNode> rowNodes = leftFixedColumnTree.getLastLevelNodes();
+		List<ColumnTreeNode> columnNodes = this.reportDataSet.getBodyRightColumnNodes();
 		Map<String, ReportDataRow> statRowMap = reportDataSet.getRowMap();
-		List<ReportDataColumn> statColumns = reportDataSet.getDisplayStatColumns();
-		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(layoutColumnTree);
+		List<ReportDataColumn> statColumns = reportDataSet.getEnabledStatColumns();
+		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(leftFixedColumnTree);
 
 		int rowIndex = 0;
 		String[] lastNodePaths = null;
 		this.tableRows.append("<tbody>");
-		for (ColumnTreeNode layoutLeafNode : layoutLeafNodes) {
-			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"c\"" : "").append(">");
-			lastNodePaths = this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, layoutLeafNode);
-			for (ColumnTreeNode dimLeafNode : dimLeafNodes) {
-				String rowKey = layoutLeafNode.getPath() + dimLeafNode.getPath();
+		for (ColumnTreeNode rowNode : rowNodes) {
+			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"easyreport-row\"" : "").append(">");
+			lastNodePaths = this.drawLeftFixedColumn(pathTreeNodeMap, lastNodePaths, rowNode, this.reportParameter.isRowSpan());
+			for (ColumnTreeNode columnNode : columnNodes) {
+				String rowKey = this.reportDataSet.getRowKey(rowNode, columnNode);
 				ReportDataRow statRow = statRowMap.get(rowKey);
-				if (statRow == null)
+				if (statRow == null) {
 					statRow = new ReportDataRow();
+				}
 				for (ReportDataColumn statColumn : statColumns) {
 					Object cell = statRow.getCell(statColumn.getName());
 					String value = (cell == null) ? "" : cell.toString();
