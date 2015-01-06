@@ -64,11 +64,43 @@ public abstract class ReportDataSet {
 	}
 
 	/**
-	 * 获取表头列树
+	 * 获取报表数据集(RowMap)每一行的key
+	 * 
+	 * @param rowNode
+	 *            行结点
+	 * @param columnNode
+	 *            列结点
+	 * @return 行key
+	 */
+	public abstract String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode);
+
+	/**
+	 * 获取报表表头(header)左边固定列集合
+	 * 
+	 * @return List<ReportDataColumn>
+	 */
+	public abstract List<ReportDataColumn> getHeaderLeftFixedColumns();
+
+	/**
+	 * 获取表头(header)右边列树型结构
 	 * 
 	 * @return ColumnTree
 	 */
-	public abstract ColumnTree getHeaderColumnTree();
+	public abstract ColumnTree getHeaderRightColumnTree();
+
+	/**
+	 * 获取报表表体(body)左边固定列树型结构
+	 * 
+	 * @return ColumnTree
+	 */
+	public abstract ColumnTree getBodyLeftFixedColumnTree();
+
+	/**
+	 * 获取报表表体(body)右边列集合
+	 * 
+	 * @return List<ColumnTreeNode>
+	 */
+	public abstract List<ColumnTreeNode> getBodyRightColumnNodes();
 
 	/**
 	 * 获取布局列树
@@ -250,7 +282,7 @@ public abstract class ReportDataSet {
 	 * 
 	 * @return Map<String, ReportDataRow>
 	 */
-	public Map<String, ReportDataRow> getDataRowMap() {
+	public Map<String, ReportDataRow> getRowMap() {
 		Map<String, ReportDataRow> dataRowMap = new HashMap<String, ReportDataRow>();
 		List<ReportDataColumn> statColumns = this.getStatColumns();
 		List<ReportDataColumn> computedColumns = this.getComputedColumns();

@@ -13,10 +13,10 @@ $(function() {
 		ReportTemplate.closeComment(e);
 	});
 	$('#checkAllStatColumn').click(ReportTemplate.checkedAllStatColumn);
-	
+
 	$('#btnExportToExcel').on("click", ReportTemplate.exportToExcel);
 	$('#btnFullScreen').on("click", ReportTemplate.fullScreen);
-	
+
 	ReportTemplate.generate();
 });
 
@@ -24,11 +24,11 @@ var ReportTemplate = function() {
 };
 
 ReportTemplate.initTable = function() {
-	var table = $("#report");
+	var table = $("#easyreport");
 	ReportTemplate.addToggleRowEvents();
 	// 暂时不支持跨行排序
-	var rowspans = $("#report>tbody>tr>td[rowspan][rowspan != '1']");
-	table.data('isSort', rowspans.length === 0).fixScroll();
+	var rowspans = $("#easyreport>tbody>tr>td[rowspan]");
+	// table.data('isSort', rowspans.length === 0).fixScroll();
 	if (rowspans && rowspans.length > 0) {
 		return;
 	}
@@ -45,17 +45,20 @@ ReportTemplate.initTable = function() {
 };
 
 ReportTemplate.addToggleRowEvents = function() {
-	$("#report>tbody>tr").click(function() {
-		$('#report .selected').removeClass('selected').removeAttr('title');
+	$("#easyreport>tbody>tr").click(function() {
+		$('#easyreport .selected').removeClass('selected').removeAttr('title');
 		$(this).addClass('selected').attr('title', 'selected');
 	});
 };
 
 ReportTemplate.generate = function() {
+	var data = $("#templateFrom").serializeObject();
+	data.isRowSpan = $("#isRowSpan").prop("checked");
+
 	$.ajax({
 		type : "POST",
 		url : XFrame.getContextPath() + '/report/generate',
-		data : $("#templateFrom").serialize(),
+		data : data,
 		dataType : "json",
 		beforeSend : function() {
 			$('#loadingText').html("报表正在生成中, 请稍等...");
@@ -76,27 +79,25 @@ ReportTemplate.generate = function() {
 ReportTemplate.renderFilterTable = function() {
 	var html = '<table>';
 	html += '<tr><td><h3>表报名称</h3></td><td><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
-	$('#templateFrom .j-item').each(
-			function() {
-				var type = $(this).attr('data-type');
-				if (type === 'date-range') {
-					var input = $(this).find('.combo-text');
-					html += '<tr><td><strong>时间范围</strong></td><td>' + input.eq(0).val() + '~' + input.eq(1).val()
-							+ '</td></tr>';
-				} else if (type === 'checkbox') {
-					html += '<tr><td><strong>筛选统计列</strong></td><td>';
-					var rowChoose = [];
-					$(this).find('input[type="checkbox"]:checked').each(function() {
-						rowChoose.push($(this).attr('data-name'));
-					})
-					html += rowChoose.join('、');
-					html += '</td></tr>';
-				} else {
-					var label = $(this).find('label').text().replace(':', '');
-					var val = $(this).find('.combo-text').val();
-					html += '<tr><td><strong>' + label + '</strong></td><td>' + val + '</td></tr>';
-				}
+	$('#templateFrom .j-item').each(function() {
+		var type = $(this).attr('data-type');
+		if (type === 'date-range') {
+			var input = $(this).find('.combo-text');
+			html += '<tr><td><strong>时间范围</strong></td><td>' + input.eq(0).val() + '~' + input.eq(1).val() + '</td></tr>';
+		} else if (type === 'checkbox') {
+			html += '<tr><td><strong>筛选统计列</strong></td><td>';
+			var rowChoose = [];
+			$(this).find('input[type="checkbox"]:checked').each(function() {
+				rowChoose.push($(this).attr('data-name'));
 			})
+			html += rowChoose.join('、');
+			html += '</td></tr>';
+		} else {
+			var label = $(this).find('label').text().replace(':', '');
+			var val = $(this).find('.combo-text').val();
+			html += '<tr><td><strong>' + label + '</strong></td><td>' + val + '</td></tr>';
+		}
+	})
 	html += '<tr></tr><tr></tr><tr></tr></table>';
 	return html;
 };
@@ -104,7 +105,7 @@ ReportTemplate.renderFilterTable = function() {
 ReportTemplate.exportToExcel = function(e) {
 	var htmlText = '';
 	htmlText += (ReportTemplate.filterTable || '');
-	htmlText += '<table>' + $('#report').html() + '</table>';
+	htmlText += '<table>' + $('#easyreport').html() + '</table>';
 	var bytes = ReportTemplate.getBytes(htmlText);
 	if (bytes > 2000000) {
 		htmlText = "large";

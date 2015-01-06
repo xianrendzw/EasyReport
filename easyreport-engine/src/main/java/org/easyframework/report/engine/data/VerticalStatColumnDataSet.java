@@ -19,13 +19,25 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 		super(metaDataSet, layout, statColumnLayout);
 	}
 
+	@Override
+	public String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReportDataColumn> getHeaderLeftFixedColumns() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * 获取表头列树
 	 * 
 	 * @return ColumnTree
 	 */
 	@Override
-	public ColumnTree getHeaderColumnTree() {
+	public ColumnTree getHeaderRightColumnTree() {
 		if (this.headerColumnTree != null) {
 			return this.headerColumnTree;
 		}
@@ -34,6 +46,18 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 			return this.getVerticalHeaderColumnTree();
 		}
 		return this.getHorizontalHeaderColumnTree();
+	}
+
+	@Override
+	public ColumnTree getBodyLeftFixedColumnTree() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ColumnTreeNode> getBodyRightColumnNodes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -71,8 +95,7 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 			return this.dimColumnTree;
 		}
 
-		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(),
-				this.layout == LayoutType.HORIZONTAL);
+		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(), this.layout == LayoutType.HORIZONTAL);
 		return this.dimColumnTree;
 	}
 

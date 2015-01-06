@@ -66,7 +66,7 @@ public class ReportingChartService {
 	}
 
 	public Map<String, JSONObject> getDataRows(ReportDataSet reportDataSet) {
-		Map<String, ReportDataRow> dataRows = reportDataSet.getDataRowMap();
+		Map<String, ReportDataRow> dataRows = reportDataSet.getRowMap();
 		List<ReportDataColumn> statColumns = reportDataSet.getStatColumns();
 		Map<String, JSONObject> rowMap = new HashMap<String, JSONObject>(dataRows.size());
 

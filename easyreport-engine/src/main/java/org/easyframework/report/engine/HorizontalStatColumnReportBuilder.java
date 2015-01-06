@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
-import org.easyframework.report.engine.data.LayoutType;
 import org.easyframework.report.engine.data.ReportDataColumn;
 import org.easyframework.report.engine.data.ReportDataRow;
 import org.easyframework.report.engine.data.ReportDataSet;
@@ -31,25 +30,24 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 
 	@Override
 	public void drawTableHeaderRows() {
-		// 获取表头左边的一般维度列(即非布局维度列)
-		List<ReportDataColumn> headerDimColumns = reportParameter.getLayout() == LayoutType.HORIZONTAL ?
-				reportDataSet.getDimColumns() : reportDataSet.getLayoutColumns();
-		// 获取表头右边的布局维度列树型结构
-		ColumnTree headerColumnTree = this.reportDataSet.getHeaderColumnTree();
-		int rowCount = headerColumnTree.getDepth();
+		// 获取表头左边的固定列集合
+		List<ReportDataColumn> leftFixedColumns = this.reportDataSet.getHeaderLeftFixedColumns();
+		// 获取表头右边列树型结构
+		ColumnTree rightColumnTree = this.reportDataSet.getHeaderRightColumnTree();
+		int rowCount = rightColumnTree.getDepth();
 		String rowSpan = rowCount > 1 ? String.format(" rowspan=\"%s\"", rowCount) : "";
 
 		this.tableRows.append("<thead>");
 		for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
 			this.tableRows.append("<tr class=\"easyreport-header\">");
 			if (rowIndex == 0) {
-				for (ReportDataColumn column : headerDimColumns) {
-					this.tableRows.append(String.format("<th%s>%s</th>", rowSpan, column.getText()));
+				for (ReportDataColumn leftColumn : leftFixedColumns) {
+					this.tableRows.append(String.format("<th%s>%s</th>", rowSpan, leftColumn.getText()));
 				}
 			}
-			for (ColumnTreeNode treeNode : headerColumnTree.getNodesByLevel(rowIndex)) {
-				String colSpan = treeNode.getSpans() > 1 ? String.format(" colspan=\"%s\"", treeNode.getSpans()) : "";
-				this.tableRows.append(String.format("<th%s>%s</th>", colSpan, treeNode.getValue()));
+			for (ColumnTreeNode rightColumn : rightColumnTree.getNodesByLevel(rowIndex)) {
+				String colSpan = rightColumn.getSpans() > 1 ? String.format(" colspan=\"%s\"", rightColumn.getSpans()) : "";
+				this.tableRows.append(String.format("<th%s>%s</th>", colSpan, rightColumn.getValue()));
 			}
 			this.tableRows.append("</tr>");
 		}
@@ -58,24 +56,21 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 
 	@Override
 	public void drawTableBodyRows() {
-		ColumnTree dimColumnTree = reportParameter.getLayout() == LayoutType.HORIZONTAL ?
-				reportDataSet.getDimColumnTree() : reportDataSet.getLayoutColumnTree();
-		List<ColumnTreeNode> dimRowNodes = dimColumnTree.getLastLevelNodes();
-		List<ColumnTreeNode> statColumnNodes = reportParameter.getLayout() == LayoutType.HORIZONTAL ?
-				reportDataSet.getLayoutColumnTree().getLastLevelNodes() : reportDataSet.getDimColumnTree().getLastLevelNodes();
-		Map<String, ReportDataRow> statRowMap = reportDataSet.getDataRowMap();
+		ColumnTree leftFixedColumnTree = this.reportDataSet.getBodyLeftFixedColumnTree();
+		List<ColumnTreeNode> rowNodes = leftFixedColumnTree.getLastLevelNodes();
+		List<ColumnTreeNode> columnNodes = this.reportDataSet.getBodyRightColumnNodes();
+		Map<String, ReportDataRow> statRowMap = reportDataSet.getRowMap();
 		List<ReportDataColumn> statColumns = reportDataSet.getDisplayStatColumns();
-		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(dimColumnTree);
+		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(leftFixedColumnTree);
 
 		int rowIndex = 0;
 		String[] lastNodePaths = null;
 		this.tableRows.append("<tbody>");
-		for (ColumnTreeNode dimRowNode : dimRowNodes) {
+		for (ColumnTreeNode rowNode : rowNodes) {
 			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"easyreport-row\"" : "").append(">");
-			lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap, lastNodePaths, dimRowNode);
-			for (ColumnTreeNode statColumnNode : statColumnNodes) {
-				String rowKey = reportParameter.getLayout() == LayoutType.HORIZONTAL ?
-						(statColumnNode.getPath() + dimRowNode.getPath()) : (dimRowNode.getPath() + statColumnNode.getPath());
+			lastNodePaths = this.drawLeftFixedColumn(pathTreeNodeMap, lastNodePaths, rowNode, this.reportParameter.isRowSpan());
+			for (ColumnTreeNode columnNode : columnNodes) {
+				String rowKey = this.reportDataSet.getRowKey(rowNode, columnNode);
 				ReportDataRow statRow = statRowMap.get(rowKey);
 				if (statRow == null) {
 					statRow = new ReportDataRow();

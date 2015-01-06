@@ -11,26 +11,24 @@ jQuery.fn.extend({
 	}
 });
 $.fn.paramMaxLength = function(value, length) {
-	if (typeof (length) == "number" && typeof (value) != "undefined"
-			&& value.length >= length) {
+	if (typeof (length) == "number" && typeof (value) != "undefined" && value.length >= length) {
 		return true;
 	}
 	return false;
 };
 $.fn.paramMinLength = function(value, length) {
-	if (typeof (length) == "number" && typeof (value) != "undefined"
-			&& value.length < length) {
+	if (typeof (length) == "number" && typeof (value) != "undefined" && value.length < length) {
 		return true;
 	}
 	return false;
 };
 $.fn.paramMaxMinLength = function(value, param) {
-	if ($.fn.paramMaxLength(value, param[0])
-			|| $.fn.paramMinLength(value, param[1])) {
+	if ($.fn.paramMaxLength(value, param[0]) || $.fn.paramMinLength(value, param[1])) {
 		return true;
 	}
 	return false;
 };
+
 $
 		.extend(
 				$.fn.validatebox.defaults.rules,
@@ -278,8 +276,7 @@ $.fn.formatDateYM = function() {
 	});
 };
 $.fn.frameVar = function(callUrl) {
-	return '<iframe scrolling="no" frameborder="0"  src="' + callUrl
-			+ '" style="width:100%;height:100%;"></iframe>';
+	return '<iframe scrolling="no" frameborder="0"  src="' + callUrl + '" style="width:100%;height:100%;"></iframe>';
 };
 
 $.fn.frameHtml = function(callUrl) {

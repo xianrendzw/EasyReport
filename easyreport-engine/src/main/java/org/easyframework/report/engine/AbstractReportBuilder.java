@@ -20,19 +20,44 @@ public abstract class AbstractReportBuilder {
 	}
 
 	/**
-	 * 根据树结构生成table中的跨行列(rowspan)
+	 * 生成表体左边每一行的单元格
 	 * 
 	 * @param pathTreeNodeMap
 	 *            树中每个节点的path属性为key,treeNode属性为value的map对象
 	 * @param lastNodePaths
 	 *            上一个跨行结点的树路径
-	 * @param rowSpanNode
-	 *            当前跨行结点
+	 * @param rowNode
+	 *            当前行结点
+	 * @param isRowSpan
+	 *            是否跨行(rowspan)
+	 * @return
+	 */
+	protected String[] drawLeftFixedColumn(Map<String, ColumnTreeNode> pathTreeNodeMap,
+			String[] lastNodePaths, ColumnTreeNode rowNode, boolean isRowSpan) {
+		if (isRowSpan) {
+			return this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, rowNode);
+		}
+		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
+		int level = paths.length > 1 ? paths.length - 1 : 1;
+		for (int i = 0; i < level; i++) {
+			this.tableRows.append(String.format("<td class=\"easyreport-fixed-column\">%s</td>", paths[i]));
+		}
+		return null;
+	}
+
+	/**
+	 * 生成表体左边每一行的跨行(rowspan)单元格
+	 * 
+	 * @param pathTreeNodeMap
+	 *            树中每个节点的path属性为key,treeNode属性为value的map对象
+	 * @param lastNodePaths
+	 *            上一个跨行结点的树路径
+	 * @param rowNode
+	 *            当前行结点
 	 * @return 当前跨行结点的树路径
 	 */
-	protected String[] drawRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths,
-			ColumnTreeNode rowSpanNode) {
-		String[] paths = StringUtils.splitPreserveAllTokens(rowSpanNode.getPath(), this.reportDataSet.getSeparatorChars());
+	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
+		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
 		int level = paths.length > 1 ? paths.length - 1 : 1;
 		String[] currNodePaths = new String[level];
 		for (int i = 0; i < level; i++) {

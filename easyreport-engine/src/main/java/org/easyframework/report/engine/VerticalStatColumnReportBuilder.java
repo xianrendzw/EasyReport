@@ -30,7 +30,7 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 
 	@Override
 	public void drawTableHeaderRows() {
-		ColumnTree headerColumnTree = this.reportDataSet.getHeaderColumnTree();
+		ColumnTree headerColumnTree = this.reportDataSet.getHeaderRightColumnTree();
 		List<ReportDataColumn> layoutColumns = reportDataSet.getLayoutColumns();
 		int rowCount = headerColumnTree.getDepth();
 
@@ -58,7 +58,7 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 		ColumnTree layoutColumnTree = reportDataSet.getLayoutColumnTree();
 		List<ColumnTreeNode> layoutLeafNodes = layoutColumnTree.getLastLevelNodes();
 		List<ColumnTreeNode> dimLeafNodes = reportDataSet.getDimColumnTree().getLastLevelNodes();
-		Map<String, ReportDataRow> statRowMap = reportDataSet.getDataRowMap();
+		Map<String, ReportDataRow> statRowMap = reportDataSet.getRowMap();
 		List<ReportDataColumn> statColumns = reportDataSet.getDisplayStatColumns();
 		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(layoutColumnTree);
 
@@ -67,7 +67,7 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 		this.tableRows.append("<tbody>");
 		for (ColumnTreeNode layoutLeafNode : layoutLeafNodes) {
 			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"c\"" : "").append(">");
-			lastNodePaths = this.drawRowSpanColumn(pathTreeNodeMap, lastNodePaths, layoutLeafNode);
+			lastNodePaths = this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, layoutLeafNode);
 			for (ColumnTreeNode dimLeafNode : dimLeafNodes) {
 				String rowKey = layoutLeafNode.getPath() + dimLeafNode.getPath();
 				ReportDataRow statRow = statRowMap.get(rowKey);
