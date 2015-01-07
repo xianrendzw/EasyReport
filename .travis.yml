@@ -1,6 +1,7 @@
 language: java
 jdk:
   - oraclejdk8
+script:
+  - mvn install -DskipTests=true
 before_install:
   - mysql -e "create database IF NOT EXISTS easy_report;" -uroot
-  - mvn install -DskipTests=true
