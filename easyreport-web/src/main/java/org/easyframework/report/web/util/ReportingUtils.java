@@ -56,13 +56,17 @@ public class ReportingUtils {
 	}
 
 	public static void generate(String uid, JSONObject jsonObject, HttpServletRequest request) {
+		generate(uid, jsonObject, request.getParameterMap());
+	}
+
+	public static void generate(String uid, JSONObject jsonObject, Map<?, ?> formParameters) {
 		if (StringUtils.isBlank(uid)) {
 			jsonObject.put("htmlTable", "uid参数为空导致数据不能加载！");
 			return;
 		}
 
 		ReportingPo report = reportingService.getByUid(uid);
-		Map<String, Object> formParams = generationService.getFormParameters(request.getParameterMap(), report.getDataRange());
+		Map<String, Object> formParams = generationService.getFormParameters(formParameters, report.getDataRange());
 		String htmlTable = generationService.getHtmlTable(report, formParams);
 		jsonObject.put("htmlTable", htmlTable);
 	}
