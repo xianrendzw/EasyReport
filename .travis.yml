@@ -3,3 +3,4 @@ jdk:
   - oraclejdk8
 before_install:
   - mysql -e "create database IF NOT EXISTS easy_report;" -uroot
+  - mvn install -DskipTests=true
