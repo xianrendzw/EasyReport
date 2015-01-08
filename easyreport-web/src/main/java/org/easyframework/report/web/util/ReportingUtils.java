@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.common.util.DateUtils;
+import org.easyframework.report.engine.data.ReportTable;
 import org.easyframework.report.po.ReportingPo;
 import org.easyframework.report.service.ReportingGenerationService;
 import org.easyframework.report.service.ReportingService;
@@ -59,16 +60,20 @@ public class ReportingUtils {
 		generate(uid, jsonObject, request.getParameterMap());
 	}
 
-	public static void generate(String uid, JSONObject jsonObject, Map<?, ?> formParameters) {
+	public static void generate(String uid, JSONObject jsonObject, Map<?, ?> parameters) {
 		if (StringUtils.isBlank(uid)) {
 			jsonObject.put("htmlTable", "uid参数为空导致数据不能加载！");
 			return;
 		}
+		ReportTable reportTable = generate(uid, parameters);
+		jsonObject.put("htmlTable", reportTable.getHtmlText());
+		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
+	}
 
+	public static ReportTable generate(String uid, Map<?, ?> parameters) {
 		ReportingPo report = reportingService.getByUid(uid);
-		Map<String, Object> formParams = generationService.getFormParameters(formParameters, report.getDataRange());
-		String htmlTable = generationService.getHtmlTable(report, formParams);
-		jsonObject.put("htmlTable", htmlTable);
+		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
+		return generationService.getReportTable(report, formParams);
 	}
 
 	public static void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
@@ -78,7 +83,8 @@ public class ReportingUtils {
 			if ("large".equals(htmlText)) {
 				ReportingPo report = reportingService.getByUid(uid);
 				Map<String, Object> formParameters = generationService.getFormParameters(request.getParameterMap(), report.getDataRange());
-				htmlText = generationService.getHtmlTable(report, formParameters);
+				ReportTable reportTable = generationService.getReportTable(report, formParameters);
+				htmlText = reportTable.getHtmlText();
 			}
 			response.reset();
 			response.setHeader("Content-Disposition", String.format("attachment; filename=%s", fileName));

@@ -8,6 +8,7 @@ import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
 import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
+import org.easyframework.report.engine.data.ReportTable;
 
 public abstract class AbstractReportBuilder {
 	protected final ReportDataSet reportDataSet;
@@ -17,6 +18,21 @@ public abstract class AbstractReportBuilder {
 	protected AbstractReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
 		this.reportDataSet = reportDataSet;
 		this.reportParameter = reportParameter;
+	}
+
+	/**
+	 * 生成报表对象
+	 * 
+	 * @return ReportTable
+	 */
+	public ReportTable getTable() {
+		StringBuilder table = new StringBuilder();
+		table.append("<table id=\"report\" class=\"grid\">");
+		table.append(this.tableRows.toString());
+		table.append("</table>");
+		return new ReportTable(table.toString(),
+				this.reportParameter.getSqlText(),
+				reportDataSet.getMetaData().getRows().size());
 	}
 
 	/**

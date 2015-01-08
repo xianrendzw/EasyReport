@@ -7,6 +7,7 @@ import java.util.Set;
  * 报表参数类
  */
 public class ReportParameter {
+	private String id;
 	private String name;
 	private LayoutType layout;
 	private LayoutType statColumnLayout;
@@ -21,6 +22,8 @@ public class ReportParameter {
 	/**
 	 * 报表参数构造函数
 	 * 
+	 * @param id
+	 *            报表唯一id
 	 * @param name
 	 *            报表名称
 	 * @param layout
@@ -36,8 +39,9 @@ public class ReportParameter {
 	 * @param isRowSpan
 	 *            是否生成rowspan（跨行)的表格,默认为true
 	 */
-	public ReportParameter(String name, int layout, int statColumnLayout,
+	public ReportParameter(String id, String name, int layout, int statColumnLayout,
 			String sqlText, String metaColumns, Set<String> enabledStatColumns, boolean isRowSpan) {
+		this.id = id;
 		this.name = name;
 		this.layout = LayoutType.valueOf(layout);
 		this.statColumnLayout = LayoutType.valueOf(statColumnLayout);
@@ -45,6 +49,24 @@ public class ReportParameter {
 		this.metaColumns = metaColumns;
 		this.enabledStatColumns = enabledStatColumns;
 		this.isRowSpan = isRowSpan;
+	}
+
+	/**
+	 * 获取报表唯一id
+	 * 
+	 * @return
+	 */
+	public String getId() {
+		return this.id;
+	}
+
+	/**
+	 * 设置报表唯一id
+	 * 
+	 * @param id
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**

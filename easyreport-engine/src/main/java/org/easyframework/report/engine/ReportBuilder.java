@@ -1,5 +1,7 @@
 package org.easyframework.report.engine;
 
+import org.easyframework.report.engine.data.ReportTable;
+
 /**
  * 报表生成接口。
  */
@@ -21,9 +23,9 @@ public interface ReportBuilder {
 	void drawTableFooterRows();
 
 	/**
-	 * 获取最终生成的报表html table代码
+	 * 获取最终生成的报表
 	 * 
-	 * @return 报表html table代码
+	 * @return ReportTable
 	 */
-	String getTable();
+	ReportTable getTable();
 }

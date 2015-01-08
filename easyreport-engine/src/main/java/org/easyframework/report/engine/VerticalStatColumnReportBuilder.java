@@ -14,18 +14,8 @@ import org.easyframework.report.engine.data.ReportParameter;
  * 纵向展示统计列的报表生成类
  */
 public class VerticalStatColumnReportBuilder extends AbstractReportBuilder implements ReportBuilder {
-
 	public VerticalStatColumnReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
 		super(reportDataSet, reportParameter);
-	}
-
-	@Override
-	public String getTable() {
-		StringBuilder table = new StringBuilder();
-		table.append("<table id=\"easyReport\" class=\"easy-report\">");
-		table.append(this.tableRows.toString());
-		table.append("</table>");
-		return table.toString();
 	}
 
 	@Override

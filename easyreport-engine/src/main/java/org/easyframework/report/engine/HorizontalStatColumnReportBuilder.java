@@ -20,15 +20,6 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 	}
 
 	@Override
-	public String getTable() {
-		StringBuilder table = new StringBuilder();
-		table.append("<table id=\"easyreport\" class=\"easyreport\">");
-		table.append(this.tableRows.toString());
-		table.append("</table>");
-		return table.toString();
-	}
-
-	@Override
 	public void drawTableHeaderRows() {
 		// 获取表头左边的固定列集合
 		List<ReportDataColumn> leftFixedColumns = this.reportDataSet.getHeaderLeftFixedColumns();

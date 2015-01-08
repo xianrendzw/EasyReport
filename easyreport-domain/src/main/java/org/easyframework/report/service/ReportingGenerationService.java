@@ -23,6 +23,7 @@ import org.easyframework.report.engine.data.ReportDataSource;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
 import org.easyframework.report.engine.data.ReportParameter;
 import org.easyframework.report.engine.data.ReportSqlTemplate;
+import org.easyframework.report.engine.data.ReportTable;
 import org.easyframework.report.engine.util.VelocityUtils;
 import org.easyframework.report.po.DataSourcePo;
 import org.easyframework.report.po.QueryParameterPo;
@@ -54,17 +55,17 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		super(dao);
 	}
 
-	public String getHtmlTable(int id, Map<String, Object> formParams) {
+	public ReportTable getReportTable(int id, Map<String, Object> formParams) {
 		ReportingPo report = this.dao.queryByKey(id);
-		return this.getHtmlTable(report, formParams);
+		return this.getReportTable(report, formParams);
 	}
 
-	public String getHtmlTable(String uid, Map<String, Object> formParams) {
+	public ReportTable getReportTable(String uid, Map<String, Object> formParams) {
 		ReportingPo report = this.dao.queryByUid(uid);
-		return this.getHtmlTable(report, formParams);
+		return this.getReportTable(report, formParams);
 	}
 
-	public String getHtmlTable(ReportingPo report, Map<String, Object> formParams) {
+	public ReportTable getReportTable(ReportingPo report, Map<String, Object> formParams) {
 		DataSourcePo ds = this.dataSourceService.getById(report.getDsId());
 		ReportDataSource reportDs = new ReportDataSource(ds.getJdbcUrl(), ds.getUser(), ds.getPassword());
 		return ReportGenerator.generate(reportDs, this.createReportParameter(report, formParams));
@@ -79,8 +80,8 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 	private ReportParameter createReportParameter(ReportingPo report, Map<String, Object> formParams) {
 		String sqlText = new ReportSqlTemplate(report.getSqlText(), formParams).execute();
 		Set<String> enabledStatColumns = this.getEnabledStatColumns(formParams);
-		return new ReportParameter(report.getName(), report.getLayout(), report.getStatColumnLayout(), sqlText,
-				report.getMetaColumns(), enabledStatColumns, Boolean.valueOf(formParams.get("isRowSpan").toString()));
+		return new ReportParameter(report.getId().toString(), report.getName(), report.getLayout(), report.getStatColumnLayout(),
+				sqlText, report.getMetaColumns(), enabledStatColumns, Boolean.valueOf(formParams.get("isRowSpan").toString()));
 	}
 
 	private Set<String> getEnabledStatColumns(Map<String, Object> formParams) {

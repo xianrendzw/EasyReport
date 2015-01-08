@@ -42,8 +42,7 @@ public class ReportingService extends BaseService<ReportingDao, ReportingPo> {
 		String[] columnNames = new String[] {
 				ReportingPo.DsId, ReportingPo.Name, ReportingPo.Status,
 				ReportingPo.Sequence, ReportingPo.DataRange, ReportingPo.Layout,
-				ReportingPo.StatColumnLayout, ReportingPo.SqlText,
-				ReportingPo.MetaColumns, ReportingPo.QueryParams
+				ReportingPo.StatColumnLayout, ReportingPo.SqlText, ReportingPo.MetaColumns
 		};
 		return this.edit(entity, entity.getId(), columnNames);
 	}
