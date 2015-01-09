@@ -27,7 +27,7 @@ public abstract class AbstractReportBuilder {
 	 */
 	public ReportTable getTable() {
 		StringBuilder table = new StringBuilder();
-		table.append("<table id=\"report\" class=\"grid\">");
+		table.append("<table id=\"easyreport\" class=\"easyreport\">");
 		table.append(this.tableRows.toString());
 		table.append("</table>");
 		return new ReportTable(table.toString(),

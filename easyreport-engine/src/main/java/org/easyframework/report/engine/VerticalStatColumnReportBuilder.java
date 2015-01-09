@@ -14,15 +14,22 @@ import org.easyframework.report.engine.data.ReportParameter;
  * 纵向展示统计列的报表生成类
  */
 public class VerticalStatColumnReportBuilder extends AbstractReportBuilder implements ReportBuilder {
+
+	/**
+	 * 纵向展示统计列的报表生成类
+	 * 
+	 * @param reportDataSet
+	 *            报表数据集
+	 * @param reportParameter
+	 *            报表参数
+	 */
 	public VerticalStatColumnReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
 		super(reportDataSet, reportParameter);
 	}
 
 	@Override
 	public void drawTableHeaderRows() {
-		// 获取表头左边的固定列集合
 		List<ReportDataColumn> leftFixedColumns = this.reportDataSet.getHeaderLeftFixedColumns();
-		// 获取表头右边列树型结构
 		ColumnTree rightColumnTree = this.reportDataSet.getHeaderRightColumnTree();
 		int rowCount = rightColumnTree.getDepth();
 		String rowSpan = rowCount > 1 ? String.format(" rowspan=\"%s\"", rowCount) : "";

@@ -42,13 +42,13 @@ public class ReportGenerator {
 	 * @return
 	 */
 	public static ReportDataSet getDataSet(ReportDataSource ds, ReportParameter parameter) {
-		return new DataExecution(ds, parameter).execute();
+		return new DataExecutor(ds, parameter).execute();
 	}
 
-	private static ReportBuilder createBuilder(ReportDataSet reportData, ReportParameter parameter) {
+	private static ReportBuilder createBuilder(ReportDataSet reportDataSet, ReportParameter parameter) {
 		if (parameter.getStatColumnLayout() == LayoutType.HORIZONTAL) {
-			return new HorizontalStatColumnReportBuilder(reportData, parameter);
+			return new HorizontalStatColumnReportBuilder(reportDataSet, parameter);
 		}
-		return new VerticalStatColumnReportBuilder(reportData, parameter);
+		return new VerticalStatColumnReportBuilder(reportDataSet, parameter);
 	}
 }
