@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.common.util.DateUtils;
-import org.easyframework.report.common.viewmodel.NameTextPair;
 import org.easyframework.report.dao.ReportingDao;
 import org.easyframework.report.data.jdbc.BaseService;
 import org.easyframework.report.engine.ReportGenerator;
@@ -22,6 +21,7 @@ import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportDataSource;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
 import org.easyframework.report.engine.data.ReportParameter;
+import org.easyframework.report.engine.data.ReportQueryParamItem;
 import org.easyframework.report.engine.data.ReportSqlTemplate;
 import org.easyframework.report.engine.data.ReportTable;
 import org.easyframework.report.engine.util.VelocityUtils;
@@ -304,14 +304,14 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 	}
 
 	private HtmlComboBox getComboBoxFormElements(QueryParameterPo queryParam, DataSourcePo ds, Map<String, Object> buildinParams) {
-		List<NameTextPair> options = this.getOptions(queryParam, ds, buildinParams);
+		List<ReportQueryParamItem> options = this.getOptions(queryParam, ds, buildinParams);
 		List<HtmlSelectOption> htmlSelectOptions = new ArrayList<HtmlSelectOption>(options.size());
 
 		if (queryParam.hasDefaultValue()) {
 			htmlSelectOptions.add(new HtmlSelectOption(queryParam.getDefaultText(), queryParam.getDefaultValue(), true));
 		}
 		for (int i = 0; i < options.size(); i++) {
-			NameTextPair option = options.get(i);
+			ReportQueryParamItem option = options.get(i);
 			if (!option.getName().equals(queryParam.getDefaultValue())) {
 				htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName(), (!queryParam.hasDefaultValue() && i == 0)));
 			}
@@ -333,13 +333,13 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		htmlFormElement.setComment(queryParam.getComment());
 	}
 
-	private List<NameTextPair> getOptions(QueryParameterPo queryParam, DataSourcePo ds,
+	private List<ReportQueryParamItem> getOptions(QueryParameterPo queryParam, DataSourcePo ds,
 			Map<String, Object> buildinParams) {
 		if (queryParam.getDataSource().equals("sql")) {
 			return this.reportingService.getDao().executeQueryParamSqlText(ds.getJdbcUrl(), ds.getUser(), ds.getPassword(), queryParam.getContent());
 		}
 
-		List<NameTextPair> options = new ArrayList<NameTextPair>();
+		List<ReportQueryParamItem> options = new ArrayList<ReportQueryParamItem>();
 		if (queryParam.getDataSource().equals("text") && StringUtils.isNoneBlank(queryParam.getContent())) {
 			HashSet<String> set = new HashSet<String>();
 			String[] optionSplits = StringUtils.split(queryParam.getContent(), '|');
@@ -349,7 +349,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 				String text = namevalueSplits.length > 1 ? namevalueSplits[1] : name;
 				if (!set.contains(name)) {
 					set.add(name);
-					options.add(new NameTextPair(name, text));
+					options.add(new ReportQueryParamItem(name, text));
 				}
 			}
 		}

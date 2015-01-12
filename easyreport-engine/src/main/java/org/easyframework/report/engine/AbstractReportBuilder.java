@@ -3,7 +3,7 @@ package org.easyframework.report.engine;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
 import org.easyframework.report.engine.data.ReportDataSet;
@@ -53,7 +53,12 @@ public abstract class AbstractReportBuilder {
 		if (isRowSpan) {
 			return this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, rowNode);
 		}
+
 		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
+		if (paths == null || paths.length == 0) {
+			return null;
+		}
+
 		int level = paths.length > 1 ? paths.length - 1 : 1;
 		for (int i = 0; i < level; i++) {
 			this.tableRows.append(String.format("<td class=\"easyreport-fixed-column\">%s</td>", paths[i]));
@@ -74,6 +79,10 @@ public abstract class AbstractReportBuilder {
 	 */
 	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
 		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
+		if (paths == null || paths.length == 0) {
+			return null;
+		}
+
 		int level = paths.length > 1 ? paths.length - 1 : 1;
 		String[] currNodePaths = new String[level];
 		for (int i = 0; i < level; i++) {

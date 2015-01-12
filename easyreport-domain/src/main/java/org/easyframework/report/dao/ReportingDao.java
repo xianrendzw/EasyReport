@@ -1,25 +1,15 @@
 package org.easyframework.report.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.easyframework.report.common.viewmodel.NameTextPair;
 import org.easyframework.report.data.PageInfo;
 import org.easyframework.report.data.SortType;
 import org.easyframework.report.data.criterion.Restrictions;
 import org.easyframework.report.data.criterion.operands.Bracket;
 import org.easyframework.report.data.jdbc.BaseDao;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
+import org.easyframework.report.engine.data.ReportQueryParamItem;
+import org.easyframework.report.engine.query.QueryerFactory;
 import org.easyframework.report.po.ReportingPo;
 import org.springframework.stereotype.Repository;
 
@@ -198,85 +188,10 @@ public class ReportingDao extends BaseDao<ReportingPo> {
 	}
 
 	public List<ReportMetaDataColumn> executeSqlText(String url, String user, String password, String sqlText) {
-		java.sql.Connection conn = null;
-		java.sql.PreparedStatement stmt = null;
-		java.sql.ResultSet rs = null;
-		List<ReportMetaDataColumn> columns = null;
-
-		try {
-			conn = DriverManager.getConnection(url, user, password);
-			stmt = conn.prepareStatement(this.appendLimit(sqlText));
-			rs = stmt.executeQuery();
-			ResultSetMetaData rsMataData = rs.getMetaData();
-			int count = rsMataData.getColumnCount();
-			columns = new ArrayList<ReportMetaDataColumn>(count);
-			for (int i = 1; i <= count; i++) {
-				ReportMetaDataColumn column = new ReportMetaDataColumn();
-				column.setName(rsMataData.getColumnLabel(i));
-				column.setDataType(rsMataData.getColumnTypeName(i));
-				column.setWidth(rsMataData.getColumnDisplaySize(i));
-				columns.add(column);
-			}
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			this.releaseJdbcResource(conn, stmt, rs);
-		}
-
-		return columns == null ? new ArrayList<ReportMetaDataColumn>(0) : columns;
+		return QueryerFactory.create(url, user, password).parseMetaDataColumns(sqlText);
 	}
 
-	public List<NameTextPair> executeQueryParamSqlText(String url, String user, String password, String sqlText) {
-		java.sql.Connection conn = null;
-		java.sql.PreparedStatement stmt = null;
-		java.sql.ResultSet rs = null;
-		HashSet<String> set = new HashSet<String>();
-		List<NameTextPair> rows = new ArrayList<NameTextPair>();
-
-		try {
-			conn = DriverManager.getConnection(url, user, password);
-			stmt = conn.prepareStatement(sqlText);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				String name = rs.getString("name");
-				String text = rs.getString("text");
-				name = (name == null) ? "" : name.trim();
-				text = (text == null) ? "" : text.trim();
-				if (!set.contains(name)) {
-					set.add(name);
-				}
-				rows.add(new NameTextPair(name, text));
-			}
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			this.releaseJdbcResource(conn, stmt, rs);
-		}
-
-		set.clear();
-		return rows;
-	}
-
-	private void releaseJdbcResource(Connection conn, PreparedStatement stmt, ResultSet rs) {
-		try {
-			if (rs != null)
-				rs.close();
-			if (stmt != null)
-				stmt.close();
-			if (conn != null)
-				conn.close();
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
-
-	private String appendLimit(String sqlText) {
-		sqlText = StringUtils.stripEnd(sqlText.trim(), ";");
-		Pattern pattern = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(sqlText);
-		if (matcher.find()) {
-			sqlText = matcher.replaceFirst("");
-		}
-		return sqlText + " limit 1";
+	public List<ReportQueryParamItem> executeQueryParamSqlText(String url, String user, String password, String sqlText) {
+		return QueryerFactory.create(url, user, password).parseQueryParamItems(sqlText);
 	}
 }

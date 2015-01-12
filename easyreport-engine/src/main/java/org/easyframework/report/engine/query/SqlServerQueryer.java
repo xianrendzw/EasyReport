@@ -14,7 +14,7 @@ public class SqlServerQueryer extends AbstractQueryer implements Queryer {
 	}
 
 	@Override
-	protected Connection getConnection() {
+	public Connection getJdbcConnection() {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			return DriverManager.getConnection(this.dataSource.getJdbcUrl(), this.dataSource.getUser(), this.dataSource.getPassword());

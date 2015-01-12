@@ -37,12 +37,12 @@ public class ConfigDictPo implements Serializable {
 	/**
 	 * 列名key,
 	 */
-	public final static String Key = "key";
+	public final static String Key = "`key`";
 
 	/**
 	 * 列名value,
 	 */
-	public final static String Value = "value";
+	public final static String Value = "`value`";
 
 	/**
 	 * 列名sequence,

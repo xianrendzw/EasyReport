@@ -41,8 +41,9 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 	 */
 	@Override
 	public List<ReportDataColumn> getHeaderLeftFixedColumns() {
-		return layout == LayoutType.HORIZONTAL ?
-				this.getDimColumns() : this.getLayoutColumns();
+		List<ReportDataColumn> leftFixedColumns = (layout == LayoutType.HORIZONTAL) ? this.getDimColumns() : this.getLayoutColumns();
+		leftFixedColumns.add(new ReportDataColumn(new ReportMetaDataColumn("stat_column", "统计列", ColumnType.STATISTICAL)));
+		return leftFixedColumns;
 	}
 
 	/**
@@ -65,6 +66,10 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 	 */
 	@Override
 	public ColumnTree getBodyLeftFixedColumnTree() {
+		if (leftFixedColumnTree != null) {
+			return this.leftFixedColumnTree;
+		}
+
 		return layout == LayoutType.HORIZONTAL ?
 				this.getHorizontalLeftFixedColumnTree() : this.getVerticalLeftFixedColumnTree();
 	}
@@ -109,7 +114,7 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 		// 无维度列则直接设置树只有一个节点
 		if (depth == 0) {
 			List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
-			roots.add(new ColumnTreeNode("", "", ""));
+			roots.add(new ColumnTreeNode("stat_value", "值", ""));
 			this.dimColumnTree = new ColumnTree(roots, 1);
 			this.dimColumnTree.setLeafNodes(roots);
 			return this.dimColumnTree;
@@ -184,36 +189,34 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 	private ColumnTree getHorizontalLeftFixedColumnTree() {
 		ColumnTree statColumnTree = this.getStatColumnTree();
 
-		ColumnTree layoutColumnTree = this.getLayoutColumnTree();
-		for (ColumnTreeNode leafNode : layoutColumnTree.getLeafNodes()) {
-			leafNode.getChildren().addAll(statColumnTree.getRoots());
-		}
-
-		this.setTreeNodeSpansAndDepth(layoutColumnTree.getRoots(), this.getLayoutColumns());
-		int depth = layoutColumnTree.getDepth() + statColumnTree.getDepth();
-		this.headerColumnTree = new ColumnTree(layoutColumnTree.getRoots(), depth);
-		return this.headerColumnTree;
-	}
-
-	private ColumnTree getVerticalLeftFixedColumnTree() {
-		ColumnTree statColumnTree = this.getStatColumnTree();
-
-		// 无维度列则表头列直接设置为统计列
+		// 无维度列则表体左边固定列直接设置为统计列
 		if (this.getDimColumnCount() == 0) {
 			this.setTreeNodeSpansAndDepth(statColumnTree.getRoots(), false, this.getEnabledStatColumns());
-			this.headerColumnTree = new ColumnTree(statColumnTree.getRoots(), statColumnTree.getDepth());
-			this.headerColumnTree.setLeafNodes(statColumnTree.getRoots());
-			return this.headerColumnTree;
+			this.leftFixedColumnTree = new ColumnTree(statColumnTree.getRoots(), statColumnTree.getDepth());
+			this.leftFixedColumnTree.setLeafNodes(statColumnTree.getRoots());
+			return this.leftFixedColumnTree;
 		}
 
 		ColumnTree dimColumnTree = this.getDimColumnTree();
 		for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
 			leafNode.getChildren().addAll(statColumnTree.getRoots());
 		}
-
 		this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
 		int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
-		this.headerColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
-		return this.headerColumnTree;
+		this.leftFixedColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
+		return this.leftFixedColumnTree;
+	}
+
+	private ColumnTree getVerticalLeftFixedColumnTree() {
+		ColumnTree statColumnTree = this.getStatColumnTree();
+
+		ColumnTree layoutTree = this.getLayoutColumnTree();
+		for (ColumnTreeNode leafNode : layoutTree.getLeafNodes()) {
+			leafNode.getChildren().addAll(statColumnTree.getRoots());
+		}
+		this.setTreeNodeSpansAndDepth(layoutTree.getRoots(), this.getLayoutColumns());
+		int depth = layoutTree.getDepth() + statColumnTree.getDepth();
+		this.leftFixedColumnTree = new ColumnTree(layoutTree.getRoots(), depth);
+		return this.leftFixedColumnTree;
 	}
 }

@@ -2,7 +2,6 @@ package org.easyframework.report.engine;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.engine.data.HorizontalStatColumnDataSet;
 import org.easyframework.report.engine.data.LayoutType;
 import org.easyframework.report.engine.data.ReportDataSet;
@@ -12,12 +11,8 @@ import org.easyframework.report.engine.data.ReportMetaDataRow;
 import org.easyframework.report.engine.data.ReportMetaDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
 import org.easyframework.report.engine.data.VerticalStatColumnDataSet;
-import org.easyframework.report.engine.query.HBaseQueryer;
-import org.easyframework.report.engine.query.HiveQueryer;
-import org.easyframework.report.engine.query.MySqlQueryer;
-import org.easyframework.report.engine.query.OracleQueryer;
 import org.easyframework.report.engine.query.Queryer;
-import org.easyframework.report.engine.query.SqlServerQueryer;
+import org.easyframework.report.engine.query.QueryerFactory;
 
 /**
  *
@@ -80,23 +75,6 @@ public class DataExecutor {
 		if (this.queryer != null) {
 			return this.queryer;
 		}
-		if (this.dataSource != null) {
-			if (StringUtils.containsIgnoreCase(this.dataSource.getJdbcUrl(), "jdbc:mysql")) {
-				return new MySqlQueryer(this.dataSource, this.parameter);
-			}
-			if (StringUtils.containsIgnoreCase(this.dataSource.getJdbcUrl(), "jdbc:oracle")) {
-				return new OracleQueryer(this.dataSource, this.parameter);
-			}
-			if (StringUtils.containsIgnoreCase(this.dataSource.getJdbcUrl(), "jdbc:sqlserver")) {
-				return new SqlServerQueryer(this.dataSource, this.parameter);
-			}
-			if (StringUtils.containsIgnoreCase(this.dataSource.getJdbcUrl(), "jdbc:hive")) {
-				return new HiveQueryer(this.dataSource, this.parameter);
-			}
-			if (StringUtils.containsIgnoreCase(this.dataSource.getJdbcUrl(), "jdbc:phoenix")) {
-				return new HBaseQueryer(this.dataSource, this.parameter);
-			}
-		}
-		return null;
+		return QueryerFactory.create(this.dataSource, this.parameter);
 	}
 }
