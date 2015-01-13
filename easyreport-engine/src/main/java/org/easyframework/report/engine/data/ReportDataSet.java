@@ -28,6 +28,7 @@ public abstract class ReportDataSet {
 	protected List<ReportDataColumn> statColumns;
 	protected List<ReportDataColumn> nonStatColumns;
 	protected ColumnTree headerColumnTree;
+	protected ColumnTree leftFixedColumnTree;
 	protected ColumnTree layoutColumnTree;
 	protected ColumnTree dimColumnTree;
 	protected ColumnTree statColumnTree;

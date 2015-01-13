@@ -3,7 +3,6 @@ package org.easyframework.report.engine;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
 import org.easyframework.report.engine.data.ReportDataColumn;
@@ -63,31 +62,5 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 
 	@Override
 	public void drawTableFooterRows() {
-	}
-
-	@Override
-	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
-		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
-		if (paths == null || paths.length == 0) {
-			return null;
-		}
-
-		int level = paths.length > 1 ? paths.length - 1 : 1;
-		String[] currNodePaths = new String[level];
-		for (int i = 0; i < level; i++) {
-			String currPath = paths[i] + this.reportDataSet.getSeparatorChars();
-			currNodePaths[i] = (i > 0 ? currNodePaths[i - 1] + currPath : currPath);
-			if (lastNodePaths != null && lastNodePaths[i].equals(currNodePaths[i]))
-				continue;
-			ColumnTreeNode treeNode = pathTreeNodeMap.get(currNodePaths[i]);
-			if (treeNode == null) {
-				this.tableRows.append("<td class=\"easyreport-fixed-column\"></td>");
-			} else {
-				String rowspan = treeNode.getSpans() > 1 ? String.format(" rowspan=\"%s\"", treeNode.getSpans()) : "";
-				this.tableRows.append(String.format("<td class=\"easyreport-fixed-column\"%s>%s</td>", rowspan, treeNode.getValue()));
-			}
-		}
-		lastNodePaths = currNodePaths;
-		return lastNodePaths;
 	}
 }

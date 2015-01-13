@@ -30,8 +30,11 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 	 */
 	@Override
 	public String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode) {
+		if (rowNode.getParent() == null) {
+			return columnNode.getPath();
+		}
 		return layout == LayoutType.HORIZONTAL ?
-				(columnNode.getPath() + rowNode.getPath()) : (rowNode.getPath() + columnNode.getPath());
+				(columnNode.getPath() + rowNode.getParent().getPath()) : (rowNode.getParent().getPath() + columnNode.getPath());
 	}
 
 	/**
@@ -185,18 +188,36 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 	}
 
 	private ColumnTree getHorizontalLayoutLeftFixedColumnTree() {
-		// 无维度列则表体左边固定列直接设置为一列统计列
+		ColumnTree statColumnTree = this.getStatColumnTree();
+		// 无维度列则表体左边固定列直接设置为统计列
 		if (this.getDimColumnCount() == 0) {
-			List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
-			roots.add(new ColumnTreeNode("stat_column", "统计列", ""));
-			this.statColumnTree = new ColumnTree(roots, 1);
-			this.statColumnTree.setLeafNodes(roots);
-			return this.statColumnTree;
+			this.setTreeNodeSpansAndDepth(statColumnTree.getRoots(), false, this.getEnabledStatColumns());
+			this.leftFixedColumnTree = new ColumnTree(statColumnTree.getRoots(), statColumnTree.getDepth());
+			this.leftFixedColumnTree.setLeafNodes(statColumnTree.getRoots());
+			return this.leftFixedColumnTree.refresh();
 		}
-		return this.getDimColumnTree();
+
+		ColumnTree dimColumnTree = this.getDimColumnTree();
+		for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
+			leafNode.getChildren().addAll(statColumnTree.getRoots());
+		}
+
+		this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
+		int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
+		this.leftFixedColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
+		return this.leftFixedColumnTree.refresh();
 	}
 
 	private ColumnTree getVerticalLayoutLeftFixedColumnTree() {
-		return this.getLayoutColumnTree();
+		ColumnTree statColumnTree = this.getStatColumnTree();
+		ColumnTree layoutTree = this.getLayoutColumnTree();
+		for (ColumnTreeNode leafNode : layoutTree.getLeafNodes()) {
+			leafNode.getChildren().addAll(statColumnTree.getRoots());
+		}
+
+		this.setTreeNodeSpansAndDepth(layoutTree.getRoots(), this.getLayoutColumns());
+		int depth = layoutTree.getDepth() + statColumnTree.getDepth();
+		this.leftFixedColumnTree = new ColumnTree(layoutTree.getRoots(), depth);
+		return this.leftFixedColumnTree.refresh();
 	}
 }
