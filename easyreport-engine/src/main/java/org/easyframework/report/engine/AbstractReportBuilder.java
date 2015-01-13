@@ -74,7 +74,7 @@ public abstract class AbstractReportBuilder {
 			return this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, rowNode);
 		}
 
-		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
+		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getPathSeparator());
 		if (paths == null || paths.length == 0) {
 			return null;
 		}

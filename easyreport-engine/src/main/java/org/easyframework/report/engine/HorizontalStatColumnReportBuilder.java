@@ -67,7 +67,7 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 
 	@Override
 	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
-		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getSeparatorChars());
+		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getPathSeparator());
 		if (paths == null || paths.length == 0) {
 			return null;
 		}
@@ -75,7 +75,7 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 		int level = paths.length > 1 ? paths.length - 1 : 1;
 		String[] currNodePaths = new String[level];
 		for (int i = 0; i < level; i++) {
-			String currPath = paths[i] + this.reportDataSet.getSeparatorChars();
+			String currPath = paths[i] + this.reportDataSet.getPathSeparator();
 			currNodePaths[i] = (i > 0 ? currNodePaths[i - 1] + currPath : currPath);
 			if (lastNodePaths != null && lastNodePaths[i].equals(currNodePaths[i]))
 				continue;

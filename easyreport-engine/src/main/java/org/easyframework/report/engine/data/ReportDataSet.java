@@ -17,7 +17,7 @@ import org.easyframework.report.engine.util.ComparatorUtils;
  * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
  */
 public abstract class ReportDataSet {
-	protected final String separatorChar = "$";
+	protected final String pathSeparator = "$";
 	protected final ReportMetaDataSet metaDataSet;
 	protected final LayoutType layout;
 	protected final LayoutType statColumnLayout;
@@ -45,13 +45,13 @@ public abstract class ReportDataSet {
 	}
 
 	/**
-	 * 获取报表数据集中行数据中的列分隔字符串
+	 * 获取报表数据集中行key(或树路径)分隔字符串
 	 * <sample>layoutValue$col1value$col2value$col3value$...</sample>
 	 * 
 	 * @return
 	 */
-	public String getSeparatorChars() {
-		return this.separatorChar;
+	public String getPathSeparator() {
+		return this.pathSeparator;
 	}
 
 	/**
@@ -398,8 +398,8 @@ public abstract class ReportDataSet {
 		StringBuilder rowMapKeyBuilder = new StringBuilder("");
 		for (ReportDataColumn nonStatColumn : nonStatColumns) {
 			String value = this.getMetaCellValue(metaDataRow, nonStatColumn);
-			value = StringUtils.replace(value, this.separatorChar, "*");
-			rowMapKeyBuilder.append(value + this.separatorChar);
+			value = StringUtils.replace(value, this.pathSeparator, "*");
+			rowMapKeyBuilder.append(value + this.pathSeparator);
 		}
 		return rowMapKeyBuilder.toString();
 	}
@@ -456,13 +456,14 @@ public abstract class ReportDataSet {
 	}
 
 	protected String getLevelPath(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns, int level) {
-		String path = "";
+		StringBuilder pathBuilder = new StringBuilder();
 		for (int i = 0; i <= level; i++) {
 			ReportDataColumn column = columns.get(i);
 			String columnValue = this.getMetaCellValue(metaDataRow, column);
-			path += StringUtils.replace(columnValue, this.separatorChar, "*") + this.separatorChar;
+			pathBuilder.append(StringUtils.replace(columnValue, this.pathSeparator, "*"));
+			pathBuilder.append(this.pathSeparator);
 		}
-		return path;
+		return pathBuilder.toString();
 	}
 
 	protected Object getStatCellValue(ReportMetaDataRow metaDataRow, ReportDataColumn statColumn) {
