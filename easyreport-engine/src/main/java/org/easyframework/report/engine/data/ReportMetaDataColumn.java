@@ -1,6 +1,5 @@
 package org.easyframework.report.engine.data;
 
-
 /**
  * 报表元数据列类
  */

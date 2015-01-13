@@ -33,8 +33,6 @@ public abstract class AbstractQueryer {
 		this.parameter = parameter;
 	}
 
-	public abstract Connection getJdbcConnection();
-
 	public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -155,13 +153,20 @@ public abstract class AbstractQueryer {
 	}
 
 	/**
-	 * 预处理获取报表列集合的sql语句， 在这里可以拦截全表查询等sql， 因为如果表的数据量很大，将会产生过多的内存消耗，甚至性能问题
+	 * 预处理获取报表列集合的sql语句，
+	 * 在这里可以拦截全表查询等sql， 因为如果表的数据量很大，将会产生过多的内存消耗，甚至性能问题
 	 * 
-	 * @param sqlText
-	 *            原sql语句
+	 * @param sqlText 原sql语句
 	 * @return 预处理后的sql语句
 	 */
 	protected String preprocessSqlText(String sqlText) {
 		return sqlText;
 	}
+
+	/**
+	 * 获取当前报表查询器的JDBC Connection对象
+	 * 
+	 * @return Connection
+	 */
+	protected abstract Connection getJdbcConnection();
 }

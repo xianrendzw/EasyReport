@@ -1,6 +1,5 @@
 package org.easyframework.report.engine.query;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
@@ -13,13 +12,6 @@ import org.easyframework.report.engine.data.ReportQueryParamItem;
  *
  */
 public interface Queryer {
-
-	/**
-	 * 获取当前报表查询器的JDBC Connection对象
-	 * 
-	 * @return Connection
-	 */
-	Connection getJdbcConnection();
 
 	/**
 	 * 从sql语句中解析出报表元数据列集合

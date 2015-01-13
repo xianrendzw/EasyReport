@@ -13,7 +13,7 @@ public class HiveQueryer extends AbstractQueryer implements Queryer {
 	}
 
 	@Override
-	public Connection getJdbcConnection() {
+	protected Connection getJdbcConnection() {
 		try {
 			Class.forName("org.apache.hive.jdbc.HiveDriver");
 			return DriverManager.getConnection(this.dataSource.getJdbcUrl(), this.dataSource.getUser(), this.dataSource.getPassword());

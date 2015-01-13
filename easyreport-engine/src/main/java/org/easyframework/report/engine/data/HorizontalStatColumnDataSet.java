@@ -56,9 +56,9 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		}
 		// 如果布局列纵向展示
 		if (this.layout == LayoutType.HORIZONTAL) {
-			return this.getHorizontalHeaderColumnTree();
+			return this.getHorizontalLayoutHeaderColumnTree();
 		}
-		return this.getVerticalHeaderColumnTree();
+		return this.getVerticalLayoutHeaderColumnTree();
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		return this.dimColumns;
 	}
 
-	private ColumnTree getHorizontalHeaderColumnTree() {
+	private ColumnTree getHorizontalLayoutHeaderColumnTree() {
 		ColumnTree statColumnTree = this.getStatColumnTree();
 
 		ColumnTree layoutColumnTree = this.getLayoutColumnTree();
@@ -198,7 +198,7 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		return this.headerColumnTree;
 	}
 
-	private ColumnTree getVerticalHeaderColumnTree() {
+	private ColumnTree getVerticalLayoutHeaderColumnTree() {
 		ColumnTree statColumnTree = this.getStatColumnTree();
 
 		// 无维度列则表头列直接设置为统计列

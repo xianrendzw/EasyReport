@@ -16,7 +16,7 @@ public class MySqlQueryer extends AbstractQueryer implements Queryer {
 	}
 
 	@Override
-	public Connection getJdbcConnection() {
+	protected Connection getJdbcConnection() {
 		try {
 			return DriverManager.getConnection(this.dataSource.getJdbcUrl(), this.dataSource.getUser(), this.dataSource.getPassword());
 		} catch (Exception ex) {

@@ -14,7 +14,7 @@ public class OracleQueryer extends AbstractQueryer implements Queryer {
 	}
 
 	@Override
-	public Connection getJdbcConnection() {
+	protected Connection getJdbcConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			return DriverManager.getConnection(this.dataSource.getJdbcUrl(), this.dataSource.getUser(), this.dataSource.getPassword());

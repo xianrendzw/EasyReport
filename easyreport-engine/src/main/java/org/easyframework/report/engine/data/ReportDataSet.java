@@ -23,12 +23,11 @@ public abstract class ReportDataSet {
 	protected final LayoutType statColumnLayout;
 	protected List<ReportDataColumn> layoutColumns;
 	protected List<ReportDataColumn> dimColumns;
-	protected List<ReportDataColumn> displayStatColumns;
+	protected List<ReportDataColumn> enabledStatColumns;
 	protected List<ReportDataColumn> computedColumns;
 	protected List<ReportDataColumn> statColumns;
 	protected List<ReportDataColumn> nonStatColumns;
 	protected ColumnTree headerColumnTree;
-	protected ColumnTree leftFixedColumnTree;
 	protected ColumnTree layoutColumnTree;
 	protected ColumnTree dimColumnTree;
 	protected ColumnTree statColumnTree;
@@ -157,17 +156,17 @@ public abstract class ReportDataSet {
 	 * @return {@link List<ReportDataColumn>}
 	 */
 	public List<ReportDataColumn> getEnabledStatColumns() {
-		if (this.displayStatColumns != null) {
-			return this.displayStatColumns;
+		if (this.enabledStatColumns != null) {
+			return this.enabledStatColumns;
 		}
 
-		this.displayStatColumns = new ArrayList<ReportDataColumn>();
+		this.enabledStatColumns = new ArrayList<ReportDataColumn>();
 		for (ReportDataColumn statColumn : this.getStatColumns()) {
 			if (!statColumn.getMetaData().isHidden()) {
-				this.displayStatColumns.add(statColumn);
+				this.enabledStatColumns.add(statColumn);
 			}
 		}
-		return this.displayStatColumns;
+		return this.enabledStatColumns;
 	}
 
 	/**

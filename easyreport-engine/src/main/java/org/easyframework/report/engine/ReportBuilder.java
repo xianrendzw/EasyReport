@@ -8,22 +8,22 @@ import org.easyframework.report.engine.data.ReportTable;
 public interface ReportBuilder {
 
 	/**
-	 * 画报表表头
+	 * 生成报表表头
 	 */
 	void drawTableHeaderRows();
 
 	/**
-	 * 画报表表体中的每一行
+	 * 生成报表表体中的每一行
 	 */
 	void drawTableBodyRows();
 
 	/**
-	 * 画报表表尾
+	 * 生成报表表尾
 	 */
 	void drawTableFooterRows();
 
 	/**
-	 * 获取最终生成的报表
+	 * 获取生成的报表对象
 	 * 
 	 * @return ReportTable
 	 */
