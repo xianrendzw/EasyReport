@@ -187,4 +187,15 @@ public class ColumnTreeNode {
 	public List<ColumnTreeNode> getChildren() {
 		return this.children;
 	}
+
+	@Override
+	public ColumnTreeNode clone() {
+		ColumnTreeNode treeNode = new ColumnTreeNode(this.name, this.text, this.value);
+		treeNode.setColumn(this.column);
+		treeNode.setDepth(this.depth);
+		treeNode.setParent(this.parent);
+		treeNode.setPath(this.path);
+		treeNode.setSpans(this.spans);
+		return treeNode;
+	}
 }

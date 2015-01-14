@@ -18,37 +18,18 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		super(metaDataSet, layout, statColumnLayout);
 	}
 
-	/**
-	 * 获取报表数据集(RowMap)每一行的key
-	 * 
-	 * @param rowNode
-	 *            行结点
-	 * @param columnNode
-	 *            列结点
-	 * @return 行key
-	 */
 	@Override
 	public String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode) {
 		return layout == LayoutType.HORIZONTAL ?
 				(columnNode.getPath() + rowNode.getPath()) : (rowNode.getPath() + columnNode.getPath());
 	}
 
-	/**
-	 * 获取报表表头(header)左边固定列集合
-	 * 
-	 * @return List<ReportDataColumn>
-	 */
 	@Override
 	public List<ReportDataColumn> getHeaderLeftFixedColumns() {
 		return layout == LayoutType.HORIZONTAL ?
 				this.getDimColumns() : this.getLayoutColumns();
 	}
 
-	/**
-	 * 获取表头(header)右边列树型结构
-	 * 
-	 * @return ColumnTree
-	 */
 	@Override
 	public ColumnTree getHeaderRightColumnTree() {
 		if (this.headerColumnTree != null) {
@@ -61,33 +42,18 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		return this.getVerticalLayoutHeaderColumnTree();
 	}
 
-	/**
-	 * 获取报表表体(body)左边固定列树型结构
-	 * 
-	 * @return ColumnTree
-	 */
 	@Override
 	public ColumnTree getBodyLeftFixedColumnTree() {
 		return layout == LayoutType.HORIZONTAL ?
 				this.getDimColumnTree() : this.getLayoutColumnTree();
 	}
 
-	/**
-	 * 获取报表表体(body)右边列节点集合
-	 * 
-	 * @return List<ColumnTreeNode>
-	 */
 	@Override
 	public List<ColumnTreeNode> getBodyRightColumnNodes() {
 		return layout == LayoutType.HORIZONTAL ?
 				this.getLayoutColumnTree().getLastLevelNodes() : this.getDimColumnTree().getLastLevelNodes();
 	}
 
-	/**
-	 * 获取布局列树
-	 * 
-	 * @return ColumnTree
-	 */
 	@Override
 	public ColumnTree getLayoutColumnTree() {
 		if (this.layoutColumnTree != null) {
@@ -97,11 +63,6 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		return this.layoutColumnTree;
 	}
 
-	/**
-	 * 获取维度列树
-	 * 
-	 * @return ColumnTree
-	 */
 	@Override
 	public ColumnTree getDimColumnTree() {
 		if (this.dimColumnTree != null) {
@@ -118,58 +79,10 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 			return this.dimColumnTree;
 		}
 
-		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(), this.layout == LayoutType.HORIZONTAL);
+		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(), true);
 		return this.dimColumnTree;
 	}
 
-	/**
-	 * 获取报表统计列树
-	 * 
-	 * @return ColumnTree
-	 */
-	@Override
-	public ColumnTree getStatColumnTree() {
-		if (this.statColumnTree != null) {
-			return this.statColumnTree;
-		}
-
-		List<ColumnTreeNode> treeNodes = new ArrayList<ColumnTreeNode>();
-		// 当统计列只有一列时,如果维度列大于0
-		// 则表头列不显示出统计列，只显示布局列或维度列
-		if (this.getEnabledStatColumns().size() == 1) {
-			if (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0) {
-				this.statColumnTree = new ColumnTree(treeNodes, 0);
-				return this.statColumnTree;
-			}
-		}
-
-		int depth = 1;
-		List<ReportDataStatColumn> roots = this.getReportDataStatColumns();
-		for (ReportDataStatColumn root : roots) {
-			if (root.getReportDataColumn().getMetaData().isHidden()) {
-				continue;
-			}
-			ColumnTreeNode treeNode = this.createColumnTreeNode(root.getReportDataColumn());
-			for (ReportDataColumn child : root.getChildren()) {
-				depth = 2;
-				ColumnTreeNode childNode = this.createColumnTreeNode(child);
-				if (root.getChildren().size() == 1) {
-					childNode.setValue("");
-				}
-				treeNode.getChildren().add(childNode);
-			}
-			treeNodes.add(treeNode);
-		}
-
-		this.statColumnTree = new ColumnTree(treeNodes, depth);
-		return this.statColumnTree;
-	}
-
-	/**
-	 * 获取报表所有维度列列表
-	 * 
-	 * @return {@link List<ReportDataColumn>}
-	 */
 	@Override
 	public List<ReportDataColumn> getDimColumns() {
 		if (this.dimColumns != null) {
@@ -184,14 +97,27 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		return this.dimColumns;
 	}
 
+	@Override
+	public boolean isHideStatColumn() {
+		if (this.getEnabledStatColumns().size() == 1) {
+			// 如果布局列横向显示
+			// 或者布局列纵向显示（即显示在表体左边)且表头有维度列
+			return (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0);
+		}
+		return false;
+	}
+
 	private ColumnTree getHorizontalLayoutHeaderColumnTree() {
 		ColumnTree statColumnTree = this.getStatColumnTree();
 
 		ColumnTree layoutColumnTree = this.getLayoutColumnTree();
+		if (this.isHideStatColumn()) {
+			return layoutColumnTree;
+		}
+
 		for (ColumnTreeNode leafNode : layoutColumnTree.getLeafNodes()) {
 			leafNode.getChildren().addAll(statColumnTree.getRoots());
 		}
-
 		this.setTreeNodeSpansAndDepth(layoutColumnTree.getRoots(), this.getLayoutColumns());
 		int depth = layoutColumnTree.getDepth() + statColumnTree.getDepth();
 		this.headerColumnTree = new ColumnTree(layoutColumnTree.getRoots(), depth);
@@ -210,10 +136,13 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 		}
 
 		ColumnTree dimColumnTree = this.getDimColumnTree();
+		if (this.isHideStatColumn()) {
+			return dimColumnTree;
+		}
+
 		for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
 			leafNode.getChildren().addAll(statColumnTree.getRoots());
 		}
-
 		this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
 		int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
 		this.headerColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);

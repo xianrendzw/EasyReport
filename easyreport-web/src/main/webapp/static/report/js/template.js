@@ -52,13 +52,11 @@ ReportTemplate.addToggleRowEvents = function() {
 };
 
 ReportTemplate.generate = function() {
-	var data = $("#templateFrom").serializeObject();
-	data.isRowSpan = $("#isRowSpan").prop("checked");
-
+	$('#isRowSpan').val($('#isMergeRow').prop('checked'));
 	$.ajax({
 		type : "POST",
 		url : XFrame.getContextPath() + '/report/generate',
-		data : data,
+		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
 			$('#loadingText').html("报表正在生成中, 请稍等...");

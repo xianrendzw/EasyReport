@@ -34,14 +34,14 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 		List<ColumnTreeNode> columnNodes = this.reportDataSet.getBodyRightColumnNodes();
 		Map<String, ReportDataRow> statRowMap = reportDataSet.getRowMap();
 		List<ReportDataColumn> statColumns = reportDataSet.getEnabledStatColumns();
-		Map<String, ColumnTreeNode> pathTreeNodeMap = this.getPathTreeNodeMap(leftFixedColumnTree);
+		Map<String, ColumnTreeNode> treeNodePathMap = this.getTreeNodePathMap(leftFixedColumnTree);
 
 		int rowIndex = 0;
 		String[] lastNodePaths = null;
 		this.tableRows.append("<tbody>");
 		for (ColumnTreeNode rowNode : rowNodes) {
 			this.tableRows.append("<tr").append(rowIndex % 2 == 0 ? " class=\"easyreport-row\"" : "").append(">");
-			lastNodePaths = this.drawLeftFixedColumn(pathTreeNodeMap, lastNodePaths, rowNode, this.reportParameter.isRowSpan());
+			lastNodePaths = this.drawLeftFixedColumn(treeNodePathMap, lastNodePaths, rowNode, this.reportParameter.isRowSpan());
 			for (ColumnTreeNode columnNode : columnNodes) {
 				String rowKey = this.reportDataSet.getRowKey(rowNode, columnNode);
 				ReportDataRow statRow = statRowMap.get(rowKey);

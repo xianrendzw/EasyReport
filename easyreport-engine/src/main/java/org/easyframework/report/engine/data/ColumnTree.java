@@ -58,10 +58,6 @@ public class ColumnTree {
 		return new ArrayList<ColumnTreeNode>(0);
 	}
 
-	public ColumnTree refresh() {
-		return this;
-	}
-
 	private void buildLevelNodesMapByRecrusion(ColumnTreeNode parentNode) {
 		int level = parentNode.getDepth();
 		if (!this.levelNodesMap.containsKey(level)) {

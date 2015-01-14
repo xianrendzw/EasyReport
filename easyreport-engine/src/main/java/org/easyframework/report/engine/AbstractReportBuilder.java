@@ -58,7 +58,7 @@ public abstract class AbstractReportBuilder {
 	/**
 	 * 生成表体左边每一行的单元格
 	 * 
-	 * @param pathTreeNodeMap
+	 * @param treeNodePathMap
 	 *            树中每个节点的path属性为key,treeNode属性为value的map对象
 	 * @param lastNodePaths
 	 *            上一个跨行结点的树路径
@@ -68,10 +68,10 @@ public abstract class AbstractReportBuilder {
 	 *            是否跨行(rowspan)
 	 * @return
 	 */
-	protected String[] drawLeftFixedColumn(Map<String, ColumnTreeNode> pathTreeNodeMap,
+	protected String[] drawLeftFixedColumn(Map<String, ColumnTreeNode> treeNodePathMap,
 			String[] lastNodePaths, ColumnTreeNode rowNode, boolean isRowSpan) {
 		if (isRowSpan) {
-			return this.drawLeftRowSpanColumn(pathTreeNodeMap, lastNodePaths, rowNode);
+			return this.drawLeftRowSpanColumn(treeNodePathMap, lastNodePaths, rowNode);
 		}
 
 		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getPathSeparator());
@@ -93,7 +93,7 @@ public abstract class AbstractReportBuilder {
 	 *            报表列树对象
 	 * @return 树中每个节点的path属性为key,treeNode属性为value的map对象
 	 */
-	protected Map<String, ColumnTreeNode> getPathTreeNodeMap(ColumnTree columnTree) {
+	protected Map<String, ColumnTreeNode> getTreeNodePathMap(ColumnTree columnTree) {
 		Map<String, ColumnTreeNode> pathTreeNodeMap = new HashMap<String, ColumnTreeNode>();
 		for (int level = 0; level < columnTree.getDepth(); level++) {
 			for (ColumnTreeNode treeNode : columnTree.getNodesByLevel(level)) {
@@ -106,7 +106,7 @@ public abstract class AbstractReportBuilder {
 	/**
 	 * 生成表体左边每一行的跨行(rowspan)单元格
 	 * 
-	 * @param pathTreeNodeMap
+	 * @param treeNodePathMap
 	 *            树中每个节点的path属性为key,treeNode属性为value的map对象
 	 * @param lastNodePaths
 	 *            上一个跨行结点的树路径
@@ -114,7 +114,7 @@ public abstract class AbstractReportBuilder {
 	 *            当前行结点
 	 * @return 当前跨行结点的树路径
 	 */
-	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> pathTreeNodeMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
+	protected String[] drawLeftRowSpanColumn(Map<String, ColumnTreeNode> treeNodePathMap, String[] lastNodePaths, ColumnTreeNode rowNode) {
 		String[] paths = StringUtils.splitPreserveAllTokens(rowNode.getPath(), this.reportDataSet.getPathSeparator());
 		if (paths == null || paths.length == 0) {
 			return null;
@@ -125,9 +125,10 @@ public abstract class AbstractReportBuilder {
 		for (int i = 0; i < level; i++) {
 			String currPath = paths[i] + this.reportDataSet.getPathSeparator();
 			currNodePaths[i] = (i > 0 ? currNodePaths[i - 1] + currPath : currPath);
-			if (lastNodePaths != null && lastNodePaths[i].equals(currNodePaths[i]))
+			if (lastNodePaths != null && lastNodePaths[i].equals(currNodePaths[i])) {
 				continue;
-			ColumnTreeNode treeNode = pathTreeNodeMap.get(currNodePaths[i]);
+			}
+			ColumnTreeNode treeNode = treeNodePathMap.get(currNodePaths[i]);
 			if (treeNode == null) {
 				this.tableRows.append("<td class=\"easyreport-fixed-column\"></td>");
 			} else {

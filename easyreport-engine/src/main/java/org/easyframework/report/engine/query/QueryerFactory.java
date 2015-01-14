@@ -21,6 +21,9 @@ public class QueryerFactory {
 			if (StringUtils.containsIgnoreCase(dataSource.getJdbcUrl(), "jdbc:sqlserver")) {
 				return new SqlServerQueryer(dataSource, parameter);
 			}
+			if (StringUtils.containsIgnoreCase(dataSource.getJdbcUrl(), "jdbc:sqlite")) {
+				return new SQLiteQueryer(dataSource, parameter);
+			}
 			if (StringUtils.containsIgnoreCase(dataSource.getJdbcUrl(), "jdbc:hive")) {
 				return new HiveQueryer(dataSource, parameter);
 			}

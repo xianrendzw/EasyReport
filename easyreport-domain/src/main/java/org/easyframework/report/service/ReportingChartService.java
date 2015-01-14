@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 @Service
 public class ReportingChartService {
 	public String buildDimColumnsHtml(ReportDataSet reportDataSet) {
-		Map<String, List<String>> map = reportDataSet.getNonStatColumnData();
+		Map<String, List<String>> map = reportDataSet.getUnduplicatedNonStatColumnDataMap();
 		if (map.size() < 1)
 			return "";
 
