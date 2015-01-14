@@ -15,6 +15,7 @@ public class HBaseQueryer extends AbstractQueryer implements Queryer {
 
 	@Override
 	protected Connection getJdbcConnection() {
+		// <see>http://phoenix.apache.org/
 		throw new NotImplementedException();
 	}
 }
