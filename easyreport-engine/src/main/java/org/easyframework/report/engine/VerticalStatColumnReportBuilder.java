@@ -58,6 +58,5 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
 
 	@Override
 	public void drawTableFooterRows() {
-		// TODO Auto-generated method stub
 	}
 }
