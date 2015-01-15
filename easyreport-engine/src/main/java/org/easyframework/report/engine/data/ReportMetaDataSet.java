@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 报表元数据类
+ * 报表元数据集类
  */
 public class ReportMetaDataSet {
 	private final List<ReportMetaDataRow> rows;

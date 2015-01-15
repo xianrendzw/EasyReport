@@ -27,6 +27,18 @@ public class DataExecutor {
 	/**
 	 * 数据执行器
 	 * 
+	 * @param parameter
+	 *            报表参数对象
+	 */
+	public DataExecutor(ReportParameter parameter) {
+		this.parameter = parameter;
+		this.dataSource = null;
+		this.queryer = null;
+	}
+
+	/**
+	 * 数据执行器
+	 * 
 	 * @param dataSource
 	 *            报表数据源配置对象
 	 * @param parameter
@@ -66,6 +78,21 @@ public class DataExecutor {
 		List<ReportMetaDataColumn> metaDataColumns = queryer.getMetaDataColumns();
 		List<ReportMetaDataRow> metaDataRows = queryer.getMetaDataRows();
 		ReportMetaDataSet metaDataSet = new ReportMetaDataSet(metaDataRows, metaDataColumns, this.parameter.getEnabledStatColumns());
+		return this.parameter.getStatColumnLayout() == LayoutType.VERTICAL ?
+				new VerticalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout()) :
+				new HorizontalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());
+	}
+
+	/**
+	 * 选择正确的报表查询器并获取数据，最终转化为成报表的数据集
+	 * 
+	 * @param metaDataSet
+	 * @return ReportDataSet报表数据集对象
+	 */
+	public ReportDataSet execute(ReportMetaDataSet metaDataSet) {
+		if (metaDataSet == null) {
+			throw new RuntimeException("报表元数据集不能为null!");
+		}
 		return this.parameter.getStatColumnLayout() == LayoutType.VERTICAL ?
 				new VerticalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout()) :
 				new HorizontalStatColumnDataSet(metaDataSet, this.parameter.getLayout(), this.parameter.getStatColumnLayout());

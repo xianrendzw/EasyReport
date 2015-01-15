@@ -3,6 +3,7 @@ package org.easyframework.report.engine;
 import org.easyframework.report.engine.data.LayoutType;
 import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportDataSource;
+import org.easyframework.report.engine.data.ReportMetaDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
 import org.easyframework.report.engine.data.ReportTable;
 import org.easyframework.report.engine.query.Queryer;
@@ -25,25 +26,22 @@ public class ReportGenerator {
 
 	/**
 	 * 
-	 * @param dataSet
-	 * @param parameter
-	 * @return ReportTable
-	 */
-	public static ReportTable generate(ReportDataSet dataSet, ReportParameter parameter) {
-		ReportBuilder builder = createBuilder(dataSet, parameter);
-		ReportDirector director = new ReportDirector(builder);
-		director.build();
-		return builder.getTable();
-	}
-
-	/**
-	 * 
 	 * @param queryer
 	 * @param parameter
 	 * @return ReportTable
 	 */
 	public static ReportTable generate(Queryer queryer, ReportParameter parameter) {
 		return generate(getDataSet(queryer, parameter), parameter);
+	}
+
+	/**
+	 * 
+	 * @param metaDataSet
+	 * @param parameter
+	 * @return
+	 */
+	public static ReportTable generate(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
+		return generate(getDataSet(metaDataSet, parameter), parameter);
 	}
 
 	/**
@@ -64,6 +62,29 @@ public class ReportGenerator {
 	 */
 	public static ReportDataSet getDataSet(Queryer queryer, ReportParameter parameter) {
 		return new DataExecutor(queryer, parameter).execute();
+	}
+
+	/**
+	 * 
+	 * @param metaDataSet
+	 * @param parameter
+	 * @return
+	 */
+	public static ReportDataSet getDataSet(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
+		return new DataExecutor(parameter).execute(metaDataSet);
+	}
+
+	/**
+	 * 
+	 * @param dataSet
+	 * @param parameter
+	 * @return ReportTable
+	 */
+	public static ReportTable generate(ReportDataSet dataSet, ReportParameter parameter) {
+		ReportBuilder builder = createBuilder(dataSet, parameter);
+		ReportDirector director = new ReportDirector(builder);
+		director.build();
+		return builder.getTable();
 	}
 
 	private static ReportBuilder createBuilder(ReportDataSet reportDataSet, ReportParameter parameter) {
