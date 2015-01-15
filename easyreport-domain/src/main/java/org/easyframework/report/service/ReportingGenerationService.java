@@ -20,10 +20,12 @@ import org.easyframework.report.engine.data.ColumnType;
 import org.easyframework.report.engine.data.ReportDataSet;
 import org.easyframework.report.engine.data.ReportDataSource;
 import org.easyframework.report.engine.data.ReportMetaDataColumn;
+import org.easyframework.report.engine.data.ReportMetaDataSet;
 import org.easyframework.report.engine.data.ReportParameter;
 import org.easyframework.report.engine.data.ReportQueryParamItem;
 import org.easyframework.report.engine.data.ReportSqlTemplate;
 import org.easyframework.report.engine.data.ReportTable;
+import org.easyframework.report.engine.query.Queryer;
 import org.easyframework.report.engine.util.VelocityUtils;
 import org.easyframework.report.po.DataSourcePo;
 import org.easyframework.report.po.QueryParameterPo;
@@ -69,6 +71,14 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		DataSourcePo ds = this.dataSourceService.getById(report.getDsId());
 		ReportDataSource reportDs = new ReportDataSource(ds.getJdbcUrl(), ds.getUser(), ds.getPassword());
 		return ReportGenerator.generate(reportDs, this.createReportParameter(report, formParams));
+	}
+
+	public ReportTable getReportTable(ReportingPo report, Map<String, Object> formParams, Queryer queryer) {
+		return ReportGenerator.generate(queryer, this.createReportParameter(report, formParams));
+	}
+
+	public ReportTable getReportTable(ReportingPo report, Map<String, Object> formParams, ReportMetaDataSet metaDataSet) {
+		return ReportGenerator.generate(metaDataSet, this.createReportParameter(report, formParams));
 	}
 
 	public ReportDataSet getReportDataSet(ReportingPo report, Map<String, Object> parameters) {

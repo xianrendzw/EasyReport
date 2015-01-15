@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.common.util.DateUtils;
+import org.easyframework.report.engine.data.ReportMetaDataSet;
 import org.easyframework.report.engine.data.ReportTable;
+import org.easyframework.report.engine.query.Queryer;
 import org.easyframework.report.po.ReportingPo;
 import org.easyframework.report.service.ReportingGenerationService;
 import org.easyframework.report.service.ReportingService;
@@ -74,6 +76,18 @@ public class ReportingUtils {
 		ReportingPo report = reportingService.getByUid(uid);
 		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
 		return generationService.getReportTable(report, formParams);
+	}
+
+	public static ReportTable generate(String uid, Map<?, ?> parameters, Queryer queryer) {
+		ReportingPo report = reportingService.getByUid(uid);
+		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
+		return generationService.getReportTable(report, formParams, queryer);
+	}
+
+	public static ReportTable generate(String uid, Map<?, ?> parameters, ReportMetaDataSet metaDataSet) {
+		ReportingPo report = reportingService.getByUid(uid);
+		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
+		return generationService.getReportTable(report, formParams, metaDataSet);
 	}
 
 	public static void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
