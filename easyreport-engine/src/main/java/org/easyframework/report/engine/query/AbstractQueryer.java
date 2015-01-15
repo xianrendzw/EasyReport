@@ -38,7 +38,7 @@ public abstract class AbstractQueryer {
 		List<ReportMetaDataColumn> columns = null;
 
 		try {
-			logger.info(sqlText);
+			logger.debug(sqlText);
 			conn = this.getJdbcConnection();
 			stmt = conn.prepareStatement(this.preprocessSqlText(sqlText));
 			rs = stmt.executeQuery();
@@ -69,7 +69,7 @@ public abstract class AbstractQueryer {
 		List<ReportQueryParamItem> rows = new ArrayList<ReportQueryParamItem>();
 
 		try {
-			logger.info(sqlText);
+			logger.debug(sqlText);
 			conn = this.getJdbcConnection();
 			stmt = conn.prepareStatement(sqlText);
 			rs = stmt.executeQuery();
@@ -98,7 +98,7 @@ public abstract class AbstractQueryer {
 		ResultSet rs = null;
 
 		try {
-			logger.info(this.parameter.getSqlText());
+			logger.debug(this.parameter.getSqlText());
 			conn = this.getJdbcConnection();
 			stmt = conn.prepareStatement(this.parameter.getSqlText());
 			rs = stmt.executeQuery();
