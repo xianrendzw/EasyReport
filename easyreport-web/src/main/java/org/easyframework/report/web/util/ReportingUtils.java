@@ -41,11 +41,11 @@ public class ReportingUtils {
 		return reportingService.getByUid(uid);
 	}
 
-	public ReportDataSource getReportDataSource(ReportingPo report) {
+	public static ReportDataSource getReportDataSource(ReportingPo report) {
 		return generationService.getReportDataSource(report);
 	}
 
-	public ReportParameter getReportParameter(ReportingPo report, Map<?, ?> parameters) {
+	public static ReportParameter getReportParameter(ReportingPo report, Map<?, ?> parameters) {
 		return generationService.getReportParameter(report, parameters);
 	}
 
