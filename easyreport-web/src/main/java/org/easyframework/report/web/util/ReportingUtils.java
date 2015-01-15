@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.common.util.DateUtils;
+import org.easyframework.report.engine.data.ReportDataSource;
 import org.easyframework.report.engine.data.ReportMetaDataSet;
+import org.easyframework.report.engine.data.ReportParameter;
 import org.easyframework.report.engine.data.ReportTable;
 import org.easyframework.report.engine.query.Queryer;
 import org.easyframework.report.po.ReportingPo;
@@ -33,6 +35,18 @@ public class ReportingUtils {
 	public ReportingUtils(ReportingService reportingService, ReportingGenerationService generationService) {
 		ReportingUtils.reportingService = reportingService;
 		ReportingUtils.generationService = generationService;
+	}
+
+	public static ReportingPo getReportingPo(String uid) {
+		return reportingService.getByUid(uid);
+	}
+
+	public ReportDataSource getReportDataSource(ReportingPo report) {
+		return generationService.getReportDataSource(report);
+	}
+
+	public ReportParameter getReportParameter(ReportingPo report, Map<?, ?> parameters) {
+		return generationService.getReportParameter(report, parameters);
 	}
 
 	public static void previewByFormMap(String uid, ModelAndView modelAndView, HttpServletRequest request) {
@@ -72,22 +86,22 @@ public class ReportingUtils {
 		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
 	}
 
+	public static void generate(Queryer queryer, ReportParameter reportParameter, JSONObject jsonObject) {
+		ReportTable reportTable = generationService.getReportTable(queryer, reportParameter);
+		jsonObject.put("htmlTable", reportTable.getHtmlText());
+		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
+	}
+
+	public static void generate(ReportMetaDataSet metaDataSet, ReportParameter reportParameter, JSONObject jsonObject) {
+		ReportTable reportTable = generationService.getReportTable(metaDataSet, reportParameter);
+		jsonObject.put("htmlTable", reportTable.getHtmlText());
+		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
+	}
+
 	public static ReportTable generate(String uid, Map<?, ?> parameters) {
 		ReportingPo report = reportingService.getByUid(uid);
 		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
 		return generationService.getReportTable(report, formParams);
-	}
-
-	public static ReportTable generate(String uid, Map<?, ?> parameters, Queryer queryer) {
-		ReportingPo report = reportingService.getByUid(uid);
-		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
-		return generationService.getReportTable(report, formParams, queryer);
-	}
-
-	public static ReportTable generate(String uid, Map<?, ?> parameters, ReportMetaDataSet metaDataSet) {
-		ReportingPo report = reportingService.getByUid(uid);
-		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
-		return generationService.getReportTable(report, formParams, metaDataSet);
 	}
 
 	public static void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
