@@ -104,7 +104,7 @@ public abstract class AbstractQueryer {
 			conn = this.getJdbcConnection();
 			stmt = conn.prepareStatement(this.parameter.getSqlText());
 			rs = stmt.executeQuery();
-			return this.getMetaDataRows(rs, this.getSqlColumns(this.getMetaDataColumns()));
+			return this.getMetaDataRows(rs, this.getSqlColumns(this.parseJSONColumns()));
 		} catch (Exception ex) {
 			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
 			throw new SQLQueryException(ex);
@@ -114,7 +114,7 @@ public abstract class AbstractQueryer {
 	}
 
 	public List<ReportMetaDataColumn> getMetaDataColumns() {
-		return JSON.parseArray(this.parameter.getMetaColumns(), ReportMetaDataColumn.class);
+		return this.parseJSONColumns();
 	}
 
 	protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns) throws SQLException {
@@ -150,6 +150,10 @@ public abstract class AbstractQueryer {
 		return metaDataColumns.stream()
 				.filter(x -> x.getType() != ColumnType.COMPUTED)
 				.collect(Collectors.toList());
+	}
+
+	protected List<ReportMetaDataColumn> parseJSONColumns() {
+		return JSON.parseArray(this.parameter.getMetaColumns(), ReportMetaDataColumn.class);
 	}
 
 	/**
