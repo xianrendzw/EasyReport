@@ -21,8 +21,6 @@ import org.easyframework.report.engine.exception.SQLQueryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
-
 public abstract class AbstractQueryer {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	protected final ReportDataSource dataSource;
@@ -104,7 +102,7 @@ public abstract class AbstractQueryer {
 			conn = this.getJdbcConnection();
 			stmt = conn.prepareStatement(this.parameter.getSqlText());
 			rs = stmt.executeQuery();
-			return this.getMetaDataRows(rs, this.getSqlColumns(this.parseJSONColumns()));
+			return this.getMetaDataRows(rs, this.getSqlColumns(this.parameter.getMetaColumns()));
 		} catch (Exception ex) {
 			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
 			throw new SQLQueryException(ex);
@@ -114,7 +112,7 @@ public abstract class AbstractQueryer {
 	}
 
 	public List<ReportMetaDataColumn> getMetaDataColumns() {
-		return this.parseJSONColumns();
+		return this.parameter.getMetaColumns();
 	}
 
 	protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns) throws SQLException {
@@ -152,15 +150,12 @@ public abstract class AbstractQueryer {
 				.collect(Collectors.toList());
 	}
 
-	protected List<ReportMetaDataColumn> parseJSONColumns() {
-		return JSON.parseArray(this.parameter.getMetaColumns(), ReportMetaDataColumn.class);
-	}
-
 	/**
 	 * 预处理获取报表列集合的sql语句，
 	 * 在这里可以拦截全表查询等sql， 因为如果表的数据量很大，将会产生过多的内存消耗，甚至性能问题
 	 * 
-	 * @param sqlText 原sql语句
+	 * @param sqlText
+	 *            原sql语句
 	 * @return 预处理后的sql语句
 	 */
 	protected String preprocessSqlText(String sqlText) {

@@ -1,6 +1,7 @@
 package org.easyframework.report.engine.data;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,7 +13,7 @@ public class ReportParameter {
 	private LayoutType layout;
 	private LayoutType statColumnLayout;
 	private String sqlText;
-	private String metaColumns;
+	private List<ReportMetaDataColumn> metaColumns;
 	private Set<String> enabledStatColumns;
 	private boolean isRowSpan = true;
 
@@ -30,25 +31,25 @@ public class ReportParameter {
 	 *            报表布局形式 (1:横向;2:纵向)
 	 * @param statColumnLayout
 	 *            报表统计列或计算列布局形式 (1:横向;2:纵向)
-	 * @param sqlText
-	 *            报表sql查询语句
 	 * @param metaColumns
-	 *            JSON格式的报表元数据列集合
+	 *            报表元数据列集合
 	 * @param enabledStatColumns
 	 *            报表中启用的统计(含计算)列名集合
 	 * @param isRowSpan
 	 *            是否生成rowspan（跨行)的表格,默认为true
+	 * @param sqlText
+	 *            报表sql查询语句
 	 */
 	public ReportParameter(String id, String name, int layout, int statColumnLayout,
-			String sqlText, String metaColumns, Set<String> enabledStatColumns, boolean isRowSpan) {
+			List<ReportMetaDataColumn> metaColumns, Set<String> enabledStatColumns, boolean isRowSpan, String sqlText) {
 		this.id = id;
 		this.name = name;
 		this.layout = LayoutType.valueOf(layout);
 		this.statColumnLayout = LayoutType.valueOf(statColumnLayout);
-		this.sqlText = sqlText;
 		this.metaColumns = metaColumns;
 		this.enabledStatColumns = enabledStatColumns;
 		this.isRowSpan = isRowSpan;
+		this.sqlText = sqlText;
 	}
 
 	/**
@@ -144,21 +145,21 @@ public class ReportParameter {
 	}
 
 	/**
-	 * 获取JSON格式的报表元数据列集合
+	 * 获取报表元数据列集合
 	 * 
-	 * @return JSON字符串格式的报表元数据列集合
+	 * @return 报表元数据列集合
 	 */
-	public String getMetaColumns() {
+	public List<ReportMetaDataColumn> getMetaColumns() {
 		return this.metaColumns;
 	}
 
 	/**
-	 * 设置JSON格式的报表元数据列集合
+	 * 设置报表元数据列集合
 	 * 
 	 * @param jsonMetaColumns
-	 *            JSON字符串格式的报表元数据列集合
+	 *            报表元数据列集合
 	 */
-	public void setMetaColumns(String metaColumns) {
+	public void setMetaColumns(List<ReportMetaDataColumn> metaColumns) {
 		this.metaColumns = metaColumns;
 	}
 

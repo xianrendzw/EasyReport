@@ -40,6 +40,8 @@ import org.easyframework.report.viewmodel.HtmlTextBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 报表生成服务类
  */
@@ -99,9 +101,11 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 
 	private ReportParameter createReportParameter(ReportingPo report, Map<String, Object> formParams) {
 		String sqlText = new ReportSqlTemplate(report.getSqlText(), formParams).execute();
-		Set<String> displayedStatColumns = this.getEnabledStatColumns(formParams);
-		return new ReportParameter(report.getId().toString(), report.getName(), report.getLayout(), report.getStatColumnLayout(),
-				sqlText, report.getMetaColumns(), displayedStatColumns, Boolean.valueOf(formParams.get("isRowSpan").toString()));
+		Set<String> enabledStatColumn = this.getEnabledStatColumns(formParams);
+		List<ReportMetaDataColumn> metaColumns = JSON.parseArray(report.getMetaColumns(), ReportMetaDataColumn.class);
+		return new ReportParameter(report.getId().toString(), report.getName(),
+				report.getLayout(), report.getStatColumnLayout(), metaColumns,
+				enabledStatColumn, Boolean.valueOf(formParams.get("isRowSpan").toString()), sqlText);
 	}
 
 	private Set<String> getEnabledStatColumns(Map<String, Object> formParams) {
