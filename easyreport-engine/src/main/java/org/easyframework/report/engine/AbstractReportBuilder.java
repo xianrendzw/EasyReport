@@ -43,12 +43,14 @@ public abstract class AbstractReportBuilder {
 			this.tableRows.append("<tr class=\"easyreport-header\">");
 			if (rowIndex == 0) {
 				for (ReportDataColumn leftColumn : leftFixedColumns) {
-					this.tableRows.append(String.format("<th%s>%s</th>", rowSpan, leftColumn.getText()));
+					this.tableRows.append(String.format("<th title=\"%s\"%s>%s</th>",
+							leftColumn.getMetaData().getComment(), rowSpan, leftColumn.getText()));
 				}
 			}
 			for (ColumnTreeNode rightColumn : rightColumnTree.getNodesByLevel(rowIndex)) {
 				String colSpan = rightColumn.getSpans() > 1 ? String.format(" colspan=\"%s\"", rightColumn.getSpans()) : "";
-				this.tableRows.append(String.format("<th%s>%s</th>", colSpan, rightColumn.getValue()));
+				this.tableRows.append(String.format("<th title=\"%s\"%s>%s</th>",
+						rightColumn.getColumn().getMetaData().getComment(), colSpan, rightColumn.getValue()));
 			}
 			this.tableRows.append("</tr>");
 		}

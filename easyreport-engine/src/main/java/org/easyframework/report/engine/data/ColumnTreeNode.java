@@ -18,6 +18,11 @@ public class ColumnTreeNode {
 	private ReportDataColumn column;
 	private final List<ColumnTreeNode> children = new ArrayList<ColumnTreeNode>(0);
 
+	public ColumnTreeNode(ReportDataColumn column) {
+		this(column.getName(), column.getText(), column.getText());
+		this.column = column;
+	}
+
 	public ColumnTreeNode(String name, String text, String value) {
 		this(name, text, value, null);
 	}

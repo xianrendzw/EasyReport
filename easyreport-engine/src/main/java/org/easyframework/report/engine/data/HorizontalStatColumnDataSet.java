@@ -1,6 +1,5 @@
 package org.easyframework.report.engine.data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,49 +54,6 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 	}
 
 	@Override
-	public ColumnTree getLayoutColumnTree() {
-		if (this.layoutColumnTree != null) {
-			return this.layoutColumnTree;
-		}
-		this.layoutColumnTree = this.buildColumnTreeByLevel(this.getLayoutColumns(), true);
-		return this.layoutColumnTree;
-	}
-
-	@Override
-	public ColumnTree getDimColumnTree() {
-		if (this.dimColumnTree != null) {
-			return this.dimColumnTree;
-		}
-
-		int depth = this.getDimColumnCount();
-		// 无维度列则直接设置树只有一个节点
-		if (depth == 0) {
-			List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
-			roots.add(new ColumnTreeNode("", "", ""));
-			this.dimColumnTree = new ColumnTree(roots, 1);
-			this.dimColumnTree.setLeafNodes(roots);
-			return this.dimColumnTree;
-		}
-
-		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(), true);
-		return this.dimColumnTree;
-	}
-
-	@Override
-	public List<ReportDataColumn> getDimColumns() {
-		if (this.dimColumns != null) {
-			return this.dimColumns;
-		}
-
-		this.dimColumns = new ArrayList<ReportDataColumn>();
-		List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
-		for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-			this.dimColumns.add(this.createColumn(metaDataColumn));
-		}
-		return this.dimColumns;
-	}
-
-	@Override
 	public boolean isHideStatColumn() {
 		if (this.getEnabledStatColumns().size() == 1) {
 			// 如果布局列横向显示
@@ -127,7 +83,7 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 	private ColumnTree getVerticalLayoutHeaderColumnTree() {
 		ColumnTree statColumnTree = this.getStatColumnTree();
 
-		// 无维度列则表头列直接设置为统计列
+		// 如果右边没有维度列则表头列直接设置为统计列
 		if (this.getDimColumnCount() == 0) {
 			this.setTreeNodeSpansAndDepth(statColumnTree.getRoots(), false, this.getEnabledStatColumns());
 			this.headerColumnTree = new ColumnTree(statColumnTree.getRoots(), statColumnTree.getDepth());

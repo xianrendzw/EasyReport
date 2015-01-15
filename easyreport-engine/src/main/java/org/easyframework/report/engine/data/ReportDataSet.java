@@ -104,20 +104,6 @@ public abstract class ReportDataSet {
 	public abstract List<ColumnTreeNode> getBodyRightColumnNodes();
 
 	/**
-	 * 获取布局列树
-	 * 
-	 * @return ColumnTree
-	 */
-	public abstract ColumnTree getLayoutColumnTree();
-
-	/**
-	 * 获取维度列树
-	 * 
-	 * @return ColumnTree {@link ColumnTree}
-	 */
-	public abstract ColumnTree getDimColumnTree();
-
-	/**
 	 * 是否在报表中隐藏统计列
 	 * 当统计列只有一列时,如果维度列大于0,则不显示出统计列，只显示布局列或维度列
 	 * 
@@ -126,11 +112,42 @@ public abstract class ReportDataSet {
 	public abstract boolean isHideStatColumn();
 
 	/**
-	 * 获取报表所有维度列列表
+	 * 获取布局列树
 	 * 
-	 * @return {@link List<ReportDataColumn>}
+	 * @return ColumnTree
 	 */
-	public abstract List<ReportDataColumn> getDimColumns();
+	public ColumnTree getLayoutColumnTree() {
+		if (this.layoutColumnTree != null) {
+			return this.layoutColumnTree;
+		}
+		this.layoutColumnTree = this.buildColumnTreeByLevel(this.getLayoutColumns(), true);
+		return this.layoutColumnTree;
+	}
+
+	/**
+	 * 获取维度列树
+	 * 
+	 * @return ColumnTree {@link ColumnTree}
+	 */
+	public ColumnTree getDimColumnTree() {
+		if (this.dimColumnTree != null) {
+			return this.dimColumnTree;
+		}
+
+		int depth = this.getDimColumnCount();
+		// 无维度列则直接设置树只有一个节点
+		if (depth == 0) {
+			List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
+			ReportDataColumn column = new ReportDataColumn(new ReportMetaDataColumn("stat_value", "值", ColumnType.DIMENSION));
+			roots.add(new ColumnTreeNode(column));
+			this.dimColumnTree = new ColumnTree(roots, 1);
+			this.dimColumnTree.setLeafNodes(roots);
+			return this.dimColumnTree;
+		}
+
+		this.dimColumnTree = this.buildColumnTreeByLevel(this.getDimColumns(), true);
+		return this.dimColumnTree;
+	}
 
 	/**
 	 * 获取报表统计列树
@@ -172,10 +189,28 @@ public abstract class ReportDataSet {
 
 			this.layoutColumns = new ArrayList<ReportDataColumn>();
 			for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-				this.layoutColumns.add(this.createColumn(metaDataColumn));
+				this.layoutColumns.add(new ReportDataColumn(metaDataColumn));
 			}
 		}
 		return this.layoutColumns;
+	}
+
+	/**
+	 * 获取报表所有维度列列表
+	 * 
+	 * @return {@link List<ReportDataColumn>}
+	 */
+	public List<ReportDataColumn> getDimColumns() {
+		if (this.dimColumns != null) {
+			return this.dimColumns;
+		}
+
+		this.dimColumns = new ArrayList<ReportDataColumn>();
+		List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
+		for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
+			this.dimColumns.add(new ReportDataColumn(metaDataColumn));
+		}
+		return this.dimColumns;
 	}
 
 	/**
@@ -229,7 +264,7 @@ public abstract class ReportDataSet {
 		this.statColumns = new ArrayList<ReportDataColumn>();
 		List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getStatColumns();
 		for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-			this.statColumns.add(this.createColumn(metaDataColumn));
+			this.statColumns.add(new ReportDataColumn(metaDataColumn));
 		}
 		return this.statColumns;
 	}
@@ -407,10 +442,6 @@ public abstract class ReportDataSet {
 			}
 		}
 		return depthTreeNodes;
-	}
-
-	protected ReportDataColumn createColumn(ReportMetaDataColumn metaDataColumn) {
-		return new ReportDataColumn(metaDataColumn);
 	}
 
 	protected ColumnTreeNode createColumnTreeNode(ReportMetaDataRow metaDataRow, List<ReportDataColumn> columns,

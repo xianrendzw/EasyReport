@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.easyframework.report.engine.data.ColumnTree;
 import org.easyframework.report.engine.data.ColumnTreeNode;
+import org.easyframework.report.engine.data.ReportDataCell;
 import org.easyframework.report.engine.data.ReportDataColumn;
 import org.easyframework.report.engine.data.ReportDataRow;
 import org.easyframework.report.engine.data.ReportDataSet;
@@ -49,7 +50,7 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
 					statRow = new ReportDataRow();
 				}
 				for (ReportDataColumn statColumn : statColumns) {
-					Object cell = statRow.getCell(statColumn.getName());
+					ReportDataCell cell = statRow.getCell(statColumn.getName());
 					String value = (cell == null) ? "" : cell.toString();
 					this.tableRows.append("<td>").append(value).append("</td>");
 				}
