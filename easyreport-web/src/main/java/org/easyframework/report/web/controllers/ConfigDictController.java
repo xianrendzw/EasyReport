@@ -80,7 +80,7 @@ public class ConfigDictController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/batchremove")
+	@RequestMapping(value = "/batchRemove")
 	@ResponseBody
 	public JsonResult remove(String ids) {
 		JsonResult result = new JsonResult(false, "");
@@ -102,8 +102,7 @@ public class ConfigDictController extends AbstractController {
 			id = 0;
 
 		List<ConfigDictPo> configDicts = this.configDictService.getDao().queryByPid(id);
-		List<TreeNode<ConfigDictPo>> treeNodes = new ArrayList<TreeNode<ConfigDictPo>>(
-				configDicts.size());
+		List<TreeNode<ConfigDictPo>> treeNodes = new ArrayList<TreeNode<ConfigDictPo>>(configDicts.size());
 
 		for (ConfigDictPo po : configDicts) {
 			String configId = Integer.toString(po.getId());

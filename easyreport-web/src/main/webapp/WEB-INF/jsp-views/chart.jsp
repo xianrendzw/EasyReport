@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp-views/frame/pageInclude.jsp"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>${name}-报表展示图</title>
-<%@ include file="/WEB-INF/jsp-views/frame/pageHeader.jsp"%>
+<%@ include file="/WEB-INF/jsp-views/includes/header.jsp"%>
+<%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp"%>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/echarts/esl.js"></script>
+<script src="<%=request.getContextPath()%>/assets/modules/report/js/chart.js?v=<%=Math.random()%>"></script>
 </head>
 <body>
 	<div id="loading"
@@ -61,5 +64,3 @@
 	<div id="chart1" style="height: 345px; border: 1px solid #ccc;">${message}</div>
 </body>
 </html>
-<script src="<%=request.getContextPath()%>/static/frame/echarts/esl.js"></script>
-<script src="<%=request.getContextPath()%>/static/report/js/chart.js?v=<%=Math.random()%>"></script>

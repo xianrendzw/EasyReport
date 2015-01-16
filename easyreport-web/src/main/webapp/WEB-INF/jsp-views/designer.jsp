@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp-views/frame/pageInclude.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>报表管理</title>
-<%@ include file="/WEB-INF/jsp-views/frame/pageHeader.jsp"%>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/report/js/designer.js?v=<%=Math.random()%>"></script>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/codemirror.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/theme/rubyblue.css" />
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/static/frame/codemirror/addon/display/fullscreen.css" />
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/codemirror.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/mode/sql/sql.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/static/frame/codemirror/addon/display/fullscreen.js"></script>
+<%@ include file="/WEB-INF/jsp-views/includes/header.jsp"%>
+<%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp"%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/codemirror.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/theme/rubyblue.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/show-hint.css" />
+<script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/codemirror.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/mode/sql/sql.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/display/fullscreen.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/show-hint.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/sql-hint.js"></script>
+<script src="<%=request.getContextPath()%>/assets/modules/report/js/designer.js?v=<%=Math.random()%>"></script>
 </head>
 <body id="layout" class="easyui-layout" style="text-align: left">
 	<!-- 左边tree -->
@@ -68,9 +70,8 @@
 								class="easyui-linkbutton" icon="icon-add" onclick="javascript:Reporting.save()">新增</a> &nbsp;&nbsp; <a id="reportingEditBtn"
 								href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:Reporting.save()">修改</a>&nbsp;&nbsp; <a
 								id="reportingPreviewBtn" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview"
-								onclick="javascript:Reporting.previewInNewTab()">报表预览</a>&nbsp;&nbsp; <a
-								id="reportingFullScreenBtn" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview"
-								onclick="javascript:Reporting.previewInNewTab()">全屏编辑</a></td>
+								onclick="javascript:Reporting.previewInNewTab()">报表预览</a>&nbsp;&nbsp; <a id="reportingFullScreenBtn" href="javascript:void(0)"
+								class="easyui-linkbutton" icon="icon-preview" onclick="javascript:Reporting.previewInNewTab()">全屏编辑</a></td>
 						</tr>
 						<tr>
 							<td id="sqlColumnGridTd" colspan="8"><div id="sqlColumnGrid" title="SQL列配置"></div></td>
