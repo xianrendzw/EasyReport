@@ -5,7 +5,6 @@ package org.easyframework.report.engine.data;
  */
 public class ReportDataColumn {
 	private String parentName;
-	private int ordinal;
 	private final ReportMetaDataColumn metaDataColumn;
 
 	public ReportDataColumn(ReportMetaDataColumn metaDataColumn) {
@@ -64,23 +63,5 @@ public class ReportDataColumn {
 	 */
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
-	}
-
-	/**
-	 * 获取报表列在当前集合中的顺序(从1开始)
-	 * 
-	 * @return 报表列在当前集合中的顺序
-	 */
-	public int getOrdinal() {
-		return this.ordinal;
-	}
-
-	/**
-	 * 获取报表列在当前集合中的顺序
-	 * 
-	 * @return 报表列在当前集合中的顺序(从1开始)
-	 */
-	public void setOrdinal(int ordinal) {
-		this.ordinal = ordinal;
 	}
 }

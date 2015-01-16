@@ -25,10 +25,12 @@ public abstract class AbstractQueryer {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	protected final ReportDataSource dataSource;
 	protected final ReportParameter parameter;
+	protected final List<ReportMetaDataColumn> metaDataColumns;
 
 	protected AbstractQueryer(ReportDataSource dataSource, ReportParameter parameter) {
 		this.dataSource = dataSource;
 		this.parameter = parameter;
+		this.metaDataColumns = new ArrayList<ReportMetaDataColumn>(this.parameter.getMetaColumns());
 	}
 
 	public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {
@@ -112,7 +114,7 @@ public abstract class AbstractQueryer {
 	}
 
 	public List<ReportMetaDataColumn> getMetaDataColumns() {
-		return this.parameter.getMetaColumns();
+		return this.metaDataColumns;
 	}
 
 	protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns) throws SQLException {

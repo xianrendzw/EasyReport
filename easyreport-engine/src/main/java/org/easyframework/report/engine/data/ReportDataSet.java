@@ -350,13 +350,13 @@ public abstract class ReportDataSet {
 			for (ReportDataColumn statColumn : statColumns) {
 				Object value = metaDataRow.getCellValue(statColumn.getName());
 				dataRow.add(new ReportDataCell(statColumn, statColumn.getName(), value));
-				exprContext.put("c" + statColumn.getOrdinal(), value);
+				exprContext.put("c" + statColumn.getMetaData().getOrdinal(), value);
 				exprContext.put(statColumn.getName(), value);
 			}
 			for (ReportDataColumn column : computedColumns) {
 				Object value = AviatorExprUtils.execute(column.getMetaData().getExpression(), exprContext);
 				dataRow.getCell(column.getName()).setValue(value);
-				exprContext.put("c" + column.getOrdinal(), value);
+				exprContext.put("c" + column.getMetaData().getOrdinal(), value);
 				exprContext.put(column.getName(), value);
 			}
 			dataRowMap.put(key, dataRow);

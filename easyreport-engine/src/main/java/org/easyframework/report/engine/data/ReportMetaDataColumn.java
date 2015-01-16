@@ -8,6 +8,7 @@ package org.easyframework.report.engine.data;
  * 报表元数据列类
  */
 public class ReportMetaDataColumn {
+	private int ordinal;
 	private String name;
 	private String text;
 	private String dataType;
@@ -32,6 +33,24 @@ public class ReportMetaDataColumn {
 		this.name = name;
 		this.text = text;
 		this.type = type;
+	}
+
+	/**
+	 * 获取报表元数据列的顺序(从1开始)
+	 * 
+	 * @return 报表元数据列的顺序
+	 */
+	public int getOrdinal() {
+		return this.ordinal;
+	}
+
+	/**
+	 * 设置报表元数据列的顺序
+	 * 
+	 * @return 报表元数据列的顺序(从1开始)
+	 */
+	public void setOrdinal(int ordinal) {
+		this.ordinal = ordinal;
 	}
 
 	/**
