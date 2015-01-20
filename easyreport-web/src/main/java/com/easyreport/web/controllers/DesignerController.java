@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,10 +51,10 @@ public class DesignerController extends AbstractController {
 
 	@RequestMapping(value = { "", "/", "/index" })
 	public String home() {
-		return "/designer";
+		return "report/designer";
 	}
 
-	@RequestMapping(value = "/listchildnodes")
+	@RequestMapping(value = "/listChildNodes")
 	@ResponseBody
 	public List<TreeNode<ReportingPo>> listChildNodes(Integer id, HttpServletRequest request) {
 		if (id == null) {
@@ -74,7 +74,7 @@ public class DesignerController extends AbstractController {
 		return treeNodes;
 	}
 
-	@RequestMapping(value = "/loadsqlcolumns")
+	@RequestMapping(value = "/loadSqlColumns")
 	@ResponseBody
 	public ParamJsonResult<List<ReportMetaDataColumn>> loadSqlColumns(Integer dsId, String sqlText, String jsonQueryParams, HttpServletRequest request) {
 		ParamJsonResult<List<ReportMetaDataColumn>> result = new ParamJsonResult<List<ReportMetaDataColumn>>(false, "");
@@ -92,7 +92,7 @@ public class DesignerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/viewsqltext")
+	@RequestMapping(value = "/viewSqlText")
 	@ResponseBody
 	public ParamJsonResult<String> viewSqlText(Integer dsId, String sqlText, Integer dataRange, String jsonQueryParams, HttpServletRequest request) {
 		ParamJsonResult<String> result = new ParamJsonResult<String>(false, "");
@@ -125,7 +125,7 @@ public class DesignerController extends AbstractController {
 		return VelocityUtils.prase(sqlText, formParameters);
 	}
 
-	@RequestMapping(value = "/getsqlcolumn")
+	@RequestMapping(value = "/getSqlColumn")
 	@ResponseBody
 	public ReportMetaDataColumn getSqlColumn() {
 		ReportMetaDataColumn sqlColumnPo = new ReportMetaDataColumn();
@@ -136,9 +136,9 @@ public class DesignerController extends AbstractController {
 		return sqlColumnPo;
 	}
 
-	@RequestMapping(value = "/getallhistorysql")
+	@RequestMapping(value = "/getHistorySqlText")
 	@ResponseBody
-	public Map<String, Object> getAllHistorySql(Integer page, Integer rows, Integer reportId, HttpServletRequest request) {
+	public Map<String, Object> getHistorySqlText(Integer page, Integer rows, Integer reportId, HttpServletRequest request) {
 		if (reportId == null)
 			reportId = 0;
 		if (page == null)
@@ -158,7 +158,7 @@ public class DesignerController extends AbstractController {
 		return modelMap;
 	}
 
-	@RequestMapping(value = "/addtreenode")
+	@RequestMapping(value = "/addTreeNode")
 	@ResponseBody
 	public ParamJsonResult<List<TreeNode<ReportingPo>>> addTreeNode(ReportingPo po, HttpServletRequest request) {
 		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false, "");
@@ -178,7 +178,7 @@ public class DesignerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edittreenode")
+	@RequestMapping(value = "/editTreeNode")
 	@ResponseBody
 	public ParamJsonResult<TreeNode<ReportingPo>> editTreeNode(ReportingPo po, HttpServletRequest request) {
 		ParamJsonResult<TreeNode<ReportingPo>> result = new ParamJsonResult<TreeNode<ReportingPo>>(false, "");
@@ -195,7 +195,7 @@ public class DesignerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/dragtreenode")
+	@RequestMapping(value = "/dragTreeNode")
 	@ResponseBody
 	public JsonResult dragTreeNode(Integer sourceId, Integer targetId, Integer sourcePid, HttpServletRequest request) {
 		JsonResult result = new JsonResult(false, "");
@@ -209,7 +209,7 @@ public class DesignerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/pastetreenode")
+	@RequestMapping(value = "/pasteTreeNode")
 	@ResponseBody
 	public ParamJsonResult<List<TreeNode<ReportingPo>>> pasteTreeNode(Integer sourceId, Integer targetId,
 			HttpServletRequest request) {
@@ -239,7 +239,7 @@ public class DesignerController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/clonetreenode")
+	@RequestMapping(value = "/cloneTreeNode")
 	@ResponseBody
 	public JsonResult cloneTreeNode(Integer sourceId, Integer targetId, Integer dsId, HttpServletRequest request) {
 		JsonResult result = new JsonResult(false, "");
@@ -353,7 +353,7 @@ public class DesignerController extends AbstractController {
 		return modelMap;
 	}
 
-	@RequestMapping(value = "/setqueryparam")
+	@RequestMapping(value = "/setQueryParam")
 	@ResponseBody
 	public ParamJsonResult<TreeNode<ReportingPo>> setQueryParam(Integer id, String jsonQueryParams, HttpServletRequest request) {
 		ParamJsonResult<TreeNode<ReportingPo>> result = new ParamJsonResult<TreeNode<ReportingPo>>(false, "");
@@ -401,7 +401,7 @@ public class DesignerController extends AbstractController {
 		return modelMap;
 	}
 
-	@RequestMapping(value = "/listallchildnodes")
+	@RequestMapping(value = "/listAllChildNodes")
 	@ResponseBody
 	public List<TreeNode<ReportingPo>> listAllChildNodes() {
 		List<TreeNode<ReportingPo>> roots = new ArrayList<TreeNode<ReportingPo>>();

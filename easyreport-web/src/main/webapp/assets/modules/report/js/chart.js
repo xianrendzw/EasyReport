@@ -16,7 +16,7 @@ ReportChart.metaData = null;
 ReportChart.generate = function(e) {
 	$.ajax({
 		type : "POST",
-		url : XFrame.getContextPath() + '/report/chart/getdata',
+		url : WebAppRequest.getContextPath() + '/report/chart/getdata',
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
@@ -120,7 +120,7 @@ ReportChart.checkCanSelectAllDimCount = function() {
 ReportChart.setDefaultDim = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var canSelectAllDimCount = ReportChart.getCanSelectAllDimCount();
-	for ( var i = 0; i < dimColumns.length; i++) {
+	for (var i = 0; i < dimColumns.length; i++) {
 		if (i < canSelectAllDimCount) {
 			continue;
 		}
@@ -176,7 +176,7 @@ ReportChart.getDisplayStatColumns = function() {
 ReportChart.isExistAllOption = function() {
 	var exists = false;
 	var dimColumns = ReportChart.metaData.dimColumns;
-	for ( var i = dimColumns.length - 1; i >= 0; i--) {
+	for (var i = dimColumns.length - 1; i >= 0; i--) {
 		id = "#dim_" + dimColumns[i].name;
 		var value = $(id).val();
 		if (value == "all") {
@@ -193,7 +193,7 @@ ReportChart.isSelectMutiAll = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var canSelectAllDimCount = ReportChart.getCanSelectAllDimCount();
 	var count = 0;
-	for ( var i = 0; i < dimColumns.length; i++) {
+	for (var i = 0; i < dimColumns.length; i++) {
 		id = "#dim_" + dimColumns[i].name;
 		var value = $(id).val();
 		if (value == "all") {
@@ -207,7 +207,7 @@ ReportChart.setShowDimOptions = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var exist = ReportChart.isExistAllOption();
 	$('#showDim').empty();
-	for ( var i = 0; i < dimColumns.length; i++) {
+	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
 		var value = $(id).val();
 		if (!exist || (exist && value == "all")) {
@@ -229,8 +229,7 @@ ReportChart.getSecondAllDimName = function() {
 };
 
 ReportChart.hasSecondAllDim = function() {
-	return (ReportChart.getCheckedStatColumnCount() == 1 && ReportChart.isExistAllOption() && $("#showDim option")
-			.size() == 2);
+	return (ReportChart.getCheckedStatColumnCount() == 1 && ReportChart.isExistAllOption() && $("#showDim option").size() == 2);
 };
 
 ReportChart.checkedAllStatColumn = function() {
@@ -251,7 +250,7 @@ ReportChart.toChartData = function(chartType) {
 ReportChart.getTitle = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var names = [];
-	for ( var i = 0; i < dimColumns.length; i++) {
+	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
 		var text = dimColumns[i].text + ":" + $(id).find("option:selected").text();
 		names.push(text);
@@ -321,7 +320,7 @@ ReportChart.getCategory = function() {
 ReportChart.getSeries = function(chartType) {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var keyValues = [];
-	for ( var i = 0; i < dimColumns.length; i++) {
+	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
 		var value = $(id).val();
 		if (value == "all") {
@@ -334,7 +333,7 @@ ReportChart.getSeries = function(chartType) {
 	var legends = ReportChart.getLegends();
 	var categoryName = "#{" + category.name + "}";
 	var series = [];
-	for ( var j = 0; j < legends.length; j++) {
+	for (var j = 0; j < legends.length; j++) {
 		series.push({
 			name : legends[j].text,
 			type : chartType,
@@ -345,9 +344,9 @@ ReportChart.getSeries = function(chartType) {
 	if (ReportChart.hasSecondAllDim()) {
 		var secondAllDimName = "#{" + ReportChart.getSecondAllDimName() + "}";
 		var statColumnName = ReportChart.getCheckedStatColumn().name;
-		for ( var i = 0; i < category.data.length; i++) {
+		for (var i = 0; i < category.data.length; i++) {
 			var tempKey = keyTemplate.replace(categoryName, category.data[i].replace('$', '*'));
-			for ( var j = 0; j < legends.length; j++) {
+			for (var j = 0; j < legends.length; j++) {
 				var key = tempKey.replace(secondAllDimName, legends[j].text.replace('$', '*'));
 				var row = ReportChart.metaData.dataRows[key];
 				series[j].data.push(row ? row[statColumnName] : 0);
@@ -356,10 +355,10 @@ ReportChart.getSeries = function(chartType) {
 		return series;
 	}
 
-	for ( var i = 0; i < category.data.length; i++) {
+	for (var i = 0; i < category.data.length; i++) {
 		var key = keyTemplate.replace(categoryName, category.data[i].replace('$', '*'));
 		var row = ReportChart.metaData.dataRows[key];
-		for ( var j = 0; j < legends.length; j++) {
+		for (var j = 0; j < legends.length; j++) {
 			var columnName = legends[j].name;
 			series[j].data.push(row ? row[columnName] : 0);
 		}

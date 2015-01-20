@@ -42,7 +42,7 @@
 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
-		<url-pattern>/static/*</url-pattern>
+		<url-pattern>/assets/*</url-pattern>
 	</servlet-mapping>
 
 	<error-page>
@@ -57,10 +57,10 @@
 		<error-code>500</error-code>
 		<location>/error/500</location>
 	</error-page>
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/error/500</location>
-	</error-page>
+	<error-page>  
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/500</location>  
+    </error-page>  
 	<session-config>
 		<session-timeout>-1</session-timeout>
 		<tracking-mode>COOKIE</tracking-mode>

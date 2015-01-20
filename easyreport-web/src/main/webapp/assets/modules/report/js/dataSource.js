@@ -1,4 +1,4 @@
-var dsPageRootUrl = XFrame.getContextPath() + '/report/ds/';
+var dsPageRootUrl = WebAppRequest.getContextPath() + '/report/ds/';
 $(function() {
 	// 数据源grid
 	$('#datasourceGrid').datagrid({
@@ -14,15 +14,15 @@ $(function() {
 		toolbar : [ {
 			text : '增加',
 			iconCls : 'icon-add',
-			handler : Datasource.add
+			handler : DataSource.add
 		}, '-', {
 			text : '修改',
 			iconCls : 'icon-edit',
-			handler : Datasource.edit
+			handler : DataSource.edit
 		}, '-', {
 			text : '删除',
 			iconCls : 'icon-remove',
-			handler : Datasource.remove
+			handler : DataSource.remove
 		} ],
 		frozenColumns : [ [ {
 			field : 'ck',
@@ -61,20 +61,19 @@ $(function() {
 			title : '操作',
 			width : 300,
 			formatter : function(value, row, index) {
-				return Datasource.optionsFormatter(value, row, index);
+				return DataSource.optionsFormatter(value, row, index);
 			}
 		} ] ],
 		onDblClickRow : function(index, row) {
-			Datasource.edit();
+			DataSource.edit();
 		}
 	});
 
-	
 	// 初始化数据源dialog
 	$('#checkDlg').dialog({
 		closed : true,
 		modal : true,
-		buttons : [  {
+		buttons : [ {
 			text : '关闭',
 			iconCls : 'icon-no',
 			handler : function() {
@@ -82,9 +81,7 @@ $(function() {
 			}
 		} ]
 	});
-	
-	
-	
+
 	$('#datasourceDlg').dialog({
 		closed : true,
 		modal : true,
@@ -92,7 +89,7 @@ $(function() {
 			text : '测试连接',
 			iconCls : 'icon-search',
 			handler : function() {
-				Datasource.testConnection();
+				DataSource.testConnection();
 			}
 		}, {
 			text : '关闭',
@@ -103,48 +100,46 @@ $(function() {
 		}, {
 			text : '保存',
 			iconCls : 'icon-save',
-			handler : Datasource.save
+			handler : DataSource.save
 		} ]
 	});
 });
 
-var Datasource = function() {
+var DataSource = function() {
 };
 
 // 数据源增删改操作
-Datasource.add = function() {
+DataSource.add = function() {
 	ReportCommon.add('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceId', '新增数据源配置');
 };
 
-Datasource.edit = function() {
-	ReportCommon.edit('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', '#datasourceId',
-			'修改数据源配置');
+DataSource.edit = function() {
+	ReportCommon.edit('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', '#datasourceId', '修改数据源配置');
 };
 
-Datasource.remove = function() {
-	ReportCommon.removeWithActUrl('#datasourceGrid', dsPageRootUrl + 'query',dsPageRootUrl + 'remove');
+DataSource.remove = function() {
+	ReportCommon.removeWithActUrl('#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl + 'remove');
 };
 
-Datasource.batchRemove = function() {
-	ReportCommon.batchRemoveWithActUrl('#datasourceGrid', dsPageRootUrl + 'query',dsPageRootUrl + 'remove');
+DataSource.batchRemove = function() {
+	ReportCommon.batchRemoveWithActUrl('#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl + 'remove');
 };
 
-Datasource.save = function() {
-	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', dsPageRootUrl + 'query',
-			dsPageRootUrl + '');
+DataSource.save = function() {
+	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl
+			+ '');
 };
 
-Datasource.optionsFormatter = function(value, row, index) {
-	var path = XFrame.getContextPath() + '/static/report/icons/connect.png';
-	return '<a href="#" title="测试连接" onclick="javascript:Datasource.applyConnection(' + index + ')"><img src="' + path
-			+ '" alt="测试连接"/"></a>';
+DataSource.optionsFormatter = function(value, row, index) {
+	var path = WebAppRequest.getContextPath() + '/assets/modules/report/icons/connect.png';
+	return '<a href="#" title="测试连接" onclick="javascript:DataSource.applyConnection(' + index + ')"><img src="' + path + '" alt="测试连接"/"></a>';
 };
 
-Datasource.applyConnection = function(index) {
+DataSource.applyConnection = function(index) {
 	$('#datasourceGrid').datagrid('selectRow', index);
 	var row = $('#datasourceGrid').datagrid('getSelected');
 
-	$.post(dsPageRootUrl + 'testconnection', {
+	$.post(dsPageRootUrl + 'testConnection', {
 		url : row.jdbcUrl,
 		pass : row.password,
 		user : row.user
@@ -157,8 +152,8 @@ Datasource.applyConnection = function(index) {
 	}, 'json');
 };
 
-Datasource.testConnection = function() {
-	$.post(dsPageRootUrl + 'testconnection', {
+DataSource.testConnection = function() {
+	$.post(dsPageRootUrl + 'testConnection', {
 		url : $("#configJdbcUrl").val(),
 		pass : $("#configPassword").val(),
 		user : $("#configUser").val()

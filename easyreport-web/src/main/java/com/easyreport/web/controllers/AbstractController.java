@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.easyframework.report.common.viewmodel.JsonResult;

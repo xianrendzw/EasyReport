@@ -14,77 +14,83 @@
 <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/display/fullscreen.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/show-hint.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/sql-hint.js"></script>
+<script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
 <script src="<%=request.getContextPath()%>/assets/modules/report/js/designer.js?v=<%=Math.random()%>"></script>
 </head>
 <body id="layout" class="easyui-layout" style="text-align: left">
-	<!-- 左边tree -->
-	<div id="west" region="west" border="false" split="true" title=" " style="width: 250px; padding: 5px; cursor: pointer;">
-		<ul id="reportingTree"></ul>
+	<!-- 左边树控件 -->
+	<div id="west" region="west" border="false" split="true" title=" " style="width: 250px; padding: 5px;">
+		<ul id="reportTree"></ul>
 		<input type="hidden" id="copyNodeId" name="copyNodeId" value="0" />
 	</div>
-	<!-- 右边tabs -->
+	<!-- 右边tab控件 -->
 	<div region="center" border="false">
 		<div id="tabs" class="easyui-tabs" fit="true" border="false" plain="true">
-			<div id="reportingTab" title="报表配置" style="padding: 5px;">
-				<form id="reportingForm" method="post">
-					<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
+			<div id="settingsTab" title="基本设置" style="padding: 5px;">
+				<form id="settingsForm" method="post">
+					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 						<tr>
-							<td class="text_r blueside">报表名称:</td>
-							<td><input type="text" id="reportingName" name="name" style="width: 99%;" /></td>
+							<td class="text_r blueside">名称:</td>
+							<td><input type="text" id="reportName" name="name" /></td>
 							<td class="text_r blueside" width="60">数据源:</td>
-							<td><input id="reportingDsId" name="dsId" /></td>
+							<td><input id="reportDsId" name="dsId" /></td>
 							<td class="text_r blueside">布局列:</td>
-							<td><select id="reportingLayout" name="layout">
+							<td><select id="reportLayout" name="layout">
 									<option value="1">横向展示</option>
 									<option value="2">纵向展示</option>
-							</select></td>
+								</select>
+							</td>
 							<td class="text_r blueside">统计列:</td>
-							<td><select id="reportingStatColumnLayout" name="statColumnLayout">
+							<td><select id="reportStatColumnLayout" name="statColumnLayout">
 									<option value="1">横向展示</option>
 									<option value="2">纵向展示</option>
-							</select></td>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="text_r blueside">显示几天数据:</td>
-							<td><input type="text" id="reportingDataRange" name="dataRange" value="7" /></td>
+							<td><input type="text" id="reportDataRange" name="dataRange" value="7" /></td>
 							<td class="text_r blueside">状态:</td>
-							<td><select id="reportingStatus" name="status">
+							<td><select id="reportStatus" name="status">
 									<option value="0">编辑</option>
 									<option value="1">锁定</option>
 									<option value="2">隐藏</option>
-							</select></td>
+								</select>
+							</td>
 							<td class="text_r blueside">显示顺序:</td>
-							<td colspan="3"><input type="text" id="reportingSequence" name="sequence" value="100" /><input id="reportingId" type="hidden" name="id"
-								value="0" /> <input id="reportingAction" type="hidden" name="action" value="add" /><input type="hidden" id="reportingUid" name="uid" /> <input
-								type="hidden" id="reportingPid" name="pid" value="0" /><input type="hidden" id="reportingIsChange" name="isChange" value="0" /></td>
+							<td colspan="3">
+								<input type="text" id="reportSequence" name="sequence" value="100" />
+								<input type="hidden" id="reportId"  name="id" value="0" /> 
+								<input type="hidden" id="reportAction" name="action" value="add" />
+								<input type="hidden" id="reportUid" name="uid" />
+								<input type="hidden" id="reportPid" name="pid" value="0" />
+							    <input type="hidden" id="reportIsChange" name="isChange" value="0" />
+						    </td>
 						</tr>
 						<tr>
-							<td class="text_r blueside top">报表SQL:</td>
-							<td id="reportingSqlTextTd" colspan="7"><textarea id="reportingSqlText" name="sqlText"></textarea></td>
+							<td class="text_r blueside top">SQL语句:</td>
+							<td id="reportSqlTextTd" colspan="7"><textarea id="reportSqlText" name="sqlText"></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="6" style="text-align: center;"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok"
-								onclick="javascript:Reporting.executeSql()">执行SQL</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton"
-								onclick="javascript:Reporting.viewSqlText()">预览SQL</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton"
-								onclick="javascript:Reporting.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;<a id="reportingNewBtn" href="javascript:void(0)"
-								class="easyui-linkbutton" icon="icon-add" onclick="javascript:Reporting.save()">新增</a> &nbsp;&nbsp; <a id="reportingEditBtn"
-								href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:Reporting.save()">修改</a>&nbsp;&nbsp; <a
-								id="reportingPreviewBtn" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview"
-								onclick="javascript:Reporting.previewInNewTab()">报表预览</a>&nbsp;&nbsp; <a id="reportingFullScreenBtn" href="javascript:void(0)"
-								class="easyui-linkbutton" icon="icon-preview" onclick="javascript:Reporting.previewInNewTab()">全屏编辑</a></td>
-						</tr>
-						<tr>
-							<td id="sqlColumnGridTd" colspan="8"><div id="sqlColumnGrid" title="SQL列配置"></div></td>
+							<td colspan="6" style="text-align: center;">
+							<a id="btnExecSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
+							<a id="btnViewSqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
+							<a id="btnViewHistorySqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
+							<a id="btnNewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="javascript:ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
+							<a id="btnEditReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:ReportDesigner.save()">修改</a>&nbsp;&nbsp;
+							<a id="btnViewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="javascript:ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
+							<a id="btnFullScreenEditSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="javascript:ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
 						</tr>
 					</table>
 				</form>
+			<div id="sqlColumnGrid" title="SQL列配置"></div>
 			</div>
-			<div id="reportingQueryParam" title="查询参数" style="padding: 5px;">
+			<div id="queryParamTab" title="查询参数" style="padding: 5px;">
 				<form id="queryParamForm" method="post">
-					<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
+					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 						<tr>
 							<td class="text_r blueside" width="60">参数名:</td>
-							<td><input id="queryParamName" name="name" type="text" /></td>
+							<td><input type="text" id="queryParamName" name="name" /></td>
 							<td class="text_r blueside">标题:</td>
 							<td><input type="text" id="queryParamText" name="text" /></td>
 							<td class="text_r blueside">默认值:</td>
@@ -126,92 +132,88 @@
 						</tr>
 						<tr>
 							<td class="text_r blueside top">内容:</td>
-							<td colspan="7"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea> </br> <!-- <p style="color: red; bold: true">注意：如为SQL则必须包含两列且列名必须为name与text.(eg:select col1 as name,col1 as text from
-									table);如为文本字符串则格式为:name1,text1|name2,text2|...,如果name与text相同格式为：name1|name2|...</p> --> <input id="queryParamGridIndex" type="hidden"
-								value="" /> <input type="hidden" id="jsonQueryParams" /><input id="queryParamReportId" type="hidden" value="0" /></td>
+							<td colspan="7"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea>
+							<input type="hidden" id="queryParamGridIndex"  value="" /> 
+							<input type="hidden" id="jsonQueryParams" />
+							<input type="hidden" id="queryParamReportId"  value="0" /></td>
 						</tr>
 						<tr>
-							<td colspan="8" style="text-align: center;"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add"
-								onclick="javascript:Reporting.setQueryParam('add')">增加</a> &nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit"
-								onclick="javascript:Reporting.setQueryParam('edit')">修改</a>&nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-save"
-								onclick="javascript:Reporting.saveQueryParam()">保存</a></td>
-						</tr>
-						<tr>
-							<td id="queryParamGridTd" colspan="8"><div id="queryParamGrid" title="查询参数列表"></div></td>
+							<td colspan="8" style="text-align: center;">
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="javascript:ReportDesigner.setQueryParam('add')">增加</a>&nbsp;&nbsp;
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:ReportDesigner.setQueryParam('edit')">修改</a>&nbsp;&nbsp;
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-save" onclick="javascript:ReportDesigner.saveQueryParam()">保存</a></td>
 						</tr>
 					</table>
 				</form>
+				<div id="queryParamGrid" title="查询参数列表"></div>
 			</div>
 		</div>
 	</div>
-	<div id="reportingProperties">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; margin: 1px 2px 1px 8px">
+	<!-- 报表基本属性弹框 -->
+	<div id="settingsDlg">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; margin: 1px 2px 1px 8px">
 			<tr>
 				<td class="text_r blueside" width="100">名称:</td>
-				<td><label id="reportingProp_name" /></td>
+				<td><label id="reportProp_name" /></td>
 				<td class="text_r blueside" width="80">ID:</td>
-				<td><label id="reportingProp_id" /></td>
+				<td><label id="reportProp_id" /></td>
 				<td class="text_r blueside" width="100">父ID:</td>
-				<td><label id="reportingProp_pid" /></td>
+				<td><label id="reportProp_pid" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">代号:</td>
-				<td><label id="reportingProp_uid" /></td>
+				<td><label id="reportProp_uid" /></td>
 				<td class="text_r blueside">布局形式:</td>
-				<td><label id="reportingProp_layout" /></td>
+				<td><label id="reportProp_layout" /></td>
 				<td class="text_r blueside">显示几天数据:</td>
-				<td><label id="reportingProp_dataRange" /></td>
+				<td><label id="reportProp_dataRange" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">树路径:</td>
-				<td><label id="reportingProp_path" /></td>
+				<td><label id="reportProp_path" /></td>
 				<td class="text_r blueside">节点类型:</td>
-				<td><label id="reportingProp_flag" /></td>
+				<td><label id="reportProp_flag" /></td>
 				<td class="text_r blueside">是否有子节点:</td>
-				<td><label id="reportingProp_hasChild" /></td>
+				<td><label id="reportProp_hasChild" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">创建用户:</td>
-				<td><label id="reportingProp_createUser" /></td>
+				<td><label id="reportProp_createUser" /></td>
 				<td class="text_r blueside">创建时间:</td>
-				<td><label id="reportingProp_createTime" /></td>
+				<td><label id="reportProp_createTime" /></td>
 				<td class="text_r blueside">更新时间:</td>
-				<td><label id="reportingProp_updateTime" /></td>
+				<td><label id="reportProp_updateTime" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">状态:</td>
-				<td><label id="reportingProp_status" /></td>
+				<td><label id="reportProp_status" /></td>
 				<td class="text_r blueside">显示顺序:</td>
-				<td><label id="reportingProp_sequence" /></td>
+				<td><label id="reportProp_sequence" /></td>
 				<td class="text_r blueside"></td>
 				<td></td>
 			</tr>
 			<tr>
-				<td class="text_r blueside top">数据源:</td>
-				<td colspan="5" class="code"><label id="reportingProp_dsId" /></td>
+				<td class="text_r blueside top">SQL语句:</td>
+				<td colspan="5" class="code"><label id="reportProp_sqlText" /></td>
 			</tr>
 			<tr>
-				<td class="text_r blueside top">报表SQL:</td>
-				<td colspan="5" class="code"><label id="reportingProp_sqlText" /></td>
+				<td class="text_r blueside top">SQL列配置:</td>
+				<td colspan="5" class="code"><label id="reportProp_metaColumns" /></td>
 			</tr>
 			<tr>
-				<td class="text_r blueside top">报表SQL列配置:</td>
-				<td colspan="5" class="code"><label id="reportingProp_metaColumns" /></td>
-			</tr>
-			<tr>
-				<td class="text_r blueside top">报表查询参数:</td>
-				<td colspan="5" class="code"><label id="reportingProp_queryParams" /></td>
+				<td class="text_r blueside top">查询参数:</td>
+				<td colspan="5" class="code"><label id="reportProp_queryParams" /></td>
 			</tr>
 			<tr>
 				<td class="text_r blueside">说明:</td>
-				<td colspan="5"><label id="reportingProp_comment" /></td>
+				<td colspan="5"><label id="reportProp_comment" /></td>
 			</tr>
 		</table>
 	</div>
 	<!-- 增加与修改树节点弹框  -->
 	<div id="setTreeNodeDlg">
 		<form id="setTreeNodeForm" method="post">
-			<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
+			<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 				<tr id="setTreeNodeParentNodeNameTr">
 					<td class="text_r blueside" width="60">父节点:</td>
 					<td><label id="parentNodeName"></label></td>
@@ -248,24 +250,25 @@
 				</tr>
 				<tr>
 					<td class="text_r blueside top">备注:</td>
-					<td><textarea id="setTreeNodeComment" name="comment" style="width: 99%; height: 130px;"></textarea> <input id="treeNodeAction" type="hidden"
-						name="action" value="add" /><input type="hidden" id="treeNodeId" name="id" value="0" /> <input type="hidden" id="treeNodePid" name="pid"
-						value="0" /></td>
+					<td><textarea id="setTreeNodeComment" name="comment" style="width: 99%; height: 130px;"></textarea> 
+					<input id="treeNodeAction" type="hidden" name="action" value="add" />
+					<input type="hidden" id="treeNodeId" name="id" value="0" /> 
+					<input type="hidden" id="treeNodePid" name="pid" value="0" /></td>
 				</tr>
 			</table>
 		</form>
 	</div>
 	<!-- 查看报表SQL弹框  -->
 	<div id="viewSqlTextDlg" title="查看报表SQL">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
 				<td class="top"><textarea id="viewSqlText" name="sqlText" style="width: 99%; height: 99%;"></textarea></td>
 			</tr>
 		</table>
 	</div>
 	<!-- 查看报表SQL历史记录弹框  -->
-	<div id="viewSqlTextHistoryDlg" title="查看报表SQL历史记录">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
+	<div id="viewHistorySqlTextDlg" title="查看报表SQL历史记录">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
 				<td class="text_center blueside top" style="width: 300px;">版本历史</td>
 				<td class="text_center blueside top">版本记录</td>
@@ -276,17 +279,9 @@
 			</tr>
 		</table>
 	</div>
-	<!-- 设置计算列表达式弹框  -->
-	<div id="expressionSettingsDlg" title="设置表达式">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
-			<tr>
-				<td class="top"><textarea id="sqlColumnExpression" name="expression" style="width: 98%; height: 215px;"></textarea></td>
-			</tr>
-		</table>
-	</div>
 	<!-- 查找报表弹框  -->
 	<div id="searchReportDlg" title="查找报表">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
 				<td class="text_r blueside" width="60">选项:</td>
 				<td><select id="searchReportFieldName" name="fieldName">
@@ -296,32 +291,39 @@
 				</select></td>
 				<td class="text_r blueside">关键字:</td>
 				<td><input type="text" id="searchReportKeyword" name="keyword" style="width: 98%;" /></td>
-				<td colspan="2"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:Reporting.search();">查找</a></td>
+				<td colspan="2"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.search();">查找</a></td>
 			</tr>
 			<tr class="top">
 				<td id="searchReportGridTd" colspan="6"><div id="searchReportGrid" title="报表列表"></div></td>
 			</tr>
 		</table>
 	</div>
-	<!-- 修改报表负责人  -->
-	<div id="changeOwerDlg" title="修改报表负责人">
-		<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%; height: 99%">
+	<!-- 设置计算列表达式弹框  -->
+	<div id="expressionDlg" title="设置表达式">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
-				<td class="text_r blueside" width="100">当前负责人:</td>
-				<td><label id="currentCreateUser"></label></td>
+				<td class="top"><textarea id="columnExpression" name="expression" style="width: 98%; height: 215px;"></textarea></td>
 			</tr>
+		</table>
+	</div>
+	<!-- 设置列备注弹框  -->
+	<div id="columnCommentDlg" title="列备注">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
-				<td class="text_r blueside">新负责人:</td>
-				<td><input type="text" id="newCreateUser" name="createUser" class="easyui-validatebox" required="true" /></td>
+				<td class="top"><textarea id="columnComment" name="columnComment" style="width: 98%; height: 215px;"></textarea></td>
 			</tr>
+		</table>
+	</div>
+	<!-- 设置列格式弹框  -->
+	<div id="columnFormatDlg" title="列格式">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
-				<td class="text_r blueside">新负责人姓名:</td>
-				<td><input type="text" id="newCreateUserName" name="createUserName" class="easyui-validatebox" required="true" /></td>
+				<td class="top"><textarea id="columnFormat" name="columnFormat" style="width: 98%; height: 215px;"></textarea></td>
 			</tr>
 		</table>
 	</div>
 	<!-- tree右键菜单  -->
-	<div id="reportingTreeCtxMenu" class="easyui-menu" data-options="onClick:Reporting.treeContextMenu" style="width: 220px;">
+	<div id="reportTreeCtxMenu" class="easyui-menu" data-options="onClick:ReportDesigner.treeContextMenu" style="width: 220px;">
 		<div id="m-addRp" data-options="name:'addRp',iconCls:'icon-add'">新增报表</div>
 		<div id="m-comment" data-options="name:'comment',iconCls:'icon-comment2'">设置备注</div>
 		<div id="m-info" data-options="name:'info',iconCls:'icon-tip'">报表属性</div>
@@ -337,7 +339,7 @@
 		<div id="m-refresh" data-options="name:'refresh',iconCls:'icon-reload'">刷新</div>
 	</div>
 	<!-- tabs右键菜单  -->
-	<div id="tabCtxMenu" class="easyui-menu" data-options="onClick:Reporting.tabContextMenu" style="width: 220px;">
+	<div id="tabsCtxMenu" class="easyui-menu" data-options="onClick:ReportDesigner.tabContextMenu" style="width: 220px;">
 		<div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">关闭当前页</div>
 		<div id="m-others" data-options="name:'others',iconCls:''">关闭其他页</div>
 		<div id="m-all" data-options="name:'all',iconCls:''">关闭所有页</div>

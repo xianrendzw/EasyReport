@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class ChartingController extends AbstractController {
 
 	@RequestMapping(value = { "/{uid}" })
 	public ModelAndView index(@PathVariable String uid, HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView("/chart");
+		ModelAndView modelAndView = new ModelAndView("report/chart");
 
 		try {
 			ReportingPo po = reportingService.getByUid(uid);

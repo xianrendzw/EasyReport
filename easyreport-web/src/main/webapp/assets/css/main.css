@@ -156,83 +156,43 @@ a.download-link {
 	padding: 5px;
 }
 
-.icon-base {
-	background: url('images/basic.png') no-repeat;
-}
-
-.icon-layout {
-	background: url('images/layout.png') no-repeat;
-}
-
-.icon-menu {
-	background: url('images/menu.png') no-repeat;
-}
-
-.icon-form {
-	background: url('images/form.png') no-repeat;
-}
-
-.icon-window {
-	background: url('images/window.png') no-repeat;
-}
-
-.icon-datagrid {
-	background: url('images/grid.png') no-repeat;
-}
-
-.icon-gears {
-	background: url('images/gears.png') no-repeat;
-}
-
-a:link {
-	text-decoration: none;
-}
-
-a:visited {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-table.formStyle {
+table.form-table {
 	width: 100%;
 }
 
-.formStyle {
+.form-table {
 	clear: both;
 	border-collapse: collapse;
 }
 
-.formStyle .text_r {
+.form-table .text_r {
 	text-align: right;
 }
 
-.formStyle .text_center {
+.form-table .text_center {
 	text-align: center;
 }
 
-.formStyle .blueside {
+.form-table .blueside {
 	background: #F6FAFD;
 	font-weight: bold;
 }
 
-.formStyle .top {
+.form-table .top {
 	vertical-align: top;
 }
 
-.formStyle .bold {
+.form-table .bold {
 	font-weight: bold;
 }
 
-.formStyle .code {
+.form-table .code {
 	word-wrap: break-word;
 	word-break: break-all;
 	font-family: "Monaco", "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
 }
 
-.formStyle tr th {
+.form-table tr th {
 	text-align: left;
 	padding: 2px;
 	background: #E4F1FA;
@@ -240,13 +200,13 @@ table.formStyle {
 	font-size: 12px;
 }
 
-.formStyle tr td {
+.form-table tr td {
 	padding: 2px 0px 2px 2px;
 	font-size: 12px;
 	border: 1px solid #E5E6E8;
 }
 
-.formStyle tr input, .formStyle tr textarea {
+.form-table tr input, .form-table tr textarea {
 	border: 1px solid #AEAEAE;
 	height: 20px;
 	line-height: 20px;

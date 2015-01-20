@@ -1,4 +1,4 @@
-var configPageRootUrl = XFrame.getContextPath() + '/report/config/';
+var configPageRootUrl = WebAppRequest.getContextPath() + '/report/config/';
 $(function() {
 	// 左边字典树
 	$('#west').panel({
@@ -95,8 +95,8 @@ $(function() {
 	$('#configDictDlg').dialog({
 		closed : true,
 		modal : true,
-		width: 500,
-		height: 310,
+		width : 500,
+		height : 310,
 		buttons : [ {
 			text : '关闭',
 			iconCls : 'icon-no',
@@ -115,12 +115,15 @@ var ConfigDict = function() {
 };
 
 ConfigDict.treeContextMenu = function(item) {
-	if (item.name == "add")
+	if (item.name == "add") {
 		return ConfigDict.add();
-	if (item.name == "edit")
+	}
+	if (item.name == "edit") {
 		return ConfigDict.edit();
-	if (item.name == "remove")
+	}
+	if (item.name == "remove") {
 		return ConfigDict.remove();
+	}
 	return;
 };
 
@@ -147,7 +150,7 @@ ConfigDict.edit = function() {
 	var node = $('#configDictTree').tree('getSelected');
 	node = node ? node.attributes : null;
 	row = row || node;
-	ReportCommon.editWithData('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '修改ID配置字典项',row);
+	ReportCommon.editWithData('#configDictDlg', '#configDictForm', '#configDictAction', '#configDictId', '修改ID配置字典项', row);
 };
 
 ConfigDict.remove = function() {
@@ -155,7 +158,7 @@ ConfigDict.remove = function() {
 	var node = $('#configDictTree').tree('getSelected');
 	node = node ? node.attributes : null;
 	row = row || node;
-	
+
 	ReportCommon.removeWithCallback(row, configPageRootUrl + 'remove', {
 		id : row ? row.id : 0
 	}, function(data) {
@@ -179,7 +182,7 @@ ConfigDict.batchRemove = function() {
 ConfigDict.save = function() {
 	var pid = $("#configDictPid").val();
 	var url = configPageRootUrl + 'query?id=' + pid;
-	var actUrl =configPageRootUrl +  $('#configDictAction').val();
+	var actUrl = configPageRootUrl + $('#configDictAction').val();
 	ReportCommon.saveWithCallback('#configDictDlg', '#configDictForm', actUrl, function() {
 		ConfigDict.refreshNode(pid);
 		ReportCommon.loadDataToGrid('#configDictGrid', url);

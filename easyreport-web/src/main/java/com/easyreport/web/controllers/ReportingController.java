@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +9,6 @@ import org.easyframework.report.engine.exception.SQLQueryException;
 import org.easyframework.report.engine.exception.TemplatePraseException;
 import org.easyframework.report.exception.QueryParamsException;
 import org.easyframework.report.view.EasyUIQueryFormView;
-import org.easyframework.report.web.util.ReportingUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.easyreport.web.util.ReportingUtils;
 
 /**
  * 报表生成控制器
@@ -25,14 +25,10 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 @RequestMapping(value = "/report")
 public class ReportingController extends AbstractController {
-	@RequestMapping(value = "/home")
-	public String home() {
-		return "/home";
-	}
 
 	@RequestMapping(value = { "", "/", "/index" })
 	public String index(HttpServletRequest request) {
-		return "/designer";
+		return "report/designer";
 	}
 
 	@RequestMapping(value = { "/preview/{uid}" })
@@ -56,7 +52,7 @@ public class ReportingController extends AbstractController {
 
 	@RequestMapping(value = { "/uid/{uid}" })
 	public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView("/template");
+		ModelAndView modelAndView = new ModelAndView("report/template");
 		try {
 			ReportingUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
 		} catch (QueryParamsException | TemplatePraseException ex) {
@@ -87,7 +83,7 @@ public class ReportingController extends AbstractController {
 		return jsonObject;
 	}
 
-	@RequestMapping(value = "/exportexcel", method = RequestMethod.POST)
+	@RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
 	public void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ReportingUtils.exportToExcel(uid, name, htmlText, request, response);

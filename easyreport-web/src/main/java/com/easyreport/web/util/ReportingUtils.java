@@ -1,4 +1,4 @@
-package org.easyframework.report.web.util;
+package com.easyreport.web.util;
 
 import java.io.OutputStream;
 import java.util.List;

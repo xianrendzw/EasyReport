@@ -55,7 +55,7 @@ ReportTemplate.generate = function() {
 	$('#isRowSpan').val($('#isMergeRow').prop('checked'));
 	$.ajax({
 		type : "POST",
-		url : XFrame.getContextPath() + '/report/generate',
+		url : WebAppRequest.getContextPath() + '/report/generate',
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
@@ -108,7 +108,7 @@ ReportTemplate.exportToExcel = function(e) {
 	if (bytes > 2000000) {
 		htmlText = "large";
 	}
-	var postUrl = XFrame.getContextPath() + '/report/exportexcel';
+	var postUrl = WebAppRequest.getContextPath() + '/report/exportexcel';
 	var postData = $('#templateFrom').serializeObject();
 	postData["htmlText"] = htmlText;
 
@@ -141,9 +141,9 @@ ReportTemplate.closeComment = function(e) {
 
 ReportTemplate.toggleSkin = function(e) {
 	var regex = /default/g;
-	var href = XFrame.getContextPath() + "/static/report/themes/default.css";
+	var href = WebAppRequest.getContextPath() + "/static/report/themes/default.css";
 	if (regex.test($('#skin').attr("href"))) {
-		href = XFrame.getContextPath() + "/static/report/themes/clear.css";
+		href = WebAppRequest.getContextPath() + "/static/report/themes/clear.css";
 	}
 	$('#skin').attr({
 		"href" : href
@@ -152,7 +152,7 @@ ReportTemplate.toggleSkin = function(e) {
 
 ReportTemplate.fullScreen = function() {
 	var uid = $('#uid').val();
-	var url = XFrame.getContextPath() + '/report/uid/' + uid;
+	var url = WebAppRequest.getContextPath() + '/report/uid/' + uid;
 	ReportTemplate.winOpen(url, uid);
 };
 

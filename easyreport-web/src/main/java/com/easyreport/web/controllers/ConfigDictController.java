@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ConfigDictController extends AbstractController {
 
 	@RequestMapping(value = { "", "/", "/index" })
 	public String index() {
-		return "/config";
+		return "report/config";
 	}
 
 	@RequestMapping(value = "/query")

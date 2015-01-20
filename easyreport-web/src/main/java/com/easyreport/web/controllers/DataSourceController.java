@@ -1,4 +1,4 @@
-package org.easyframework.report.web.controllers;
+package com.easyreport.web.controllers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +27,12 @@ public class DataSourceController extends AbstractController {
 
 	@RequestMapping(value = { "", "/", "/index" })
 	public String index() {
-		return "/ds";
+		return "report/dataSource";
 	}
 
-	@RequestMapping(value = "/getall")
+	@RequestMapping(value = "/list")
 	@ResponseBody
-	public List<DataSourcePo> getAll(HttpServletRequest request) {
+	public List<DataSourcePo> list(HttpServletRequest request) {
 		return this.datasourceService.getAll();
 	}
 
@@ -87,7 +87,7 @@ public class DataSourceController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/testconnection")
+	@RequestMapping(value = "/testConnection")
 	@ResponseBody
 	public JsonResult testConnection(String url, String pass, String user) {
 		JsonResult result = new JsonResult(false, "");
@@ -116,7 +116,7 @@ public class DataSourceController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/batchremove")
+	@RequestMapping(value = "/batchRemove")
 	@ResponseBody
 	public JsonResult remove(String ids, HttpServletRequest request) {
 		JsonResult result = new JsonResult(false, "您没有权限执行该操作!");
