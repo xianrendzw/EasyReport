@@ -2,13 +2,15 @@ package org.easyframework.report.service;
 
 import java.util.List;
 
-import org.easyframework.report.data.util.SpringContextUtils;
 import org.easyframework.report.domain.BaseTest;
-import org.easyframework.report.po.ConfigDictPo;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.easyreport.data.util.SpringContextUtils;
+import com.easyreport.po.ConfigDictPo;
+import com.easyreport.service.ConfigDictService;
 
 public class ConfigDictServiceTest extends BaseTest {
 	private ConfigDictService configDictService;

@@ -1,7 +1,8 @@
 package org.easyframework.report.data.jdbc;
 
-import org.easyframework.report.data.jdbc.BaseDao;
 import org.springframework.stereotype.Repository;
+
+import com.easyreport.data.jdbc.BaseDao;
 
 @Repository
 public class CategoryDao extends BaseDao<CategoryPo> {

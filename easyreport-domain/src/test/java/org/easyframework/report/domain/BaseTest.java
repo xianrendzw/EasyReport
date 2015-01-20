@@ -1,12 +1,13 @@
 package org.easyframework.report.domain;
 
-import org.easyframework.report.data.util.SpringContextUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import com.easyreport.data.util.SpringContextUtils;
 
 public class BaseTest {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());

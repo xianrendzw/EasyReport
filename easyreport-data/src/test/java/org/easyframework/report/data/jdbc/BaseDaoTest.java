@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.easyframework.report.data.BaseTest;
-import org.easyframework.report.data.criterion.Restrictions;
-import org.easyframework.report.data.util.SpringContextUtils;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.easyreport.data.criterion.Restrictions;
+import com.easyreport.data.util.SpringContextUtils;
 
 public class BaseDaoTest extends BaseTest {
 

@@ -8,13 +8,14 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.easyframework.report.common.viewmodel.JsonResult;
-import org.easyframework.report.data.PageInfo;
-import org.easyframework.report.po.DataSourcePo;
-import org.easyframework.report.service.DataSourceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.easyreport.common.viewmodel.JsonResult;
+import com.easyreport.data.PageInfo;
+import com.easyreport.po.DataSourcePo;
+import com.easyreport.service.DataSourceService;
 
 /**
  * 报表数据源控制器

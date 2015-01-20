@@ -2,7 +2,7 @@ package org.easyframework.report.data.jdbc;
 
 import java.io.Serializable;
 
-import org.easyframework.report.data.annotations.Column;
+import com.easyreport.data.annotations.Column;
 
 public class CategoryPo implements Serializable {
 	private static final long serialVersionUID = 7746155700054643942L;

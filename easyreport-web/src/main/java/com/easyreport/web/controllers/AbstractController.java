@@ -1,9 +1,10 @@
 package com.easyreport.web.controllers;
 
 import org.apache.commons.lang3.StringUtils;
-import org.easyframework.report.common.viewmodel.JsonResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.easyreport.common.viewmodel.JsonResult;
 
 public abstract class AbstractController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());

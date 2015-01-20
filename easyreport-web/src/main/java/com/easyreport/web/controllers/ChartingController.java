@@ -6,17 +6,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.easyframework.report.engine.data.ReportDataSet;
-import org.easyframework.report.engine.exception.NotFoundLayoutColumnException;
-import org.easyframework.report.engine.exception.SQLQueryException;
-import org.easyframework.report.engine.exception.TemplatePraseException;
-import org.easyframework.report.exception.QueryParamsException;
-import org.easyframework.report.po.ReportingPo;
-import org.easyframework.report.service.ReportingChartService;
-import org.easyframework.report.service.ReportingGenerationService;
-import org.easyframework.report.service.ReportingService;
-import org.easyframework.report.view.EasyUIQueryFormView;
-import org.easyframework.report.viewmodel.HtmlFormElement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +14,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.easyreport.engine.data.ReportDataSet;
+import com.easyreport.engine.exception.NotFoundLayoutColumnException;
+import com.easyreport.engine.exception.SQLQueryException;
+import com.easyreport.engine.exception.TemplatePraseException;
+import com.easyreport.exception.QueryParamsException;
+import com.easyreport.po.ReportingPo;
+import com.easyreport.service.ReportingChartService;
+import com.easyreport.service.ReportingGenerationService;
+import com.easyreport.service.ReportingService;
+import com.easyreport.view.EasyUIQueryFormView;
+import com.easyreport.viewmodel.HtmlFormElement;
 
 /**
  * 报表图表生成控制器
@@ -64,7 +64,7 @@ public class ChartingController extends AbstractController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/getdata", method = RequestMethod.POST)
+	@RequestMapping(value = "/getData", method = RequestMethod.POST)
 	@ResponseBody
 	public JSONObject getData(String uid, Integer id, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();

@@ -4,11 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.easyframework.report.engine.exception.NotFoundLayoutColumnException;
-import org.easyframework.report.engine.exception.SQLQueryException;
-import org.easyframework.report.engine.exception.TemplatePraseException;
-import org.easyframework.report.exception.QueryParamsException;
-import org.easyframework.report.view.EasyUIQueryFormView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.easyreport.engine.exception.NotFoundLayoutColumnException;
+import com.easyreport.engine.exception.SQLQueryException;
+import com.easyreport.engine.exception.TemplatePraseException;
+import com.easyreport.exception.QueryParamsException;
+import com.easyreport.view.EasyUIQueryFormView;
 import com.easyreport.web.util.ReportingUtils;
 
 /**

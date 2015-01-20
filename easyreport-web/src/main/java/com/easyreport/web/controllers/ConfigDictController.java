@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.easyframework.report.common.viewmodel.JsonResult;
-import org.easyframework.report.common.viewmodel.TreeNode;
-import org.easyframework.report.po.ConfigDictPo;
-import org.easyframework.report.service.ConfigDictService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.easyreport.common.viewmodel.JsonResult;
+import com.easyreport.common.viewmodel.TreeNode;
+import com.easyreport.po.ConfigDictPo;
+import com.easyreport.service.ConfigDictService;
 
 /**
  * 报表配置控制器
