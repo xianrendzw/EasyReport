@@ -113,3 +113,12 @@
 .icon-config{
 	background:url('icons/config.png') no-repeat center left;
 }
+.icon-fullscreen{
+	background:url('icons/fullscreen.png') no-repeat center left;
+}
+.icon-history{
+	background:url('icons/history.png') no-repeat center left;
+}
+.icon-sql{
+	background:url('icons/sql.png') no-repeat center left;
+}

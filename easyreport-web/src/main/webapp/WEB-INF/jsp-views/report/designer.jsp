@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>报表管理</title>
+<title>报表设计</title>
 <%@ include file="/WEB-INF/jsp-views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp"%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/codemirror.css" />
@@ -30,11 +30,24 @@
 				<form id="settingsForm" method="post">
 					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 						<tr>
-							<td class="text_r blueside">名称:</td>
-							<td><input type="text" id="reportName" name="name" /></td>
+							<td class="text_r blueside" width="70">名称:</td>
+							<td><input type="text" id="reportName" name="name" required/></td>
 							<td class="text_r blueside" width="60">数据源:</td>
-							<td><input id="reportDsId" name="dsId" /></td>
-							<td class="text_r blueside">布局列:</td>
+							<td><input id="reportDsId" name="dsId" required/></td>
+							<td class="text_r blueside">状态:</td>
+							<td><select id="reportStatus" name="status">
+									<option value="0">编辑</option>
+									<option value="1">锁定</option>
+									<option value="2">隐藏</option>
+								</select>
+							</td>
+							<td class="text_r blueside">显示顺序:</td>
+							<td>
+								<input type="text" id="reportSequence" name="sequence" value="100" required/>
+						    </td>
+						</tr>
+						<tr>
+						<td class="text_r blueside" width="70">布局列:</td>
 							<td><select id="reportLayout" name="layout">
 									<option value="1">横向展示</option>
 									<option value="2">纵向展示</option>
@@ -46,26 +59,16 @@
 									<option value="2">纵向展示</option>
 								</select>
 							</td>
-						</tr>
-						<tr>
 							<td class="text_r blueside">显示几天数据:</td>
 							<td><input type="text" id="reportDataRange" name="dataRange" value="7" /></td>
-							<td class="text_r blueside">状态:</td>
-							<td><select id="reportStatus" name="status">
-									<option value="0">编辑</option>
-									<option value="1">锁定</option>
-									<option value="2">隐藏</option>
-								</select>
-							</td>
-							<td class="text_r blueside">显示顺序:</td>
-							<td colspan="3">
-								<input type="text" id="reportSequence" name="sequence" value="100" />
+							<td class="text_r blueside"></td>
+							<td>
 								<input type="hidden" id="reportId"  name="id" value="0" /> 
 								<input type="hidden" id="reportAction" name="action" value="add" />
 								<input type="hidden" id="reportUid" name="uid" />
 								<input type="hidden" id="reportPid" name="pid" value="0" />
 							    <input type="hidden" id="reportIsChange" name="isChange" value="0" />
-						    </td>
+							</td>
 						</tr>
 						<tr>
 							<td class="text_r blueside top">SQL语句:</td>
@@ -73,13 +76,13 @@
 						</tr>
 						<tr>
 							<td colspan="6" style="text-align: center;">
-							<a id="btnExecSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
-							<a id="btnViewSqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
-							<a id="btnViewHistorySqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
-							<a id="btnNewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="javascript:ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
-							<a id="btnEditReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:ReportDesigner.save()">修改</a>&nbsp;&nbsp;
-							<a id="btnViewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="javascript:ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
-							<a id="btnFullScreenEditSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="javascript:ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
+							<a id="btnExecSql" href="void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
+							<a id="btnViewSqlText" href="void(0)" class="easyui-linkbutton" icon="icon-sql" onclick="ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
+							<a id="btnViewHistorySqlText" href="void(0)" class="easyui-linkbutton" icon="icon-history" onclick="ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
+							<a id="btnNewReport" href="void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
+							<a id="btnEditReport" href="void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.save()">修改</a>&nbsp;&nbsp;
+							<a id="btnViewReport" href="void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
+							<a id="btnFullScreenEditSql" href="void(0)" class="easyui-linkbutton" icon="icon-fullscreen" onclick="ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
 						</tr>
 					</table>
 				</form>
@@ -89,17 +92,17 @@
 				<form id="queryParamForm" method="post">
 					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 						<tr>
-							<td class="text_r blueside" width="60">参数名:</td>
-							<td><input type="text" id="queryParamName" name="name" /></td>
+							<td class="text_r blueside" width="70">参数名:</td>
+							<td><input type="text" id="queryParamName" name="name" required/></td>
 							<td class="text_r blueside">标题:</td>
-							<td><input type="text" id="queryParamText" name="text" /></td>
+							<td><input type="text" id="queryParamText" name="text" required/></td>
 							<td class="text_r blueside">默认值:</td>
 							<td><input type="text" id="queryParamDefaultValue" name="defaultValue" /></td>
 							<td class="text_r blueside">默认标题:</td>
 							<td><input type="text" id="queryParamDefaultText" name="defaultText" /></td>
 						</tr>
 						<tr>
-							<td class="text_r blueside" width="60">数据类型:</td>
+							<td class="text_r blueside" width="70">数据类型:</td>
 							<td><select id="queryParamDataType" name="dataType">
 									<option value="string" selected="selected">字符串</option>
 									<option value="number">数字（包括整数、浮点数)</option>
@@ -116,7 +119,7 @@
 							<td><input type="checkbox" id="queryParamIsAutoComplete" name="autoComplete" /></td>
 						</tr>
 						<tr>
-							<td class="text_r blueside top">表单控件:</td>
+							<td class="text_r blueside" width="70">表单控件:</td>
 							<td><select id="queryParamFormElement" name="formElement">
 									<option value="select">下拉单选</option>
 									<option value="selectMul">下拉多选</option>
@@ -139,9 +142,9 @@
 						</tr>
 						<tr>
 							<td colspan="8" style="text-align: center;">
-							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="javascript:ReportDesigner.setQueryParam('add')">增加</a>&nbsp;&nbsp;
-							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="javascript:ReportDesigner.setQueryParam('edit')">修改</a>&nbsp;&nbsp;
-							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-save" onclick="javascript:ReportDesigner.saveQueryParam()">保存</a></td>
+							<a href="void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.setQueryParam('add')">增加</a>&nbsp;&nbsp;
+							<a href="void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.setQueryParam('edit')">修改</a>&nbsp;&nbsp;
+							<a href="void(0)" class="easyui-linkbutton" icon="icon-save" onclick="ReportDesigner.saveQueryParam()">保存</a></td>
 						</tr>
 					</table>
 				</form>
@@ -291,7 +294,7 @@
 				</select></td>
 				<td class="text_r blueside">关键字:</td>
 				<td><input type="text" id="searchReportKeyword" name="keyword" style="width: 98%;" /></td>
-				<td colspan="2"><a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="javascript:ReportDesigner.search();">查找</a></td>
+				<td colspan="2"><a href="void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.search();">查找</a></td>
 			</tr>
 			<tr class="top">
 				<td id="searchReportGridTd" colspan="6"><div id="searchReportGrid" title="报表列表"></div></td>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>报表中心</title>
+<title>EasyReport-A simple and easy to use Web Report System</title>
 <%@ include file="/WEB-INF/jsp-views/includes/header.jsp"%>
 </head>
 <body>

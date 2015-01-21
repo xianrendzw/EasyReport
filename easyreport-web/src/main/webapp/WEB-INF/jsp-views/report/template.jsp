@@ -20,7 +20,7 @@
 				<br />
 				<table>
 					<tr>
-						<td valign="top"><img alt="loading" border="0" src="<%=request.getContextPath()%>/static/report/icons/loading.gif" /></td>
+						<td valign="top"><img alt="loading" border="0" src="<%=request.getContextPath()%>/assets/modules/report/icons/loading.gif" /></td>
 						<td valign="middle" style="font-size: 14px;" id="loadingText">报表正在生成中, 请稍等...</td>
 					</tr>
 				</table>
@@ -44,17 +44,19 @@
 					<td colspan="2" id="rpTitle" style="font-size: 24px;">${name}</td>
 				</tr>
 				<tr style="height: 40px;">
-					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}<input id="isMergeRow" type="checkbox"
-						name="isMergeRow" checked="checked" />合并左边相同维度行 <a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom"
-						data-options="iconCls:'icon-ok'">生成报表</a></td>
-					<td style="text-align: left; vertical-align: middle; white-space: normal;"><img style="cursor: pointer;" id="btnFullScreen" title="全屏显示"
-						src="<%=request.getContextPath()%>/static/report/icons/fullscreen_24.png" />&nbsp;<img style="cursor: pointer;" id="btnExportToExcel"
-						title="导出到Excel" src="<%=request.getContextPath()%>/static/report/icons/excel_24.png" />&nbsp;<img style="cursor: pointer;" id="btnShowChart"
-						title="图表展示" src="<%=request.getContextPath()%>/static/report/icons/chart_24.png" />&nbsp;<img style="cursor: pointer;" id="btnToggleSkins"
-						title="切换报表样式" src="<%=request.getContextPath()%>/static/report/icons/skins_24.png" />&nbsp;<img style="cursor: pointer;" id="btnShowComment"
-						title="报表说明" src="<%=request.getContextPath()%>/static/report/icons/comment_24.png" /><input id="rpId" type="hidden" name="id" value="${id}" /><input
-						id="rpName" type="hidden" name="name" value="${name}" /> <input id="uid" type="hidden" name="uid" value="${uid}" /> <input id="isRowSpan"
-						type="hidden" name="isRowSpan" value="true" /></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}
+					<input id="isMergeRow" type="checkbox" name="isMergeRow" checked="checked" />合并左边相同维度行 
+					<a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal;">
+					<img style="cursor: pointer;" id="btnFullScreen" title="全屏显示" src="<%=request.getContextPath()%>/assets/modules/report/icons/fullscreen_24.png" />&nbsp;
+					<img style="cursor: pointer;" id="btnExportToExcel" title="导出到Excel" src="<%=request.getContextPath()%>/assets/modules/report/icons/excel_24.png" />&nbsp;
+					<img style="cursor: pointer;" id="btnShowChart" title="图表展示" src="<%=request.getContextPath()%>/assets/modules/report/icons/chart_24.png" />&nbsp;
+					<img style="cursor: pointer;" id="btnToggleSkins" title="切换报表样式" src="<%=request.getContextPath()%>/assets/modules/report/icons/skins_24.png" />&nbsp;
+					<img style="cursor: pointer;" id="btnShowComment" title="报表说明" src="<%=request.getContextPath()%>/assets/modules/report/icons/comment_24.png" />
+					<input id="rpId" type="hidden" name="id" value="${id}" />
+					<input id="rpName" type="hidden" name="name" value="${name}" /> 
+					<input id="uid" type="hidden" name="uid" value="${uid}" /> 
+					<input id="isRowSpan" type="hidden" name="isRowSpan" value="true" /></td>
 				</tr>
 				<c:if test="${not empty statColumHtmlText}">
 					<tr style="height: 40px;">

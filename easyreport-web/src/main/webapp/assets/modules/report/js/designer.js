@@ -89,7 +89,7 @@ $(function() {
 		text : "表达式",
 		type : 4
 	}, {
-		name : "memo",
+		name : "comment",
 		text : "备注",
 		type : 2
 	}, {
@@ -113,16 +113,19 @@ $(function() {
 	} ];
 
 	sqlColumnSortTypeOptions = [ {
-		text : "布局列",
+		text : "默认",
+		value : 0
+	}, {
+		text : "数字优先升序",
 		value : 1
 	}, {
-		text : "维度列",
+		text : "数字优先降序",
 		value : 2
 	}, {
-		text : "统计列",
+		text : "字符优先升序",
 		value : 3
 	}, {
-		text : "计算列",
+		text : "字符优先降序",
 		value : 4
 	} ];
 
@@ -173,284 +176,287 @@ $(function() {
 		}
 	});
 
-	$('#sqlColumnGrid')
-			.datagrid(
-					{
-						method : 'post',
-						fit : true,
-						fitColumns : true,
-						singleSelect : true,
-						rownumbers : true,
-						tools : [ {
-							iconCls : 'icon-up',
-							handler : function() {
-								var grid = $("#sqlColumnGrid");
-								var row = grid.datagrid('getSelected');
-								var index = grid.datagrid('getRowIndex', row);
-								ReportDesigner.resortDatagrid(index, 'up', grid);
-							}
-						}, '-', {
-							iconCls : 'icon-down',
-							handler : function() {
-								var grid = $("#sqlColumnGrid");
-								var row = grid.datagrid('getSelected');
-								var index = grid.datagrid('getRowIndex', row);
-								ReportDesigner.resortDatagrid(index, 'down', grid);
-							}
-						}, '-', {
-							iconCls : 'icon-add',
-							handler : function() {
-								var index = 1;
-								var rows = $("#sqlColumnGrid").datagrid('getRows');
-								if (rows && rows.length > 0) {
-									for (var i = 0; i < rows.length; i++) {
-										var type = $("#type" + i).val();
-										if (type == 4) {
-											index++;
-										}
-									}
-								}
-								$.post(designerPageRootUrl + 'getSqlColumn', function(row) {
-									row.name = row.name + index;
-									row.text = row.name;
-									$('#sqlColumnGrid').datagrid('appendRow', row);
-								}, 'json');
-							}
-						}, '-', {
-							iconCls : 'icon-cancel',
-							handler : function() {
-								var row = $("#sqlColumnGrid").datagrid('getSelected');
-								if (row) {
-									var index = $("#sqlColumnGrid").datagrid('getRowIndex', row);
-									$("#sqlColumnGrid").datagrid('deleteRow', index);
-									$("#sqlColumnGrid").datagrid('loadData', $("#sqlColumnGrid").datagrid('getRows'));
-								}
-							}
-						} ],
-						columns : [ [
-								{
-									field : 'name',
-									title : '列名',
-									width : 100,
-									formatter : function(value, row, index) {
-										var id = "name" + index;
-										return "<input style=\"width:98%;\" type=\"text\" id=\"" + id + "\" name=\"name\" value=\"" + row.name
-												+ "\" />";
-									}
-								},
-								{
-									field : 'text',
-									title : '标题',
-									width : 100,
-									formatter : function(value, row, index) {
-										var id = "text" + index;
-										return "<input style=\"width:98%;\" type=\"text\" id=\"" + id + "\" name=\"text\" value=\"" + row.text
-												+ "\" />";
-									}
-								},
-								{
-									field : 'type',
-									title : '类型',
-									width : 75,
-									formatter : function(value, row, index) {
-										var id = "type" + index;
-										var count = sqlColumnTypeOptions.length;
-										var selectHtmlText = "<select id=\"" + id + "\" name=\"type\">";
-										for (var i = 0; i < count; i++) {
-											var selected = sqlColumnTypeOptions[i].value == value ? 'selected="selected"' : '';
-											selectHtmlText += "<option value=\"" + sqlColumnTypeOptions[i].value + "\" " + selected + ">"
-													+ sqlColumnTypeOptions[i].text + "</option>";
-										}
-										selectHtmlText += "</select>";
-										return selectHtmlText;
-									}
-								},
-								{
-									field : 'dataType',
-									title : '数据类型',
-									width : 75
-								},
-								{
-									field : 'width',
-									title : '宽度',
-									width : 40
-								},
-								{
-									field : 'decimals',
-									title : '精度',
-									width : 50,
-									formatter : function(value, row, index) {
-										var id = "decimals" + index;
-										if (!row.decimals) {
-											row.decimals = 0;
-										}
-										return "<input style=\"width:42px;\" type=\"text\" id=\"" + id + "\" name=\"text\" value=\"" + row.decimals
-												+ "\" />";
-									}
-								},
-								{
-									field : 'sortType',
-									title : '排序类型',
-									width : 75,
-									formatter : function(value, row, index) {
-										var id = "sortType" + index;
-										var count = sqlColumnTypeOptions.length;
-										var selectHtmlText = "<select id=\"" + id + "\" name=\"sortType\">";
-										for (var i = 0; i < count; i++) {
-											var selected = sqlColumnTypeOptions[i].value == row.sortType ? 'selected="selected"' : '';
-											selectHtmlText += "<option value=\"" + sqlColumnTypeOptions[i].value + "\" " + selected + ">"
-													+ sqlColumnTypeOptions[i].text + "</option>";
-										}
-										selectHtmlText += "</select>";
-										return selectHtmlText;
-									}
-								},
-								{
-									field : 'options',
-									title : '配置',
-									width : 300,
-									formatter : function(value, row, index) {
-										var subOptions = [];
-										// 4:计算列,3:统计列,2:维度列,1:布局列
-										if (row.type == 4) {
-											subOptions = $.grep(sqlColumnOptions, function(option, i) {
-												return option.type == 1 || option.type == 2 || option.type == 4;
-											});
-										} else if (row.type == 3) {
-											subOptions = $.grep(sqlColumnOptions, function(option, i) {
-												return option.type == 1 || option.type == 2;
-											});
-										} else {
-											subOptions = $.grep(sqlColumnOptions, function(option, i) {
-												return option.type == 2 || option.type == 3;
-											});
-										}
-
-										var htmlOptions = [];
-										for (var i = 0; i < subOptions.length; i++) {
-											var name = subOptions[i].name;
-											var id = name + index;
-											var text = subOptions[i].text;
-											var checked = row[name] ? " checked=\"checked\"" : "";
-											var html = "";
-											if (name == "expression" || name == "comment" || name == "format") {
-												var imgSrc = WebAppRequest.getContextPath() + "/assets/modules/report/icons/" + name + ".png";
-												var onClick = " onclick =\"javascript:ReportDesigner.showSqlColumnGridDialog(" + index + ")\"";
-												html = "<img style=\"cursor: pointer;\" id=\"" + id + "\" title=\"" + text + "\" src=\"" + imgSrc
-														+ "\"" + onClick + "/>";
-											} else {
-												html = "<input type=\"checkbox\" id=\"" + id + "\" name=\"" + name + "\"" + checked + ">" + text
-														+ "</input>";
-											}
-											htmlOptions.push(html);
-										}
-										return htmlOptions.join(" ");
-									}
-								} ] ]
-					});
-
-	$('#queryParamGrid').datagrid(
-			{
-				method : 'get',
-				fit : true,
-				singleSelect : true,
-				rownumbers : true,
-				tools : [ {
-					iconCls : 'icon-up',
-					handler : function() {
-						var grid = $("#queryParamGrid");
-						var row = grid.datagrid('getSelected');
-						var index = grid.datagrid('getRowIndex', row);
-						ReportDesigner.resortDatagrid(index, 'up', grid);
+	$('#sqlColumnGrid').datagrid({
+		method : 'post',
+		fit : true,
+		fitColumns : true,
+		singleSelect : true,
+		rownumbers : true,
+		tools : [ {
+			iconCls : 'icon-up',
+			handler : function() {
+				var grid = $("#sqlColumnGrid");
+				var row = grid.datagrid('getSelected');
+				var index = grid.datagrid('getRowIndex', row);
+				ReportDesigner.resortDatagrid(index, 'up', grid);
+			}
+		}, '-', {
+			iconCls : 'icon-down',
+			handler : function() {
+				var grid = $("#sqlColumnGrid");
+				var row = grid.datagrid('getSelected');
+				var index = grid.datagrid('getRowIndex', row);
+				ReportDesigner.resortDatagrid(index, 'down', grid);
+			}
+		}, '-', {
+			iconCls : 'icon-add',
+			handler : function() {
+				var index = 1;
+				var rows = $("#sqlColumnGrid").datagrid('getRows');
+				if (rows && rows.length > 0) {
+					for (var i = 0; i < rows.length; i++) {
+						var type = $("#type" + i).val();
+						if (type == 4) {
+							index++;
+						}
 					}
-				}, '-', {
-					iconCls : 'icon-down',
-					handler : function() {
-						var grid = $("#queryParamGrid");
-						var row = grid.datagrid('getSelected');
-						var index = grid.datagrid('getRowIndex', row);
-						ReportDesigner.resortDatagrid(index, 'down', grid);
-					}
-				} ],
-				columns : [ [
-						{
-							field : 'name',
-							title : '参数名',
-							width : 80
-						},
-						{
-							field : 'text',
-							title : '标题',
-							width : 80
-						},
-						{
-							field : 'defaultValue',
-							title : '默认值',
-							width : 80
-						},
-						{
-							field : 'defaultText',
-							title : '默认标题',
-							width : 80
-						},
-						{
-							field : 'formElement',
-							title : '表单控件',
-							width : 80
-						},
-						{
-							field : 'dataSource',
-							title : '来源类型',
-							width : 80,
-							formatter : function(value, row, index) {
-								if (value == "sql") {
-									return "SQL语句";
-								}
-								if (value == "text") {
-									return "文本字符串";
-								}
-								return "无内容";
-							}
-						},
-						{
-							field : 'dataType',
-							title : '数据类型',
-							width : 80
-						},
-						{
-							field : 'width',
-							title : '数据长度',
-							width : 80
-						},
-						{
-							field : 'required',
-							title : '是否必选',
-							width : 80
-						},
-						{
-							field : 'autoComplete',
-							title : '是否自动提示',
-							width : 80
-						},
-						{
-							field : 'content',
-							title : '内容',
-							width : 360
-						},
-						{
-							field : 'options',
-							title : '操作',
-							width : 50,
-							formatter : function(value, row, index) {
-								var path = WebAppRequest.getContextPath() + '/static/report/icons/';
-								return '<a href="#" title ="删除" onclick="javascript:ReportDesigner.deleteQueryParam(' + index + ')"><img src="'
-										+ path + 'remove.png" alt="删除"/"></a>';
-							}
-						} ] ],
-				onDblClickRow : function(index, row) {
-					$('#queryParamForm').autofill(row);
 				}
-			});
+				$.post(designerPageRootUrl + 'getSqlColumn', function(row) {
+					row.name = row.name + index;
+					row.text = row.name;
+					$('#sqlColumnGrid').datagrid('appendRow', row);
+				}, 'json');
+			}
+		}, '-', {
+			iconCls : 'icon-cancel',
+			handler : function() {
+				var row = $("#sqlColumnGrid").datagrid('getSelected');
+				if (row) {
+					var index = $("#sqlColumnGrid").datagrid('getRowIndex', row);
+					$("#sqlColumnGrid").datagrid('deleteRow', index);
+					$("#sqlColumnGrid").datagrid('loadData', $("#sqlColumnGrid").datagrid('getRows'));
+				}
+			}
+		} ],
+		columns : [ [
+				{
+					field : 'name',
+					title : '列名',
+					width : 100,
+					formatter : function(value, row, index) {
+						var id = "name" + index;
+						var tmpl = '<input style="width:98%;" type="text" id="{{id}}" name="name" value="{{value}}" />';
+						return template.compile(tmpl)({
+							id : id,
+							value : row.name
+						});
+					}
+				},
+				{
+					field : 'text',
+					title : '标题',
+					width : 100,
+					formatter : function(value, row, index) {
+						var id = "text" + index;
+						var tmpl = '<input style="width:98%;" type="text" id="{{id}}" name="text" value="{{value}}" />';
+						return template.compile(tmpl)({
+							id : id,
+							value : row.text
+						});
+					}
+				},
+				{
+					field : 'type',
+					title : '类型',
+					width : 75,
+					formatter : function(value, row, index) {
+						var id = "type" + index;
+						var tmpl = '\
+								<select id="{{id}}" name=\"type\">\
+								{{each list}}\
+									<option value="{{$value.value}}" {{if $value.value == currValue}}selected{{/if}}>{{$value.text}}</option>\
+								{{/each}}\
+								</select>';
+						return template.compile(tmpl)({
+							id : id,
+							currValue : value,
+							list : sqlColumnTypeOptions
+						});
+					}
+				},
+				{
+					field : 'dataType',
+					title : '数据类型',
+					width : 75
+				},
+				{
+					field : 'width',
+					title : '宽度',
+					width : 40
+				},
+				{
+					field : 'decimals',
+					title : '精度',
+					width : 50,
+					formatter : function(value, row, index) {
+						var id = "decimals" + index;
+						if (!row.decimals) {
+							row.decimals = 0;
+						}
+						var tmpl = '<input style="width:42px;" type="text" id="{{id}}" name="decimals" value="{{value}}" />';
+						return template.compile(tmpl)({
+							id : id,
+							value : row.decimals
+						});
+					}
+				},
+				{
+					field : 'sortType',
+					title : '排序类型',
+					width : 75,
+					formatter : function(value, row, index) {
+						var id = "sortType" + index;
+						var tmpl = '\
+								<select id="{{id}}" name=\"sortType\">\
+								{{each list}}\
+									<option value="{{$value.value}}" {{if $value.value == currValue}}selected{{/if}}>{{$value.text}}</option>\
+								{{/each}}\
+								</select>';
+						return template.compile(tmpl)({
+							id : id,
+							currValue : value,
+							list : sqlColumnSortTypeOptions 
+						});
+					}
+				}, {
+					field : 'options',
+					title : '配置',
+					width : 300,
+					formatter : function(value, row, index) {
+						var subOptions = [];
+						// 4:计算列,3:统计列,2:维度列,1:布局列
+						if (row.type == 4) {
+							subOptions = $.grep(sqlColumnOptions, function(option, i) {
+								return option.type == 1 || option.type == 2 || option.type == 4;
+							});
+						} else if (row.type == 3) {
+							subOptions = $.grep(sqlColumnOptions, function(option, i) {
+								return option.type == 1 || option.type == 2;
+							});
+						} else {
+							subOptions = $.grep(sqlColumnOptions, function(option, i) {
+								return option.type == 2 || option.type == 3;
+							});
+						}
+
+						var htmlOptions = [];
+						for (var i = 0; i < subOptions.length; i++) {
+							var name = subOptions[i].name;
+							var data = {
+								id : name + index,
+								name : name,
+								text : subOptions[i].text,
+								checked : row[name] ? " checked=\"checked\"" : "",
+								imgSrc : "",
+								onClick : ""
+							};
+							var tmpl = "";
+							if (name == "expression" || name == "comment" || name == "format") {
+								data.imgSrc = WebAppRequest.getContextPath() + "/assets/modules/report/icons/" + name + ".png";
+								data.onClick = " onclick =\"ReportDesigner.showSqlColumnGridDialog(" + index + ")\"";
+								tmpl = '<img style="cursor: pointer;" id="{{id}}" title="{{text}}" src="{{imgSrc}}" {{onClick}} />';
+							} else {
+								tmpl = '<input type="checkbox" id="{{id}}" name="{{name}}" {{checked}}>{{text}}</input>'
+							}
+							htmlOptions.push(template.compile(tmpl)(data));
+						}
+						return htmlOptions.join(" ");
+					}
+				} ] ]
+	});
+
+	$('#queryParamGrid').datagrid({
+		method : 'get',
+		fit : true,
+		singleSelect : true,
+		rownumbers : true,
+		tools : [ {
+			iconCls : 'icon-up',
+			handler : function() {
+				var grid = $("#queryParamGrid");
+				var row = grid.datagrid('getSelected');
+				var index = grid.datagrid('getRowIndex', row);
+				ReportDesigner.resortDatagrid(index, 'up', grid);
+			}
+		}, '-', {
+			iconCls : 'icon-down',
+			handler : function() {
+				var grid = $("#queryParamGrid");
+				var row = grid.datagrid('getSelected');
+				var index = grid.datagrid('getRowIndex', row);
+				ReportDesigner.resortDatagrid(index, 'down', grid);
+			}
+		} ],
+		columns : [ [ {
+			field : 'name',
+			title : '参数名',
+			width : 80
+		}, {
+			field : 'text',
+			title : '标题',
+			width : 80
+		}, {
+			field : 'defaultValue',
+			title : '默认值',
+			width : 80
+		}, {
+			field : 'defaultText',
+			title : '默认标题',
+			width : 80
+		}, {
+			field : 'formElement',
+			title : '表单控件',
+			width : 80
+		}, {
+			field : 'dataSource',
+			title : '来源类型',
+			width : 80,
+			formatter : function(value, row, index) {
+				if (value == "sql") {
+					return "SQL语句";
+				}
+				if (value == "text") {
+					return "文本字符串";
+				}
+				return "无内容";
+			}
+		}, {
+			field : 'dataType',
+			title : '数据类型',
+			width : 80
+		}, {
+			field : 'width',
+			title : '数据长度',
+			width : 80
+		}, {
+			field : 'required',
+			title : '是否必选',
+			width : 80
+		}, {
+			field : 'autoComplete',
+			title : '是否自动提示',
+			width : 80
+		}, {
+			field : 'content',
+			title : '内容',
+			width : 360
+		}, {
+			field : 'options',
+			title : '操作',
+			width : 50,
+			formatter : function(value, row, index) {
+				var imgPath = WebAppRequest.getContextPath() + '/assets/modules/report/icons/remove.png';
+				var tmpl = '<a href="#" title ="删除" onclick="ReportDesigner.deleteQueryParam(\'{{index}}\')"><img src="{{imgPath}}" alt="删除"/"></a>';
+				return template.compile(tmpl)({
+					index : index,
+					imgPath : imgPath
+				});
+			}
+		} ] ],
+		onDblClickRow : function(index, row) {
+			$('#queryParamForm').autofill(row);
+		}
+	});
 
 	$('#searchReportGrid').datagrid({
 		method : 'get',
@@ -666,22 +672,10 @@ var ReportDesigner = function() {
 ReportDesigner.init = function() {
 	$('#reportEditBtn').linkbutton('disable');
 	$('#reportPreviewBtn').linkbutton('disable');
-	$('#queryParamFormElement').change(function() {
-		var formElement = $("#queryParamFormElement").val();
-		if (formElement == "select" || formElement == "selectMul") {
-			$("#queryParamContent").removeAttr("disabled");
-			return $("#queryParamDataSource").val("sql");
-		}
-		$("#queryParamContent").val('');
-		$("#queryParamContent").attr({
-			"disabled" : "disabled"
-		});
-		$("#queryParamDataSource").val("none");
-	});
+	$('#queryParamFormElement').change(ReportDesigner.queryParamFormElementChange);
 	$('#reportStatus').change(function() {
 		return ReportDesigner.setSqlEditorStatus();
 	});
-
 	ReportDesigner.loadDataSource();
 };
 
@@ -743,28 +737,13 @@ ReportDesigner.loadDataToTab = function(index) {
 ReportDesigner.clearTab = function(index) {
 	if (index == 0) {
 		ReportDesigner.clearAllEditor();
-		ReportDesigner.resetForm();
+		ReportDesigner.resetSettingsForm();
 		return ReportCommon.clearDataGrid('#sqlColumnGrid');
 	}
 	if (index == 1) {
 		$('#queryParamForm').form('reset');
 		return ReportCommon.clearDataGrid('#queryParamGrid');
 	}
-};
-
-ReportDesigner.resetForm = function() {
-	$("#reportDsId").val("");
-	$("#reportLayout").val("1");
-	$("#reportDataRange").val("7");
-	$("#reportName").val("");
-	$("#reportStatColumnLayout").val("1")
-	$("#reportStatus").val("0");
-	$("#reportSequence").val("100");
-	$("#reportId").val("0");
-	$("#reportAction").val("add");
-	$("#reportUid").val("");
-	$("#reportPid").val("0");
-	$("#reportIsChange").val("0");
 };
 
 ReportDesigner.clearAllCheckedNode = function(target) {
@@ -875,17 +854,8 @@ ReportDesigner.treeContextMenu = function(item) {
 	if (item.name == "paste") {
 		return ReportDesigner.pasteTreeNode();
 	}
-	if (item.name == "privilage") {
-		return ReportDesigner.privilegeSettings();
-	}
-	if (item.name == "contacts") {
-		return ReportDesigner.contactsSettings();
-	}
 	if (item.name == "info") {
 		return ReportDesigner.showProperties();
-	}
-	if (item.name == "chown") {
-		return ReportDesigner.changeOwner();
 	}
 	return;
 };
@@ -1055,7 +1025,7 @@ ReportDesigner.selectTreeNodeHandler = function(node) {
 ReportDesigner.treeNodeOnDrop = function(target, source, point) {
 	var targetNode = $('#reportTree').tree('getNode', target);
 	if (targetNode) {
-		$.post(designerPageRootUrl + 'dragtreenode', {
+		$.post(designerPageRootUrl + 'dragTreeNode', {
 			sourceId : source.id,
 			targetId : targetNode.id,
 			sourcePid : source.attributes.pid
@@ -1079,7 +1049,7 @@ ReportDesigner.copyTreeNode = function() {
 ReportDesigner.pasteTreeNode = function() {
 	var node = ReportDesigner.getSelectedTreeNode();
 	if (node) {
-		$.post(designerPageRootUrl + 'pastetreenode', {
+		$.post(designerPageRootUrl + 'pasteTreeNode', {
 			sourceId : $('#copyNodeId').val(),
 			targetId : node.id
 		}, function(result) {
@@ -1208,6 +1178,21 @@ ReportDesigner.toggleButton = function(action) {
 	$('#reportContactsBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
 	$('#reportEditBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
 	$('#reportPreviewBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
+};
+
+ReportDesigner.resetSettingsForm = function() {
+	$("#reportDsId").val("");
+	$("#reportLayout").val("1");
+	$("#reportDataRange").val("7");
+	$("#reportName").val("");
+	$("#reportStatColumnLayout").val("1")
+	$("#reportStatus").val("0");
+	$("#reportSequence").val("100");
+	$("#reportId").val("0");
+	$("#reportAction").val("add");
+	$("#reportUid").val("");
+	$("#reportPid").val("0");
+	$("#reportIsChange").val("0");
 };
 
 ReportDesigner.clearAllEditor = function() {
@@ -1484,6 +1469,20 @@ ReportDesigner.previewInNewTab = function() {
 //
 // 以为报表查询参数配置相关函数
 //
+
+ReportDesigner.queryParamFormElementChange = function() {
+	var formElement = $("#queryParamFormElement").val();
+	if (formElement == "select" || formElement == "selectMul") {
+		$("#queryParamContent").removeAttr("disabled");
+		return $("#queryParamDataSource").val("sql");
+	}
+	$("#queryParamContent").val('');
+	$("#queryParamContent").attr({
+		"disabled" : "disabled"
+	});
+	$("#queryParamDataSource").val("none");
+};
+
 ReportDesigner.loadDataToQueryParamTab = function(data) {
 	$("#jsonQueryParams").val(data.queryParams);
 	$("#queryParamReportId").val(data.id);
@@ -1591,9 +1590,6 @@ ReportDesigner.resortDatagrid = function(index, type, grid) {
 
 ReportDesigner.getPropertyValue = function(name, object) {
 	var value = object[name];
-	if (name == "dsId") {
-		return ReportDesigner.getDatasource(value);
-	}
 	if (name == "flag") {
 		return ReportDesigner.getFlagName(value);
 	}
