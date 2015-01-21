@@ -8,7 +8,7 @@
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 
 	<!-- Scans the classpath of this application for @Components to deploy as beans -->
-	<context:component-scan base-package="org.easyframework.report" />
+	<context:component-scan base-package="com.easytoolsoft" />
 	<context:annotation-config />
 	<!-- Configures Spring MVC -->
 	<import resource="mvc-config.xml" />

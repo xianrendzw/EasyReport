@@ -1,0 +1,312 @@
+/*-------------------------------------
+           Reset Styles
+--------------------------------------*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+/*-------------------------------------
+           End Reset Styles
+--------------------------------------*/
+
+body {
+	line-height: 1;
+	color: black;
+	background: white;
+	background-image: url(images/body-bg.gif);
+	background-position: top;
+	background-repeat: repeat-x;
+	background-color: #e8e3D0;
+	font-family: Georgia, serif;
+}
+
+.clear-fix:after {
+    content: ".";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    font-size: 1px;
+    clear: both;
+}
+
+.clear-fix {
+	zoom: 1;
+}
+
+a,
+a:link,
+a:visited {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/*-------------------------------------
+         Used by multiple pages
+--------------------------------------*/
+
+.info-container {
+	width: 840px;
+	border: 1px solid #d8d5c6;
+	padding: 4px;
+	margin: 40px auto 0;
+}
+
+.inner-border {
+	background-color: #fcfbf9;
+	border: 1px solid #d8d5c6;
+	padding: 10px 20px;
+}
+
+/*-------------------------------------
+       End Used by multiple pages
+--------------------------------------*/
+
+/*-------------------------------------
+          404 Page Styles
+--------------------------------------*/
+
+.body-404 {
+	width: 980px;
+	margin: 0 auto;
+}
+
+.body-404 h1 {
+	background-repeat: no-repeat;
+	background-position: center top;
+	width: 980px;
+	height: 500px;
+}
+
+.body-404 h1 span {
+	display: none;
+}
+
+.body-404 h2.info-top {
+	border-left: 1px solid #d6d3c4;
+	border-top: 1px solid #d6d3c4;
+	border-right: 1px solid #d6d3c4;
+	font-size: 18px;
+	background-image: url(images/info-top-bg.gif);
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	width: 266px;
+	margin: -48px auto 0;
+	text-align: center;
+	padding: 9px 15px 10px;
+	font-weight: bold;
+}
+
+.body-404 .inner-border {
+	.padding-bottom: 0;
+}
+
+.site-owner-404 {
+	float: left;
+	width: 400px;
+	border-right: 1px solid #d9d6c5;
+	font-size: 12px;
+	color: #6d6a5b;
+	height: 87px;
+}
+
+.site-owner-404 h3 {
+	padding: 10px 0 12px;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.site-owner-404 h3 strong {
+	font-weight: bold;
+	color: #000;
+}
+
+.site-owner-404 ol li {
+	padding-bottom: 5px;
+}
+
+.site-visitor-404 {
+	float: left;
+	font-size: 12px;
+	color: #6d6a5b;
+	padding-left: 20px;
+}
+
+.site-visitor-404 h3 {
+	padding: 10px 0 12px;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.site-visitor-404 h3 strong {
+	font-weight: bold;
+	color: #000;
+}
+
+.site-visitor-404 ol li {
+	padding-bottom: 5px;
+}
+
+.site-visitor-404 ol li.last {
+	padding-left: 14px;
+}
+
+/*-------------------------------------
+          End 404 Page Styles
+--------------------------------------*/
+
+
+/*-------------------------------------
+         	500 Page Styles
+--------------------------------------*/
+
+.body-500 {
+	width: 980px;
+	margin: 0 auto;
+}
+
+.body-500 h1 {
+	background-image: url(images/500.gif);
+	background-repeat: no-repeat;
+	background-position: center top;
+	width: 980px;
+	height: 500px;
+}
+
+.body-500 h1 span {
+	display: none;
+}
+
+.body-500 h2.info-top {
+	border-left: 1px solid #d6d3c4;
+	border-top: 1px solid #d6d3c4;
+	border-right: 1px solid #d6d3c4;
+	font-size: 18px;
+	background-image: url(images/info-top-bg.gif);
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	width: 260px;
+	margin: -48px auto 0;
+	text-align: center;
+	padding: 9px 15px 10px;
+	font-weight: bold;
+}
+
+.body-500 .info-container .inner-border h3 {
+	padding: 20px 0 10px;
+	font-size: 14px;
+	color: #6d6a5b;
+	font-weight: normal;
+	.padding: 10px 0 10px;
+}
+
+/*-------------------------------------
+          End 500 Page Styles
+--------------------------------------*/
+
+/*-------------------------------------
+          Coming Soon Page Styles
+--------------------------------------*/
+
+.body-coming-soon {
+	width: 980px;
+	margin: 0 auto;
+}
+
+.body-coming-soon h1 {
+	background-image: url(images/comingsoon.gif);
+	background-repeat: no-repeat;
+	background-position: center top;
+	width: 980px;
+	height: 500px;
+}
+
+.body-coming-soon h1 span {
+	display: none;
+}
+
+
+
+.coming-soon-visitor strong,
+.coming-soon-owner strong {
+	font-weight: bold;
+	color: #000;
+}
+
+.coming-soon-owner {
+	float: left;
+	font-size: 14px;
+	color: #6d6a5b;
+	font-weight: normal;
+	width: 400px;
+	border-right: 1px solid #d9d6c5;
+	padding: 10px 0;
+	.margin-bottom: 10px;
+}
+
+.coming-soon-visitor {
+	float: left;
+	font-size: 14px;
+	color: #6d6a5b;
+	font-weight: normal;
+	padding-left: 20px;
+	padding: 10px 0 10px 20px;
+	.margin-bottom: 10px;
+}
+
+/*-------------------------------------
+         End Coming Soon Page Styles
+--------------------------------------*/
+
+/*-------------------------------------
+         Suspended Page Styles
+--------------------------------------*/
+
+.body-suspended {
+	width: 980px;
+	margin: 0 auto;
+}
+
+.body-suspended h1 {
+	background-image: url(images/suspended.gif);
+	background-repeat: no-repeat;
+	background-position: center top;
+	width: 980px;
+	height: 500px;
+}
+
+.body-suspended h1 span {
+	display: none;
+}
+
+
+/*-------------------------------------
+       End Suspended Page Styles
+--------------------------------------*/
+

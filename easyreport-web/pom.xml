@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.easyframework</groupId>
+		<groupId>com.easytoolsoft</groupId>
 		<artifactId>easyreport</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
@@ -76,19 +76,19 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.easyframework</groupId>
+			<groupId>com.easytoolsoft</groupId>
 			<artifactId>easyreport-common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.easyframework</groupId>
+			<groupId>com.easytoolsoft</groupId>
 			<artifactId>easyreport-data</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.easyframework</groupId>
+			<groupId>com.easytoolsoft</groupId>
 			<artifactId>easyreport-domain</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.easyframework</groupId>
+			<groupId>com.easytoolsoft</groupId>
 			<artifactId>easyreport-engine</artifactId>
 		</dependency>
 	</dependencies>
