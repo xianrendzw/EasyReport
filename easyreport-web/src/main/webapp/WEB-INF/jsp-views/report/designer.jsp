@@ -28,7 +28,7 @@
 		<div id="tabs" class="easyui-tabs" fit="true" border="false" plain="true">
 			<div id="settingsTab" title="基本设置" style="padding: 5px;">
 				<form id="settingsForm" method="post">
-					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
+					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 100%;">
 						<tr>
 							<td class="text_r blueside" width="70">名称:</td>
 							<td><input type="text" id="reportName" name="name" required/></td>
@@ -75,14 +75,14 @@
 							<td id="reportSqlTextTd" colspan="7"><textarea id="reportSqlText" name="sqlText"></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="6" style="text-align: center;">
-							<a id="btnExecSql" href="void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
-							<a id="btnViewSqlText" href="void(0)" class="easyui-linkbutton" icon="icon-sql" onclick="ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
-							<a id="btnViewHistorySqlText" href="void(0)" class="easyui-linkbutton" icon="icon-history" onclick="ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
-							<a id="btnNewReport" href="void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
-							<a id="btnEditReport" href="void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.save()">修改</a>&nbsp;&nbsp;
-							<a id="btnViewReport" href="void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
-							<a id="btnFullScreenEditSql" href="void(0)" class="easyui-linkbutton" icon="icon-fullscreen" onclick="ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
+							<td colspan="8" style="text-align: center;">
+							<a id="btnExecSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
+							<a id="btnViewSqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-sql" onclick="ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
+							<a id="btnViewHistorySqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-history" onclick="ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
+							<a id="btnNewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
+							<a id="btnEditReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.save()">修改</a>&nbsp;&nbsp;
+							<a id="btnViewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
+							<a id="btnFullScreenEditSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-fullscreen" onclick="ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
 						</tr>
 					</table>
 				</form>
@@ -90,7 +90,7 @@
 			</div>
 			<div id="queryParamTab" title="查询参数" style="padding: 5px;">
 				<form id="queryParamForm" method="post">
-					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
+					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 100%;">
 						<tr>
 							<td class="text_r blueside" width="70">参数名:</td>
 							<td><input type="text" id="queryParamName" name="name" required/></td>
@@ -142,9 +142,9 @@
 						</tr>
 						<tr>
 							<td colspan="8" style="text-align: center;">
-							<a href="void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.setQueryParam('add')">增加</a>&nbsp;&nbsp;
-							<a href="void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.setQueryParam('edit')">修改</a>&nbsp;&nbsp;
-							<a href="void(0)" class="easyui-linkbutton" icon="icon-save" onclick="ReportDesigner.saveQueryParam()">保存</a></td>
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.setQueryParam('add')">增加</a>&nbsp;&nbsp;
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.setQueryParam('edit')">修改</a>&nbsp;&nbsp;
+							<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-save" onclick="ReportDesigner.saveQueryParam()">保存</a></td>
 						</tr>
 					</table>
 				</form>
@@ -263,28 +263,24 @@
 	</div>
 	<!-- 查看报表SQL弹框  -->
 	<div id="viewSqlTextDlg" title="查看报表SQL">
-		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
-			<tr>
-				<td class="top"><textarea id="viewSqlText" name="sqlText" style="width: 99%; height: 99%;"></textarea></td>
-			</tr>
-		</table>
+		<textarea id="viewSqlText" name="sqlText" style="height:100%"></textarea>
 	</div>
 	<!-- 查看报表SQL历史记录弹框  -->
 	<div id="viewHistorySqlTextDlg" title="查看报表SQL历史记录">
-		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
+		<table cellpadding="0" cellspacing="0" style="width: 100%; height:  100%">
 			<tr>
-				<td class="text_center blueside top" style="width: 300px;">版本历史</td>
-				<td class="text_center blueside top">版本记录</td>
+				<td style="width: 410px;text-align: center;background: #F6FAFD;font-weight: bold;">版本历史</td>
+				<td style="text-align: center;background: #F6FAFD;font-weight: bold;">版本记录</td>
 			</tr>
 			<tr>
-				<td class="top"><div id="viewSqlTextHistoryGrid"></div></td>
-				<td class="top"><textarea id="viewSqlTextHistory" name="sqlText" style="width: 99%; height: 99%;"></textarea></td>
+				<td style="vertical-align: top;"><div id="viewSqlTextHistoryGrid"></div></td>
+				<td style="vertical-align: top;"><textarea id="viewSqlTextHistory" name="sqlText" style="width: 100%; height: 100%;"></textarea></td>
 			</tr>
 		</table>
 	</div>
-	<!-- 查找报表弹框  -->
-	<div id="searchReportDlg" title="查找报表">
-		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
+	<!-- 查找树节点弹框  -->
+	<div id="searchReportDlg" title="查找树节点">
+		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 100%;">
 			<tr>
 				<td class="text_r blueside" width="60">选项:</td>
 				<td><select id="searchReportFieldName" name="fieldName">
@@ -293,16 +289,14 @@
 						<option value="create_user">创建者</option>
 				</select></td>
 				<td class="text_r blueside">关键字:</td>
-				<td><input type="text" id="searchReportKeyword" name="keyword" style="width: 98%;" /></td>
-				<td colspan="2"><a href="void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.search();">查找</a></td>
-			</tr>
-			<tr class="top">
-				<td id="searchReportGridTd" colspan="6"><div id="searchReportGrid" title="报表列表"></div></td>
+				<td><input type="text" id="searchReportKeyword" name="keyword" />
+				<a href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.search();">查找</a></td>
 			</tr>
 		</table>
+		<div id="searchReportGrid" title="报表列表"></div>
 	</div>
 	<!-- 设置计算列表达式弹框  -->
-	<div id="expressionDlg" title="设置表达式">
+	<div id="columnExpressionDlg" title="设置表达式">
 		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
 				<td class="top"><textarea id="columnExpression" name="expression" style="width: 98%; height: 215px;"></textarea></td>
@@ -313,7 +307,7 @@
 	<div id="columnCommentDlg" title="列备注">
 		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
-				<td class="top"><textarea id="columnComment" name="columnComment" style="width: 98%; height: 215px;"></textarea></td>
+				<td class="top"><textarea id="columnComment" name="comment" style="width: 98%; height: 215px;"></textarea></td>
 			</tr>
 		</table>
 	</div>
@@ -321,14 +315,13 @@
 	<div id="columnFormatDlg" title="列格式">
 		<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%; height: 99%">
 			<tr>
-				<td class="top"><textarea id="columnFormat" name="columnFormat" style="width: 98%; height: 215px;"></textarea></td>
+				<td class="top"><textarea id="columnFormat" name="format" style="width: 98%; height: 215px;"></textarea></td>
 			</tr>
 		</table>
 	</div>
 	<!-- tree右键菜单  -->
 	<div id="reportTreeCtxMenu" class="easyui-menu" data-options="onClick:ReportDesigner.treeContextMenu" style="width: 220px;">
 		<div id="m-addRp" data-options="name:'addRp',iconCls:'icon-add'">新增报表</div>
-		<div id="m-comment" data-options="name:'comment',iconCls:'icon-comment2'">设置备注</div>
 		<div id="m-info" data-options="name:'info',iconCls:'icon-tip'">报表属性</div>
 		<div class="menu-sep"></div>
 		<div id="m-copy" data-options="name:'copy',iconCls:'icon-copy'">复制</div>

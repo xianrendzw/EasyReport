@@ -214,6 +214,8 @@ $(function() {
 				$.post(designerPageRootUrl + 'getSqlColumn', function(row) {
 					row.name = row.name + index;
 					row.text = row.name;
+					row.type = 4;
+					row.sortType = 0;
 					$('#sqlColumnGrid').datagrid('appendRow', row);
 				}, 'json');
 			}
@@ -353,8 +355,8 @@ $(function() {
 							var tmpl = "";
 							if (name == "expression" || name == "comment" || name == "format") {
 								data.imgSrc = WebAppRequest.getContextPath() + "/assets/modules/report/icons/" + name + ".png";
-								data.onClick = " onclick =\"ReportDesigner.showSqlColumnGridDialog(" + index + ")\"";
-								tmpl = '<img style="cursor: pointer;" id="{{id}}" title="{{text}}" src="{{imgSrc}}" {{onClick}} />';
+								data.onClick = "ReportDesigner.showSqlColumnGridOptionDialog('" + index + "','"+ name +"')";
+								tmpl = '<img style="cursor: pointer;" id="{{id}}" title="{{text}}" src="{{imgSrc}}" onclick="{{onClick}}" />';
 							} else {
 								tmpl = '<input type="checkbox" id="{{id}}" name="{{name}}" {{checked}}>{{text}}</input>'
 							}
@@ -390,27 +392,27 @@ $(function() {
 		columns : [ [ {
 			field : 'name',
 			title : '参数名',
-			width : 80
+			width : 100
 		}, {
 			field : 'text',
 			title : '标题',
-			width : 80
+			width : 100
 		}, {
 			field : 'defaultValue',
 			title : '默认值',
-			width : 80
+			width : 100
 		}, {
 			field : 'defaultText',
 			title : '默认标题',
-			width : 80
+			width : 100
 		}, {
 			field : 'formElement',
 			title : '表单控件',
-			width : 80
+			width : 100
 		}, {
 			field : 'dataSource',
 			title : '来源类型',
-			width : 80,
+			width : 100,
 			formatter : function(value, row, index) {
 				if (value == "sql") {
 					return "SQL语句";
@@ -423,11 +425,11 @@ $(function() {
 		}, {
 			field : 'dataType',
 			title : '数据类型',
-			width : 80
+			width : 100
 		}, {
 			field : 'width',
 			title : '数据长度',
-			width : 80
+			width : 100
 		}, {
 			field : 'required',
 			title : '是否必选',
@@ -436,10 +438,6 @@ $(function() {
 			field : 'autoComplete',
 			title : '是否自动提示',
 			width : 80
-		}, {
-			field : 'content',
-			title : '内容',
-			width : 360
 		}, {
 			field : 'options',
 			title : '操作',
@@ -455,6 +453,7 @@ $(function() {
 		} ] ],
 		onDblClickRow : function(index, row) {
 			$('#queryParamForm').autofill(row);
+			$("#queryParamGridIndex").val(index);
 		}
 	});
 
@@ -524,7 +523,7 @@ $(function() {
 		}, {
 			field : 'author',
 			title : '作者',
-			width : 100
+			width : 80
 		} ] ],
 		onDblClickRow : function(index, row) {
 			viewHistorySqlEditor.setValue(row.sqlText);
@@ -580,7 +579,7 @@ $(function() {
 		modal : true,
 		maximizable : true,
 		width : window.screen.width - 500,
-		height : window.screen.height - 200,
+		height : window.screen.height - 300,
 		buttons : [ {
 			text : '关闭',
 			iconCls : 'icon-no',
@@ -595,31 +594,13 @@ $(function() {
 		modal : true,
 		maximizable : true,
 		width : window.screen.width - 200,
-		height : window.screen.height - 200,
+		height : window.screen.height - 300,
 		buttons : [ {
 			text : '关闭',
 			iconCls : 'icon-no',
 			handler : function() {
 				$("#viewHistorySqlTextDlg").dialog('close');
 			}
-		} ]
-	});
-
-	$('#expressionDlg').dialog({
-		closed : true,
-		modal : true,
-		width : 500,
-		height : 300,
-		buttons : [ {
-			text : '关闭',
-			iconCls : 'icon-no',
-			handler : function() {
-				$("#expressionDlg").dialog('close');
-			}
-		}, {
-			text : '保存',
-			iconCls : 'icon-save',
-			handler : ReportDesigner.saveExpression
 		} ]
 	});
 
@@ -637,6 +618,24 @@ $(function() {
 		} ]
 	});
 
+	$('#columnExpressionDlg').dialog({
+		closed : true,
+		modal : true,
+		width : 500,
+		height : 300,
+		buttons : [ {
+			text : '关闭',
+			iconCls : 'icon-no',
+			handler : function() {
+				$("#columnExpressionDlg").dialog('close');
+			}
+		}, {
+			text : '保存',
+			iconCls : 'icon-save',
+			handler : ReportDesigner.saveSqlColumnGridOptionDialog
+		} ]
+	});
+
 	$('#columnCommentDlg').dialog({
 		closed : true,
 		modal : true,
@@ -648,6 +647,10 @@ $(function() {
 			handler : function() {
 				$("#columnCommentDlg").dialog('close');
 			}
+		}, {
+			text : '保存',
+			iconCls : 'icon-save',
+			handler : ReportDesigner.saveSqlColumnGridOptionDialog
 		} ]
 	});
 
@@ -662,6 +665,10 @@ $(function() {
 			handler : function() {
 				$("#columnFormatDlg").dialog('close');
 			}
+		}, {
+			text : '保存',
+			iconCls : 'icon-save',
+			handler : ReportDesigner.saveSqlColumnGridOptionDialog
 		} ]
 	});
 });
@@ -669,9 +676,13 @@ $(function() {
 var ReportDesigner = function() {
 };
 
+
+ReportDesigner.SqlColumnGridOptionDialogName = "";
+ReportDesigner.treeNodePathIds = [];
+
 ReportDesigner.init = function() {
-	$('#reportEditBtn').linkbutton('disable');
-	$('#reportPreviewBtn').linkbutton('disable');
+	$('#btnEditReport').linkbutton('disable');
+	$('#btnViewReport').linkbutton('disable');
 	$('#queryParamFormElement').change(ReportDesigner.queryParamFormElementChange);
 	$('#reportStatus').change(function() {
 		return ReportDesigner.setSqlEditorStatus();
@@ -705,8 +716,7 @@ ReportDesigner.tabSelectedHandlder = function(title, currIndex) {
 		if (index == 0) {
 			sqlEditor.refresh();
 			viewSqlEditor.refresh();
-			viewHistorySqlEditor.refresh();
-			return;
+			return viewHistorySqlEditor.refresh();
 		}
 		if (index > 1) {
 			var tab = $('#tabs').tabs('getTab', index);
@@ -823,9 +833,6 @@ ReportDesigner.closeAllTab = function() {
 //
 // 报表树相关操作
 //
-
-ReportDesigner.treeNodePathIds = [];
-
 ReportDesigner.treeContextMenu = function(item) {
 	if (item.name == "addRp") {
 		return ReportDesigner.add();
@@ -835,9 +842,6 @@ ReportDesigner.treeContextMenu = function(item) {
 	}
 	if (item.name == "edit") {
 		return ReportDesigner.editTreeNode();
-	}
-	if (item.name == "comment") {
-		return ReportDesigner.setTreeNodeComment();
 	}
 	if (item.name == "remove") {
 		return ReportDesigner.removeTreeNode();
@@ -968,7 +972,7 @@ ReportDesigner.removeTreeNode = function() {
 
 ReportDesigner.saveTreeNode = function() {
 	var act = $("#treeNodeAction").val();
-	var actUrl = act == "add" ? designerPageRootUrl + "/addtreenode" : designerPageRootUrl + "/edittreenode";
+	var actUrl = act == "add" ? designerPageRootUrl + "addTreeNode" : designerPageRootUrl + "editTreeNode";
 	$('#setTreeNodeForm').form('submit', {
 		url : actUrl,
 		onSubmit : function() {
@@ -1016,7 +1020,7 @@ ReportDesigner.selectTreeNodeHandler = function(node) {
 	if (node.attributes.flag != 1) {
 		$('#reportAction').val('add');
 		$('#reportPid').val(node.id);
-		ReportDesigner.toggleButton('add');
+		ReportDesigner.initButtonStatus('add');
 	} else {
 		ReportDesigner.loadAllTabData();
 	}
@@ -1155,7 +1159,7 @@ ReportDesigner.add = function() {
 		ReportDesigner.selectTab(0);
 		$('#reportId').val(0);
 		$('#reportPid').val(node.id);
-		ReportDesigner.toggleButton('add');
+		ReportDesigner.initButtonStatus('add');
 		ReportDesigner.clearAllEditor();
 	} else {
 		$.messager.alert('提示', "请选择一个节点", 'info');
@@ -1164,20 +1168,18 @@ ReportDesigner.add = function() {
 
 ReportDesigner.edit = function(data) {
 	$('#reportAction').val('edit');
-	ReportDesigner.toggleButton('edit');
 	$('#settingsForm').form('load', data);
 	$("#sqlColumnGrid").datagrid('loadData', eval(data.metaColumns));
-	sqlEditor.setValue(data.sqlText);
 	$('#reportIsChange').val(0);
+	sqlEditor.setValue(data.sqlText);
+	ReportDesigner.initButtonStatus('edit');
 
 };
 
-ReportDesigner.toggleButton = function(action) {
-	$('#reportNewBtn').linkbutton(action == 'add' ? 'enable' : 'disable');
-	$('#reportPowerBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
-	$('#reportContactsBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
-	$('#reportEditBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
-	$('#reportPreviewBtn').linkbutton(action == 'add' ? 'disable' : 'enable');
+ReportDesigner.initButtonStatus = function(action) {
+	$('#btnNewReport').linkbutton(action == 'add' ? 'enable' : 'disable');
+	$('#btnEditReport').linkbutton(action == 'add' ? 'disable' : 'enable');
+	$('#btnViewReport').linkbutton(action == 'add' ? 'disable' : 'enable');
 };
 
 ReportDesigner.resetSettingsForm = function() {
@@ -1241,6 +1243,7 @@ ReportDesigner.viewSqlText = function() {
 		$.messager.progress("close");
 		if (result.success) {
 			$('#viewSqlTextDlg').dialog('open');
+			$('#viewSqlTextDlg .CodeMirror').css("height","99%");
 			return viewSqlEditor.setValue(result.data);
 		}
 		return $.messager.alert('错误', result.msg);
@@ -1249,6 +1252,7 @@ ReportDesigner.viewSqlText = function() {
 
 ReportDesigner.viewSqlHistory = function() {
 	$('#viewHistorySqlTextDlg').dialog('open');
+	$('#viewHistorySqlTextDlg .CodeMirror').css("height","98%");
 	var reportId = $("#reportId").val();
 	var url = designerPageRootUrl + 'getHistorySqlText?reportId=' + reportId;
 	ReportCommon.loadDataToGrid('#viewSqlTextHistoryGrid', url);
@@ -1280,7 +1284,9 @@ ReportDesigner.executeSql = function() {
 		$.messager.progress("close");
 		if (result.success) {
 			$("#sqlColumnGrid").datagrid('clearChecked');
-			return ReportDesigner.loadSqlColumns(result.data);
+			var rows = ReportDesigner.eachSqlColumnRows(result.data);
+			console.log(rows);
+			return ReportDesigner.loadSqlColumns(rows);
 		}
 		return $.messager.alert('错误', result.msg);
 	}, 'json');
@@ -1352,15 +1358,37 @@ ReportDesigner.getCheckboxOptions = function(type) {
 	return subOptions;
 };
 
-ReportDesigner.showSqlColumnGridDialog = function(index, name, value) {
-	$('#' + name.toLowerCase() + 'Dlg').dialog('open');
-	$("#column" + name).val(value);
+ReportDesigner.showSqlColumnGridOptionDialog = function(index, name) {
+	ReportDesigner.SqlColumnGridOptionDialogName = name;
+	$("#sqlColumnGrid").datagrid('selectRow', index);
+	var row = $("#sqlColumnGrid").datagrid('getSelected');
+	if (name == "expression"){
+		$('#columnExpressionDlg').dialog('open');
+		$("#columnExpression").val(row.expression);
+	}else if( name == "comment"){
+		$('#columnCommentDlg').dialog('open');
+		$("#columnComment").val(row.comment);
+	}
+	else if(name == "format"){
+		$('#columnFormatDlg').dialog('open');
+		$("#columnFormat").val(row.format);
+	}
 };
 
-ReportDesigner.saveSqlColumnGridDialog = function(name) {
+ReportDesigner.saveSqlColumnGridOptionDialog = function() {
+	var name = ReportDesigner.SqlColumnGridOptionDialogName;
 	var row = $("#sqlColumnGrid").datagrid('getSelected');
-	var value = $("#column" + name).val();
-	$('#' + name.toLowerCase() + 'Dlg').dialog('close');
+	if (name == "expression"){
+		row.expression = $("#columnExpression").val();
+		$('#columnExpressionDlg').dialog('close');
+	}else if( name == "comment"){
+		row.comment = $("#columnComment").val();
+		$('#columnCommentDlg').dialog('close');
+	}
+	else if(name == "format"){
+		row.format = $("#columnFormat").val();
+		$('#columnFormatDlg').dialog('close');
+	}
 };
 
 ReportDesigner.getEmptyExprColumns = function(sqlColumnRows) {
@@ -1529,13 +1557,14 @@ ReportDesigner.deleteQueryParam = function(index) {
 
 ReportDesigner.setQueryParam = function(act) {
 	if ($("#queryParamForm").valid()) {
+		var row = $('#queryParamForm').serializeObject()
+		row.required = $("#queryParamIsRequired").prop("checked");
+		row.autoComplete = $("#queryParamIsAutoComplete").prop("checked");
+
 		if (act == "add") {
-			$('#queryParamGrid').datagrid('appendRow', $('#queryParamForm').serializeObject());
+			$('#queryParamGrid').datagrid('appendRow', row);
 		} else if (act == "edit") {
 			var index = $("#queryParamGridIndex").val();
-			var row = $('#queryParamForm').serializeObject()
-			row.required = $("#queryParamIsRequired").prop("checked");
-			row.autoComplete = $("#queryParamIsAutoComplete").prop("checked");
 			$('#queryParamGrid').datagrid('updateRow', {
 				index : index,
 				row : row
@@ -1624,6 +1653,53 @@ ReportDesigner.getLayoutName = function(layout) {
 	}
 	return "无";
 };
+
+ReportDesigner.eachSqlColumnRows = function(rows){
+	if(rows && rows.length > 0){
+		for(var i=0;i<rows.length;i++){
+			var row = rows[i];
+			row.type = ReportDesigner.getColumnTypeValue(row.type);
+			row.sortType = ReportDesigner.getColumnSortTypeValue(row.sortType);
+		}
+	}
+	return rows;
+}
+
+ReportDesigner.getColumnTypeValue = function(name){
+	if (name == "LAYOUT") {
+		return 1;
+	}
+	if (name == "DIMENSION") {
+		return 2;
+	}
+	if (name == "STATISTICAL") {
+		return 3;
+	}
+	if (name == "COMPUTED") {
+		return 4;
+	}
+	return 2;
+};
+
+ReportDesigner.getColumnSortTypeValue = function(name){
+	if (name =="DEFAULT") {
+		return  0;
+	}
+	if (name == "DIGIT_ASCENDING") {
+		return 1;
+	}
+	if (name == "DIGIT_DESCENDING") {
+		return 2;
+	}
+	if (name == "CHAR_ASCENDING") {
+		return 3;
+	}
+	if (name == "CHAR_DESCENDING") {
+		return 4;
+	}
+	return 0;
+};
+
 
 // 在tab里显示报表图表页
 function showChart(title, id, uid) {

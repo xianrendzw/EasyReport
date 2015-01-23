@@ -31,7 +31,9 @@ public abstract class AbstractQueryer {
 	protected AbstractQueryer(ReportDataSource dataSource, ReportParameter parameter) {
 		this.dataSource = dataSource;
 		this.parameter = parameter;
-		this.metaDataColumns = new ArrayList<ReportMetaDataColumn>(this.parameter.getMetaColumns());
+		this.metaDataColumns = this.parameter == null ?
+				new ArrayList<ReportMetaDataColumn>(0) :
+				new ArrayList<ReportMetaDataColumn>(this.parameter.getMetaColumns());
 	}
 
 	public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {

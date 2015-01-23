@@ -23,7 +23,7 @@
 	<!-- 新增与修改配置字典dialog  -->
 	<div id="configDictDlg">
 		<form id="configDictForm" method="post" novalidate>
-			<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
+			<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 				<tr id="configDictPNameDiv">
 					<td class="text_r blueside" width="80">父节点:</td>
 					<td><label id="configDictPName"></label></td>

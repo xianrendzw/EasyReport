@@ -336,7 +336,7 @@ public class DesignerController extends AbstractController {
 	@ResponseBody
 	public Map<String, Object> search(Integer page, Integer rows, String fieldName, String keyword,
 			HttpServletRequest request) {
-		if (page == null)
+		if (page == null || page < 1)
 			page = 1;
 		if (rows == null)
 			rows = 15;
@@ -386,7 +386,7 @@ public class DesignerController extends AbstractController {
 	@RequestMapping(value = "/query")
 	@ResponseBody
 	public Map<String, Object> query(Integer page, Integer rows, HttpServletRequest request) {
-		if (page == null)
+		if (page == null || page < 1)
 			page = 1;
 		if (rows == null)
 			rows = 30;

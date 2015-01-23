@@ -118,7 +118,7 @@ public class ReportingDao extends BaseDao<ReportingPo> {
 	public List<ReportingPo> queryByPage(String fieldName, String keyword, PageInfo page) {
 		String condition = "";
 		if (keyword != null && keyword.trim().length() > 0) {
-			condition = Restrictions.like(fieldName, "'%" + keyword + "%'").toString();
+			condition = Restrictions.like(fieldName, "%" + keyword + "%").toString();
 		}
 		String[] columnNames = new String[] {
 				ReportingPo.Id, ReportingPo.Pid, ReportingPo.Uid, ReportingPo.Path,

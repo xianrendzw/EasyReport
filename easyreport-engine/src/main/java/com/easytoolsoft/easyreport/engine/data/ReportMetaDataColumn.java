@@ -17,8 +17,8 @@ public class ReportMetaDataColumn {
 	private String comment;
 	private int width;
 	private int decimals;
-	private ColumnType type;
-	private ColumnSortType sortType;
+	private ColumnType type = ColumnType.DIMENSION;
+	private ColumnSortType sortType = ColumnSortType.DEFAULT;
 	private boolean isExtensions;
 	private boolean isFootings;
 	private boolean isPercent;

@@ -17,7 +17,7 @@
 	<!-- 新增与修改数据源dialog  -->
 	<div id="datasourceDlg" style="width: 500px; height: 300px; padding: 10px 20px";>
 		<form id="datasourceForm" method="post">
-			<table cellpadding="0" class="formStyle" cellpadding="5" cellspacing="5" style="width: 99%;">
+			<table cellpadding="0" class="form-table" cellpadding="5" cellspacing="5" style="width: 99%;">
 				<tr>
 					<td class="text_r blueside" style="font-size: 15px">数据源名称:</td>
 					<td><input name="name" class="easyui-validatebox" required="true" style="width: 300px;" /></td>

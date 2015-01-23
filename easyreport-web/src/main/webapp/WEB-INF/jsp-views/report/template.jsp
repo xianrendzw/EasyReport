@@ -39,7 +39,7 @@
 	</div>
 	<div style="margin: 5px;">
 		<form id="templateFrom" method="post">
-			<table cellpadding="0" class="formStyle" cellspacing="0" style="width: 99%;">
+			<table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
 				<tr class="text_center blueside" style="height: 45px;">
 					<td colspan="2" id="rpTitle" style="font-size: 24px;">${name}</td>
 				</tr>
