@@ -47,7 +47,7 @@
 					<td style="text-align: left; vertical-align: middle; white-space: normal;">${formHtmlText}
 					<input id="isMergeRow" type="checkbox" name="isMergeRow" checked="checked" />合并左边相同维度行 
 					<a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成报表</a></td>
-					<td style="text-align: left; vertical-align: middle; white-space: normal;">
+					<td style="text-align: right; vertical-align: middle; white-space: normal;">
 					<img style="cursor: pointer;" id="btnFullScreen" title="全屏显示" src="<%=request.getContextPath()%>/assets/modules/report/icons/fullscreen_24.png" />&nbsp;
 					<img style="cursor: pointer;" id="btnExportToExcel" title="导出到Excel" src="<%=request.getContextPath()%>/assets/modules/report/icons/excel_24.png" />&nbsp;
 					<img style="cursor: pointer;" id="btnShowChart" title="图表展示" src="<%=request.getContextPath()%>/assets/modules/report/icons/chart_24.png" />&nbsp;

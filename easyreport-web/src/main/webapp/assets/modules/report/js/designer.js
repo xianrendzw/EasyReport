@@ -453,6 +453,8 @@ $(function() {
 		} ] ],
 		onDblClickRow : function(index, row) {
 			$('#queryParamForm').autofill(row);
+			$("#queryParamIsRequired").prop("checked",row.required);
+			$("#queryParamIsAutoComplete").prop("checked",row.autoComplete);
 			$("#queryParamGridIndex").val(index);
 		}
 	});
