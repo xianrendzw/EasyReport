@@ -55,7 +55,7 @@
 					<img style="cursor: pointer;" id="btnShowComment" title="报表说明" src="<%=request.getContextPath()%>/assets/modules/report/icons/comment_24.png" />
 					<input id="rpId" type="hidden" name="id" value="${id}" />
 					<input id="rpName" type="hidden" name="name" value="${name}" /> 
-					<input id="uid" type="hidden" name="uid" value="${uid}" /> 
+					<input id="rpUid" type="hidden" name="uid" value="${uid}" /> 
 					<input id="isRowSpan" type="hidden" name="isRowSpan" value="true" /></td>
 				</tr>
 				<c:if test="${not empty statColumHtmlText}">

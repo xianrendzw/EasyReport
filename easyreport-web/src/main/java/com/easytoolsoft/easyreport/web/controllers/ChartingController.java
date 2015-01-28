@@ -1,6 +1,5 @@
 package com.easytoolsoft.easyreport.web.controllers;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,7 +23,7 @@ import com.easytoolsoft.easyreport.service.ReportingChartService;
 import com.easytoolsoft.easyreport.service.ReportingGenerationService;
 import com.easytoolsoft.easyreport.service.ReportingService;
 import com.easytoolsoft.easyreport.view.EasyUIQueryFormView;
-import com.easytoolsoft.easyreport.viewmodel.HtmlFormElement;
+import com.easytoolsoft.easyreport.web.util.ReportingUtils;
 
 /**
  * 报表图表生成控制器
@@ -44,20 +43,12 @@ public class ChartingController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView("report/chart");
 
 		try {
-			ReportingPo po = reportingService.getByUid(uid);
-			Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), po.getDataRange());
-			List<HtmlFormElement> formElements = generationService.getFormElements(po, buildinParams, 0);
-			EasyUIQueryFormView formView = new EasyUIQueryFormView();
-			modelAndView.addObject("uid", uid);
-			modelAndView.addObject("id", po.getId());
-			modelAndView.addObject("name", po.getName());
-			modelAndView.addObject("comment", po.getComment().trim());
-			modelAndView.addObject("formHtmlText", formView.getFormHtmlText(formElements));
+			ReportingUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
 		} catch (QueryParamsException | TemplatePraseException ex) {
-			modelAndView.addObject("message", ex.getMessage());
+			modelAndView.addObject("formHtmlText", ex.getMessage());
 			this.logException("查询参数生成失败", ex);
 		} catch (Exception ex) {
-			modelAndView.addObject("message", "查询参数生成失败！请联系管理员.");
+			modelAndView.addObject("formHtmlText", "查询参数生成失败！请联系管理员.");
 			this.logException("查询参数生成失败", ex);
 		}
 

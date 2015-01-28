@@ -10,7 +10,7 @@ jQuery.fn.fixTableHeader = function(gv, scrollHeight) {
 	})
 	var gvn = $(gv).clone(true).removeAttr("id");
 	var gvn = $(gvn).find("thead");
-	var table = $("<table>").addClass("grid");
+	var table = $("<table>").addClass("easyreport");
 	table.append(gvn);
 	var $gv = $(gv);
 	$gv.before(table);
@@ -51,7 +51,7 @@ jQuery.fn.fixScroll = function(scroll) {
 		$(this).css("width", $(this).width());
 	});
 	var cloneTh = $thList.clone(true);
-	newDiv.append($("<table>").addClass("grid").append(cloneTh));
+	newDiv.append($("<table>").addClass("easyreport").append(cloneTh));
 	$e.before(newDiv);
 
 	$scroll.bind("scroll", function() {

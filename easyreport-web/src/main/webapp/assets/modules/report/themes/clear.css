@@ -20,17 +20,17 @@ td,th {
 	max-width: 400px;
 }
 
-.grid {
+.easyreport {
 	width: 100%;
 }
 
-.grid td:hover {
+.easyreport td:hover {
 	overflow: visible;
 	white-space: normal;
 	word-wrap: break-word;
 }
 
-.grid .caption td,.grid .caption2 td {
+.easyreport .easyreport-header td,.easyreport .easyreport-header td {
 	height: 28px;
 	background: #308ca5;
 	border-right: 1px solid #ccc;
@@ -39,28 +39,28 @@ td,th {
 	text-align: center;
 }
 
-.grid .caption2 th {
+.easyreport .easyreport-header th {
 	background: #53b125;
 }
 
-.grid tr.c {
+.easyreport tr.easyreport-row {
 	background: #e6f1f5
 }
 
-.grid th,.grid td {
+.easyreport th,.easyreport td {
 	padding: 8px 10px;
 	border-right: 1px solid #ccc;
 	color: #36534f;
 }
 
-.grid .back {
+.easyreport .easyreport-fixed-column {
 	background: #ecfbd2;
 	font-weight: bold;
 	font-size: 11px;
 	text-align: left;
 }
 
-.grid th {
+.easyreport th {
 	background: #f7fbfc;
 	border: 1px solid #ccc;
 	font-size: 11px;
@@ -69,9 +69,10 @@ td,th {
 	padding:8px 2px 8px 2px;
 }
 
-.grid td {
+.easyreport td {
 	border: 1px solid #ccc;
-	font-size: 11px;
 	text-align: center;
+	font-size: 11px;
 	height: 18px;
+	text-align: center;
 }

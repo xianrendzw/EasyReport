@@ -61,10 +61,10 @@ td,th {
 }
 
 .easyreport th {
-	background: #308ca5 /*#f7fbfc*/;
+	background: #308ca5;
 	border: 1px solid #ccc;
 	font-size: 11px;
-	color: #fff /*#333*/;
+	color: #fff;
 	text-align: center;
 	padding:8px 2px 8px 2px;
 }

@@ -1,61 +1,34 @@
 $(function() {
-	$('#btnGenarate').click(function(e) {
-		ReportTemplate.generate();
-	});
+	$('#btnGenarate').click(ReportTemplate.generate);
 	$('#btnShowChart').click(ReportTemplate.showChart);
-	$('#btnToggleSkins').click(function(e) {
-		ReportTemplate.toggleSkin(e);
-	});
-	$('#btnShowComment').mouseover(function(e) {
-		ReportTemplate.showComment(e);
-	});
-	$('#btnShowComment').mouseleave(function(e) {
-		ReportTemplate.closeComment(e);
-	});
+	$('#btnToggleSkins').click(ReportTemplate.toggleSkin);
+	$('#btnShowComment').mouseover(ReportTemplate.showComment);
+	$('#btnShowComment').mouseleave(ReportTemplate.closeComment);
 	$('#checkAllStatColumn').click(ReportTemplate.checkedAllStatColumn);
-
 	$('#btnExportToExcel').on("click", ReportTemplate.exportToExcel);
 	$('#btnFullScreen').on("click", ReportTemplate.fullScreen);
 
-	ReportTemplate.generate();
+	ReportTemplate.generate(ReportTemplate.Mode.classic,null);
 });
 
 var ReportTemplate = function() {
 };
 
-ReportTemplate.initTable = function() {
-	var table = $("#easyreport");
-	ReportTemplate.addToggleRowEvents();
-	// 暂时不支持跨行排序
-	var rowspans = $("#easyreport>tbody>tr>td[rowspan]");
-	// table.data('isSort', rowspans.length === 0).fixScroll();
-	if (rowspans && rowspans.length > 0) {
-		return;
-	}
-
-	table.tablesorter({
-		sortInitialOrder : 'desc'
-	});
-
-	table.find('>thead>tr').attr({
-		title : "点击可以排序"
-	}).css({
-		cursor : "pointer"
-	});
+ReportTemplate.Mode = {
+	classic : 'classic',// 经典表格模式
+	datatables : 'dt'// datatables控件表格模式
 };
 
-ReportTemplate.addToggleRowEvents = function() {
-	$("#easyreport>tbody>tr").click(function() {
-		$('#easyreport .selected').removeClass('selected').removeAttr('title');
-		$(this).addClass('selected').attr('title', 'selected');
-	});
+ReportTemplate.URL = {
+	generate : WebAppRequest.getContextPath() + '/report/generate',
+	exportToExcel : WebAppRequest.getContextPath() + '/report/exportExcel'
 };
 
-ReportTemplate.generate = function() {
+ReportTemplate.generate = function(mode, callback) {
 	$('#isRowSpan').val($('#isMergeRow').prop('checked'));
 	$.ajax({
 		type : "POST",
-		url : WebAppRequest.getContextPath() + '/report/generate',
+		url : ReportTemplate.URL.generate,
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
@@ -64,8 +37,11 @@ ReportTemplate.generate = function() {
 		},
 		success : function(result) {
 			$('#reportDiv').html(result.htmlTable);
-			ReportTemplate.initTable();
+			ReportTemplate.initTable(mode || ReportTemplate.Mode.classic);
 			ReportTemplate.filterTable = ReportTemplate.renderFilterTable();
+			if (callback instanceof Function) {
+				callback();
+			}
 		},
 		complete : function() {
 			$('#loading').hide();
@@ -73,7 +49,83 @@ ReportTemplate.generate = function() {
 	});
 };
 
-// 讲报表上面的过滤信息拼成table，用于写入excel中
+ReportTemplate.initTable = function(mode) {
+	var table = $("#easyreport");
+	
+	if (mode == ReportTemplate.Mode.classic) {
+		return ReportTemplate.renderClassicReport(table);
+	}
+	// 如果为dt模式但是表格存在跨行
+	// 则转为经典表格模式,因为datatables控件不支持跨行
+	if (ReportTemplate.hasRowSpan()) {
+		return ReportTemplate.renderClassicReport(table);
+	}
+	return ReportTemplate.renderDatatablesReport(table);
+};
+
+// 表格中是否跨行
+ReportTemplate.hasRowSpan = function() {
+	var rowspans = $("#easyreport>tbody>tr>td[rowspan]");
+	return (rowspans && rowspans.length > 0);
+};
+
+ReportTemplate.renderClassicReport = function(table) {
+	$("#easyreport>tbody>tr").click(function() {
+		$('#easyreport .selected').removeClass('selected').removeAttr('title');
+		$(this).addClass('selected');
+	});
+
+	var noRowSpan = !ReportTemplate.hasRowSpan();
+	table.data('isSort', noRowSpan).fixScroll();
+	
+	//如果表格中没有跨行rowspan(暂不支持跨行)
+	if (noRowSpan) {
+		table.tablesorter({
+			sortInitialOrder : 'desc'
+		});
+		table.find('>thead>tr').attr({
+			title : "点击可以排序"
+		}).css({
+			cursor : "pointer"
+		});
+	}
+};
+
+ReportTemplate.renderDatatablesReport = function(table) {
+	$('#easyreport').removeClass("easyreport");
+	$('#easyreport').addClass('table table-striped table-bordered');
+	$('#easyreport').dataTable({
+		"scrollY" : "100%",
+		"scrollX" : true,
+		"scrollCollapse" : true,
+		"searching" : false,
+		"language" : {
+			processing : "数据正在加载中...",
+			search : "查询:",
+			lengthMenu : "每页显示 _MENU_ 条记录",
+			info : "从 _START_ 到 _END_ /共 _TOTAL_ 条记录",
+			infoEmpty : "从 0 到  0  共 0  条记录",
+			infoFiltered : "(从 _MAX_ 条数据中检索)",
+			infoPostFix : "",
+			thousands : ",",
+			loadingRecords : "数据加载中...",
+			zeroRecords : "没有检索到数据",
+			emptyTable : "没有数据",
+			paginate : {
+				first : "首页",
+				previous : "前一页",
+				next : "后一页",
+				last : "尾页"
+			},
+			aria : {
+				sortAscending : ": 升序",
+				sortDescending : ": 降序"
+			}
+		}
+	});
+};
+
+// 将报表上面的过滤信息拼成table，用于写入excel中
 ReportTemplate.renderFilterTable = function() {
 	var html = '<table>';
 	html += '<tr><td><h3>表报名称</h3></td><td><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
@@ -108,7 +160,7 @@ ReportTemplate.exportToExcel = function(e) {
 	if (bytes > 2000000) {
 		htmlText = "large";
 	}
-	var postUrl = WebAppRequest.getContextPath() + '/report/exportexcel';
+	var postUrl = ReportTemplate.URL.exportToExcel;
 	var postData = $('#templateFrom').serializeObject();
 	postData["htmlText"] = htmlText;
 
@@ -141,9 +193,9 @@ ReportTemplate.closeComment = function(e) {
 
 ReportTemplate.toggleSkin = function(e) {
 	var regex = /default/g;
-	var href = WebAppRequest.getContextPath() + "/static/report/themes/default.css";
+	var href = WebAppRequest.getContextPath() + "/assets/modules/report/themes/default.css";
 	if (regex.test($('#skin').attr("href"))) {
-		href = WebAppRequest.getContextPath() + "/static/report/themes/clear.css";
+		href = WebAppRequest.getContextPath() + "/assets/modules/report/themes/clear.css";
 	}
 	$('#skin').attr({
 		"href" : href
@@ -151,7 +203,7 @@ ReportTemplate.toggleSkin = function(e) {
 };
 
 ReportTemplate.fullScreen = function() {
-	var uid = $('#uid').val();
+	var uid = $('#rpUid').val();
 	var url = WebAppRequest.getContextPath() + '/report/uid/' + uid;
 	ReportTemplate.winOpen(url, uid);
 };
@@ -159,7 +211,7 @@ ReportTemplate.fullScreen = function() {
 ReportTemplate.showChart = function(e) {
 	var title = $('#rpName').val() + "(图表)";
 	var id = $('#rpId').val();
-	var uid = $('#uid').val();
+	var uid = $('#rpUid').val();
 	parent.showChart(title, id, uid);
 };
 

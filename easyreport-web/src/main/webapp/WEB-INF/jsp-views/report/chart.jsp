@@ -22,7 +22,7 @@
 				<br />
 				<table>
 					<tr>
-						<td valign="top"><img alt="loading" border="0" src="<%=request.getContextPath()%>/static/report/icons/loading.gif" /></td>
+						<td valign="top"><img alt="loading" border="0" src="<%=request.getContextPath()%>/assets/modules/report/icons/loading.gif" /></td>
 						<td valign="middle" style="font-size: 14px;" id="loadingText">图表正在生成中, 请稍等...</td>
 					</tr>
 				</table>
@@ -38,26 +38,30 @@
 					<td id="rpName" colspan="2" style="font-size: 24px;">${name}</td>
 				</tr>
 				<tr style="height: 40px;">
-					<td style="text-align: left; vertical-align: middle; white-space: normal; word-wrap: break-word;">${dateHtml}&nbsp;${sqlQueryParamsHtml}&nbsp;&nbsp;<a
-						id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成</a> <input id="rpId"
-						type="hidden" name="id" value="${id}" /><input id="rpName" type="hidden" name="name" value="${name}" /> <input id="rpUid" type="hidden"
-						name="rpUid" value="${rpUid}" /></td>
+					<td style="text-align: left; vertical-align: middle; white-space: normal; word-wrap: break-word;">${formHtmlText}&nbsp;&nbsp;
+						<a id="btnGenarate" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-ok'">生成</a> 
+						<input id="rpId" type="hidden" name="id" value="${id}" />
+						<input id="rpName" type="hidden" name="name" value="${name}" /> 
+						<input id="rpUid" type="hidden" name="uid" value="${uid}" />
+					</td>
 				</tr>
-				<c:if test="${not empty statColumnsHtml}">
+				<c:if test="${not empty statColumHtmlText}">
 					<tr style="height: 40px;">
-						<td colspan="2" style="text-align: left; vertical-align: middle;">${statColumnsHtml}&nbsp;<input name="checkAllStatColumn" type="checkbox"
-							onclick="ReportChart.checkedAllStatColumn();" />全选
-						</td>
+						<td colspan="2" style="text-align: left; vertical-align: middle; white-space: normal; word-wrap: break-word;">${statColumHtmlText}</td>
 					</tr>
 				</c:if>
 				<tr style="height: 40px;">
-					<td colspan="2" style="text-align: left; vertical-align: middle;"><span id="dimColumnSelects"></span>&nbsp;横轴维度：<select id="showDim"></select>&nbsp;顺序：<select
-						id="sortType"><option value="asc">升序</option>
-							<option value="desc">降序</option></select>&nbsp;<a id="btnViewChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom"
-						data-options="iconCls:'icon-preview'">查看</a>&nbsp;<a id="btnAddChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom"
-						data-options="iconCls:'icon-add'">对比</a>&nbsp;<a id="btnToggleChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom"
-						data-options="iconCls:'icon-toggle'">转换</a>&nbsp;<a id="btnResetChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom"
-						data-options="iconCls:'icon-reload'">重置</a></td>
+					<td colspan="2" style="text-align: left; vertical-align: middle;"><span id="dimColumnSelects"></span>&nbsp;
+						横轴维度：<select id="showDim"></select>&nbsp;
+						顺序：<select id="sortType">
+							<option value="asc">升序</option>
+							<option value="desc">降序</option>
+							</select>&nbsp;
+							<a id="btnViewChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-preview'">查看</a>&nbsp;
+							<a id="btnAddChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-add'">对比</a>&nbsp;
+							<a id="btnToggleChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-toggle'">转换</a>&nbsp;
+							<a id="btnResetChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-reload'">重置</a>
+					</td>
 				</tr>
 			</table>
 		</form>
