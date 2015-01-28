@@ -94,11 +94,13 @@ ReportTemplate.renderClassicReport = function(table) {
 ReportTemplate.renderDatatablesReport = function(table) {
 	$('#easyreport').removeClass("easyreport");
 	$('#easyreport').addClass('table table-striped table-bordered');
-	$('#easyreport').dataTable({
-		"scrollY" : "100%",
+	var dt = $('#easyreport').dataTable({
+		"scrollY" : "758",
 		"scrollX" : true,
 		"scrollCollapse" : true,
 		"searching" : false,
+		"pageLength": 100,
+		"lengthMenu": [ 50, 100, 200, 500, 1000 ],
 		"language" : {
 			processing : "数据正在加载中...",
 			search : "查询:",
@@ -123,6 +125,15 @@ ReportTemplate.renderDatatablesReport = function(table) {
 			}
 		}
 	});
+	$('#easyreport tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+        	dt.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
 };
 
 // 将报表上面的过滤信息拼成table，用于写入excel中
