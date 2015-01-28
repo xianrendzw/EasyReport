@@ -39,7 +39,7 @@ public class ChartingController extends AbstractController {
 	private ReportingChartService reportChartService;
 
 	@RequestMapping(value = { "/{uid}" })
-	public ModelAndView index(@PathVariable String uid, HttpServletRequest request) {
+	public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("report/chart");
 
 		try {

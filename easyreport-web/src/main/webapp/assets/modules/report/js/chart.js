@@ -4,6 +4,7 @@ $(function() {
 	$('#btnAddChart').click(ReportChart.addChart);
 	$('#btnResetChart').click(ReportChart.resetChart);
 	$('#btnToggleChart').click(ReportChart.toggleChart);
+	$('#checkAllStatColumn').click(ReportChart.checkedAllStatColumn);
 
 	ReportChart.generate();
 });
@@ -372,9 +373,9 @@ ReportChart.show = function(id, chartType) {
 
 	require.config({
 		paths : {
-			'echarts' : '../static/frame/echarts/echarts',
-			'echarts/chart/bar' : '../static/frame/echarts/echarts-map',
-			'echarts/chart/line' : '../static/frame/echarts/echarts-map'
+			'echarts' : '../../assets/js/plugins/echarts',
+			'echarts/chart/bar' : '../../assets/js/plugins/echarts/chart/bar',
+			'echarts/chart/line' : '../../assets/js/plugins/echarts/chart/line'
 		}
 	});
 	require([ 'echarts', 'echarts/chart/bar', 'echarts/chart/line' ], function(ec) {
@@ -396,16 +397,12 @@ ReportChart.show = function(id, chartType) {
 				x : 'right',
 				y : 'center',
 				feature : {
-					dataZoom : {
-						show : true
-					},
-					dataView : {
-						readOnly : false
-					},
-					magicType : [ 'line', 'bar' ],
-					restore : true,
-					saveAsImage : true
-				}
+			            mark : {show: true},
+			            dataView : {show: true, readOnly: false},
+			            magicType : {show: true, type: ['line', 'bar']},
+			            restore : {show: true},
+			            saveAsImage : {show: true}
+			    }
 			},
 			calculable : true,
 			xAxis : [ {

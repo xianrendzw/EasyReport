@@ -8,6 +8,7 @@
 <%@ include file="/WEB-INF/jsp-views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp"%>
 <script src="<%=request.getContextPath()%>/assets/js/plugins/echarts/esl.js"></script>
+<script src="<%=request.getContextPath()%>/assets/js/plugins/echarts/echarts.js"></script>
 <script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
 <script src="<%=request.getContextPath()%>/assets/modules/report/js/chart.js?v=<%=Math.random()%>"></script>
 </head>

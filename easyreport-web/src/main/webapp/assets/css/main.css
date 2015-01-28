@@ -1,16 +1,12 @@
+html,body,span,div,p,table,td,th,tr {
+	padding: 0px;
+	margin: 0px;
+	font-size: 11px;
+	font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+}
+
 * {
 	font-size: 14px;
-}
-
-html, body {
-	margin: 0;
-	padding: 0;
-}
-
-body {
-	font-family: verdana, helvetica, arial, sans-serif;
-	background: #fff;
-	text-align: center;
 }
 
 h3 {
