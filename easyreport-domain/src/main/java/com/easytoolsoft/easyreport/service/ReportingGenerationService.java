@@ -264,7 +264,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 		text.append(" ");
 		text.append(report.getQueryParams());
 
-		String regex = "\\$\\{.*?startTime\\}|\\$\\{.*?endTime\\}";
+		String regex = "\\$\\{.*?\\}";
 		Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(text.toString());
 		Set<String> set = new HashSet<String>(2);

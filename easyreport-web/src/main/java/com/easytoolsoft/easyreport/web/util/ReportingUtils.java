@@ -63,7 +63,7 @@ public class ReportingUtils {
 		ReportingPo report = reportingService.getByUid(uid);
 		Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
 		List<HtmlFormElement> dateAndQueryElements = generationService.getDateAndQueryParamFormElements(report, buildinParams);
-		HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(report.getMetaColumnList(), 1);
+		HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(report.getMetaColumnList(), 0);
 		modelAndView.addObject("uid", uid);
 		modelAndView.addObject("id", report.getId());
 		modelAndView.addObject("name", report.getName());
