@@ -43,15 +43,7 @@ $(function() {
 		}, {
 			field : 'jdbcUrl',
 			title : '数据源连接字符串',
-			width : 100
-		}, {
-			field : 'user',
-			title : '用户名',
-			width : 50
-		}, {
-			field : 'password',
-			title : '密码',
-			width : 50
+			width : 200
 		}, {
 			field : 'createTime',
 			title : '创建日期',
@@ -139,10 +131,8 @@ DataSource.applyConnection = function(index) {
 	$('#datasourceGrid').datagrid('selectRow', index);
 	var row = $('#datasourceGrid').datagrid('getSelected');
 
-	$.post(dsPageRootUrl + 'testConnection', {
-		url : row.jdbcUrl,
-		pass : row.password,
-		user : row.user
+	$.post(dsPageRootUrl + 'testConnectionById', {
+		id : row.id
 	}, function callback(data) {
 		if (data.success) {
 			$.messager.alert('成功', "测试成功", 'success');

@@ -22,7 +22,7 @@ public class DataSourceDao extends BaseDao<DataSourcePo> {
 		super(DataSourcePo.EntityName, DataSourcePo.Id);
 	}
 
-	public boolean testConnection(String url, String pass, String user) {
+	public boolean testConnection(String url, String user, String pass) {
 		try {
 			DriverManager.getConnection(url, user, pass);
 			return true;

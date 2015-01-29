@@ -34,7 +34,7 @@ public class DataSourceController extends AbstractController {
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public List<DataSourcePo> list(HttpServletRequest request) {
-		return this.datasourceService.getAll();
+		return this.datasourceService.getAll(DataSourcePo.Id, DataSourcePo.Uid, DataSourcePo.Name);
 	}
 
 	@RequestMapping(value = "/query")
@@ -46,7 +46,10 @@ public class DataSourceController extends AbstractController {
 			rows = 50;
 
 		PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
-		List<DataSourcePo> list = this.datasourceService.getByPage(pageInfo);
+		String[] columnNames = new String[] {
+				DataSourcePo.Id, DataSourcePo.Name, DataSourcePo.Uid,
+				DataSourcePo.JdbcUrl, DataSourcePo.CreateUser, DataSourcePo.CreateTime };
+		List<DataSourcePo> list = this.datasourceService.getByPage(pageInfo, columnNames);
 
 		Map<String, Object> modelMap = new HashMap<String, Object>(2);
 		modelMap.put("total", pageInfo.getTotals());
@@ -94,7 +97,22 @@ public class DataSourceController extends AbstractController {
 		JsonResult result = new JsonResult(false, "");
 
 		try {
-			result.setSuccess(this.datasourceService.getDao().testConnection(url, pass, user));
+			result.setSuccess(this.datasourceService.getDao().testConnection(url, user, pass));
+		} catch (Exception ex) {
+			this.setExceptionResult(result, ex);
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/testConnectionById")
+	@ResponseBody
+	public JsonResult testConnection(Integer id) {
+		JsonResult result = new JsonResult(false, "");
+
+		try {
+			DataSourcePo dsPo = this.datasourceService.getById(id);
+			result.setSuccess(this.datasourceService.getDao().testConnection(dsPo.getJdbcUrl(), dsPo.getUser(), dsPo.getPassword()));
 		} catch (Exception ex) {
 			this.setExceptionResult(result, ex);
 		}
