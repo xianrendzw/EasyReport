@@ -14,23 +14,23 @@ import com.easytoolsoft.easyreport.viewmodel.HtmlTextBox;
 public class EasyUIQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
 	@Override
 	protected String getDateBoxText(HtmlDateBox dateBox) {
-		String template = "<input name=\"%s\" type=\"text\" class=\"easyui-datebox\" required=\"true\" value=\"%s\" />";
-		String easyuiText = String.format(template, dateBox.getName(), dateBox.getValue());
+		String template = "<input id=\"%s\" name=\"%s\" type=\"text\" class=\"easyui-datebox\" required=\"true\" value=\"%s\" />";
+		String easyuiText = String.format(template, dateBox.getName(), dateBox.getName(), dateBox.getValue());
 		return String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>%s</span>", dateBox.getText(), easyuiText);
 	}
 
 	@Override
 	protected String getTexBoxText(HtmlTextBox textBox) {
-		String template = "<input name=\"%s\" type=\"text\" value=\"%s\" />";
-		String easyuiText = String.format(template, textBox.getName(), textBox.getValue());
+		String template = "<input id=\"%s\" name=\"%s\" type=\"text\" value=\"%s\" />";
+		String easyuiText = String.format(template, textBox.getName(), textBox.getName(), textBox.getValue());
 		return String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>%s</span>", textBox.getText(), easyuiText);
 	}
 
 	@Override
 	protected String getCheckBoxText(HtmlCheckBox checkBox) {
 		String checked = checkBox.isChecked() ? "" : "checked=\"checked\"";
-		return String.format("<input name=\"%s\" type=\"checkbox\" value=\"%s\" %s />%s",
-				checkBox.getName(), checkBox.getValue(), checked, checkBox.getText());
+		return String.format("<input id=\"%s\" name=\"%s\" type=\"checkbox\" value=\"%s\" %s />%s",
+				checkBox.getName(), checkBox.getName(), checkBox.getValue(), checked, checkBox.getText());
 	}
 
 	@Override
@@ -38,7 +38,8 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
 		String multiple = comboBox.isMultipled() ? "data-options=\"multiple:true\"" : "";
 		StringBuilder htmlText = new StringBuilder("");
 		htmlText.append(String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>", comboBox.getText()));
-		htmlText.append(String.format("<select class=\"easyui-combobox\" style=\"width: 200px;\" name=\"%s\" %s>", comboBox.getName(), multiple));
+		htmlText.append(String.format("<select id=\"%s\" name=\"%s\" class=\"easyui-combobox\" style=\"width: 200px;\" %s>",
+				comboBox.getName(), comboBox.getName(), multiple));
 		for (HtmlSelectOption option : comboBox.getValue()) {
 			String selected = option.isSelected() ? "selected=\"selected\"" : "";
 			htmlText.append(String.format("<option value=\"%s\" %s>%s</option>", option.getValue(), selected, option.getText()));

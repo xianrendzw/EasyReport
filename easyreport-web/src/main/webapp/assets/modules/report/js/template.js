@@ -51,8 +51,9 @@ ReportTemplate.generate = function(mode, callback) {
 
 ReportTemplate.initTable = function(mode) {
 	var table = $("#easyreport");
+	return ReportTemplate.renderClassicReport(table);
 	
-	if (mode == ReportTemplate.Mode.classic) {
+	/*if (mode == ReportTemplate.Mode.classic) {
 		return ReportTemplate.renderClassicReport(table);
 	}
 	// 如果为dt模式但是表格存在跨行
@@ -60,7 +61,7 @@ ReportTemplate.initTable = function(mode) {
 	if (ReportTemplate.hasRowSpan()) {
 		return ReportTemplate.renderClassicReport(table);
 	}
-	return ReportTemplate.renderDatatablesReport(table);
+	return ReportTemplate.renderDatatablesReport(table);*/
 };
 
 // 表格中是否跨行
