@@ -305,7 +305,7 @@ $(function() {
 				{
 					field : 'sortType',
 					title : '排序类型',
-					width : 75,
+					width : 100,
 					formatter : function(value, row, index) {
 						var id = "sortType" + index;
 						var tmpl = '\

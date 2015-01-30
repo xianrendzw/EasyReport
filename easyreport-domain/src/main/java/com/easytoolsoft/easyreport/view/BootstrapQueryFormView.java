@@ -19,7 +19,7 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
 		htmlText.append(String.format("<label>%s:</label>", dateBox.getText()));
 		htmlText.append("<label class=\"input\">");
 		htmlText.append("<i class=\"icon-append fa fa-calendar\"></i> ");
-		htmlText.append(String.format("<input class=\"hasDatepicker\" type=\"text\" id=\"%s\" name=\"%s\" value=\"%s\" readonly />",
+		htmlText.append(String.format("<input id=\"%s\" name=\"%s\" class=\"hasDatepicker\" type=\"text\" value=\"%s\" readonly />",
 				dateBox.getName(), dateBox.getName(), dateBox.getValue()));
 		htmlText.append("</label>");
 		htmlText.append("</div>");
@@ -32,8 +32,8 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
 		htmlText.append("<div class=\"form-group\">");
 		htmlText.append(String.format("<label>%s:</label>", textBox.getText()));
 		htmlText.append("<label class=\"input\">");
-		htmlText.append(String.format("<input type=\"text\" name=\"%s\" value=\"%s\" placeholder=\"%s\"/>",
-				textBox.getName(), textBox.getValue(), textBox.getDefaultText()));
+		htmlText.append(String.format("<input id=\"%s\" name=\"%s\" type=\"text\" value=\"%s\" placeholder=\"%s\"/>",
+				textBox.getName(), textBox.getName(), textBox.getValue(), textBox.getDefaultText()));
 		htmlText.append("</label>");
 		htmlText.append("</div>");
 		return htmlText.toString();
@@ -45,8 +45,8 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
 		StringBuilder htmlText = new StringBuilder("");
 		htmlText.append("<div class=\"form-group\">");
 		htmlText.append(String.format("<label class=\"checkbox\">%s", checkBox.getText()));
-		htmlText.append(String.format("<input class=\"checkbox-item\" type=\"checkbox\" name=\"%s\" value=\"%s\" %s />",
-				checkBox.getName(), checkBox.getValue(), checked));
+		htmlText.append(String.format("<input id=\"%s\" name=\"%s\" class=\"checkbox-item\" type=\"checkbox\" value=\"%s\" %s />",
+				checkBox.getName(), checkBox.getName(), checkBox.getValue(), checked));
 		htmlText.append("<i></i></label>");
 		htmlText.append("</div>");
 		return htmlText.toString();
