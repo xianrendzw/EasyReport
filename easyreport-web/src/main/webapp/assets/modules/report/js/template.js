@@ -5,8 +5,8 @@ $(function() {
 	$('#btnShowComment').mouseover(ReportTemplate.showComment);
 	$('#btnShowComment').mouseleave(ReportTemplate.closeComment);
 	$('#checkAllStatColumn').click(ReportTemplate.checkedAllStatColumn);
-	$('#btnExportToExcel').on("click", ReportTemplate.exportToExcel);
-	$('#btnFullScreen').on("click", ReportTemplate.fullScreen);
+	$('#btnExportToExcel').click(ReportTemplate.exportToExcel);
+	$('#btnFullScreen').click(ReportTemplate.fullScreen);
 
 	ReportTemplate.generate(ReportTemplate.Mode.classic,null);
 });
