@@ -57,15 +57,14 @@ public class ChartingController extends AbstractController {
 
 	@RequestMapping(value = "/getData", method = RequestMethod.POST)
 	@ResponseBody
-	public JSONObject getData(String uid, Integer id, HttpServletRequest request) {
+	public JSONObject getData(String uid, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("dimColumnSelects", "");
 		jsonObject.put("dimColumns", null);
 		jsonObject.put("statColumns", null);
 		jsonObject.put("dataRows", null);
 		jsonObject.put("msg", "");
 
-		if (id == null) {
+		if (uid == null) {
 			return jsonObject;
 		}
 

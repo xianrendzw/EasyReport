@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 import com.easytoolsoft.easyreport.common.util.DateUtils;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
+import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
@@ -61,15 +62,18 @@ public class ReportingUtils {
 
 	public static void previewByTemplate(String uid, ModelAndView modelAndView, QueryParamFormView formView, HttpServletRequest request) {
 		ReportingPo report = reportingService.getByUid(uid);
+		List<ReportMetaDataColumn> metaDataColumns = report.getMetaColumnList();
 		Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
 		List<HtmlFormElement> dateAndQueryElements = generationService.getDateAndQueryParamFormElements(report, buildinParams);
-		HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(report.getMetaColumnList(), 0);
+		HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(metaDataColumns, 0);
+		List<HtmlFormElement> nonStatColumnFormElements = generationService.getNonStatColumnFormElements(metaDataColumns);
 		modelAndView.addObject("uid", uid);
 		modelAndView.addObject("id", report.getId());
 		modelAndView.addObject("name", report.getName());
 		modelAndView.addObject("comment", report.getComment().trim());
 		modelAndView.addObject("formHtmlText", formView.getFormHtmlText(dateAndQueryElements));
 		modelAndView.addObject("statColumHtmlText", formView.getFormHtmlText(statColumnFormElements));
+		modelAndView.addObject("nonStatColumHtmlText", formView.getFormHtmlText(nonStatColumnFormElements));
 	}
 
 	public static void generate(String uid, JSONObject jsonObject, HttpServletRequest request) {

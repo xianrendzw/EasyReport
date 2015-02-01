@@ -52,12 +52,13 @@
 					</tr>
 				</c:if>
 				<tr style="height: 40px;">
-					<td colspan="2" style="text-align: left; vertical-align: middle;"><span id="dimColumnSelects"></span>&nbsp;
-						横轴维度：<select id="showDim"></select>&nbsp;
-						顺序：<select id="sortType">
+					<td colspan="2" style="text-align: left; vertical-align: middle;">
+					<label style="width: 120px;">选择维度:</label>${nonStatColumHtmlText}&nbsp;
+					横轴维度：<select id="showDim"></select>&nbsp;
+					顺序：<select id="sortType">
 							<option value="asc">升序</option>
 							<option value="desc">降序</option>
-							</select>&nbsp;
+						</select>&nbsp;
 							<a id="btnViewChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-preview'">查看</a>&nbsp;
 							<a id="btnAddChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-add'">对比</a>&nbsp;
 							<a id="btnToggleChart" href="#" class="easyui-linkbutton" style="vertical-align: bottom" data-options="iconCls:'icon-toggle'">转换</a>&nbsp;

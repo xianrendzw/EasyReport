@@ -409,7 +409,20 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			checkbox.setChecked(!column.isOptional());
 			checkBoxes.add(checkbox);
 		}
-
 		return new HtmlCheckBoxList("statColumns", "统计列", checkBoxes);
+	}
+
+	public List<HtmlFormElement> getNonStatColumnFormElements(List<ReportMetaDataColumn> columns) {
+		List<HtmlFormElement> formElements = new ArrayList<HtmlFormElement>(10);
+		for (ReportMetaDataColumn column : columns) {
+			if (column.getType() == ColumnType.LAYOUT || column.getType() == ColumnType.DIMENSION) {
+				HtmlComboBox htmlComboBox =
+						new HtmlComboBox("dim_" + column.getName(), column.getText(), new ArrayList<HtmlSelectOption>(0));
+				htmlComboBox.setMultipled(true);
+				htmlComboBox.setAutoComplete(true);
+				formElements.add(htmlComboBox);
+			}
+		}
+		return formElements;
 	}
 }

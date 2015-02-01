@@ -26,7 +26,7 @@ ReportChart.generate = function(e) {
 		},
 		success : function(metaData) {
 			ReportChart.metaData = metaData;
-			$('#dimColumnSelects').html(metaData.dimColumnSelects);
+			ReportChart.initDimOptions();
 			ReportChart.bindDimSelectChangeEvent();
 			ReportChart.clear();
 			ReportChart.setDefaultDim();
@@ -37,6 +37,12 @@ ReportChart.generate = function(e) {
 		complete : function() {
 			$('#loading').hide();
 		}
+	});
+};
+
+ReportChart.initDimOptions = function() {
+	$("select[id*='dim_']").change(function() {
+		ReportChart.setShowDimOptions();
 	});
 };
 
