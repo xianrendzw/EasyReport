@@ -1,8 +1,10 @@
 package com.easytoolsoft.easyreport.web.util;
 
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -81,11 +83,15 @@ public class ReportingUtils {
 	}
 
 	public static void generate(String uid, JSONObject jsonObject, Map<?, ?> parameters) {
+		generate(uid, jsonObject, new HashMap<String, Object>(0), parameters);
+	}
+
+	public static void generate(String uid, JSONObject jsonObject, Map<String, Object> attachParams, Map<?, ?> parameters) {
 		if (StringUtils.isBlank(uid)) {
 			jsonObject.put("htmlTable", "uid参数为空导致数据不能加载！");
 			return;
 		}
-		ReportTable reportTable = generate(uid, parameters);
+		ReportTable reportTable = generate(uid, attachParams, parameters);
 		jsonObject.put("htmlTable", reportTable.getHtmlText());
 		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
 	}
@@ -103,8 +109,17 @@ public class ReportingUtils {
 	}
 
 	public static ReportTable generate(String uid, Map<?, ?> parameters) {
+		return generate(uid, new HashMap<String, Object>(0), parameters);
+	}
+
+	public static ReportTable generate(String uid, Map<String, Object> attachParams, Map<?, ?> parameters) {
 		ReportingPo report = reportingService.getByUid(uid);
 		Map<String, Object> formParams = generationService.getFormParameters(parameters, report.getDataRange());
+		if (attachParams != null && attachParams.size() > 0) {
+			for (Entry<String, Object> es : attachParams.entrySet()) {
+				formParams.put(es.getKey(), es.getValue());
+			}
+		}
 		return generationService.getReportTable(report, formParams);
 	}
 
