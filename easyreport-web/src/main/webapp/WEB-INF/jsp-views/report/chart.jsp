@@ -54,7 +54,7 @@
 				<tr style="height: 40px;">
 					<td colspan="2" style="text-align: left; vertical-align: middle;">
 					<label style="width: 120px;">选择维度:</label>${nonStatColumHtmlText}&nbsp;
-					横轴维度：<select id="showDim"></select>&nbsp;
+					横轴维度：<select id="xAxisDim"></select>&nbsp;
 					顺序：<select id="sortType">
 							<option value="asc">升序</option>
 							<option value="desc">降序</option>

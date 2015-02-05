@@ -105,11 +105,9 @@
 							<td class="text_r blueside" width="70">数据类型:</td>
 							<td><select id="queryParamDataType" name="dataType">
 									<option value="string" selected="selected">字符串</option>
-									<option value="number">数字（包括整数、浮点数)</option>
-									<option value="digits">正整数</option>
+									<option value="float">浮点数（包括双精度、浮点数)</option>
+									<option value="integer">整数</option>
 									<option value="date">日期</option>
-									<option value="url">URL</option>
-									<option value="email">电子邮箱</option>
 							</select></td>
 							<td class="text_r blueside">数据长度:</td>
 							<td><input type="text" id="queryParamWidth" name="width" value="100" /></td>

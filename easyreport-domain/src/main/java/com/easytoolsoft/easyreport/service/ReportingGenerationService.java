@@ -193,10 +193,20 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			String value = "";
 			values = (String[]) httpReqParamMap.get(queryParam.getName());
 			if (values != null && values.length > 0) {
-				value = values.length > 1 ? StringUtils.join(values, ",") : values[0];
+				value = this.getQueryParamValue(queryParam.getDataType(), values);
 			}
 			formParams.put(queryParam.getName(), value);
 		}
+	}
+
+	private String getQueryParamValue(String dataType, String[] values) {
+		if (values.length == 1) {
+			return values[0];
+		}
+		if (dataType.equals("float") || dataType.equals("integer")) {
+			return StringUtils.join(values, ",");
+		}
+		return StringUtils.join(values, "','");
 	}
 
 	public Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,
@@ -312,7 +322,7 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			queryParam.setDefaultValue(VelocityUtils.prase(queryParam.getDefaultValue(), buildinParams));
 			queryParam.setContent(VelocityUtils.prase(queryParam.getContent(), buildinParams));
 			String formElement = queryParam.getFormElement().toLowerCase();
-			if (formElement.equals("select") || formElement.equals("selectMul")) {
+			if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
 				htmlFormElement = this.getComboBoxFormElements(queryParam, ds, buildinParams);
 			} else if (formElement.equals("checkbox")) {
 				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
@@ -418,7 +428,6 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 			if (column.getType() == ColumnType.LAYOUT || column.getType() == ColumnType.DIMENSION) {
 				HtmlComboBox htmlComboBox =
 						new HtmlComboBox("dim_" + column.getName(), column.getText(), new ArrayList<HtmlSelectOption>(0));
-				htmlComboBox.setMultipled(true);
 				htmlComboBox.setAutoComplete(true);
 				formElements.add(htmlComboBox);
 			}

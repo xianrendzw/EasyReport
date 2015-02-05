@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.easytoolsoft.easyreport.common.viewmodel.TextValuePair;
 import com.easytoolsoft.easyreport.engine.data.ReportDataCell;
 import com.easytoolsoft.easyreport.engine.data.ReportDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportDataRow;
@@ -20,25 +22,24 @@ import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
  */
 @Service
 public class ReportingChartService {
-	public String buildDimColumnsHtml(ReportDataSet reportDataSet) {
+	public Map<String, List<TextValuePair>> getDimColumnMap(ReportDataSet reportDataSet) {
 		Map<String, List<String>> map = reportDataSet.getUnduplicatedNonStatColumnDataMap();
-		if (map.size() < 1)
-			return "";
-
-		List<ReportDataColumn> nonStatColumns = reportDataSet.getNonStatColumns();
-		StringBuilder htmlText = new StringBuilder("");
-		htmlText.append(String.format("<label style=\"width: 120px;\">%s:</label>", "选择维度"));
-		for (ReportDataColumn column : nonStatColumns) {
-			htmlText.append(String.format("<label style=\"width: 120px;\">%s:</label><select id=\"dim_%s\" name=\"dim_%s\">", column.getText(),
-					column.getName(), column.getName()));
-			htmlText.append(String.format("<option value=\"%s\">%s</option>", "all", "全部"));
-			for (String columnValue : map.get(column.getName())) {
-				htmlText.append(String.format("<option value=\"%s\">%s</option>", columnValue, columnValue));
-			}
-			htmlText.append("</select>");
+		if (map.size() < 1) {
+			return new HashMap<String, List<TextValuePair>>(0);
 		}
 
-		return htmlText.toString();
+		List<ReportDataColumn> nonStatColumns = reportDataSet.getNonStatColumns();
+		Map<String, List<TextValuePair>> dimColumnMap = new HashMap<String, List<TextValuePair>>(nonStatColumns.size());
+		for (ReportDataColumn column : nonStatColumns) {
+			List<TextValuePair> options = new ArrayList<TextValuePair>(map.get(column.getName()).size() + 1);
+			options.add(new TextValuePair("全部", "all", true));
+			for (String columnValue : map.get(column.getName())) {
+				options.add(new TextValuePair(columnValue, columnValue));
+			}
+			dimColumnMap.put(column.getName(), options);
+		}
+
+		return dimColumnMap;
 	}
 
 	public JSONArray getStatColumns(ReportDataSet reportDataSet) {

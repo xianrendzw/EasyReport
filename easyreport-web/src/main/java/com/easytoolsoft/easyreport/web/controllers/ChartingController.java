@@ -59,6 +59,7 @@ public class ChartingController extends AbstractController {
 	@ResponseBody
 	public JSONObject getData(String uid, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("dimColumnMap", null);
 		jsonObject.put("dimColumns", null);
 		jsonObject.put("statColumns", null);
 		jsonObject.put("dataRows", null);
@@ -72,7 +73,7 @@ public class ChartingController extends AbstractController {
 			ReportingPo po = reportingService.getByUid(uid);
 			Map<String, Object> formParameters = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
 			ReportDataSet reportData = generationService.getReportDataSet(po, formParameters);
-			jsonObject.put("dimColumnSelects", reportChartService.buildDimColumnsHtml(reportData));
+			jsonObject.put("dimColumnMap", reportChartService.getDimColumnMap(reportData));
 			jsonObject.put("dimColumns", reportChartService.getDimColumns(reportData));
 			jsonObject.put("statColumns", reportChartService.getStatColumns(reportData));
 			jsonObject.put("dataRows", reportChartService.getDataRows(reportData));

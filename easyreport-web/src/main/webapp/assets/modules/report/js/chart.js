@@ -27,9 +27,8 @@ ReportChart.generate = function(e) {
 		success : function(metaData) {
 			ReportChart.metaData = metaData;
 			ReportChart.initDimOptions();
-			ReportChart.bindDimSelectChangeEvent();
 			ReportChart.clear();
-			ReportChart.setDefaultDim();
+			ReportChart.setDimDefaultValue();
 			if (ReportChart.checkStatColumn()) {
 				ReportChart.show("chart1");
 			}
@@ -41,15 +40,19 @@ ReportChart.generate = function(e) {
 };
 
 ReportChart.initDimOptions = function() {
-	$("select[id*='dim_']").change(function() {
-		ReportChart.setShowDimOptions();
-	});
-};
-
-ReportChart.bindDimSelectChangeEvent = function() {
-	$("select[id*='dim_']").change(function() {
-		ReportChart.setShowDimOptions();
-	});
+	for(var key in ReportChart.metaData.dimColumnMap){
+		var id = "#dim_"+key;
+		$(id).combobox({
+			textField:'text',
+		    valueField:'value',
+		    data:ReportChart.metaData.dimColumnMap[key],
+		    onSelect:function(option){
+		    	if(option.value == "all"){
+		    		ReportChart.setXAxisDimOptions();
+		    	}
+		    }
+		});
+	}
 };
 
 ReportChart.viewChart = function(e) {
@@ -77,7 +80,7 @@ ReportChart.clear = function() {
 
 ReportChart.resetChart = function(e) {
 	if (ReportChart.metaData) {
-		ReportChart.setDefaultDim();
+		ReportChart.setDimDefaultValue();
 		$("div[id*='chart']").each(function() {
 			if ($(this).attr("id") != "chart1") {
 				$(this).remove();
@@ -124,7 +127,7 @@ ReportChart.checkCanSelectAllDimCount = function() {
 	return true;
 };
 
-ReportChart.setDefaultDim = function() {
+ReportChart.setDimDefaultValue = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var canSelectAllDimCount = ReportChart.getCanSelectAllDimCount();
 	for (var i = 0; i < dimColumns.length; i++) {
@@ -132,14 +135,18 @@ ReportChart.setDefaultDim = function() {
 			continue;
 		}
 		var id = "#dim_" + dimColumns[i].name;
-		var values = $(id + " option").map(function() {
-			return $(this).val();
-		}).get();
+		var values = ReportChart.getComoboxValues(id);
 		if (values.length > 1) {
-			$(id).val(values[1]);
+			$(id).combobox('select',values[1]);
 		}
 	}
-	ReportChart.setShowDimOptions();
+	ReportChart.setXAxisDimOptions();
+};
+
+ReportChart.getComoboxValues = function(id){
+	return $.map($(id).combobox('getData'),function(rec){
+		return rec.value;
+	});
 };
 
 ReportChart.getCheckedStatColumnCount = function() {
@@ -185,7 +192,7 @@ ReportChart.isExistAllOption = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	for (var i = dimColumns.length - 1; i >= 0; i--) {
 		id = "#dim_" + dimColumns[i].name;
-		var value = $(id).val();
+		var value = $(id).combobox('getValue');
 		if (value == "all") {
 			exists = true;
 			break;
@@ -202,7 +209,7 @@ ReportChart.isSelectMutiAll = function() {
 	var count = 0;
 	for (var i = 0; i < dimColumns.length; i++) {
 		id = "#dim_" + dimColumns[i].name;
-		var value = $(id).val();
+		var value = $(id).combobox('getValue');
 		if (value == "all") {
 			count++;
 		}
@@ -210,23 +217,23 @@ ReportChart.isSelectMutiAll = function() {
 	return count > canSelectAllDimCount;
 };
 
-ReportChart.setShowDimOptions = function() {
+ReportChart.setXAxisDimOptions = function() {
 	var dimColumns = ReportChart.metaData.dimColumns;
 	var exist = ReportChart.isExistAllOption();
-	$('#showDim').empty();
+	$('#xAxisDim').empty();
 	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
-		var value = $(id).val();
+		var value = $(id).combobox('getValue');
 		if (!exist || (exist && value == "all")) {
-			$("#showDim").append("<option value='" + dimColumns[i].name + "'>" + dimColumns[i].text + "</option>");
+			$("#xAxisDim").append("<option value='" + dimColumns[i].name + "'>" + dimColumns[i].text + "</option>");
 		}
 	}
 };
 
 ReportChart.getSecondAllDimName = function() {
-	var showDimName = $("#showDim").val();
+	var showDimName = $("#xAxisDim").val();
 	if (ReportChart.hasSecondAllDim()) {
-		return $("#showDim option").map(function() {
+		return $("#xAxisDim option").map(function() {
 			if ($(this).val() != showDimName) {
 				return $(this).val();
 			}
@@ -236,7 +243,7 @@ ReportChart.getSecondAllDimName = function() {
 };
 
 ReportChart.hasSecondAllDim = function() {
-	return (ReportChart.getCheckedStatColumnCount() == 1 && ReportChart.isExistAllOption() && $("#showDim option").size() == 2);
+	return (ReportChart.getCheckedStatColumnCount() == 1 && ReportChart.isExistAllOption() && $("#xAxisDim option").size() == 2);
 };
 
 ReportChart.checkedAllStatColumn = function() {
@@ -259,7 +266,8 @@ ReportChart.getTitle = function() {
 	var names = [];
 	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
-		var text = dimColumns[i].text + ":" + $(id).find("option:selected").text();
+		var value = $(id).combobox('getValue');
+		var text = dimColumns[i].text + ":" + value;
 		names.push(text);
 	}
 	var checkedStatColumn = ReportChart.getCheckedStatColumn();
@@ -280,14 +288,15 @@ ReportChart.getLegends = function() {
 	var showDimName = ReportChart.getSecondAllDimName();
 	if (showDimName) {
 		var id = "#dim_" + showDimName;
-		return $(id + " option").map(function() {
-			if ($(this).val() != "all") {
+		var values = ReportChart.getComoboxValues(id);
+		return $.map(values,function(value){
+			if (value != "all") {
 				return {
 					"name" : showDimName,
-					"text" : $(this).val()
+					"text" : value
 				};
 			}
-		}).get();
+		});
 	}
 	return ReportChart.getDisplayStatColumns();
 };
@@ -297,17 +306,17 @@ ReportChart.getCategories = function() {
 };
 
 ReportChart.getCategory = function() {
-	var dimName = $('#showDim').val();
+	var dimName = $('#xAxisDim').val();
 	var id = "#dim_" + dimName;
 	var sortType = $("#sortType").val();
 	var values = null;
 
 	if (ReportChart.isExistAllOption()) {
-		values = $(id + " option").map(function() {
-			if ($(this).val() != "all") {
-				return $(this).val();
+		values = $.map(ReportChart.getComoboxValues(id),function(value){
+			if (value != "all") {
+				return value;
 			}
-		}).get();
+		});
 	} else {
 		values = [];
 		values.push($(id).val());
@@ -329,7 +338,7 @@ ReportChart.getSeries = function(chartType) {
 	var keyValues = [];
 	for (var i = 0; i < dimColumns.length; i++) {
 		var id = "#dim_" + dimColumns[i].name;
-		var value = $(id).val();
+		var value = $(id).combobox('getValue');
 		if (value == "all") {
 			value = "#{" + dimColumns[i].name + "}";
 		}

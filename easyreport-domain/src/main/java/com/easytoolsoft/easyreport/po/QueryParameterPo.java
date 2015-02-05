@@ -163,7 +163,7 @@ public class QueryParameterPo implements Serializable {
 	}
 
 	/**
-	 * 获取报表查询参数表单控件的宽度(单位：像素)
+	 * 获取表查询参数的数据类型(string|float|integer|date)，默认是string
 	 * 
 	 * @return
 	 */
@@ -172,9 +172,9 @@ public class QueryParameterPo implements Serializable {
 	}
 
 	/**
-	 * 获取报表查询参数的数据来源
+	 * 获取报表查询参数的数据类型(string|float|integer|date)，默认是string
 	 * 
-	 * @param dataType
+	 * @param dataType(string|float|integer|date)
 	 */
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
