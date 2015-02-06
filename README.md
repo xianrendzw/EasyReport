@@ -12,13 +12,13 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 	[tomcat7+](http://tomcat.apache.org/)<br/>
 ## 2.安装与部署(Installation & Deployment)
 ### 2.1 从源代码安装(From Source Code)
-	首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作\：<br/>
+	首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：<br/>
 	<pre>
 		step1:git clone https://github.com/xianrendzw/EasyReport.git
 		step2:cd your_git_repository/EasyReport/easyreport-web
 		step3:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
 		step4:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
-		step5:经过step4之后会在target目录生成easyreport-web.war文件\，<br/>
+		step5:经过step4之后会在target目录生成easyreport-web.war文件，<br/>
 		      然后把这个文件部署到tomcat,jboss,jetty等容器中
 	</pre>
 ### 2.2 从发布包安装(From Release Packages)
