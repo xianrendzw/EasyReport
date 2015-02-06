@@ -22,7 +22,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 #### 3.4.2 查询参数(Query Parameter)
 #### 3.4.3 内置变量与函数(Build-in variables & functions)
 #### 3.4.4 报表预览（Reporting preview)
-### 3.5 示例(Examples)s
+### 3.5 示例(Examples)
 ### 3.6 相关参考(Referrence links)
 
 ## 4.开发者(For Developers)
