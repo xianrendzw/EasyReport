@@ -31,7 +31,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 尤其在当今大数据泛滥的时代，到处都需要各种各样的报表。在使用该工具之前您应该先了解一下数据仓库、维度、度量、[事实表](http://www.cnblogs.com/wufengtinghai/archive/2013/05/04/3060265.html)等相关概念，这将会对你制作报表有一定的帮助。
 	本工具只是简单的从数据库(MySQL,Oracle,SQLServer,HBase等)中的事实表读取数据，并转换成HTML表格形式展示。不支持CUBE、钻取、切片等复杂OLAP相关的功能。
 ### 3.2 数据源设置(DataSource Configuration)
-	在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
+	在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表.如图![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
 ### 3.3 配置管理(Configuration)
 	配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等![图3-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png)  
 ### 3.4 报表设计(Reporting Design)
