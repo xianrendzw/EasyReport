@@ -9,8 +9,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 * [开发环境(Development Environment)](#user-content-1开发环境development-environment)  
 * [安装与部署(Installation & Deployment)](#user-content-2安装与部署installation--deployment)  
-*	[从源代码安装(From Source Code)](#user-content-21-从源代码安装from-source-code)  
-*	[从发布包安装(From Release Packages)](#user-content-22-从发布包安装from-release-packages)  
+	* [从源代码安装(From Source Code)](#user-content-21-从源代码安装from-source-code)  
+	* [从发布包安装(From Release Packages)](#user-content-22-从发布包安装from-release-packages)  
 * [使用说明(User Guide)](#user-content-3使用说明user-guide)  
 *	[预备知识(Preface)](#user-content-31-预备知识preface)  
 *	[数据源设置(DataSource Configuration)](#user-content-32-数据源设置datasource-configuration)  
