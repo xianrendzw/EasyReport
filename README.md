@@ -49,8 +49,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 2.计算列是根据SQL查询结果中列的值再根据其配置的计算表达式动态运算出来的。它不存于SQL语句或事实表中。其中使用的表达式引擎为[aviator](https://code.google.com/p/aviator/wiki/User_Guide_zh).了解了上述基本知识后，我们来看看一张报表的主要设计流程：
 1.创建报表树型目录列表<br />
 ![rp-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png)
-2.点击1新建根节点，也可以在树列表中右键创建子节点<br />  
-![rp-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png)
+2.点击1新建根节点，也可以在树列表中右键创建子节点<br />
+![rp-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png)  
 3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式。<br />  
 4.输入报表SQL查询语句<br />
 5.执行SQL查询语句并获取报表的列信息 <br /> 
@@ -107,10 +107,10 @@ utcIntEndTime|UTC整型结束日期|20150204
 
 ### 3.6 相关参考(Referrence links)
 
-1 报表SQL中使用的模板引擎:[velocity](http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html)  
-2 计算列中使用的表达式引擎:[aviator](https://code.google.com/p/aviator/wiki/User_Guide_zh)  
-3 所有示例中的数据来源:[pm25.in](http://www.pm25.in)、[aqistudy](http://aqistudy.sinaapp.com/historydata/index.php)  
-4 图表控件:[echarts](http://echarts.baidu.com/index.html)、[highcharts](http://www.highcharts.com/)  
+* 报表SQL中使用的模板引擎:[velocity](http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html)  
+* 计算列中使用的表达式引擎:[aviator](https://code.google.com/p/aviator/wiki/User_Guide_zh)  
+* 所有示例中的数据来源:[pm25.in](http://www.pm25.in)、[aqistudy](http://aqistudy.sinaapp.com/historydata/index.php)  
+* 图表控件:[echarts](http://echarts.baidu.com/index.html)、[highcharts](http://www.highcharts.com/)  
 
 ## 4.开发者(For Developers)
 ### 4.1 报表引擎接口(Reporting Engine API)
