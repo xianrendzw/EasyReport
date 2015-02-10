@@ -5,12 +5,32 @@ A simple and easy to use Web Report System for java
 
 EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语句查询出的行列结构转换成HTML表格(Table)，并支持表格的跨行(RowSpan)与跨行(ColSpan)。同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。
 
+##   目录
+
+*[开发环境(Development Environment)](#1.开发环境\(Development Environment\))
+*[安装与部署(Installation & Deployment)](#2.安装与部署\(Installation & Deployment\))
+*	[从源代码安装(From Source Code)](#2.1 从源代码安装\(From Source Code\))
+*	[2.2 从发布包安装(From Release Packages)](#2.2 从发布包安装\(From Release Packages\))
+*[使用说明(User Guide）](#3.使用说明\(User Guide\))
+*	[预备知识(Preface)](#3.1 预备知识\(Preface\))
+*	[数据源设置(DataSource Configuration)](#3.2 数据源设置\(DataSource Configuration\))
+*	[配置管理(Configuration)](#3.3 配置管理\(Configuration\))
+*	[报表设计(Reporting Design)](#3.4 报表设计\(Reporting Design\))
+*	[示例(Examples)](#3.5 示例\(Examples\))
+*	[相关参考(Referrence links)](#3.6 相关参考\(Referrence links\))
+*[开发者(For Developers)](#4.开发者\(For Developers\))
+*	[报表引擎接口(Reporting Engine API)](#4.1 报表引擎接口\(Reporting Engine API\))
+*	[自定义报表开发(Customsized Reporting develop)](#4.2 自定义报表开发\(Customsized Reporting develop\))
+*[常见问题(FAQ)](#5.常见问题\(FAQ\))
+
 ## 1.开发环境(Development Environment)  
 [jdk1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
 [maven3](http://maven.apache.org/download.cgi)  
 [eclipsejee-luna](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunasr1a)  
 [tomcat7+](http://tomcat.apache.org/)  
+
 ## 2.安装与部署(Installation & Deployment)
+
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：   
 **step1**:git clone https://github.com/xianrendzw/EasyReport.git  
@@ -22,18 +42,22 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### 2.2 从发布包安装(From Release Packages)
 直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
 	
-## 3.使用说明(User Guide）
+## 3.使用说明(User Guide)
 
 ### 3.1 预备知识(Preface)  
 简单的说，报表就是用表格、图表等格式来动态显示数据。它是数据可视化的重要部分。尤其在当今大数据泛滥的时代，到处都需要各种各样的报表。在使用该工具之前您应该先了解一下数据仓库、维度、度量、[事实表](http://www.cnblogs.com/wufengtinghai/archive/2013/05/04/3060265.html)等相关概念，这将会对你制作报表有一定的帮助。
 
 本工具只是简单的从数据库(MySQL,Oracle,SQLServer,HBase等)中的事实表读取数据，并转换成HTML表格形式展示。不支持CUBE、钻取、切片等复杂OLAP相关的功能。
+
 ### 3.2 数据源设置(DataSource Configuration)
 在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表。![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
+
 ### 3.3 配置管理(Configuration) 
 配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等。![图3-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png)  
+
 ### 3.4 报表设计(Reporting Design)
-通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。
+通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。  
+
 #### 3.4.1 基本设置(Basic Settings)
 ![rp-1](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png)
 报表的基本设置由4部分组成(如上图所示）：**报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置**。
@@ -51,19 +75,19 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 2. 计算列是根据SQL查询结果中列的值再根据其配置的计算表达式动态运算出来的，它不存在于SQL语句或事实表中,其中使用的表达式引擎为[aviator](https://code.google.com/p/aviator/wiki/User_Guide_zh)。
 
 了解了上述基本知识后，我们来看看一张报表的主要设计流程:  
-*1.创建报表树型目录列表*    
+**1.创建报表树型目录列表**     
 ![rp-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png)
-*2.点击1新建根节点，也可以在树列表中右键创建子节点*    
+**2.点击1新建根节点，也可以在树列表中右键创建子节点**      
 ![rp-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png)  
-*3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式*      
-*4.输入报表SQL查询语句*  
-*5.执行SQL查询语句并获取报表的列信息*  
-*6.配置报表的列*  
-*7.新增并保存基本设置信息到数据*  
+**3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式**        
+**4.输入报表SQL查询语句**    
+**5.执行SQL查询语句并获取报表的列信息**    
+**6.配置报表的列**    
+**7.新增并保存基本设置信息到数据库**    
 ![rp-4](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-4.png)
 新增成功后，就可以双击树列表中报表名称节点或点击报表预览按钮预览报表。如觉得报表展示的不够有好，可以通过修改布局列与统计列的展示方式来改变报表显示。
 ![rp-5](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-5.png)
-上图是日期为布局列且横向显示的报表预览结果。我们可以修改一下相关配置让报表展示很直观些。
+上图是日期为布局列且横向显示的报表预览结果。我们可以修改一下相关配置让报表展示更直观些。
 ![rp-6](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-6.png)
 由于列名dt已经在配置管理设置了默认标题，因此在执行SQL后会自动匹配它的标题，您也可以把其他的列名增加配置管理项中，这样下次设计报表时就会自动匹配默认标题。现在看修改后报表展示。
 ![rp-7](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-7.png)    
