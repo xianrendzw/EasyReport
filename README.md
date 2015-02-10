@@ -12,13 +12,12 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 [tomcat7+](http://tomcat.apache.org/)  
 ## 2.安装与部署(Installation & Deployment)
 ### 2.1 从源代码安装(From Source Code)
-首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：
->
->	step1:git clone https://github.com/xianrendzw/EasyReport.git  
->	step2:cd yourgitrepository/EasyReport/easyreport-web  
->	step3:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
->	step4:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
->	step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
+首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：   
+**step1**:git clone https://github.com/xianrendzw/EasyReport.git  
+**step2**:cd yourgitrepository/EasyReport/easyreport-web  
+**step3**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
+**step4**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
+**step5**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
 
 ### 2.2 从发布包安装(From Release Packages)
 直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
@@ -30,21 +29,22 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 本工具只是简单的从数据库(MySQL,Oracle,SQLServer,HBase等)中的事实表读取数据，并转换成HTML表格形式展示。不支持CUBE、钻取、切片等复杂OLAP相关的功能。
 ### 3.2 数据源设置(DataSource Configuration)
-在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表.![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
+在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表。![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
 ### 3.3 配置管理(Configuration) 
 配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等。![图3-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png)  
 ### 3.4 报表设计(Reporting Design)
 通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。
 #### 3.4.1 基本设置(Basic Settings)
 ![rp-1](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png)
-报表的基本设置由4部分组成(如上图所示）:报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置。
-在设计报表之前，先简单介绍几个名词，我们数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是张二维表格，即由于行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分（如下表所示）。  
+报表的基本设置由4部分组成(如上图所示）：**报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置**。
+在设计报表之前，先简单介绍几个名词，我们从数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是一张二维表格，即由行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分如下表所示：    
 
-维度列 | 布局维度列、简称布局列
------- | --------------------
-       | 一般维度列、简称维度列
-度量列 | 统计列
-       | 计算列
+类型      | 子类型
+----- | ------
+维度列  | 布局维度列、简称布局列
+      | 一般维度列、简称维度列
+度量列  | 统计列
+      | 计算列
  
 1. 布局列主要用于报表展示方式上，如果布局列为横向展示，则报表在绘制时会把布局列的内容绘制表报表表头，维度列的内容绘制报表表体的左边;如果布局列为纵向展示，则报表在绘制时会把布局列的内容绘制表报表表体的左边，维度列的内容绘制报表表头。
   
