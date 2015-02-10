@@ -7,18 +7,18 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 ##   目录
 
-*[开发环境(Development Environment)](#user-content-1开发环境development-environment)  
-*[安装与部署(Installation & Deployment)](#user-content-2安装与部署installation--deployment)  
+* [开发环境(Development Environment)](#user-content-1开发环境development-environment)  
+* [安装与部署(Installation & Deployment)](#user-content-2安装与部署installation--deployment)  
 *	[从源代码安装(From Source Code)](#user-content-21-从源代码安装from-source-code)  
 *	[从发布包安装(From Release Packages)](#user-content-22-从发布包安装from-release-packages)  
-*[使用说明(User Guide)](#user-content-3使用说明user-guide)  
+* [使用说明(User Guide)](#user-content-3使用说明user-guide)  
 *	[预备知识(Preface)](#user-content-31-预备知识preface)  
 *	[数据源设置(DataSource Configuration)](#user-content-32-数据源设置datasource-configuration)  
 *	[配置管理(Configuration)](#user-content-33-配置管理configuration)  
 *	[报表设计(Reporting Design)](#user-content-34-报表设计reporting-design)  
 *	[示例(Examples)](#user-content-35-示例examples)  
 *	[相关参考(Referrence links)](#user-content-36-相关参考referrence-links)  
-*[开发者(For Developers)](#user-content-4开发者for-developers)  
+* [开发者(For Developers)](#user-content-4开发者for-developers)  
 *	[报表引擎接口(Reporting Engine API)](#user-content-41-报表引擎接口reporting-engine-api)  
 *	[自定义报表开发(Customsized Reporting develop)](#user-content-42-自定义报表开发customsized-reporting-develop)  
 *[常见问题(FAQ)](#user-content-5常见问题faq)  
