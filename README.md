@@ -19,7 +19,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 >	step3:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
 >	step4:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
 >	step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
->
+
 ### 2.2 从发布包安装(From Release Packages)
 直接从https://github.com/xianrendzw/EasyReport/releases <br/>
 下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
@@ -39,7 +39,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 #### 3.4.1 基本设置(Basic Settings)
 ![rp-1](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png)
 报表的基本设置由4部分组成(如上图所示）:报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置。
-在设计报表之前，先简单介绍几个名词，我们数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是张二维表格，即由于行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分（如下表所示）。
+在设计报表之前，先简单介绍几个名词，我们数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是张二维表格，即由于行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分（如下表所示）。  
+
 维度列 | 布局维度列、简称布局列
 ------ | --------------------
        | 一般维度列、简称维度列
@@ -50,7 +51,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
   
 2. 计算列是根据SQL查询结果中列的值再根据其配置的计算表达式动态运算出来的，它不存在于SQL语句或事实表中,其中使用的表达式引擎为[aviator](https://code.google.com/p/aviator/wiki/User_Guide_zh)。
 
-了解了上述基本知识后，我们来看看一张报表的主要设计流程：
+了解了上述基本知识后，我们来看看一张报表的主要设计流程:  
 *1.创建报表树型目录列表*    
 ![rp-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png)
 *2.点击1新建根节点，也可以在树列表中右键创建子节点*    
@@ -73,15 +74,18 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ![rp-8](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-8.png)
 其中表单控件用于报表查询参数显示形式，主要有下拉单选框(select)、下单多选框(select mul)、复选框(checkbox)及文本框(textbox)四种。下图1处为查询参数列表。
 ![rp-9](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-9.png)
-当查询参的表单控件为下拉单选或多选时，内容来源有两种不同的形式。
+当查询参的表单控件为下拉单选或多选时，内容来源有两种不同的形式。  
+
 内容来源 | 内容 | 备注
 -------- | ---- | ----
 SQL语句  | select col1 as name,col2 as text from table ... | 只包含两列且列名必须为name与text，name列的值对应下拉框的value属性，text列的值对应下拉框的text属性
 文本字符串 | name1,text1\|name2,text2\|... 或name1\|name2\|... | 多个值必须用’\|’分隔，如果name与text值相同则只选择一个并用’\|’分开也可  
 
 #### 3.4.3 内置变量与函数(Build-in variables & functions)
-有些常用的查询参数不需要用户每次都创建，因此集成在工具内，这些参数变量称为内置变量。
-有些报表的SQL语句很复杂，有时需要根据参数动态生成或需要用模板引擎(velocity)生成，因此需要一些能模板引擎中应用的函数，这些函数称为内置函数。
+
+有些常用的查询参数不需要用户每次都创建，因此集成在工具内，这些参数变量称为**内置变量**。
+
+有些报表的SQL语句很复杂，有时需要根据参数动态生成或需要用模板引擎(velocity)生成，因此需要一些能模板引擎中应用的函数，这些函数称为**内置函数**。
 
 1.内置变量(区分大小写）
 
@@ -100,7 +104,8 @@ utcIntEndTime|UTC整型结束日期|20150204
 
 * 日期函数
 ![rp-10](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-10.png)
-* 字符串函数，请参考org.apache.commons.lang3.StringUtils类  
+* 字符串函数，请参考org.apache.commons.lang3.StringUtils类   
+
 #### 3.4.4 图表显示（Charting)
 ![rp-11](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-11.png)
 占击报表的图示展示按钮，出现如下界面：
