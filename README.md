@@ -51,7 +51,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ![rp-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png)
 2.点击1新建根节点，也可以在树列表中右键创建子节点<br />
 ![rp-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png)  
-3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式。<br />  
+3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式。    
 4.输入报表SQL查询语句<br />
 5.执行SQL查询语句并获取报表的列信息 <br /> 
 6.配置报表的列  <br />
