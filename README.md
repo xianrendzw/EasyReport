@@ -14,15 +14,14 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：
 >
->	step1:git clone https://github.com/xianrendzw/EasyReport.git
->	step2:cd yourgitrepository/EasyReport/easyreport-web
->	step3:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
->	step4:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
->	step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
+>	step1:git clone https://github.com/xianrendzw/EasyReport.git  
+>	step2:cd yourgitrepository/EasyReport/easyreport-web  
+>	step3:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
+>	step4:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
+>	step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
 
 ### 2.2 从发布包安装(From Release Packages)
-直接从https://github.com/xianrendzw/EasyReport/releases <br/>
-下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
+直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
 	
 ## 3.使用说明(User Guide）
 
@@ -33,7 +32,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### 3.2 数据源设置(DataSource Configuration)
 在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表.![图3-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png)
 ### 3.3 配置管理(Configuration) 
-配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等![图3-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png)  
+配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等。![图3-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png)  
 ### 3.4 报表设计(Reporting Design)
 通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。
 #### 3.4.1 基本设置(Basic Settings)
