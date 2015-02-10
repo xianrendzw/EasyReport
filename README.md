@@ -77,7 +77,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 内容来源 | 内容 | 备注
 -------- | ---- | ----
-SQL语句  | select col1 as name,col2 as text from table ... | 只包含两列且列名必须为name与text，name列的值对应下拉框的value属性，text列的值对应下拉框的text属性
+SQL语句  | select col1 as name,col2 as text from table ... | 只包含两列且列名必须为**name**与**text**，name列的值对应下拉框的value属性，text列的值对应下拉框的text属性
 文本字符串 | name1,text1\|name2,text2\|... 或name1\|name2\|... | 多个值必须用’\|’分隔，如果name与text值相同则只选择一个并用’\|’分开也可  
 
 #### 3.4.3 内置变量与函数(Build-in variables & functions)
@@ -107,7 +107,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 
 #### 3.4.4 图表显示（Charting)
 ![rp-11](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-11.png)
-占击报表的图示展示按钮，出现如下界面：
+点击报表的图示展示按钮，出现如下界面：
 ![rp-12](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-12.png)
 如果要查看多个城市也可以通过对比来显示。
 ![rp-13](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png)
