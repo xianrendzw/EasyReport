@@ -100,8 +100,7 @@ public class ReportingService extends BaseService<ReportingDao, ReportingPo> {
 	}
 
 	public List<ReportMetaDataColumn> getReportMetaDataColumns(DataSourcePo ds, String sqlText) {
-		List<ReportMetaDataColumn> metaDataColumns = this.dao.executeSqlText(ds.getJdbcUrl(), ds.getUser(),
-				ds.getPassword(), sqlText);
+		List<ReportMetaDataColumn> metaDataColumns = this.dao.executeSqlText(ds.getJdbcUrl(), ds.getUser(), ds.getPassword(), sqlText);
 		Map<String, ReportMetaDataColumn> commonColumnMap = this.configDictService.getCommonColumns();
 		Map<String, ReportMetaDataColumn> commonOptionColumnMap = this.configDictService.getCommonOptionalColumns();
 

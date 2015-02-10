@@ -86,7 +86,7 @@
 						</tr>
 					</table>
 				</form>
-			<div id="sqlColumnGrid" title="SQL列配置"></div>
+			<div id="sqlColumnGrid" title="元数据列配置"></div>
 			</div>
 			<div id="queryParamTab" title="查询参数" style="padding: 5px;">
 				<form id="queryParamForm" method="post">
@@ -133,7 +133,8 @@
 						</tr>
 						<tr>
 							<td class="text_r blueside top">内容:</td>
-							<td colspan="7"><textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;"></textarea>
+							<td colspan="7">
+							<textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;" placeholder="(select col1 as name,col2 as text from table ...) or (name1,text1|name2,text2|...) or (name1|name2|...)"></textarea>
 							<input type="hidden" id="queryParamGridIndex"  value="" /> 
 							<input type="hidden" id="jsonQueryParams" />
 							<input type="hidden" id="queryParamReportId"  value="0" /></td>

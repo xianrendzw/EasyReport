@@ -76,7 +76,7 @@ $(function() {
 		name : "displayInMail",
 		text : "邮件显示",
 		type : 1
-	}, {
+	}, /*{
 		name : "footings",
 		text : "合计",
 		type : 1
@@ -84,7 +84,7 @@ $(function() {
 		name : "extensions",
 		text : "小计",
 		type : 3
-	}, {
+	},*/ {
 		name : "expression",
 		text : "表达式",
 		type : 4
@@ -1287,7 +1287,6 @@ ReportDesigner.executeSql = function() {
 		if (result.success) {
 			$("#sqlColumnGrid").datagrid('clearChecked');
 			var rows = ReportDesigner.eachSqlColumnRows(result.data);
-			console.log(rows);
 			return ReportDesigner.loadSqlColumns(rows);
 		}
 		return $.messager.alert('错误', result.msg);
