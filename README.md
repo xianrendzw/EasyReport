@@ -50,7 +50,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 **step1**:cd yourgitrepository/EasyReport/easyreport-scheduler  
 **step2**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
 **step3**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
-**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令: 
+**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。
+然后在linux中执行如下shell命令:
 ```shell
 nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
 ```  
@@ -72,7 +73,7 @@ nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
 通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。  
 
 #### 3.4.1 基本设置(Basic Settings)
-![rp-1](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png)
+![rp-1][]
 报表的基本设置由4部分组成(如上图所示）：**报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置**。
 在设计报表之前，先简单介绍几个名词，我们从数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是一张二维表格，即由行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分如下表所示：    
 
@@ -89,27 +90,27 @@ nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
 
 了解了上述基本知识后，我们来看看一张报表的主要设计流程:  
 **1.创建报表树型目录列表**     
-![rp-2](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png)
+![rp-2][]
 **2.点击1新建根节点，也可以在树列表中右键创建子节点**      
-![rp-3](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png)  
+![rp-3][]  
 **3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式**        
 **4.输入报表SQL查询语句**    
 **5.执行SQL查询语句并获取报表的列信息**    
 **6.配置报表的列**    
 **7.新增并保存基本设置信息到数据库**    
-![rp-4](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-4.png)
+![rp-4][]
 新增成功后，就可以双击树列表中报表名称节点或点击报表预览按钮预览报表。如觉得报表展示的不够友好，可以通过修改布局列与统计列的展示方式来改变报表显示。
-![rp-5](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-5.png)
+![rp-5][]
 上图是日期为布局列且横向显示的报表预览结果。我们可以修改一下相关配置让报表展示更直观些。
-![rp-6](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-6.png)
+![rp-6][]
 由于列名dt已经在配置管理设置了默认标题，因此在执行SQL后会自动匹配它的标题，您也可以把其他的列名增加配置管理项中，这样下次设计报表时就会自动匹配默认标题。现在看修改后报表展示。
-![rp-7](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-7.png)    
+![rp-7][]    
 
 #### 3.4.2 查询参数(Query Parameter)
 有时候报表需要根据指定条件动态生成，如要查看不同城市空气质量情况，这个时候，我就需要创建一个查询参数变量。
-![rp-8](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-8.png)
+![rp-8][]
 其中表单控件用于报表查询参数显示形式，主要有下拉单选框(select)、下单多选框(select mul)、复选框(checkbox)及文本框(textbox)四种。下图1处为查询参数列表。
-![rp-9](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-9.png)
+![rp-9][]
 当查询参的表单控件为下拉单选或多选时，内容来源有两种不同的形式。  
 
 内容来源 | 内容 | 备注
@@ -139,17 +140,17 @@ utcIntEndTime|UTC整型结束日期|20150204
 2.内置函数
 
 * 日期函数
-![rp-10](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-10.png)
-* 字符串函数，请参考[org.apache.commons.lang3.StringUtils](http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html)类   
+![rp-10][]
+* 字符串函数，请参考[org.apache.commons.lang3.StringUtils][]类   
 
 #### 3.4.4 图表显示（Charting)
-![rp-11](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-11.png)
+![rp-11][]
 点击报表的图示展示按钮，出现如下界面：
-![rp-12](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-12.png)
+![rp-12][]
 如果要查看多个城市也可以通过对比来显示：
-![rp-13](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png)
+![rp-13][]
 如果统计列只有一列时，图表显示就可以支持二个维度同时全部展示：
-![rp-14](https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-14.png)  
+![rp-14][]  
 
 ### 3.5 定时任务配置管理(Scheduled Task Configruation)
 
@@ -175,6 +176,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 [tomcat7+]: http://tomcat.apache.org/  
 [velocity]: http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html
 [aviator]: https://code.google.com/p/aviator/wiki/User_Guide_zh
+[org.apache.commons.lang3.StringUtils]: http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html
 [pm25.in]: http://www.pm25.in
 [aqistudy]: http://aqistudy.sinaapp.com/historydata/index.php 
 [echarts]: http://echarts.baidu.com/index.html
@@ -183,3 +185,17 @@ utcIntEndTime|UTC整型结束日期|20150204
 [DataTables]: http://www.datatables.net/
 [ds-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png
 [config-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png
+[rp-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png
+[rp-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png
+[rp-3]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png
+[rp-4]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-4.png
+[rp-5]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-5.png
+[rp-6]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-6.png
+[rp-7]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-7.png
+[rp-8]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-8.png
+[rp-9]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-9.png
+[rp-10]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-10.png
+[rp-11]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-11.png
+[rp-12]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-12.png
+[rp-13]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png
+[rp-14]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-14.png
