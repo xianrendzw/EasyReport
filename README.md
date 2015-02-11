@@ -167,7 +167,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 ## 4.开发者(For Developers)
 
 该系统总体架构图如下:  
-[dev-1][]
+![dev-1][]
 
 ### 4.1 报表引擎接口(Reporting Engine API)
 ### 4.2 自定义报表开发(Customsized Reporting Development)
