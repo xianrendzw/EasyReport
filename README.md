@@ -50,7 +50,10 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 **step1**:cd yourgitrepository/EasyReport/easyreport-scheduler  
 **step2**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
 **step3**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
-**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &  
+**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令: 
+```shell
+nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
+```  
 
 ## 3.使用说明(User Guide)
 
