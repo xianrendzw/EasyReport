@@ -50,8 +50,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 **step1**:cd yourgitrepository/EasyReport/easyreport-scheduler  
 **step2**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
 **step3**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
-**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。
-然后在linux中执行如下shell命令:
+**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:
 ```shell
 nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
 ```  
@@ -166,6 +165,10 @@ utcIntEndTime|UTC整型结束日期|20150204
 * 前端报表表格及排序相关js插件：[tablesorter][]、[DataTables][]
 
 ## 4.开发者(For Developers)
+
+该系统总体架构图如下:  
+[dev-1][]
+
 ### 4.1 报表引擎接口(Reporting Engine API)
 ### 4.2 自定义报表开发(Customsized Reporting Development)
 ## 5.常见问题(FAQ)
@@ -199,3 +202,4 @@ utcIntEndTime|UTC整型结束日期|20150204
 [rp-12]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-12.png
 [rp-13]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png
 [rp-14]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-14.png
+[dev-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/dev-1.png
