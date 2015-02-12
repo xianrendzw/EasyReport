@@ -12,6 +12,9 @@ public class NumberFormatUtils {
 	}
 
 	public static String format(String value) {
+		if (!isNumber(value)) {
+			return value;
+		}
 		NumberFormat nf = NumberFormat.getNumberInstance();
 		try {
 			return nf.format(nf.parse(value));
