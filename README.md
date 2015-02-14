@@ -36,10 +36,11 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：   
 **step1**:git clone https://github.com/xianrendzw/EasyReport.git  
-**step2**:cd yourgitrepository/EasyReport/easyreport-web  
-**step3**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
-**step4**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
-**step5**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
+**step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据
+**step3**:cd yourgitrepository/EasyReport/easyreport-web  
+**step4**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
+**step5**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
+**step6**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
 
 ### 2.2 从发布包安装(From Release Packages)
 直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件，然后修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串，然后把这个文件部署到tomcat,jboss,jetty等容器中.
@@ -156,6 +157,61 @@ utcIntEndTime|UTC整型结束日期|20150204
 
 ### 3.6 示例(Examples)
 
+示例中的所有数据来源于:[pm25.in][]、[aqistudy][],如果您需要运行示例中的报表，需求在mysql中创建名为**china_weather_air**的数据库，
+然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行china_weather_air_mysql.sql创建表结构与导入初始数据。
+
+1. 最简单报表,直接对应数据库二维表结构
+配置：  
+[ex-src-1][]
+报表：  
+[ex-1][]
+2. 带内置变量与查询参数的报表
+配置：
+[ex-src-2][]
+查询参数：  
+[ex-param-2][]
+报表：  
+	a. 布局列横向，统计列横向
+[ex-2-1][]
+	b. 布局列纵向，统计列横向
+[ex-2-2][]
+	c. 布局列横向，统计列纵向
+[ex-2-3][]
+	d. 布局列纵向，统计列纵向
+[ex-2-4][]
+3. 多布局列报表
+配置：
+[ex-src-3][]
+报表：  
+	a. 布局列横向，统计列横向
+[ex-3-1][]
+	b. 布局列纵向，统计列横向
+[ex-3-2][]
+	c. 布局列横向，统计列纵向
+[ex-3-3][]
+	d. 布局列纵向，统计列纵向
+[ex-3-4][]
+4. 统计列可选报表
+配置：  
+[ex-src-4][]
+报表：  
+[ex-4-1][]
+5. 报表列的排序
+配置：  
+[ex-src-5][]
+报表：  
+[ex-5][]
+6. 按百分比格式显示的列
+配置：  
+[ex-src-6][]
+报表：  
+[ex-6][]
+7. 合并报表左边相同维度列
+合并前：  
+[ex-7-2][]
+合并后：  
+[ex-7-1][]
+
 ### 3.7 相关参考(Referrence Links)
 
 * 报表SQL中使用的模板引擎:[velocity][]  
@@ -203,3 +259,24 @@ utcIntEndTime|UTC整型结束日期|20150204
 [rp-13]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png
 [rp-14]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-14.png
 [dev-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/dev-1.png
+[ex-src-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-1.png
+[ex-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-1.png
+[ex-src-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-2.png
+[ex-param-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-param-2.png
+[ex-2-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-1.png
+[ex-2-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-2.png
+[ex-2-3]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-3.png
+[ex-2-4]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-4.png
+[ex-src-3]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-3.png
+[ex-3-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-1.png
+[ex-3-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-2.png
+[ex-3-3]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-3.png
+[ex-3-4]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-4.png
+[ex-src-4]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-4.png
+[ex-4-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-4-1.png
+[ex-src-5]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-5.png
+[ex-5]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-5.png
+[ex-src-6]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-6.png
+[ex-6]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-6.png
+[ex-7-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-7-1.png
+[ex-7-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-7-2.png
