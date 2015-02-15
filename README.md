@@ -30,6 +30,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 [maven3][]  
 [eclipsejee-luna][]  
 [tomcat7+][]  
+[MySQL5+][]
 
 ## 2.安装与部署(Installation & Deployment)
 
@@ -233,6 +234,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 [maven3]: http://maven.apache.org/download.cgi  
 [eclipsejee-luna]: http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunasr1a  
 [tomcat7+]: http://tomcat.apache.org/  
+[MySQL5+]: http://dev.mysql.com/downloads/mysql/  
 [velocity]: http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html
 [aviator]: https://code.google.com/p/aviator/wiki/User_Guide_zh
 [org.apache.commons.lang3.StringUtils]: http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html
