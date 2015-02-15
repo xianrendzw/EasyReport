@@ -40,7 +40,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 **step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据
 **step3**:cd yourgitrepository/EasyReport/easyreport-web  
 **step4**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
-**step5**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
+**step5**:mvn clean package -Dskiptest=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
 **step6**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
 
 ### 2.2 从发布包安装(From Release Packages)
