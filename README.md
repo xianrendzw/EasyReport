@@ -37,7 +37,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：   
 **step1**:git clone https://github.com/xianrendzw/EasyReport.git  
-**step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据
+**step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据  
 **step3**:cd yourgitrepository/EasyReport/easyreport-web  
 **step4**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码  
 **step5**:mvn clean package -Dskiptest=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)  
