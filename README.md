@@ -13,7 +13,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 	* [从发布包安装(From Release Packages)](#user-content-22-从发布包安装from-release-packages)  
 	* [定时任务程序部署(Scheduled Task Deamon)](#user-content-23-定时任务程序部署scheduled-task-deamon) 
 * [使用说明(User Guide)](#user-content-3使用说明user-guide)  
-	* [预备知识(Preface)](#user-content-31-预备知识preface)  
+	* [预备知识(Prerequisites)](#user-content-31-预备知识Prerequisites)  
 	* [数据源设置(DataSource Configuration)](#user-content-32-数据源设置datasource-configuration)  
 	* [配置管理(Configuration)](#user-content-33-配置管理configuration)  
 	* [报表设计(Reporting Design)](#user-content-34-报表设计reporting-design)  
@@ -59,7 +59,7 @@ nohup java -jar easyreport-scheduler.jar >log.log 2>&1 &
 
 ## 3.使用说明(User Guide)
 
-### 3.1 预备知识(Preface)  
+### 3.1 预备知识(Prerequisites)  
 简单的说，报表就是用表格、图表等格式来动态显示数据。它是数据可视化的重要部分。尤其在当今大数据泛滥的时代，到处都需要各种各样的报表。在使用该工具之前您应该先了解一下数据仓库、维度、度量、[事实表](http://www.cnblogs.com/wufengtinghai/archive/2013/05/04/3060265.html)等相关概念，这将会对你制作报表有一定的帮助。
 
 本工具只是简单的从数据库(MySQL,Oracle,SQLServer,HBase等)中的事实表读取数据，并转换成HTML表格形式展示。不支持CUBE、钻取、切片等复杂OLAP相关的功能。
