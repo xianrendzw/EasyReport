@@ -13,7 +13,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 	* [从发布包安装(From Release Packages)](#user-content-22-从发布包安装from-release-packages)  
 	* [定时任务程序部署(Scheduled Task Deamon)](#user-content-23-定时任务程序部署scheduled-task-deamon) 
 * [使用说明(User Guide)](#user-content-3使用说明user-guide)  
-	* [预备知识(Prerequisites)](#user-content-31-预备知识Prerequisites)  
+	* [预备知识(Prerequisites)](#user-content-31-预备知识prerequisites)  
 	* [数据源设置(DataSource Configuration)](#user-content-32-数据源设置datasource-configuration)  
 	* [配置管理(Configuration)](#user-content-33-配置管理configuration)  
 	* [报表设计(Reporting Design)](#user-content-34-报表设计reporting-design)  
