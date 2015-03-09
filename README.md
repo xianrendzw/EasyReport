@@ -45,8 +45,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 ### 2.2 从发布包安装(From Release Packages)
 **step1**:直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件  
-**step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据 
-**step3**:修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串的IP、用户与密码    
+**step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据  
+**step3**:修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串的IP、用户与密码     
 **step4**:然后war这个文件部署到tomcat,jboss,jetty等容器中
 
 ### 2.3 定时任务程序部署(Scheduled Task Deamon)
