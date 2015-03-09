@@ -35,7 +35,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ## 2.安装与部署(Installation & Deployment)
 
 ### 2.1 从源代码安装(From Source Code)
-首先确定安装好jdk1.8与maven3，并配置好maven仓库，然后按如下步骤操作：   
+首先确定安装好[jdk1.8][]与[maven3][]、[MySQL5+][]，并配置好maven仓库，然后按如下步骤操作：   
 **step1**:git clone https://github.com/xianrendzw/EasyReport.git  
 **step2**:在MySQL中创建名为**easy_report**的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据  
 **step3**:cd yourgitrepository/EasyReport/easyreport-web  
@@ -44,6 +44,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 **step6**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  
 
 ### 2.2 从发布包安装(From Release Packages)
+首先确定安装好[jre1.8[]]或[jdk1.8][]与[MySQL5+][]，然后按如下步骤操作：   
 **step1**:直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件  
 **step2**:在MySQL中创建名为**easy_report**的数据库，然后解压[mysql.zip][],并执行easy_report_mysql.sql创建表结构与导入初始数据  
 **step3**:修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串的IP、用户与密码     
@@ -234,6 +235,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 ## 5.常见问题(FAQ)
 
 [jdk1.8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
+[jre1.8]: http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 [maven3]: http://maven.apache.org/download.cgi  
 [eclipsejee-luna]: http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunasr1a  
 [tomcat7+]: http://tomcat.apache.org/  
