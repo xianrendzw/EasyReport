@@ -1,10 +1,10 @@
 package com.easytoolsoft.easyreport.engine.query;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,15 +38,15 @@ public abstract class AbstractQueryer {
 
 	public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		List<ReportMetaDataColumn> columns = null;
 
 		try {
 			logger.debug(sqlText);
 			conn = this.getJdbcConnection();
-			stmt = conn.prepareStatement(this.preprocessSqlText(sqlText));
-			rs = stmt.executeQuery();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(this.preprocessSqlText(sqlText));
 			ResultSetMetaData rsMataData = rs.getMetaData();
 			int count = rsMataData.getColumnCount();
 			columns = new ArrayList<ReportMetaDataColumn>(count);
@@ -68,7 +68,7 @@ public abstract class AbstractQueryer {
 
 	public List<ReportQueryParamItem> parseQueryParamItems(String sqlText) {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		HashSet<String> set = new HashSet<String>();
 		List<ReportQueryParamItem> rows = new ArrayList<ReportQueryParamItem>();
@@ -76,8 +76,8 @@ public abstract class AbstractQueryer {
 		try {
 			logger.debug(sqlText);
 			conn = this.getJdbcConnection();
-			stmt = conn.prepareStatement(sqlText);
-			rs = stmt.executeQuery();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sqlText);
 			while (rs.next()) {
 				String name = rs.getString("name");
 				String text = rs.getString("text");
@@ -99,14 +99,14 @@ public abstract class AbstractQueryer {
 
 	public List<ReportMetaDataRow> getMetaDataRows() {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 
 		try {
 			logger.debug(this.parameter.getSqlText());
 			conn = this.getJdbcConnection();
-			stmt = conn.prepareStatement(this.parameter.getSqlText());
-			rs = stmt.executeQuery();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(this.parameter.getSqlText());
 			return this.getMetaDataRows(rs, this.getSqlColumns(this.parameter.getMetaColumns()));
 		} catch (Exception ex) {
 			logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
@@ -120,7 +120,8 @@ public abstract class AbstractQueryer {
 		return this.metaDataColumns;
 	}
 
-	protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns) throws SQLException {
+	protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns)
+			throws SQLException {
 		List<ReportMetaDataRow> rows = new ArrayList<ReportMetaDataRow>();
 		while (rs.next()) {
 			ReportMetaDataRow row = new ReportMetaDataRow();
@@ -136,7 +137,7 @@ public abstract class AbstractQueryer {
 		return rows;
 	}
 
-	protected void releaseJdbcResource(Connection conn, PreparedStatement stmt, ResultSet rs) {
+	protected void releaseJdbcResource(Connection conn, Statement stmt, ResultSet rs) {
 		try {
 			if (rs != null)
 				rs.close();

@@ -66,7 +66,7 @@ public class ReportingDao extends BaseDao<ReportingPo> {
 				.append(Restrictions.bracket(Bracket.Left))
 				.append(Restrictions.equal(ReportingPo.Name, "?"))
 				.append(Restrictions.Or)
-				.append(Restrictions.like(ReportingPo.Name, String.format("'%s_复件%'", name)))
+				.append(Restrictions.like(ReportingPo.Name, String.format("%s_复件%%", name)))
 				.append(Restrictions.bracket(Bracket.Rgiht)).toString();
 		Object[] args = new Object[] { pid, name };
 		return this.count(condition, args);
