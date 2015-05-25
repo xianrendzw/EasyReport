@@ -1281,6 +1281,7 @@ ReportDesigner.executeSql = function() {
 	$.post(designerPageRootUrl + 'loadSqlColumns', {
 		sqlText : sqlText,
 		dsId : $('#reportDsId').combobox('getValue'),
+		dataRange : $('#reportDataRange').val(),
 		jsonQueryParams : jsonQueryParams
 	}, function(result) {
 		$.messager.progress("close");

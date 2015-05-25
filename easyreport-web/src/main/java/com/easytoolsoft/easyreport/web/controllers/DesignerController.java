@@ -76,14 +76,15 @@ public class DesignerController extends AbstractController {
 
 	@RequestMapping(value = "/loadSqlColumns")
 	@ResponseBody
-	public ParamJsonResult<List<ReportMetaDataColumn>> loadSqlColumns(Integer dsId, String sqlText, String jsonQueryParams, HttpServletRequest request) {
+	public ParamJsonResult<List<ReportMetaDataColumn>> loadSqlColumns(Integer dsId, String sqlText, Integer dataRange,
+			String jsonQueryParams, HttpServletRequest request) {
 		ParamJsonResult<List<ReportMetaDataColumn>> result = new ParamJsonResult<List<ReportMetaDataColumn>>(false, "");
 		if (dsId == null) {
 			return result;
 		}
 
 		try {
-			sqlText = this.getSqlText(sqlText, 1, jsonQueryParams, request);
+			sqlText = this.getSqlText(sqlText, dataRange, jsonQueryParams, request);
 			result.setData(this.reportingService.getReportMetaDataColumns(dsId, sqlText));
 			result.setSuccess(true);
 		} catch (Exception ex) {
@@ -94,7 +95,8 @@ public class DesignerController extends AbstractController {
 
 	@RequestMapping(value = "/viewSqlText")
 	@ResponseBody
-	public ParamJsonResult<String> viewSqlText(Integer dsId, String sqlText, Integer dataRange, String jsonQueryParams, HttpServletRequest request) {
+	public ParamJsonResult<String> viewSqlText(Integer dsId, String sqlText, Integer dataRange, String jsonQueryParams,
+			HttpServletRequest request) {
 		ParamJsonResult<String> result = new ParamJsonResult<String>(false, "");
 		if (dsId == null)
 			return result;
@@ -113,7 +115,8 @@ public class DesignerController extends AbstractController {
 	}
 
 	private String getSqlText(String sqlText, Integer dataRange, String jsonQueryParams, HttpServletRequest request) {
-		Map<String, Object> formParameters = generationService.getBuildInParameters(request.getParameterMap(), dataRange);
+		Map<String, Object> formParameters = generationService.getBuildInParameters(request.getParameterMap(),
+				dataRange);
 		if (StringUtils.isNotBlank(jsonQueryParams)) {
 			List<QueryParameterPo> queryParams = JSON.parseArray(jsonQueryParams, QueryParameterPo.class);
 			for (QueryParameterPo queryParam : queryParams) {
@@ -138,7 +141,8 @@ public class DesignerController extends AbstractController {
 
 	@RequestMapping(value = "/getHistorySqlText")
 	@ResponseBody
-	public Map<String, Object> getHistorySqlText(Integer page, Integer rows, Integer reportId, HttpServletRequest request) {
+	public Map<String, Object> getHistorySqlText(Integer page, Integer rows, Integer reportId,
+			HttpServletRequest request) {
 		if (reportId == null)
 			reportId = 0;
 		if (page == null)
@@ -161,7 +165,8 @@ public class DesignerController extends AbstractController {
 	@RequestMapping(value = "/addTreeNode")
 	@ResponseBody
 	public ParamJsonResult<List<TreeNode<ReportingPo>>> addTreeNode(ReportingPo po, HttpServletRequest request) {
-		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false, "");
+		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false,
+				"");
 
 		try {
 			po.setId(this.reportingService.addReport(po));
@@ -213,7 +218,8 @@ public class DesignerController extends AbstractController {
 	@ResponseBody
 	public ParamJsonResult<List<TreeNode<ReportingPo>>> pasteTreeNode(Integer sourceId, Integer targetId,
 			HttpServletRequest request) {
-		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false, "");
+		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false,
+				"");
 
 		if (sourceId == null || sourceId <= 0 || targetId == null || targetId < 0) {
 			result.setMsg("提交的参数数据出错！");
@@ -266,7 +272,8 @@ public class DesignerController extends AbstractController {
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	public ParamJsonResult<List<TreeNode<ReportingPo>>> add(ReportingPo po, HttpServletRequest request) {
-		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false, "");
+		ParamJsonResult<List<TreeNode<ReportingPo>>> result = new ParamJsonResult<List<TreeNode<ReportingPo>>>(false,
+				"");
 
 		try {
 			po.setCreateUser("");
@@ -355,7 +362,8 @@ public class DesignerController extends AbstractController {
 
 	@RequestMapping(value = "/setQueryParam")
 	@ResponseBody
-	public ParamJsonResult<TreeNode<ReportingPo>> setQueryParam(Integer id, String jsonQueryParams, HttpServletRequest request) {
+	public ParamJsonResult<TreeNode<ReportingPo>> setQueryParam(Integer id, String jsonQueryParams,
+			HttpServletRequest request) {
 		ParamJsonResult<TreeNode<ReportingPo>> result = new ParamJsonResult<TreeNode<ReportingPo>>(false, "");
 
 		if (id == null) {
