@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -45,6 +46,7 @@ public class ReportingTreeService extends BaseService<ReportingDao, ReportingPo>
 		if (count > 0) {
 			entity.setName(String.format("%s_复件%s", entity.getName(), count));
 		}
+		entity.setUid(UUID.randomUUID().toString());
 		entity.setPid(targetId);
 		entity.setCreateUser(createUser);
 		entity.setId(this.dao.insertWithId(entity));
@@ -67,7 +69,8 @@ public class ReportingTreeService extends BaseService<ReportingDao, ReportingPo>
 			if (child.getId() == sourceId) {
 				child.setPid(targetId);
 				child.setDsId(dsId);
-				int newId = this.dao.insertWithId(child);
+				child.setUid(UUID.randomUUID().toString());
+				int newId = this.addWithId(child);
 				this.recursionCloneNode(children, newId, child.getId(), dsId);
 			}
 		}
@@ -78,6 +81,7 @@ public class ReportingTreeService extends BaseService<ReportingDao, ReportingPo>
 			if (child.getPid() == srcPid) {
 				child.setPid(newPid);
 				child.setDsId(dsId);
+				child.setUid(UUID.randomUUID().toString());
 				int newId = this.addWithId(child);
 				this.recursionCloneNode(children, newId, child.getId(), dsId);
 			}
