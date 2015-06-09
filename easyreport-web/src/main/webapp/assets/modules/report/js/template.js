@@ -75,6 +75,12 @@ ReportTemplate.renderClassicReport = function(table) {
 		$('#easyreport .selected').removeClass('selected').removeAttr('title');
 		$(this).addClass('selected');
 	});
+	$('#easyreport>tbody>tr').mouseover(function(e) {
+		$(this).addClass('selected');
+	});
+	$('#easyreport>tbody>tr').mouseleave(function(e) {
+		$('#easyreport .selected').removeClass('selected').removeAttr('title');
+	});
 
 	var noRowSpan = !ReportTemplate.hasRowSpan();
 	table.data('isSort', noRowSpan).fixScroll();

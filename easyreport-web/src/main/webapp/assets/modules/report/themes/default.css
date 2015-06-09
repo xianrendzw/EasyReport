@@ -60,6 +60,10 @@ td,th {
 	text-align: left;
 }
 
+.easyreport .selected {
+	background: #fddc30;
+}
+
 .easyreport th {
 	background: #308ca5;
 	border: 1px solid #ccc;
