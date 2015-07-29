@@ -26,7 +26,7 @@
 	<!-- 右边tab控件 -->
 	<div region="center" border="false">
 		<div id="tabs" class="easyui-tabs" fit="true" border="false" plain="true">
-			<div id="settingsTab" title="基本设置" style="padding: 5px;">
+			<div id="settingsTab" title="基本设置" style="padding: 5px;height:40%">
 				<form id="settingsForm" method="post">
 					<table cellpadding="0" class="form-table" cellspacing="0" style="width: 100%;">
 						<tr>
@@ -86,7 +86,9 @@
 						</tr>
 					</table>
 				</form>
-			<div id="sqlColumnGrid" title="元数据列配置"></div>
+			<div style="height:55%">
+				<div id="sqlColumnGrid" title="元数据列配置"></div>
+			</div>
 			</div>
 			<div id="queryParamTab" title="查询参数" style="padding: 5px;">
 				<form id="queryParamForm" method="post">
