@@ -1,5 +1,5 @@
-EasyReport
-==========
+EasyReport For BigData
+======================
 
 A simple and easy to use Web Report System for java
 

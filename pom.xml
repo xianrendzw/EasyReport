@@ -12,6 +12,7 @@
 		<module>easyreport-web</module>
 		<module>easyreport-engine</module>
 		<module>easyreport-scheduler</module>
+		<module>easyreport-bigdata</module>
 	</modules>
 	<reporting>
 		<plugins>
