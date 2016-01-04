@@ -49,21 +49,21 @@
 						<tr>
 						<td class="text_r blueside" width="70">布局列:</td>
 							<td><select id="reportLayout" name="layout">
-									<option value="1">横向展示</option>
 									<option value="2">纵向展示</option>
+									<option value="1">横向展示</option>
 								</select>
 							</td>
 							<td class="text_r blueside">统计列:</td>
 							<td><select id="reportStatColumnLayout" name="statColumnLayout">
-									<option value="1">横向展示</option>
-									<option value="2">纵向展示</option>
-								</select>
+                                <option value="1">横向展示</option>
+                                <option value="2">纵向展示</option>
+                            </select>
 							</td>
 							<td class="text_r blueside">显示几天数据:</td>
 							<td><input type="text" id="reportDataRange" name="dataRange" value="7" /></td>
 							<td class="text_r blueside"></td>
 							<td>
-								<input type="hidden" id="reportId"  name="id" value="0" /> 
+								<input type="hidden" id="reportId"  name="id" value="0" />
 								<input type="hidden" id="reportAction" name="action" value="add" />
 								<input type="hidden" id="reportUid" name="uid" />
 								<input type="hidden" id="reportPid" name="pid" value="0" />
@@ -79,7 +79,7 @@
 							<a id="btnExecSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-ok" onclick="ReportDesigner.executeSql()">执行SQL</a>&nbsp;&nbsp;
 							<a id="btnViewSqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-sql" onclick="ReportDesigner.viewSqlText()">预览SQL</a>&nbsp;&nbsp;
 							<a id="btnViewHistorySqlText" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-history" onclick="ReportDesigner.viewSqlHistory()">查看SQL历史记录</a>&nbsp;&nbsp;
-							<a id="btnNewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.save()">新增</a>&nbsp;&nbsp; 
+							<a id="btnNewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-add" onclick="ReportDesigner.save()">新增</a>&nbsp;&nbsp;
 							<a id="btnEditReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-edit" onclick="ReportDesigner.save()">修改</a>&nbsp;&nbsp;
 							<a id="btnViewReport" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-preview" onclick="ReportDesigner.previewInNewTab()">报表预览</a>&nbsp;&nbsp;
 							<a id="btnFullScreenEditSql" href="javascript:void(0)" class="easyui-linkbutton" icon="icon-fullscreen" onclick="ReportDesigner.fullScreenSqlEditor()">全屏编辑</a></td>
@@ -137,7 +137,7 @@
 							<td class="text_r blueside top">内容:</td>
 							<td colspan="7">
 							<textarea id="queryParamContent" name="content" style="width: 99%; height: 140px;" placeholder="(select col1 as name,col2 as text from table ...) or (name1,text1|name2,text2|...) or (name1|name2|...)"></textarea>
-							<input type="hidden" id="queryParamGridIndex"  value="" /> 
+							<input type="hidden" id="queryParamGridIndex"  value="" />
 							<input type="hidden" id="jsonQueryParams" />
 							<input type="hidden" id="queryParamReportId"  value="0" /></td>
 						</tr>
@@ -254,9 +254,9 @@
 				</tr>
 				<tr>
 					<td class="text_r blueside top">备注:</td>
-					<td><textarea id="setTreeNodeComment" name="comment" style="width: 99%; height: 130px;"></textarea> 
+					<td><textarea id="setTreeNodeComment" name="comment" style="width: 99%; height: 130px;"></textarea>
 					<input id="treeNodeAction" type="hidden" name="action" value="add" />
-					<input type="hidden" id="treeNodeId" name="id" value="0" /> 
+					<input type="hidden" id="treeNodeId" name="id" value="0" />
 					<input type="hidden" id="treeNodePid" name="pid" value="0" /></td>
 				</tr>
 			</table>
