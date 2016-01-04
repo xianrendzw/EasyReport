@@ -23,6 +23,7 @@
 					<iframe scrolling="auto" frameborder="0" src="<%=request.getContextPath()%>/report/config" style="width: 100%; height: 100%;"></iframe>
 				</div>
 				<div title="帮助" data-options="iconCls:'icon-help'" style="overflow:auto;">
+					<iframe scrolling="auto" frameborder="0" src="/assets/modules/report/help/EasyReport使用指南.htm" style="width: 100%; height: 100%;"></iframe>
 				</div>
 			</div>
 		</div>
