@@ -10,6 +10,9 @@
 	<div class="easyui-layout" fit="true" style="height: 250px;">
 		<div region="center">
 			<div id="content" class="easyui-tabs" border="false" fit="true">
+				<div title="报表查询" data-options="iconCls:'icon-table'" style="overflow:auto;">
+					<iframe scrolling="auto" frameborder="0" src="<%=request.getContextPath()%>/query" style="width: 100%; height: 100%;"></iframe>
+				</div>
 				<div title="报表设计" data-options="iconCls:'icon-table'" style="overflow:auto;">
 					<iframe scrolling="auto" frameborder="0" src="<%=request.getContextPath()%>/report/designer" style="width: 100%; height: 100%;"></iframe>
 				</div>

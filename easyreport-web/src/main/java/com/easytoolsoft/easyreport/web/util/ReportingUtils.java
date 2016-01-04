@@ -124,6 +124,8 @@ public class ReportingUtils {
 	}
 
 	public static void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
+
+		htmlText=htmlText.replaceAll("<table>","<table cellpadding=\"3\" cellspacing=\"0\"  border=\"1\"  rull=\"all\" style=\"border-collapse: collapse\">");
 		try (OutputStream out = response.getOutputStream()) {
 			String fileName = name + "_" + DateUtils.getNow("yyyyMMddHHmmss");
 			fileName = new String(fileName.getBytes(), "ISO8859-1") + ".xls";
@@ -137,7 +139,7 @@ public class ReportingUtils {
 			response.setHeader("Content-Disposition", String.format("attachment; filename=%s", fileName));
 			response.setContentType("application/vnd.ms-excel; charset=utf-8");
 			response.addCookie(new Cookie("fileDownload", "true"));
-			out.write(new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF }); // 生成带bom的utf8文件
+			//out.write(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}); // 生成带bom的utf8文件
 			out.write(htmlText.getBytes());
 			out.flush();
 		} catch (Exception ex) {
