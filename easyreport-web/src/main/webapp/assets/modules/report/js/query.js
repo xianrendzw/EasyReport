@@ -46,7 +46,7 @@ $(function () {
     $('#tabs').tabs({
         onContextMenu: function (e, title, index) {
             e.preventDefault();
-            $('#tabCtxMenu').menu('show', {
+            $('#tabsCtxMenu').menu('show', {
                 left: e.pageX,
                 top: e.pageY
             });
@@ -91,11 +91,6 @@ ReportQuery.getSelectedTabIndex = function () {
 ReportQuery.selectTab = function (index) {
     $('#tabs').tabs('select', index);
 };
-
-ReportQuery.tabSelectedHandlder = function (title, currIndex) {
-
-};
-
 
 ReportQuery.clearAllCheckedNode = function (target) {
     var nodes = $(target).tree('getChecked');
