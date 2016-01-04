@@ -17,7 +17,7 @@ public enum LayoutType {
 
 	private final int value;
 
-	private LayoutType(int value) {
+	LayoutType(int value) {
 		this.value = value;
 	}
 

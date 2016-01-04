@@ -46,7 +46,7 @@ public class DateUtils {
 	public static String getDate(String date, String pattern) {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date theDate = format.parse(date.toString());
+			Date theDate = format.parse(date);
 			format.applyPattern(pattern);
 			return format.format(theDate);
 		} catch (ParseException e) {
@@ -82,7 +82,7 @@ public class DateUtils {
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date now = Calendar.getInstance().getTime();
-			Date theDate = format.parse(date.toString());
+			Date theDate = format.parse(date);
 			theDate.setHours(now.getHours());
 			theDate.setMinutes(now.getMinutes());
 			format.setTimeZone(TimeZone.getTimeZone("UTC"));

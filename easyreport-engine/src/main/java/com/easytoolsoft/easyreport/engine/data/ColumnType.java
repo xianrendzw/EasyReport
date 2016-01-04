@@ -27,7 +27,7 @@ public enum ColumnType {
 
 	private final int value;
 
-	private ColumnType(int value) {
+	ColumnType(int value) {
 		this.value = value;
 	}
 

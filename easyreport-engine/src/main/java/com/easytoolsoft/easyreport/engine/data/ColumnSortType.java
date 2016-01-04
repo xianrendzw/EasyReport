@@ -33,7 +33,7 @@ public enum ColumnSortType {
 
 	private final int value;
 
-	private ColumnSortType(int value) {
+	ColumnSortType(int value) {
 		this.value = value;
 	}
 

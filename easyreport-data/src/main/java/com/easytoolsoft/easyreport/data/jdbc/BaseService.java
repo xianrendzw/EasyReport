@@ -163,7 +163,7 @@ public abstract class BaseService<TDao extends BaseDao<TEntity>, TEntity> {
 
 	/**
 	 *
-	 * @param pageInfo
+	 * @param page
 	 * @param columnNames
 	 * @return
 	 */
