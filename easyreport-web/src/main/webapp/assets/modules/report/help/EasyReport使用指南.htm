@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style type="text/css">body {
+  font-family: "Microsoft YaHei",Simsun, Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: white;
+  padding: 12px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 8px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 8px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 8px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; 
+      font-size: 14px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; 
+      font-size: 14px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+
+  margin: 0 2px;
+  padding: 0 5px;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; 
+  white-space: normal;
+
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  word-wrap:break-word;
+  max-width:100%;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; 
+}
+pre code, pre tt {
+  background-color: transparent;
+  border: none; 
+}
+
+@media screen {
+	pre {
+		word-wrap: break-word;
+	}
+}
+@media print {
+  table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+.hljs {
+  display: block; padding: 0.5em;
+  background: #F0F0F0;
+}
+
+.hljs,
+.hljs-subst,
+.hljs-tag .hljs-title,
+.lisp .hljs-title,
+.clojure .hljs-built_in,
+.nginx .hljs-title {
+  color: black;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-constant,
+.hljs-parent,
+.hljs-tag .hljs-value,
+.hljs-rules .hljs-value,
+.hljs-rules .hljs-value .hljs-number,
+.hljs-preprocessor,
+.hljs-pragma,
+.haml .hljs-symbol,
+.ruby .hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.hljs-aggregate,
+.hljs-template_tag,
+.django .hljs-variable,
+.smalltalk .hljs-class,
+.hljs-addition,
+.hljs-flow,
+.hljs-stream,
+.bash .hljs-variable,
+.apache .hljs-tag,
+.apache .hljs-cbracket,
+.tex .hljs-command,
+.tex .hljs-special,
+.erlang_repl .hljs-function_or_atom,
+.asciidoc .hljs-header,
+.markdown .hljs-header,
+.coffeescript .hljs-attribute {
+  color: #800;
+}
+
+.smartquote,
+.hljs-comment,
+.hljs-annotation,
+.hljs-template_comment,
+.diff .hljs-header,
+.hljs-chunk,
+.asciidoc .hljs-blockquote,
+.markdown .hljs-blockquote {
+  color: #888;
+}
+
+.hljs-number,
+.hljs-date,
+.hljs-regexp,
+.hljs-literal,
+.hljs-hexcolor,
+.smalltalk .hljs-symbol,
+.smalltalk .hljs-char,
+.go .hljs-constant,
+.hljs-change,
+.lasso .hljs-variable,
+.makefile .hljs-variable,
+.asciidoc .hljs-bullet,
+.markdown .hljs-bullet,
+.asciidoc .hljs-link_url,
+.markdown .hljs-link_url {
+  color: #080;
+}
+
+.hljs-label,
+.hljs-javadoc,
+.ruby .hljs-string,
+.hljs-decorator,
+.hljs-filter .hljs-argument,
+.hljs-localvars,
+.hljs-array,
+.hljs-attr_selector,
+.hljs-important,
+.hljs-pseudo,
+.hljs-pi,
+.haml .hljs-bullet,
+.hljs-doctype,
+.hljs-deletion,
+.hljs-envvar,
+.hljs-shebang,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in,
+.tex .hljs-formula,
+.erlang_repl .hljs-reserved,
+.hljs-prompt,
+.asciidoc .hljs-link_label,
+.markdown .hljs-link_label,
+.vhdl .hljs-attribute,
+.clojure .hljs-attribute,
+.asciidoc .hljs-attribute,
+.lasso .hljs-attribute,
+.coffeescript .hljs-property,
+.hljs-phony {
+  color: #88F
+}
+
+.hljs-keyword,
+.hljs-id,
+.hljs-title,
+.hljs-built_in,
+.hljs-aggregate,
+.css .hljs-tag,
+.hljs-javadoctag,
+.hljs-phpdoc,
+.hljs-yardoctag,
+.smalltalk .hljs-class,
+.hljs-winutils,
+.bash .hljs-variable,
+.apache .hljs-tag,
+.go .hljs-typename,
+.tex .hljs-command,
+.asciidoc .hljs-strong,
+.markdown .hljs-strong,
+.hljs-request,
+.hljs-status {
+  font-weight: bold;
+}
+
+.asciidoc .hljs-emphasis,
+.markdown .hljs-emphasis {
+  font-style: italic;
+}
+
+.nginx .hljs-built_in {
+  font-weight: normal;
+}
+
+.coffeescript .javascript,
+.javascript .xml,
+.lasso .markup,
+.tex .hljs-formula,
+.xml .javascript,
+.xml .vbscript,
+.xml .css,
+.xml .hljs-cdata {
+  opacity: 0.5;
+}
+
+pre, code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.pln {
+  color: #48484C; }
+
+.str {
+  color: #DD1144; }
+
+.kwd {
+  color: #1E347B; }
+
+.com {
+  color: #93A1A1; }
+
+.typ {
+  color: teal; }
+
+.lit {
+  color: #195F91; }
+
+.pun {
+  color: #93A1A1; }
+
+.opn {
+  color: #93A1A1; }
+
+.clo {
+  color: #93A1A1; }
+
+.tag {
+  color: #008; }
+
+.atn {
+  color: teal; }
+
+.atv {
+  color: #DD1144; }
+
+.dec {
+  color: teal; }
+
+.var {
+  color: teal; }
+
+.fun {
+  color: #DC322F; }
+
+/* Put a border around prettyprinted code snippets. */
+pre.prettyprint {
+  background-color: #F7F7F9;
+  padding: 10px;
+  border: 1px solid #E1E1E8; 
+}
+
+pre.prettyprint.linenums {
+  box-shadow: 40px 0 0 #FBFBFC inset, 41px 0 0 #ECECF0 inset; 
+}
+
+/* Specify class=linenums on a pre to get line numbering */
+pre.prettyprint.linenums ol.linenums {
+  color: #1E347B;
+  padding-left: 30px !important;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+pre.prettyprint.linenums ol.linenums li {
+  color: #BEBEC5;
+  line-height: 18px;
+  padding-left: 12px !important; 
+}
+
+pre.prettyprint.linenums ol.linenums li.L0,
+pre.prettyprint.linenums ol.linenums li.L1,
+pre.prettyprint.linenums ol.linenums li.L2,
+pre.prettyprint.linenums ol.linenums li.L3,
+pre.prettyprint.linenums ol.linenums li.L4,
+pre.prettyprint.linenums ol.linenums li.L5,
+pre.prettyprint.linenums ol.linenums li.L6,
+pre.prettyprint.linenums ol.linenums li.L7,
+pre.prettyprint.linenums ol.linenums li.L8,
+pre.prettyprint.linenums ol.linenums li.L9 {
+  list-style-type: decimal !important; 
+}
+</style><meta http-equiv="X-UA-Compatible" content="IE=8">
+
+<!--defaultCSS-->
+<title>EasyReport使用指南.md</title>
+
+
+
+
+
+<style type="text/css" id="wiz_todo_style_id" wiz_link_version="01.00.09">.wiz-todo, .wiz-todo-img {width: 16px; height: 16px; cursor: default; padding: 0 10px 0 2px; vertical-align: -10%;-webkit-user-select: none;} .wiz-todo-label { display: inline-block; padding-top: 7px; padding-bottom: 6px; line-height: 1.5;} .wiz-todo-label-checked {  color: #666;} .wiz-todo-label-unchecked {text-decoration: initial;} .wiz-todo-completed-info {padding-left: 44px; display: inline-block; } .wiz-todo-avatar { width:20px; height: 20px; vertical-align: -20%; margin-right:10px; border-radius: 2px;} .wiz-todo-account, .wiz-todo-dt { color: #666; }</style>
+<style type="text/css" id="wiz_custom_css">
+body
+{
+    font-family: 微软雅黑,"Microsoft YaHei", Georgia,Helvetica,Arial,sans-serif,宋体, PMingLiU,serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+}
+html, body
+{
+    
+    
+}
+h1 {
+    font-size:1.5em;
+    font-weight:bold;
+}
+h2 {
+    font-size:1.4em;
+    font-weight:bold;
+}
+h3 {
+    font-size:1.3em;
+    font-weight:bold;
+}
+h4 {
+    font-size:1.2em;
+    font-weight:bold;
+}
+h5 {
+    font-size:1.1em;
+    font-weight:bold;
+}
+h6 {
+    font-size:1.0em;
+    font-weight:bold;
+}
+img {
+    border:0;
+    max-width: 100%;
+    height: auto !important;
+}
+blockquote {
+    margin-top:0px;
+    margin-bottom:0px;
+}
+table {
+    border-collapse:collapse;
+    border:1px solid #bbbbbb;
+}
+td {
+    border-collapse:collapse;
+    border:1px solid #bbbbbb;
+}
+</style>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: 5000em; max-height: 5000em; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?rev=2.6.0') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?rev=2.6.0') format('woff'), url('http://cdn.mathjax.org/mathjax/2.6-latest/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?rev=2.6.0') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body style="" wiz_markdown_inited="true"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><h1 id="easyreport">EasyReport</h1>
+<p>A simple and easy to use Web Report System for java</p>
+<p>EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语句查询出的行列结构转换成HTML表格(Table)，并支持表格的跨行(RowSpan)与跨列(ColSpan)。同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。<br>欢迎加入QQ群交流：（365582678）</p>
+<h2 id="-">目录</h2>
+<ul>
+<li><a href="#user-content-1开发环境development-environment">开发环境(Development Environment)</a>  </li>
+<li><a href="#user-content-2安装与部署installation--deployment">安装与部署(Installation &amp; Deployment)</a>  <ul>
+<li><a href="#user-content-21-从源代码安装from-source-code">从源代码安装(From Source Code)</a>  </li>
+<li><a href="#user-content-22-从发布包安装from-release-packages">从发布包安装(From Release Packages)</a>  </li>
+<li><a href="#user-content-23-定时任务程序部署scheduled-task-deamon">定时任务程序部署(Scheduled Task Deamon)</a> </li>
+</ul>
+</li>
+<li><a href="#user-content-3使用说明user-guide">使用说明(User Guide)</a>  <ul>
+<li><a href="#user-content-31-预备知识prerequisites">预备知识(Prerequisites)</a>  </li>
+<li><a href="#user-content-32-数据源设置datasource-configuration">数据源设置(DataSource Configuration)</a>  </li>
+<li><a href="#user-content-33-配置管理configuration">配置管理(Configuration)</a>  </li>
+<li><a href="#user-content-34-报表设计reporting-design">报表设计(Reporting Design)</a>  </li>
+<li><a href="#user-content-35-定时任务配置管理scheduled-task-configruation">定时任务配置管理(Scheduled Task Configruation)</a>  </li>
+<li><a href="#user-content-36-示例examples">示例(Examples)</a>  </li>
+<li><a href="#user-content-37-相关参考referrence-links">相关参考(Referrence links)</a>  </li>
+</ul>
+</li>
+<li><a href="#user-content-4开发者for-developers">开发者(For Developers)</a>  <ul>
+<li><a href="#user-content-41-报表引擎接口reporting-engine-api">报表引擎接口(Reporting Engine API)</a>  </li>
+<li><a href="#user-content-42-自定义报表开发customsized-reporting-development">自定义报表开发(Customsized Reporting Development)</a>  </li>
+</ul>
+</li>
+<li><a href="#user-content-5常见问题faq">常见问题(FAQ)</a>  </li>
+</ul>
+<h2 id="1-development-environment-">1.开发环境(Development Environment)</h2>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">jdk1.8</a><br><a href="http://maven.apache.org/download.cgi">maven3</a><br><a href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunasr1a">eclipsejee-luna</a><br><a href="http://tomcat.apache.org/">tomcat7+</a><br><a href="http://dev.mysql.com/downloads/mysql/">MySQL5+</a></p>
+<h2 id="2-installation-deployment-">2.安装与部署(Installation &amp; Deployment)</h2>
+<h3 id="2-1-from-source-code-">2.1 从源代码安装(From Source Code)</h3>
+<p>首先确定安装好<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">jdk1.8</a>与<a href="http://maven.apache.org/download.cgi">maven3</a>、<a href="http://dev.mysql.com/downloads/mysql/">MySQL5+</a>，并配置好maven仓库，然后按如下步骤操作：<br><strong>step1</strong>:git clone <a href="https://github.com/xianrendzw/EasyReport.git">https://github.com/xianrendzw/EasyReport.git</a><br><strong>step2</strong>:在MySQL中创建名为<strong>easy_report</strong>的数据库，然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行easy_report_mysql.sql创建表结构与导入初始数据<br><strong>step3</strong>:cd yourgitrepository/EasyReport/easyreport-web<br><strong>step4</strong>:修改 src\main\resources\${env}\resource.properties 数据库连接字符串的IP、用户与密码<br><strong>step5</strong>:mvn clean package -Dskiptest=true -P<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" style="position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;/math&gt;" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" role="math" style="width: 2.518em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.894em; height: 0px; font-size: 132%;"><span style="position: absolute; clip: rect(1.36em 1001.838em 2.685em -1000em); top: -2.273em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="texatom" id="MathJax-Span-3"><span class="mrow" id="MathJax-Span-4"><span class="mi" id="MathJax-Span-5" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-6" style="font-family: MathJax_Math-italic;">n</span><span class="mi" id="MathJax-Span-7" style="font-family: MathJax_Math-italic;">v</span></span></span><span class="mo" id="MathJax-Span-8" style="font-family: MathJax_Main;">(</span></span><span style="display: inline-block; width: 0px; height: 2.273em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.401em; border-left-width: 0px; border-left-style: solid; width: 0px; height: 1.463em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>n</mi><mi>v</mi></mrow><mo stretchy="false">(</mo></math></span></span><script type="math/tex" id="MathJax-Element-1">{env} (</script>{env}变量说明:dev表示开发环境,prod表示生产，test表示测试)<br><strong>step6</strong>:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中  </p>
+<h3 id="2-2-from-release-packages-">2.2 从发布包安装(From Release Packages)</h3>
+<p>首先确定安装好<a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">jre1.8</a>或<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">jdk1.8</a>与<a href="http://dev.mysql.com/downloads/mysql/">MySQL5+</a>，然后按如下步骤操作：<br><strong>step1</strong>:直接从<a href="https://github.com/xianrendzw/EasyReport/releases">release</a>下载war文件<br><strong>step2</strong>:在MySQL中创建名为<strong>easy_report</strong>的数据库，然后解压<a href="https://github.com/xianrendzw/EasyReport/blob/master/docs/db/mysql.zip?raw=true">mysql.zip</a>,并执行easy_report_mysql.sql创建表结构与导入初始数据<br><strong>step3</strong>:修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串的IP、用户与密码<br><strong>step4</strong>:然后把war这个文件部署到tomcat,jboss,jetty等容器中</p>
+<h3 id="2-3-scheduled-task-deamon-">2.3 定时任务程序部署(Scheduled Task Deamon)</h3>
+<p>有时需要把报表定时（每天、每月，每季度等）以邮件形式发布给相关的人员，因此需要定时任务调度程序，常用的调度程序也很多（linux:at,crontab;windows:计划任务）,本工具实现一个简单的调度程序。<br><strong>说明：</strong>该程序是可选的，如果不需要定时把报表以邮件方式发布，则可不部署该程序。  具体安装与部署步骤如下:<br><strong>step1</strong>:cd yourgitrepository/EasyReport/easyreport-scheduler<br><strong>step2</strong>:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码<br><strong>step3</strong>:mvn clean package -P<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" style="position: relative;" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;/math&gt;" role="presentation"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-9" role="math" style="width: 2.518em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.894em; height: 0px; font-size: 132%;"><span style="position: absolute; clip: rect(1.36em 1001.838em 2.685em -1000em); top: -2.273em; left: 0em;"><span class="mrow" id="MathJax-Span-10"><span class="texatom" id="MathJax-Span-11"><span class="mrow" id="MathJax-Span-12"><span class="mi" id="MathJax-Span-13" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-14" style="font-family: MathJax_Math-italic;">n</span><span class="mi" id="MathJax-Span-15" style="font-family: MathJax_Math-italic;">v</span></span></span><span class="mo" id="MathJax-Span-16" style="font-family: MathJax_Main;">(</span></span><span style="display: inline-block; width: 0px; height: 2.273em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.401em; border-left-width: 0px; border-left-style: solid; width: 0px; height: 1.463em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow class="MJX-TeXAtom-ORD"><mi>e</mi><mi>n</mi><mi>v</mi></mrow><mo stretchy="false">(</mo></math></span></span><script type="math/tex" id="MathJax-Element-2">{env} (</script>{env}变量说明:dev表示开发环境,prod表示生产，test表示测试)<br><strong>step4</strong>:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:</p>
+<pre class="prettyprint linenums language-shell prettyprinted" style=""><ol class="linenums" style="padding-left: 0px;"><li style="list-style-type: none; padding-left: 0px;" class="L0"><code><span class="pln">nohup java </span><span class="pun">-</span><span class="pln">jar easyreport</span><span class="pun">-</span><span class="pln">scheduler</span><span class="pun">.</span><span class="pln">jar </span><span class="pun">&gt;</span><span class="pln">log</span><span class="pun">.</span><span class="pln">log </span><span class="lit">2</span><span class="pun">&gt;&amp;</span><span class="lit">1</span><span class="pln"> </span><span class="pun">&amp;</span></code></li></ol></pre><h2 id="3-user-guide-">3.使用说明(User Guide)</h2>
+<h3 id="3-1-prerequisites-">3.1 预备知识(Prerequisites)</h3>
+<p>简单的说，报表就是用表格、图表等格式来动态显示数据。它是数据可视化的重要部分。尤其在当今大数据泛滥的时代，到处都需要各种各样的报表。在使用该工具之前您应该先了解一下数据仓库、维度、度量、<a href="http://www.cnblogs.com/wufengtinghai/archive/2013/05/04/3060265.html">事实表</a>等相关概念，这将会对你制作报表有一定的帮助。</p>
+<p>本工具只是简单的从数据库(MySQL,Oracle,SQLServer,HBase等)中的事实表读取数据，并转换成HTML表格形式展示。不支持CUBE、钻取、切片等复杂OLAP相关的功能。</p>
+<h3 id="3-2-datasource-configuration-">3.2 数据源设置(DataSource Configuration)</h3>
+<p>在制作报表前需要先设置数据源，本工具只支持在单一数据源（即数据库）生成报表。<img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ds-1.png" alt="ds-1"></p>
+<h3 id="3-3-configuration-">3.3 配置管理(Configuration)</h3>
+<p>配置管理主要于在制作报表时自动匹配一些常用的列名对应的中文描述。如:dt,date（日期）、title(标题）等。<img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/config-1.png" alt="config-1">  </p>
+<h3 id="3-4-reporting-design-">3.4 报表设计(Reporting Design)</h3>
+<p>通常，只要把数据源配置成功就可以开始报表设计了，报表设计主要分两个步骤：基本设置与查询参数设置。且必须先把基本设置保存后方可进行查询参数设置 ，查询参数设置是可选的，主要看报表设计者的意图。  </p>
+<h4 id="3-4-1-basic-settings-">3.4.1 基本设置(Basic Settings)</h4>
+<p><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-1.png" alt="rp-1"><br>报表的基本设置由4部分组成(如上图所示）：<strong>报表树型列表、报表基本属性、报表SQL查询语句、报表元数据列配置</strong>。<br>在设计报表之前，先简单介绍几个名词，我们从数据仓库概念了解到维度与度量这两个概念，事实上一条SQL语句查询的结果就是一张二维表格，即由行与列组成的表格，在统计分析时，我们把有些列称为维度列，有些列称为度量列。有时事实表里有好几个维度与度量列，但是SQL查询结果只能是二维表格，它不能把维度层次化，展示方式固定而不能灵活变动，这样在观察与分析数据时多有不便，因此一些报表工具就解决了这些问题。本工具把事实表中的维度列与度量列进行再次划分如下表所示：    </p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>子类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>维度列</td>
+<td>布局维度列、简称布局列</td>
+</tr>
+<tr>
+<td></td>
+<td>一般维度列、简称维度列</td>
+</tr>
+<tr>
+<td>度量列</td>
+<td>统计列</td>
+</tr>
+<tr>
+<td></td>
+<td>计算列</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p>布局列主要用于报表展示方式上，如果布局列为横向展示，则报表在绘制时会把布局列的内容绘制表报表表头，维度列的内容绘制报表表体的左边;如果布局列为纵向展示，则报表在绘制时会把布局列的内容绘制表报表表体的左边，维度列的内容绘制报表表头。</p>
+</li>
+<li><p>计算列是根据SQL查询结果中列的值再根据其配置的计算表达式动态运算出来的，它不存在于SQL语句或事实表中,其中使用的表达式引擎为<a href="https://code.google.com/p/aviator/wiki/User_Guide_zh">aviator</a>。</p>
+</li>
+</ol>
+<p>了解了上述基本知识后，我们来看看一张报表的主要设计流程:<br><strong>1.创建报表树型目录列表</strong><br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-2.png" alt="rp-2"><br><strong>2.点击1新建根节点，也可以在树列表中右键创建子节点</strong><br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-3.png" alt="rp-3"><br><strong>3.选择指定的目录,设置基本信息，如报表名称，数据源，布局与统计列展示方式</strong><br><strong>4.输入报表SQL查询语句</strong><br><strong>5.执行SQL查询语句并获取报表的列信息</strong><br><strong>6.配置报表的列</strong><br><strong>7.新增并保存基本设置信息到数据库</strong><br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-4.png" alt="rp-4"><br>新增成功后，就可以双击树列表中报表名称节点或点击报表预览按钮预览报表。如觉得报表展示的不够友好，可以通过修改布局列与统计列的展示方式来改变报表显示。<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-5.png" alt="rp-5"><br>上图是日期为布局列且横向显示的报表预览结果。我们可以修改一下相关配置让报表展示更直观些。<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-6.png" alt="rp-6"><br>由于列名dt已经在配置管理设置了默认标题，因此在执行SQL后会自动匹配它的标题，您也可以把其他的列名增加配置管理项中，这样下次设计报表时就会自动匹配默认标题。现在看修改后报表展示。<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-7.png" alt="rp-7">    </p>
+<h4 id="3-4-2-query-parameter-">3.4.2 查询参数(Query Parameter)</h4>
+<p>有时候报表需要根据指定条件动态生成，如要查看不同城市空气质量情况，这个时候，我就需要创建一个查询参数变量。<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-8.png" alt="rp-8"><br>其中表单控件用于报表查询参数显示形式，主要有下拉单选框(select)、下单多选框(select mul)、复选框(checkbox)及文本框(textbox)四种。下图1处为查询参数列表。<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-9.png" alt="rp-9"><br>当查询参的表单控件为下拉单选或多选时，内容来源有两种不同的形式。  </p>
+<table>
+<thead>
+<tr>
+<th>内容来源</th>
+<th>内容</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL语句</td>
+<td>select col1 as name,col2 as text from table ...</td>
+<td>只包含两列且列名必须为<strong>name</strong>与<strong>text</strong>，name列的值对应下拉框的value属性，text列的值对应下拉框的text属性</td>
+</tr>
+<tr>
+<td>文本字符串</td>
+<td>name1,text1\</td>
+<td>name2,text2\</td>
+<td>... 或name1\</td>
+<td>name2\</td>
+<td>...</td>
+<td>多个值必须用’\</td>
+<td>’分隔，如果name与text值相同则只选择一个并用’\</td>
+<td>’分开也可  </td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-4-3-build-in-variables-functions-">3.4.3 内置变量与函数(Build-in variables &amp; functions)</h4>
+<p>有些常用的查询参数不需要用户每次都创建，因此集成在工具内，这些参数变量称为<strong>内置变量</strong>。</p>
+<p>有些报表的SQL语句很复杂，有时需要根据参数动态生成或需要用模板引擎(<a href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html">velocity</a>)生成，因此需要一些能在模板引擎中应用的函数，这些函数称为<strong>内置函数</strong>。</p>
+<p>1.内置变量(区分大小写）</p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>说明</th>
+<th>返回值说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startTime</td>
+<td>开始日期</td>
+<td>2015-02-04(默认结束日期的前七天，这个可以由报表基本设置的显示天数修改)</td>
+</tr>
+<tr>
+<td>endTime</td>
+<td>结束日期</td>
+<td>2015-02-10（默认为当前天）</td>
+</tr>
+<tr>
+<td>intStartTime</td>
+<td>整型开始日期</td>
+<td>20150204</td>
+</tr>
+<tr>
+<td>intEndTime</td>
+<td>整型结束日期</td>
+<td>20150210</td>
+</tr>
+<tr>
+<td>utcStartTime</td>
+<td>UTC开始日期</td>
+<td>2015-02-04（UTC日期，中国为UTC+8区）</td>
+</tr>
+<tr>
+<td>utcEndTime</td>
+<td>UTC结束日期</td>
+<td>2015-02-10（UTC日期）</td>
+</tr>
+<tr>
+<td>utcIntStartTime</td>
+<td>UTC整型开始日期</td>
+<td>20150204</td>
+</tr>
+<tr>
+<td>utcIntEndTime</td>
+<td>UTC整型结束日期</td>
+<td>20150204  </td>
+</tr>
+</tbody>
+</table>
+<p>2.内置函数</p>
+<ul>
+<li>日期函数<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-10.png" alt="rp-10"></li>
+<li>字符串函数，请参考<a href="http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html">org.apache.commons.lang3.StringUtils</a>类   </li>
+</ul>
+<h4 id="3-4-4-charting-">3.4.4 图表显示（Charting)</h4>
+<p><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-11.png" alt="rp-11"><br>点击报表的图示展示按钮，出现如下界面：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-12.png" alt="rp-12"><br>如果要查看多个城市也可以通过对比来显示：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-13.png" alt="rp-13"><br>如果统计列只有一列时，图表显示就可以支持二个维度同时全部展示：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/rp-14.png" alt="rp-14">  </p>
+<h3 id="3-5-scheduled-task-configruation-">3.5 定时任务配置管理(Scheduled Task Configruation)</h3>
+<h3 id="3-6-examples-">3.6 示例(Examples)</h3>
+<p>示例中的所有数据来源于:<a href="http://www.pm25.in">pm25.in</a>、<a href="http://aqistudy.sinaapp.com/historydata/index.php">aqistudy</a>,如果您需要运行示例中的报表，需求在mysql中创建名为<strong>china_weather_air</strong>的数据库，<br>然后解压yourgitrepository/EasyReport/docs/db/mysql.zip,并执行china_weather_air_mysql.sql创建表结构与导入初始数据。</p>
+<ol>
+<li>最简单报表,直接对应数据库二维表结构<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-1.png" alt="ex-src-1"><br>报表：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-1.png" alt="ex-1"></li>
+<li>带内置变量与查询参数的报表<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-2.png" alt="ex-src-2"><br>查询参数：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-param-2.png" alt="ex-param-2"><br>报表：<br> a. 布局列横向，统计列横向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-1.png" alt="ex-2-1"><br> b. 布局列纵向，统计列横向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-2.png" alt="ex-2-2"><br> c. 布局列横向，统计列纵向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-3.png" alt="ex-2-3"><br> d. 布局列纵向，统计列纵向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-2-4.png" alt="ex-2-4"></li>
+<li>多布局列报表<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-3.png" alt="ex-src-3"><br>报表：<br> a. 布局列横向，统计列横向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-1.png" alt="ex-3-1"><br> b. 布局列纵向，统计列横向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-2.png" alt="ex-3-2"><br> c. 布局列横向，统计列纵向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-3.png" alt="ex-3-3"><br> d. 布局列纵向，统计列纵向<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-3-4.png" alt="ex-3-4"></li>
+<li>统计列可选报表<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-4.png" alt="ex-src-4"><br>报表：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-4-1.png" alt="ex-4-1"></li>
+<li>报表列的排序<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-5.png" alt="ex-src-5"><br>报表：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-5.png" alt="ex-5"></li>
+<li>按百分比格式显示的列<br>配置：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-src-6.png" alt="ex-src-6"><br>报表：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-6.png" alt="ex-6"></li>
+<li>合并报表左边相同维度列<br>合并前：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-7-2.png" alt="ex-7-2"><br>合并后：<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/ex-7-1.png" alt="ex-7-1"></li>
+</ol>
+<h3 id="3-7-referrence-links-">3.7 相关参考(Referrence Links)</h3>
+<ul>
+<li>报表SQL中使用的模板引擎:<a href="http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html">velocity</a>  </li>
+<li>计算列中使用的表达式引擎:<a href="https://code.google.com/p/aviator/wiki/User_Guide_zh">aviator</a>  </li>
+<li>所有示例中的数据来源:<a href="http://www.pm25.in">pm25.in</a>、<a href="http://aqistudy.sinaapp.com/historydata/index.php">aqistudy</a>  </li>
+<li>图表控件:<a href="http://echarts.baidu.com/index.html">echarts</a>、<a href="http://www.highcharts.com/">highcharts</a>  </li>
+<li>前端报表表格及排序相关js插件：<a href="http://mottie.github.io/tablesorter/docs/">tablesorter</a>、<a href="http://www.datatables.net/">DataTables</a></li>
+</ul>
+<h2 id="4-for-developers-">4.开发者(For Developers)</h2>
+<p>该系统总体架构图如下:<br><img src="https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/dev-1.png" alt="dev-1"></p>
+<h3 id="4-1-reporting-engine-api-">4.1 报表引擎接口(Reporting Engine API)</h3>
+<h3 id="4-2-customsized-reporting-development-">4.2 自定义报表开发(Customsized Reporting Development)</h3>
+<h2 id="5-faq-">5.常见问题(FAQ)</h2>
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;"><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Main, sans-serif;"></div></div></body></html>

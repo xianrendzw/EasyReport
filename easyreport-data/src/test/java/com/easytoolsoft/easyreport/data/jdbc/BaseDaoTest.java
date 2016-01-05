@@ -94,7 +94,7 @@ public class BaseDaoTest extends BaseTest {
 		boolean isExist = this.categoryDao.isExist(condition, args);
 
 		Assert.assertTrue(effectedRows > 0);
-		Assert.assertTrue(isExist == false);
+		Assert.assertTrue(isExist);
 	}
 
 	@Test

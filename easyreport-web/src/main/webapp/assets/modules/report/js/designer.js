@@ -535,7 +535,7 @@ $(function() {
 	$('#tabs').tabs({
 		onContextMenu : function(e, title, index) {
 			e.preventDefault();
-			$('#tabCtxMenu').menu('show', {
+			$('#tabsCtxMenu').menu('show', {
 				left : e.pageX,
 				top : e.pageY
 			});
