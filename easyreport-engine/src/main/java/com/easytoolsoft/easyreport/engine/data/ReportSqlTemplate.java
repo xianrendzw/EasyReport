@@ -15,6 +15,6 @@ public class ReportSqlTemplate {
 	}
 
 	public String execute() {
-		return VelocityUtils.prase(this.sqlTemplate, this.parameters);
+		return VelocityUtils.parse(this.sqlTemplate, this.parameters);
 	}
 }

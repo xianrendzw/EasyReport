@@ -125,7 +125,7 @@ public class DesignerController extends AbstractController {
 				formParameters.put(queryParam.getName(), queryParam.getRealDefaultValue());
 			}
 		}
-		return VelocityUtils.prase(sqlText, formParameters);
+		return VelocityUtils.parse(sqlText, formParameters);
 	}
 
 	@RequestMapping(value = "/getSqlColumn")
