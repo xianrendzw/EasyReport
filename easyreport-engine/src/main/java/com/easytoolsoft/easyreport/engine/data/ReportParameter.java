@@ -100,7 +100,7 @@ public class ReportParameter {
 	/**
 	 * 设置报表布局形式(1:横向;2:纵向)
 	 * 
-	 * @param layoutType
+	 * @param layout
 	 *            报表布局形式(1:横向;2:纵向)
 	 */
 	public void setLayout(int layout) {
@@ -119,8 +119,7 @@ public class ReportParameter {
 	/**
 	 * 设置报表统计列或计算列布局形式 (1:横向;2:纵向)
 	 * 
-	 * @param statColumnLayout
-	 *            (1:横向;2:纵向)
+	 * @param statColumnLayout (1:横向;2:纵向)
 	 */
 	public void setStatColumnLayout(LayoutType statColumnLayout) {
 		this.statColumnLayout = statColumnLayout;
@@ -156,8 +155,7 @@ public class ReportParameter {
 	/**
 	 * 设置报表元数据列集合
 	 * 
-	 * @param jsonMetaColumns
-	 *            报表元数据列集合
+	 * @param metaColumns 报表元数据列集合
 	 */
 	public void setMetaColumns(List<ReportMetaDataColumn> metaColumns) {
 		this.metaColumns = metaColumns;

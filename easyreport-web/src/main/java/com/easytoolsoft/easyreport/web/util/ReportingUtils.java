@@ -54,8 +54,8 @@ public class ReportingUtils {
 
 	public static void previewByFormMap(String uid, ModelAndView modelAndView, HttpServletRequest request) {
 		ReportingPo report = reportingService.getByUid(uid);
-		Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
-		Map<String, HtmlFormElement> formMap = generationService.getFormElementMap(report, buildinParams, 1);
+		Map<String, Object> buildInParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
+		Map<String, HtmlFormElement> formMap = generationService.getFormElementMap(report, buildInParams, 1);
 		modelAndView.addObject("formMap", formMap);
 		modelAndView.addObject("uid", uid);
 		modelAndView.addObject("id", report.getId());
@@ -65,8 +65,8 @@ public class ReportingUtils {
 	public static void previewByTemplate(String uid, ModelAndView modelAndView, QueryParamFormView formView, HttpServletRequest request) {
 		ReportingPo report = reportingService.getByUid(uid);
 		List<ReportMetaDataColumn> metaDataColumns = report.getMetaColumnList();
-		Map<String, Object> buildinParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
-		List<HtmlFormElement> dateAndQueryElements = generationService.getDateAndQueryParamFormElements(report, buildinParams);
+		Map<String, Object> buildInParams = generationService.getBuildInParameters(request.getParameterMap(), report.getDataRange());
+		List<HtmlFormElement> dateAndQueryElements = generationService.getDateAndQueryParamFormElements(report, buildInParams);
 		HtmlFormElement statColumnFormElements = generationService.getStatColumnFormElements(metaDataColumns, 0);
 		List<HtmlFormElement> nonStatColumnFormElements = generationService.getNonStatColumnFormElements(metaDataColumns);
 		modelAndView.addObject("uid", uid);
@@ -124,8 +124,9 @@ public class ReportingUtils {
 	}
 
 	public static void exportToExcel(String uid, String name, String htmlText, HttpServletRequest request, HttpServletResponse response) {
-
-		htmlText=htmlText.replaceAll("<table>","<table cellpadding=\"3\" cellspacing=\"0\"  border=\"1\"  rull=\"all\" style=\"border-collapse: collapse\">");
+		htmlText=htmlText.replaceFirst("<table>", "<tableFirst>");
+		htmlText=htmlText.replaceAll("<table>", "<table cellpadding=\"3\" cellspacing=\"0\"  border=\"1\"  rull=\"all\" style=\"border-collapse: collapse\">");
+		htmlText=htmlText.replaceFirst("<tableFirst>", "<table>");
 		try (OutputStream out = response.getOutputStream()) {
 			String fileName = name + "_" + DateUtils.getNow("yyyyMMddHHmmss");
 			fileName = new String(fileName.getBytes(), "ISO8859-1") + ".xls";
