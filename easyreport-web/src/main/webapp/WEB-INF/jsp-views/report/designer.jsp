@@ -125,6 +125,7 @@
 									<option value="selectMul">下拉多选</option>
 									<option value="checkbox">复选框</option>
 									<option value="text">文本框</option>
+								    <option value="date">日期</option>
 							</select></td>
 							<td class="text_r blueside">内容来源类型</td>
 							<td colspan="5"><select id="queryParamDataSource" name="dataSource">

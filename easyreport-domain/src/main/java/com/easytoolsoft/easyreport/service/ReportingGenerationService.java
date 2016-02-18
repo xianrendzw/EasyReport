@@ -328,6 +328,8 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			} else if (formElement.equals("text")) {
 				htmlFormElement = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
+			} else if (formElement.equals("date")) {
+				htmlFormElement =new HtmlDateBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			}
 			if (htmlFormElement != null) {
 				this.setElementCommonProperities(queryParam, htmlFormElement);
