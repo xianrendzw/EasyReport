@@ -32,7 +32,7 @@ public class TableRemarkUtils {
     }
 
     public static String parseSelectTableName(String sql) {
-        sql = sql.replaceAll("\n", "");
+        sql = sql.replaceAll("\n", " ");
         Pattern p = Pattern.compile(
                 "(?i)(?<=(?:from)\\s{1,1000})(\\w+)"
         );
@@ -70,7 +70,7 @@ public class TableRemarkUtils {
             return "";
         }
         tableName = TMP_TABLE_PREFIX + tableName+System.currentTimeMillis();
-        String sql = "CREATE TABLE " + tableName + " AS SELECT * FROM (" + sqlText + ") t LIMIT 1";
+        String sql = "CREATE TABLE " + tableName + " AS SELECT * FROM (" + sqlText + ") t LIMIT 0";
         String dropSql = "DROP TABLE IF EXISTS " + tableName;
         Statement stmt = null;
         try {

@@ -9,4 +9,7 @@
 <script src="<%=request.getContextPath()%>/assets/js/plugins/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/plugins/jquery.fileDownload.js"></script>
 <script src="<%=request.getContextPath()%>/assets/js/plugins/jquery.fixtableheader.js"></script>
+<script src="<%=request.getContextPath()%>/assets/modules/report/js/template.js"></script>
+<%--
 <script src="<%=request.getContextPath()%>/assets/modules/report/js/template.js?v=<%=Math.random()%>"></script>
+--%>

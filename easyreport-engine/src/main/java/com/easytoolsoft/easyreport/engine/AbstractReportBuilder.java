@@ -30,7 +30,7 @@ public abstract class AbstractReportBuilder {
 		table.append("</table>");
 		return new ReportTable(table.toString(),
 				this.reportParameter.getSqlText(),
-				reportDataSet.getMetaData().getRows().size());
+				reportDataSet.getMetaData().getRows().size(),reportDataSet.getMetaData().getColumns().size());
 	}
 
 	public void drawTableHeaderRows() {

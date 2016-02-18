@@ -94,6 +94,7 @@ public class ReportingUtils {
 		ReportTable reportTable = generate(uid, attachParams, parameters);
 		jsonObject.put("htmlTable", reportTable.getHtmlText());
 		jsonObject.put("metaDataRowCount", reportTable.getMetaDataRowCount());
+		jsonObject.put("metaDataColumnCount",reportTable.getMetaDataColumnCount());
 	}
 
 	public static void generate(Queryer queryer, ReportParameter reportParameter, JSONObject jsonObject) {

@@ -38,7 +38,7 @@ ReportTemplate.generate = function(mode, callback) {
 		success : function(result) {
 			$('#reportDiv').html(result.htmlTable);
 			ReportTemplate.initTable(mode || ReportTemplate.Mode.classic);
-			ReportTemplate.filterTable = ReportTemplate.renderFilterTable();
+			ReportTemplate.filterTable = ReportTemplate.renderFilterTable(result);
 			if (callback instanceof Function) {
 				callback();
 			}
@@ -144,16 +144,17 @@ ReportTemplate.renderDatatablesReport = function(table) {
 };
 
 // 将报表上面的过滤信息拼成table，用于写入excel中
-ReportTemplate.renderFilterTable = function() {
+ReportTemplate.renderFilterTable = function(result) {
 	var html = '<table>';
-	html += '<tr><td><h3>表报名称</h3></td><td><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
+	html += '<tr><td align="center" colspan="'+result.metaDataColumnCount+'"><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
+	html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><h3>导出时间:' + currentTime()+ '</h3></td></tr>';
 	$('#templateFrom .j-item').each(function() {
 		var type = $(this).attr('data-type');
 		if (type === 'date-range') {
 			var input = $(this).find('.combo-text');
-			html += '<tr><td><strong>时间范围</strong></td><td>' + input.eq(0).val() + '~' + input.eq(1).val() + '</td></tr>';
+			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>时间范围:</strong>' + input.eq(0).val() + '~' + input.eq(1).val() + '</td></tr>';
 		} else if (type === 'checkbox') {
-			html += '<tr><td><strong>筛选统计列</strong></td><td>';
+			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>筛选统计列:</strong>';
 			var rowChoose = [];
 			$(this).find('input[type="checkbox"]:checked').each(function() {
 				rowChoose.push($(this).attr('data-name'));
@@ -260,4 +261,15 @@ ReportTemplate.getBytes = function(str) {
 		}
 	}
 	return totalLength;
+};
+
+function currentTime(){
+	var d = new Date(),str = '';
+	str += d.getFullYear()+'-';
+	str  += d.getMonth() + 1+'-';
+	str  += d.getDate()+' ';
+	str += d.getHours()+':';
+	str  += d.getMinutes()+':';
+	str+= d.getSeconds()+'';
+	return str;
 };
