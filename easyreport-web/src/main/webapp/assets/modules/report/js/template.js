@@ -161,9 +161,21 @@ ReportTemplate.renderFilterTable = function(result) {
 			})
 			html += rowChoose.join('、');
 			html += '</td></tr>';
-		} else {
+		}
+		else if (new RegExp('datebox').test($(this).find("input").attr("class"))) {
+			var label = $(this).find('label').text().replace(':', '');
+			var val = $(this).find("input").attr("value");
+			if(!val){
+				val = $(this).find('.combo-text').val();
+			}
+			html += '<tr><td><strong>' + label + '</strong></td><td>' + val + '</td></tr>';
+		}
+		else {
 			var label = $(this).find('label').text().replace(':', '');
 			var val = $(this).find('.combo-text').val();
+			if(!val){
+				val = $(this).find("input").attr("value");
+			}
 			html += '<tr><td><strong>' + label + '</strong></td><td>' + val + '</td></tr>';
 		}
 	})
