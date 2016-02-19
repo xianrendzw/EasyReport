@@ -20,8 +20,8 @@ public class VelocityUtils {
 	 * @param parameters
 	 * @return 替换后的文本
 	 */
-	public static String prase(String template, Map<String, Object> parameters) {
-		return prase(template, parameters, "report");
+	public static String parse(String template, Map<String, Object> parameters) {
+		return parse(template, parameters, "report");
 	}
 
 	/**
@@ -30,8 +30,8 @@ public class VelocityUtils {
 	 * @param template
 	 * @return 替换后的文本
 	 */
-	public static String prase(String template) {
-		return prase(template, "report");
+	public static String parse(String template) {
+		return parse(template, "report");
 	}
 
 	/**
@@ -41,8 +41,8 @@ public class VelocityUtils {
 	 * @param logTag
 	 * @return 替换后的文本
 	 */
-	public static String prase(String template, String logTag) {
-		return prase(template, new HashMap<String, Object>(0), logTag);
+	public static String parse(String template, String logTag) {
+		return parse(template, new HashMap<String, Object>(0), logTag);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class VelocityUtils {
 	 * @param logTag
 	 * @return 替换后的文本
 	 */
-	public static String prase(String template, Map<String, Object> parameters, String logTag) {
+	public static String parse(String template, Map<String, Object> parameters, String logTag) {
 		try (StringWriter writer = new StringWriter()) {
 			Velocity.init();
 			VelocityContext context = new VelocityContext();

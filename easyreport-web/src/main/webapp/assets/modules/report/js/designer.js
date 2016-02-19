@@ -547,6 +547,8 @@ $(function() {
 		title : "报表属性",
 		closed : true,
 		modal : true,
+		top:150,
+		left:150,
 		width : window.screen.width - 300,
 		height : window.screen.height - 300,
 		buttons : [ {
@@ -561,6 +563,8 @@ $(function() {
 	$('#setTreeNodeDlg').dialog({
 		closed : true,
 		modal : true,
+		top:(screen.height-500)/2,
+		left:(screen.width-360)/2,
 		width : 500,
 		height : 360,
 		buttons : [ {
@@ -575,11 +579,14 @@ $(function() {
 			handler : ReportDesigner.saveTreeNode
 		} ]
 	});
+	//$("#setTreeNodeDlg").panel("move",{top:$(document).scrollTop() + ($(window).height()-250) * 0.5});
 
 	$('#viewSqlTextDlg').dialog({
 		closed : true,
 		modal : true,
 		maximizable : true,
+		top:150,
+		left:150,
 		width : window.screen.width - 500,
 		height : window.screen.height - 300,
 		buttons : [ {
@@ -595,6 +602,8 @@ $(function() {
 		closed : true,
 		modal : true,
 		maximizable : true,
+		top:200/2,
+		left:300/2,
 		width : window.screen.width - 200,
 		height : window.screen.height - 300,
 		buttons : [ {
@@ -609,6 +618,8 @@ $(function() {
 	$('#searchReportDlg').dialog({
 		closed : true,
 		modal : true,
+		top:(screen.height-600)/2,
+		left:(screen.width-400)/2,
 		width : 600,
 		height : 400,
 		buttons : [ {
@@ -623,6 +634,8 @@ $(function() {
 	$('#columnExpressionDlg').dialog({
 		closed : true,
 		modal : true,
+		top:(screen.height-500)/2,
+		left:(screen.width-300)/2,
 		width : 500,
 		height : 300,
 		buttons : [ {
@@ -641,6 +654,8 @@ $(function() {
 	$('#columnCommentDlg').dialog({
 		closed : true,
 		modal : true,
+		top:(screen.height-600)/2,
+		left:(screen.width-400)/2,
 		width : 600,
 		height : 400,
 		buttons : [ {
@@ -659,6 +674,8 @@ $(function() {
 	$('#columnFormatDlg').dialog({
 		closed : true,
 		modal : true,
+		top:(screen.height-600)/2,
+		left:(screen.width-400)/2,
 		width : 600,
 		height : 400,
 		buttons : [ {

@@ -318,9 +318,9 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 
 		for (QueryParameterPo queryParam : queryParams) {
 			HtmlFormElement htmlFormElement = null;
-			queryParam.setDefaultText(VelocityUtils.prase(queryParam.getDefaultText(), buildinParams));
-			queryParam.setDefaultValue(VelocityUtils.prase(queryParam.getDefaultValue(), buildinParams));
-			queryParam.setContent(VelocityUtils.prase(queryParam.getContent(), buildinParams));
+			queryParam.setDefaultText(VelocityUtils.parse(queryParam.getDefaultText(), buildinParams));
+			queryParam.setDefaultValue(VelocityUtils.parse(queryParam.getDefaultValue(), buildinParams));
+			queryParam.setContent(VelocityUtils.parse(queryParam.getContent(), buildinParams));
 			String formElement = queryParam.getFormElement().toLowerCase();
 			if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
 				htmlFormElement = this.getComboBoxFormElements(queryParam, ds, buildinParams);
@@ -328,6 +328,8 @@ public class ReportingGenerationService extends BaseService<ReportingDao, Report
 				htmlFormElement = new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			} else if (formElement.equals("text")) {
 				htmlFormElement = new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
+			} else if (formElement.equals("date")) {
+				htmlFormElement =new HtmlDateBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
 			}
 			if (htmlFormElement != null) {
 				this.setElementCommonProperities(queryParam, htmlFormElement);

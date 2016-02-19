@@ -45,7 +45,7 @@ public class MySqlQueryer extends AbstractQueryer implements Queryer {
         try {
             IRemarks remarks = new MysqlRemarks();
             Map<String, String> columnRemarks = remarks.getColumnRemarksBySql(conn, sqlText);
-            for (int i = 1; i <= columns.size(); i++) {
+            for (int i = 0; i < columns.size(); i++) {
                 ReportMetaDataColumn column = columns.get(i);
                 column.setText(columnRemarks.get(column.getName()));
                 //设置默认字段类型，减少配置工作
