@@ -30,3 +30,5 @@ nb-configuration.xml
 .classpath
 .settings
 */logs/
+.idea
+*.iml

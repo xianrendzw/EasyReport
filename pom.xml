@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.easytoolsoft</groupId>
 	<artifactId>easyreport</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>easyreport-common</module>
@@ -13,24 +13,30 @@
 		<module>easyreport-engine</module>
 		<module>easyreport-scheduler</module>
 	</modules>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<configLocation>config/sun_checks.xml</configLocation>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<java.encoding>UTF-8</java.encoding>
+		<spring-version>4.1.7.RELEASE</spring-version>
+		<project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<!-- log -->
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.13</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.logback-extensions</groupId>
+				<artifactId>logback-ext-spring</artifactId>
+				<version>0.1.2</version>
+			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -53,19 +59,29 @@
 				<version>1.7.0</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>3.2</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.3.2</version>
+				<version>3.4</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.16.4</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>18.0</version>
 			</dependency>
 			<!-- db -->
 			<dependency>
@@ -76,53 +92,63 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>5.1.21</version>
+				<version>5.1.31</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>3.3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>1.2.3</version>
 			</dependency>
 			<!-- Spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-aop</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
-				<version>4.0.6.RELEASE</version>
+				<version>${spring-version}</version>
 			</dependency>
 			<!-- Text -->
 			<dependency>
@@ -143,8 +169,8 @@
 			<!-- web container -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>2.5</version>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -161,7 +187,7 @@
 			<dependency>
 				<groupId>org.apache.velocity</groupId>
 				<artifactId>velocity</artifactId>
-				<version>1.6.4</version>
+				<version>1.7</version>
 			</dependency>
 			<!-- Test -->
 			<dependency>
@@ -211,4 +237,50 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.3</version>
+					<configuration>
+						<charset>UTF16</charset>
+						<aggregate>true</aggregate>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>utf8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
