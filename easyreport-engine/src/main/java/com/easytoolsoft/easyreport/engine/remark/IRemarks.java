@@ -22,7 +22,7 @@ public interface IRemarks {
 
     /**
      * 获取sql 查询语句 获取所有列的注释
-     * <p>
+     * <p/>
      * sql 支持join连接
      */
     Map<String, String> getColumnRemarksBySql(Connection conn, String sqlText);

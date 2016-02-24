@@ -22,24 +22,24 @@ public class PostgresRemarks implements IRemarks {
         String result = "";
         try {
             st = conn.createStatement();
-            rs =st.executeQuery(getRemarkSql(tableName));
+            rs = st.executeQuery(getRemarkSql(tableName));
             if (rs.next()) {
                 return rs.getString(1);
             }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         } finally {
-            close( st, rs);
+            close(st, rs);
         }
         return result;
     }
 
     private String getRemarkSql(String tableName) {
         return "SELECT description FROM pg_description d INNER JOIN pg_class C ON C .oid = d.objoid WHERE relname='"
-        + tableName + "'";
+                + tableName + "'";
     }
 
-    private void close( Statement st, ResultSet rs) {
+    private void close(Statement st, ResultSet rs) {
         try {
             if (rs != null) {
                 rs.close();
@@ -53,13 +53,13 @@ public class PostgresRemarks implements IRemarks {
     }
 
     @Override
-    public String getColumnRemark(Connection conn,String tableSchema, String tableName, String columnName) {
+    public String getColumnRemark(Connection conn, String tableSchema, String tableName, String columnName) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Map<String, String> getColumnRemarks(Connection conn,String tableSchema, String tableName) {
+    public Map<String, String> getColumnRemarks(Connection conn, String tableSchema, String tableName) {
         // TODO Auto-generated method stub
         return null;
     }

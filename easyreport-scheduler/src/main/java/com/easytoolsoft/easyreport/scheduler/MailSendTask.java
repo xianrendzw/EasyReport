@@ -1,16 +1,15 @@
 package com.easytoolsoft.easyreport.scheduler;
 
+import com.easytoolsoft.easyreport.po.ReportingTaskPo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.easytoolsoft.easyreport.po.ReportingTaskPo;
 
 public class MailSendTask extends TimerTask {
     private final static Logger logger = LoggerFactory.getLogger(MailSendTask.class);
@@ -65,16 +64,16 @@ public class MailSendTask extends TimerTask {
         if (rt.getPeroid().equals("w")) {
             int curweek = c.get(Calendar.DAY_OF_WEEK);
             return curweek - 1 == interval && c.get(Calendar.HOUR_OF_DAY) == hour && c.get(Calendar.MINUTE) == minutes
-                    && c.get(Calendar.SECOND) == seconds ;
+                    && c.get(Calendar.SECOND) == seconds;
         }
 
         if (rt.getPeroid().equals("d")) {
-            return c.get(Calendar.DATE) % interval == 0 && timeStr.equals(curtime) ;
+            return c.get(Calendar.DATE) % interval == 0 && timeStr.equals(curtime);
         }
 
         if (rt.getPeroid().equals("h")) {
             return c.get(Calendar.HOUR) % interval == 0 && c.get(Calendar.MINUTE) == minutes
-                    && c.get(Calendar.SECOND) == seconds ;
+                    && c.get(Calendar.SECOND) == seconds;
         }
 
         if (rt.getPeroid().equals("m")) {
@@ -82,7 +81,7 @@ public class MailSendTask extends TimerTask {
         }
 
         if (rt.getPeroid().equals("s")) {
-            return c.get(Calendar.SECOND) % interval == 0 ;
+            return c.get(Calendar.SECOND) % interval == 0;
         }
         return false;
 

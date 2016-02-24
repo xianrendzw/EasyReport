@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
 		http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<context:property-placeholder location="classpath:resource.properties"/>
+    <context:property-placeholder location="classpath:resource.properties"/>
 
-	<!-- Scans the classpath of this application for @Components to deploy as beans -->
-	<context:component-scan base-package="com.easytoolsoft" />
-	<context:annotation-config />
-	<!-- Configures Spring MVC -->
-	<import resource="mvc-config.xml" />
+    <!-- Scans the classpath of this application for @Components to deploy as beans -->
+    <context:component-scan base-package="com.easytoolsoft"/>
+    <context:annotation-config/>
+    <!-- Configures Spring MVC -->
+    <import resource="mvc-config.xml"/>
 
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="${db.url}" />
-		<property name="user" value="${db.user}" />
-		<property name="password" value="${db.password}" />  
-		<property name="minPoolSize" value="1" />
-		<property name="maxPoolSize" value="300" />
-		<property name="maxIdleTime" value="1800" />
-		<property name="acquireIncrement" value="2" />
-		<property name="maxStatements" value="0" />
-		<property name="initialPoolSize" value="2" />
-		<property name="idleConnectionTestPeriod" value="1800" />
-		<property name="acquireRetryAttempts" value="30" />
-		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="testConnectionOnCheckout" value="false" />
-	</bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="${db.url}"/>
+        <property name="user" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="minPoolSize" value="1"/>
+        <property name="maxPoolSize" value="300"/>
+        <property name="maxIdleTime" value="1800"/>
+        <property name="acquireIncrement" value="2"/>
+        <property name="maxStatements" value="0"/>
+        <property name="initialPoolSize" value="2"/>
+        <property name="idleConnectionTestPeriod" value="1800"/>
+        <property name="acquireRetryAttempts" value="30"/>
+        <property name="breakAfterAcquireFailure" value="true"/>
+        <property name="testConnectionOnCheckout" value="false"/>
+    </bean>
 
-	<!-- Start of  jdbcTemplate Setting -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-	</bean>
+    <!-- Start of  jdbcTemplate Setting -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-	</bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
 </beans>

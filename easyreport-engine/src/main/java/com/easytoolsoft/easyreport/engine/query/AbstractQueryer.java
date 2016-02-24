@@ -1,26 +1,15 @@
 package com.easytoolsoft.easyreport.engine.query;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.easytoolsoft.easyreport.engine.data.*;
+import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.easytoolsoft.easyreport.engine.data.ColumnType;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
-import com.easytoolsoft.easyreport.engine.data.ReportMetaDataCell;
-import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
-import com.easytoolsoft.easyreport.engine.data.ReportMetaDataRow;
-import com.easytoolsoft.easyreport.engine.data.ReportParameter;
-import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
-import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 
 public abstract class AbstractQueryer {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -175,6 +164,7 @@ public abstract class AbstractQueryer {
      * @return Connection
      */
     protected abstract Connection getJdbcConnection();
+
     //hongliangpan add
     protected void buildRemark(Connection conn, List<ReportMetaDataColumn> columns, String sqlText) {
 

@@ -1,19 +1,19 @@
 package com.easytoolsoft.easyreport.engine.query;
 
-import java.sql.*;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
+import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
+import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.remark.IRemarks;
 import com.easytoolsoft.easyreport.engine.remark.MysqlRemarks;
 import org.apache.commons.lang3.StringUtils;
 
-import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
-import com.easytoolsoft.easyreport.engine.data.ReportParameter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MySqlQueryer extends AbstractQueryer implements Queryer {
 

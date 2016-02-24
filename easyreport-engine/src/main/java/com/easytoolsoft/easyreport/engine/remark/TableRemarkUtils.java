@@ -69,7 +69,7 @@ public class TableRemarkUtils {
         if (tableName.length() == 0) {
             return "";
         }
-        tableName = TMP_TABLE_PREFIX + tableName+System.currentTimeMillis();
+        tableName = TMP_TABLE_PREFIX + tableName + System.currentTimeMillis();
         String sql = "CREATE TABLE " + tableName + " AS SELECT * FROM (" + sqlText + ") t LIMIT 0";
         String dropSql = "DROP TABLE IF EXISTS " + tableName;
         Statement stmt = null;
