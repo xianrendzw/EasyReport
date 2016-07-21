@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.engine.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -9,7 +10,7 @@ import java.text.ParseException;
 import java.util.regex.Pattern;
 
 public class NumberFormatUtils {
-    private static final Logger logger = Logger.getLogger(NumberFormatUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(NumberFormatUtils.class);
 
     public static String format(Object value) {
         return (value == null) ? "" : format(value.toString());
@@ -24,8 +25,8 @@ public class NumberFormatUtils {
             return nf.format(nf.parse(value));
         } catch (ParseException e) {
             logger.error(e.getMessage(), e);
-            return value;
         }
+        return value;
     }
 
     public static String percentFormat(Object value) {
@@ -44,8 +45,8 @@ public class NumberFormatUtils {
             return nf.format(Double.valueOf(bd.toPlainString()));
         } catch (NumberFormatException e) {
             logger.error(e.getMessage(), e);
-            return value;
         }
+        return value;
     }
 
     public static String decimalFormat(Object value) {
@@ -65,7 +66,6 @@ public class NumberFormatUtils {
         } catch (NumberFormatException e) {
             logger.error(e.getMessage(), e);
         }
-
         return formattedValue;
     }
 

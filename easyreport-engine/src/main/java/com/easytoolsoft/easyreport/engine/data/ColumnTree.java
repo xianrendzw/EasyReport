@@ -37,10 +37,8 @@ public class ColumnTree {
 
     public Map<Integer, List<ColumnTreeNode>> getLevelNodesMap() {
         if (this.levelNodesMap == null) {
-            this.levelNodesMap = new HashMap<Integer, List<ColumnTreeNode>>();
-            for (ColumnTreeNode root : this.roots) {
-                this.buildLevelNodesMapByRecrusion(root);
-            }
+            this.levelNodesMap = new HashMap<>();
+            this.roots.forEach(this::buildLevelNodesMapByRecursion);
         }
         return this.levelNodesMap;
     }
@@ -55,10 +53,10 @@ public class ColumnTree {
         if (this.levelNodesMap.containsKey(level)) {
             return this.levelNodesMap.get(level);
         }
-        return new ArrayList<ColumnTreeNode>(0);
+        return new ArrayList<>(0);
     }
 
-    private void buildLevelNodesMapByRecrusion(ColumnTreeNode parentNode) {
+    private void buildLevelNodesMapByRecursion(ColumnTreeNode parentNode) {
         int level = parentNode.getDepth();
         if (!this.levelNodesMap.containsKey(level)) {
             List<ColumnTreeNode> treeNodes = new ArrayList<ColumnTreeNode>();
@@ -68,8 +66,6 @@ public class ColumnTree {
             this.levelNodesMap.get(level).add(parentNode);
         }
 
-        for (ColumnTreeNode treeNode : parentNode.getChildren()) {
-            this.buildLevelNodesMapByRecrusion(treeNode);
-        }
+        parentNode.getChildren().forEach(this::buildLevelNodesMapByRecursion);
     }
 }

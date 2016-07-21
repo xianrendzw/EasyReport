@@ -8,7 +8,7 @@ public abstract class AbstractOperand {
 
 	public AbstractOperand append(AbstractOperand operand) {
 		if (this.operands == null) {
-			this.operands = new ArrayList<AbstractOperand>(5);
+			this.operands = new ArrayList<>(5);
 		}
 
 		this.operands.add(operand);

@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.scheduler;
 
-import com.easytoolsoft.easyreport.po.ReportingTaskPo;
+import com.easytoolsoft.easyreport.schedule.po.ReportingTaskPo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

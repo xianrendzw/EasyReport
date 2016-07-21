@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.common.util;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesUtils {
@@ -13,8 +14,8 @@ public class PropertiesUtils {
         try {
             FileInputStream fs = new FileInputStream(configFilename);
             props.load(fs);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Property file load error.", e);
         }
     }
 
@@ -22,7 +23,7 @@ public class PropertiesUtils {
         return props.getProperty(key);
     }
 
-    public static void updateProperties(String key, String value) {
+    public static void setValue(String key, String value) {
         props.setProperty(key, value);
     }
 }

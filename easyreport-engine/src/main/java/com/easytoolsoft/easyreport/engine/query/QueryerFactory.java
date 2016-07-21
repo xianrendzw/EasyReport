@@ -5,8 +5,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import org.apache.commons.lang3.StringUtils;
 
 public class QueryerFactory {
-    public static Queryer create(String jdbcUrl, String user, String password) {
-        ReportDataSource dataSource = new ReportDataSource(jdbcUrl, user, password);
+    public static Queryer create(ReportDataSource dataSource) {
         return create(dataSource, null);
     }
 

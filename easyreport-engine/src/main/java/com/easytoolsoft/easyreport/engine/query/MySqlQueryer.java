@@ -6,10 +6,10 @@ import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.remark.IRemarks;
 import com.easytoolsoft.easyreport.engine.remark.MysqlRemarks;
+import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -24,7 +24,7 @@ public class MySqlQueryer extends AbstractQueryer implements Queryer {
     @Override
     protected Connection getJdbcConnection() {
         try {
-            return DriverManager.getConnection(this.dataSource.getJdbcUrl(), this.dataSource.getUser(), this.dataSource.getPassword());
+            return JdbcUtils.getDataSource(this.dataSource).getConnection();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

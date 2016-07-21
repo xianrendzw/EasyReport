@@ -178,7 +178,7 @@ public abstract class ReportDataSet {
                 throw new NotFoundLayoutColumnException();
             }
 
-            this.layoutColumns = new ArrayList<ReportDataColumn>();
+            this.layoutColumns = new ArrayList<>();
             for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
                 this.layoutColumns.add(new ReportDataColumn(metaDataColumn));
             }
@@ -196,7 +196,7 @@ public abstract class ReportDataSet {
             return this.dimColumns;
         }
 
-        this.dimColumns = new ArrayList<ReportDataColumn>();
+        this.dimColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
         for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
             this.dimColumns.add(new ReportDataColumn(metaDataColumn));
@@ -214,7 +214,7 @@ public abstract class ReportDataSet {
             return this.enabledStatColumns;
         }
 
-        this.enabledStatColumns = new ArrayList<ReportDataColumn>();
+        this.enabledStatColumns = new ArrayList<>();
         for (ReportDataColumn statColumn : this.getStatColumns()) {
             if (!statColumn.getMetaData().isHidden()) {
                 this.enabledStatColumns.add(statColumn);
@@ -233,7 +233,7 @@ public abstract class ReportDataSet {
             return this.computedColumns;
         }
 
-        this.computedColumns = new ArrayList<ReportDataColumn>();
+        this.computedColumns = new ArrayList<>();
         for (ReportDataColumn statColumn : this.getStatColumns()) {
             if (statColumn.getMetaData().getType() == ColumnType.COMPUTED) {
                 this.computedColumns.add(statColumn);
@@ -252,7 +252,7 @@ public abstract class ReportDataSet {
             return this.statColumns;
         }
 
-        this.statColumns = new ArrayList<ReportDataColumn>();
+        this.statColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getStatColumns();
         for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
             this.statColumns.add(new ReportDataColumn(metaDataColumn));
@@ -270,7 +270,7 @@ public abstract class ReportDataSet {
             return this.nonStatColumns;
         }
 
-        this.nonStatColumns = new ArrayList<ReportDataColumn>();
+        this.nonStatColumns = new ArrayList<>();
         nonStatColumns.addAll(this.getLayoutColumns());
         nonStatColumns.addAll(this.getDimColumns());
         return nonStatColumns;
@@ -357,7 +357,8 @@ public abstract class ReportDataSet {
     }
 
     /**
-     * 按列的先后顺序做为树的层次，构建出一棵层次树，其中层次数为key(根层次为0),当前层次列的值(即对应的行列Cell中的值)为树节点集合
+     * 按列的先后顺序做为树的层次，构建出一棵层次树，
+     * 其中层次数为key(根层次为0),当前层次列的值(即对应的行列Cell中的值)为树节点集合
      *
      * @param columns             列集合
      * @param isInitSpansAndDepth 是否初始树的spans与深度属性
@@ -389,7 +390,7 @@ public abstract class ReportDataSet {
      * @return {@link List<ColumnTreeNode>}
      */
     protected List<ColumnTreeNode> getAllLeafNodes(Map<Integer, List<ColumnTreeNode>> levelNodeMap, int depth) {
-        List<ColumnTreeNode> leafNodes = (depth > 1) ? new ArrayList<ColumnTreeNode>() : levelNodeMap.get(0);
+        List<ColumnTreeNode> leafNodes = (depth > 1) ? new ArrayList<>() : levelNodeMap.get(0);
         for (int level = 0; level < depth - 1; level++) {
             List<ColumnTreeNode> parentNodes = levelNodeMap.get(level);
             for (ColumnTreeNode parentNode : parentNodes) {

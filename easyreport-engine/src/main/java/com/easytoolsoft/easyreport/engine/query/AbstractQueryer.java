@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.query;
 
 import com.easytoolsoft.easyreport.engine.data.*;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
+import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +22,8 @@ public abstract class AbstractQueryer {
         this.dataSource = dataSource;
         this.parameter = parameter;
         this.metaDataColumns = this.parameter == null ?
-                new ArrayList<ReportMetaDataColumn>(0) :
-                new ArrayList<ReportMetaDataColumn>(this.parameter.getMetaColumns());
+                new ArrayList<>(0) :
+                new ArrayList<>(this.parameter.getMetaColumns());
     }
 
     public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {
@@ -38,7 +39,7 @@ public abstract class AbstractQueryer {
             rs = stmt.executeQuery(this.preprocessSqlText(sqlText));
             ResultSetMetaData rsMataData = rs.getMetaData();
             int count = rsMataData.getColumnCount();
-            columns = new ArrayList<ReportMetaDataColumn>(count);
+            columns = new ArrayList<>(count);
             for (int i = 1; i <= count; i++) {
                 ReportMetaDataColumn column = new ReportMetaDataColumn();
                 column.setName(rsMataData.getColumnLabel(i));
@@ -50,10 +51,10 @@ public abstract class AbstractQueryer {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
-            this.releaseJdbcResource(conn, stmt, rs);
+            JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
 
-        return columns == null ? new ArrayList<ReportMetaDataColumn>(0) : columns;
+        return columns == null ? new ArrayList<>(0) : columns;
     }
 
 
@@ -61,8 +62,8 @@ public abstract class AbstractQueryer {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        HashSet<String> set = new HashSet<String>();
-        List<ReportQueryParamItem> rows = new ArrayList<ReportQueryParamItem>();
+        HashSet<String> set = new HashSet<>();
+        List<ReportQueryParamItem> rows = new ArrayList<>();
 
         try {
             logger.debug(sqlText);
@@ -82,7 +83,7 @@ public abstract class AbstractQueryer {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
-            this.releaseJdbcResource(conn, stmt, rs);
+            JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
         set.clear();
         return rows;
@@ -103,7 +104,7 @@ public abstract class AbstractQueryer {
             logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
             throw new SQLQueryException(ex);
         } finally {
-            this.releaseJdbcResource(conn, stmt, rs);
+            JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
     }
 
@@ -126,19 +127,6 @@ public abstract class AbstractQueryer {
             rows.add(row);
         }
         return rows;
-    }
-
-    protected void releaseJdbcResource(Connection conn, Statement stmt, ResultSet rs) {
-        try {
-            if (rs != null)
-                rs.close();
-            if (stmt != null)
-                stmt.close();
-            if (conn != null)
-                conn.close();
-        } catch (SQLException ex) {
-            throw new RuntimeException("数据库资源释放异常", ex);
-        }
     }
 
     protected List<ReportMetaDataColumn> getSqlColumns(List<ReportMetaDataColumn> metaDataColumns) {
@@ -165,9 +153,6 @@ public abstract class AbstractQueryer {
      */
     protected abstract Connection getJdbcConnection();
 
-    //hongliangpan add
     protected void buildRemark(Connection conn, List<ReportMetaDataColumn> columns, String sqlText) {
-
     }
-
 }

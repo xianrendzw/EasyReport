@@ -1,21 +1,51 @@
 package com.easytoolsoft.easyreport.engine.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 报表数据源类
  */
 public class ReportDataSource {
-    private String jdbcUrl;
-    private String user;
-    private String password;
+    private final String uid;
+    private final String driverClass;
+    private final String jdbcUrl;
+    private final String user;
+    private final String password;
+    private final Map<String, Object> options;
 
-    public ReportDataSource() {
+    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password) {
+        this(uid, driverClass, jdbcUrl, user, password, new HashMap<>(3));
     }
 
-    public ReportDataSource(String url, String user, String password) {
-        this.jdbcUrl = url;
+    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password,
+                            Map<String, Object> options) {
+        this.uid = uid;
+        this.driverClass = driverClass;
+        this.jdbcUrl = jdbcUrl;
         this.user = user;
         this.password = password;
+        this.options = options;
     }
+
+    /**
+     * 获取数据源唯一标识
+     *
+     * @return 数据源唯一标识
+     */
+    public String getUid() {
+        return uid;
+    }
+
+    /**
+     * 获取数据源驱动类
+     *
+     * @return 数据源驱动类
+     */
+    public String getDriverClass() {
+        return this.driverClass;
+    }
+
 
     /**
      * 获取数据源连接字符串(JDBC)
@@ -24,15 +54,6 @@ public class ReportDataSource {
      */
     public String getJdbcUrl() {
         return this.jdbcUrl;
-    }
-
-    /**
-     * 设置数据源连接字符串(JDBC)
-     *
-     * @param jdbcUrl
-     */
-    public void setJdbcUrl(final String jdbcUrl) {
-        this.jdbcUrl = jdbcUrl;
     }
 
     /**
@@ -45,15 +66,6 @@ public class ReportDataSource {
     }
 
     /**
-     * 设置数据源登录用户名
-     *
-     * @param user
-     */
-    public void setUser(final String user) {
-        this.user = user;
-    }
-
-    /**
      * 获取数据源登录密码
      *
      * @return 数据源登录密码
@@ -63,11 +75,11 @@ public class ReportDataSource {
     }
 
     /**
-     * 设置数据源登录密码
+     * 获取数据源配置选项,如果没有配置选项则设置为默认选项
      *
-     * @param password
+     * @return 数据源配置选项
      */
-    public void setPassword(final String password) {
-        this.password = password;
+    public Map<String, Object> getOptions() {
+        return options;
     }
 }
