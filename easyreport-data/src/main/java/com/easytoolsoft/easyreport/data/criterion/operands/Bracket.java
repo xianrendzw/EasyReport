@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 public enum Bracket {
 	Left("("), Rgiht(")");
 
-	private Bracket(String abbreviation) {
+	Bracket(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
 
