@@ -228,6 +228,6 @@
         FROM ezrpt_meta_conf
         WHERE parent_id IN (SELECT id
         FROM ezrpt_meta_conf
-        WHERE `key` =  #{key})
+        WHERE `key` = #{key})
     </select>
 </mapper>

@@ -1,12 +1,22 @@
 package com.easytoolsoft.easyreport.engine.query;
 
-import com.easytoolsoft.easyreport.engine.data.*;
+import com.easytoolsoft.easyreport.engine.data.ColumnType;
+import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
+import com.easytoolsoft.easyreport.engine.data.ReportMetaDataCell;
+import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
+import com.easytoolsoft.easyreport.engine.data.ReportMetaDataRow;
+import com.easytoolsoft.easyreport.engine.data.ReportParameter;
+import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

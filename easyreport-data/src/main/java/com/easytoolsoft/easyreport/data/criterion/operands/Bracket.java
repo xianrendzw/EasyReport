@@ -1,15 +1,15 @@
 package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public enum Bracket {
-	Left("("), Rgiht(")");
+    Left("("), Rgiht(")");
 
-	Bracket(String abbreviation) {
-		this.abbreviation = abbreviation;
-	}
+    private String abbreviation;
 
-	public String getAbbreviation() {
-		return this.abbreviation;
-	}
+    Bracket(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
 
-	private String abbreviation;
+    public String getAbbreviation() {
+        return this.abbreviation;
+    }
 }

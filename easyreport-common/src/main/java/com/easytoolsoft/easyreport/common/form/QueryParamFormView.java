@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.common.form;
 
-import com.easytoolsoft.easyreport.common.pair.NameTextPair;
 import com.easytoolsoft.easyreport.common.form.control.HtmlFormElement;
+import com.easytoolsoft.easyreport.common.pair.NameTextPair;
 
 import java.util.List;
 import java.util.Map;

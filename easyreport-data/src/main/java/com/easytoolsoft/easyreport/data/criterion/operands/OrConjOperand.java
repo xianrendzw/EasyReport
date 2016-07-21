@@ -2,11 +2,11 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class OrConjOperand extends AbstractOperand {
 
-	public OrConjOperand() {
-	}
+    public OrConjOperand() {
+    }
 
-	@Override
-	protected String toExpression() {
-		return " OR ";
-	}
+    @Override
+    protected String toExpression() {
+        return " OR ";
+    }
 }

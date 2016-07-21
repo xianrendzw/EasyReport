@@ -21,7 +21,8 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id , uid , category_id , ds_id , name , sql_text , ﻿meta_columns , query_params , options , path , status , sequence ,
+        id , uid , category_id , ds_id , name , sql_text , ﻿meta_columns , query_params , options , path , status ,
+        sequence ,
         comment , create_user , gmt_created , gmt_modified
     </sql>
     <sql id="Insert_Columns">
@@ -261,7 +262,9 @@
         select count(*) as total from ezrpt_meta_report
         <where>
             <if test="where.categoryId != null">and category_id = #{where.categoryId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%') </if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
         </where>
     </select>
     <select id="selectByPager" resultMap="ReportMap" parameterType="java.util.Map">
@@ -270,7 +273,9 @@
         from ezrpt_meta_report
         <where>
             <if test="where.categoryId != null">and category_id = #{where.categoryId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%') </if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
         </where>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by ${pager.sortItem} ${pager.sortType}

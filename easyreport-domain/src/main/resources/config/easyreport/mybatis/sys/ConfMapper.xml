@@ -14,8 +14,8 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-  	  id ,parent_id ,name ,key ,value ,sequence ,comment ,gmt_created ,gmt_modified
-  	</sql>
+        id ,parent_id ,name ,key ,value ,sequence ,comment ,gmt_created ,gmt_modified
+    </sql>
     <sql id="Insert_Columns">
         <if test="parentId != null">parent_id,</if>
         <if test="name != null">name,</if>
@@ -197,7 +197,9 @@
         select count(*) as total from ezrpt_sys_conf
         <where>
             <if test="where.parentId != null">and parent_id = #{where.parentId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
         </where>
     </select>
     <select id="selectByPager" resultMap="ConfMap" parameterType="java.util.Map">
@@ -206,7 +208,9 @@
         from ezrpt_sys_conf
         <where>
             <if test="where.parentId != null">and parent_id = #{where.parentId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
         </where>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by ${pager.sortItem} ${pager.sortType}

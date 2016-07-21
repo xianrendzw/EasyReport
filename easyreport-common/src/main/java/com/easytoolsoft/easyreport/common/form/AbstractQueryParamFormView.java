@@ -1,12 +1,12 @@
 package com.easytoolsoft.easyreport.common.form;
 
-import com.easytoolsoft.easyreport.common.pair.NameTextPair;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBoxList;
 import com.easytoolsoft.easyreport.common.form.control.HtmlComboBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlDateBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlFormElement;
 import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
+import com.easytoolsoft.easyreport.common.pair.NameTextPair;
 
 import java.util.ArrayList;
 import java.util.HashMap;

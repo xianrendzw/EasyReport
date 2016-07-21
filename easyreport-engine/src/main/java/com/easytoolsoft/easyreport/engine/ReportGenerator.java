@@ -1,6 +1,11 @@
 package com.easytoolsoft.easyreport.engine;
 
-import com.easytoolsoft.easyreport.engine.data.*;
+import com.easytoolsoft.easyreport.engine.data.LayoutType;
+import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
+import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
+import com.easytoolsoft.easyreport.engine.data.ReportParameter;
+import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
 
 /**

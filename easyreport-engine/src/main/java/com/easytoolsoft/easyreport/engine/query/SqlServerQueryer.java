@@ -5,7 +5,6 @@ import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 public class SqlServerQueryer extends AbstractQueryer implements Queryer {
 

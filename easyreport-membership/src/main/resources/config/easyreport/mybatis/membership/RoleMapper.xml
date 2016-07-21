@@ -225,7 +225,9 @@
         select count(*) as total from ezrpt_member_role
         <where>
             <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
 
         </where>
     </select>
@@ -235,7 +237,9 @@
         from ezrpt_member_role
         <where>
             <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
         </where>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by ${pager.sortItem} ${pager.sortType}

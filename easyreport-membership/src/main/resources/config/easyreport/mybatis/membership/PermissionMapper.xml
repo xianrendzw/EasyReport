@@ -12,8 +12,9 @@
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <resultMap id="PermissionWithModulePathMap" type="com.easytoolsoft.easyreport.member.po.Permission" extends="PermissionMap">
-        <result column="path" property="path" jdbcType="VARCHAR" />
+    <resultMap id="PermissionWithModulePathMap" type="com.easytoolsoft.easyreport.member.po.Permission"
+               extends="PermissionMap">
+        <result column="path" property="path" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
         id , module_id , name , code , sequence , comment , gmt_created , gmt_modified
