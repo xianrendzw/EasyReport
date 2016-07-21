@@ -1,16 +1,15 @@
 package com.easytoolsoft.easyreport.scheduler;
 
-import com.easytoolsoft.easyreport.data.util.SpringContextUtils;
-import com.easytoolsoft.easyreport.schedule.po.ReportingTaskPo;
+import com.easytoolsoft.easyreport.schedule.po.Task;
 import com.easytoolsoft.easyreport.schedule.service.impl.TaskService;
 
 import java.util.List;
 
 public class TaskUtils {
-    private final static TaskService service = SpringContextUtils.getBean(TaskService.class);
-    private static List<ReportingTaskPo> tasks;
+    private final static TaskService service = new TaskService();
+    private static List<Task> tasks;
 
-    public static List<ReportingTaskPo> getTasks() {
+    public static List<Task> getTasks() {
         if (tasks == null) {
             tasks = service.getAll();
         }
@@ -23,6 +22,6 @@ public class TaskUtils {
         }
     }
 
-    public static void execute(ReportingTaskPo taskPo) {
+    public static void execute(Task task) {
     }
 }
