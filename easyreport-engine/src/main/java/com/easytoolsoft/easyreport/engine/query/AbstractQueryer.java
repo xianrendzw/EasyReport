@@ -57,13 +57,11 @@ public abstract class AbstractQueryer {
                 column.setWidth(rsMataData.getColumnDisplaySize(i));
                 columns.add(column);
             }
-            buildRemark(conn, columns, sqlText);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
-
         return columns == null ? new ArrayList<>(0) : columns;
     }
 
@@ -99,6 +97,10 @@ public abstract class AbstractQueryer {
         return rows;
     }
 
+    public List<ReportMetaDataColumn> getMetaDataColumns() {
+        return this.metaDataColumns;
+    }
+
     public List<ReportMetaDataRow> getMetaDataRows() {
         Connection conn = null;
         Statement stmt = null;
@@ -116,10 +118,6 @@ public abstract class AbstractQueryer {
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
-    }
-
-    public List<ReportMetaDataColumn> getMetaDataColumns() {
-        return this.metaDataColumns;
     }
 
     protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns)
@@ -161,8 +159,11 @@ public abstract class AbstractQueryer {
      *
      * @return Connection
      */
-    protected abstract Connection getJdbcConnection();
-
-    protected void buildRemark(Connection conn, List<ReportMetaDataColumn> columns, String sqlText) {
+    protected Connection getJdbcConnection() {
+        try {
+            return JdbcUtils.getDataSource(this.dataSource).getConnection();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

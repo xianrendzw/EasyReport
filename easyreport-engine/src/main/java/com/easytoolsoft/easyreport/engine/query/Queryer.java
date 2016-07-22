@@ -10,7 +10,6 @@ import java.util.List;
  * 报表查询器接口
  */
 public interface Queryer {
-
     /**
      * 从sql语句中解析出报表元数据列集合
      *
