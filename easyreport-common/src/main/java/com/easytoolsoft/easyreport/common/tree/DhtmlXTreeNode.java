@@ -16,10 +16,10 @@ public class DhtmlXTreeNode {
     private int child = 0;
     private int open;
     private int sequence = 10;
-    private List<DhtmlXTreeNode> item;
+    private final List<DhtmlXTreeNode> item;
 
     public DhtmlXTreeNode() {
-        this.item = new ArrayList<DhtmlXTreeNode>(10);
+        this.item = new ArrayList<>(10);
     }
 
     public String getId() {

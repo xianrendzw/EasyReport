@@ -7,14 +7,14 @@ import java.util.List;
  * jQueryEasyUI(http://www.jeasyui.com/)树节点视图数据模型类
  */
 public class EasyUITreeNode<T> {
-    private String id;
-    private String pid;
-    private String text;
-    private String state;
-    private String iconCls;
-    private boolean checked;
-    private T attributes;
-    private List<EasyUITreeNode<T>> children = new ArrayList<EasyUITreeNode<T>>();
+    private final String id;
+    private final String pid;
+    private final String text;
+    private final String state;
+    private final String iconCls;
+    private final boolean checked;
+    private final T attributes;
+    private final List<EasyUITreeNode<T>> children = new ArrayList<>();
 
     public EasyUITreeNode(String id, String pid, String text) {
         this(id, pid, text, "closed", "", false, null);
