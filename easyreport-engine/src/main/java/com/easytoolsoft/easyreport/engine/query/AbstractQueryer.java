@@ -62,7 +62,7 @@ public abstract class AbstractQueryer {
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
-        return columns == null ? new ArrayList<>(0) : columns;
+        return columns;
     }
 
 
@@ -122,7 +122,7 @@ public abstract class AbstractQueryer {
 
     protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns)
             throws SQLException {
-        List<ReportMetaDataRow> rows = new ArrayList<ReportMetaDataRow>();
+        List<ReportMetaDataRow> rows = new ArrayList<>();
         while (rs.next()) {
             ReportMetaDataRow row = new ReportMetaDataRow();
             for (ReportMetaDataColumn column : sqlColumns) {

@@ -2,9 +2,6 @@ package com.easytoolsoft.easyreport.engine.query;
 
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
-import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
-
-import java.sql.Connection;
 
 /**
  * SQLite3数据库查询器类。

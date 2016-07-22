@@ -41,7 +41,7 @@ public class VelocityUtils {
      * @return 替换后的文本
      */
     public static String parse(String template, String logTag) {
-        return parse(template, new HashMap<String, Object>(0), logTag);
+        return parse(template, new HashMap<>(0), logTag);
     }
 
     /**

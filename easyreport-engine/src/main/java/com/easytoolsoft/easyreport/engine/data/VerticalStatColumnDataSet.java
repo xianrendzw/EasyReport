@@ -18,7 +18,7 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 
     @Override
     public String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode) {
-        String rowNodePath = null;
+        String rowNodePath;
         if (this.isHideStatColumn()) {
             rowNodePath = rowNode.getPath();
         } else if (rowNode.getParent() == null) {
@@ -35,7 +35,7 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
         if (this.isHideStatColumn()) {
             return columns;
         }
-        List<ReportDataColumn> leftFixedColumns = new ArrayList<ReportDataColumn>(columns.size() + 1);
+        List<ReportDataColumn> leftFixedColumns = new ArrayList<>(columns.size() + 1);
         leftFixedColumns.addAll(columns);
         leftFixedColumns.add(new ReportDataColumn(new ReportMetaDataColumn("stat_column", "统计列", ColumnType.STATISTICAL)));
         return leftFixedColumns;
@@ -63,12 +63,10 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 
     @Override
     public boolean isHideStatColumn() {
-        if (this.getEnabledStatColumns().size() == 1) {
-            // 如果布局列纵向显示
-            // 或者布局列模向显示（即显示在表头右边)且有维度列（即表体左边)
-            return (this.layout == LayoutType.VERTICAL || this.getDimColumnCount() > 0);
-        }
-        return false;
+        // 如果布局列纵向显示
+        // 或者布局列模向显示（即显示在表头右边)且有维度列（即表体左边)
+        return this.getEnabledStatColumns().size() == 1 &&
+                (this.layout == LayoutType.VERTICAL || this.getDimColumnCount() > 0);
     }
 
     private ColumnTree getHorizontalLayoutLeftFixedColumnTree() {

@@ -53,12 +53,10 @@ public class HorizontalStatColumnDataSet extends ReportDataSet {
 
     @Override
     public boolean isHideStatColumn() {
-        if (this.getEnabledStatColumns().size() == 1) {
-            // 如果布局列横向显示
-            // 或者布局列纵向显示（即显示在表体左边)且表头有维度列
-            return (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0);
-        }
-        return false;
+        // 如果布局列横向显示
+        // 或者布局列纵向显示（即显示在表体左边)且表头有维度列
+        return this.getEnabledStatColumns().size() == 1 &&
+                (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0);
     }
 
     private ColumnTree getHorizontalLayoutHeaderColumnTree() {

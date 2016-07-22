@@ -8,7 +8,7 @@ import java.util.Map;
  * 报表数据行类
  */
 public class ReportDataRow {
-    private final Map<String, ReportDataCell> cells = new HashMap<String, ReportDataCell>();
+    private final Map<String, ReportDataCell> cells = new HashMap<>();
 
     public ReportDataRow() {
     }
@@ -19,9 +19,7 @@ public class ReportDataRow {
     }
 
     public ReportDataRow addAll(List<ReportDataCell> cells) {
-        for (ReportDataCell cell : cells) {
-            this.add(cell);
-        }
+        cells.forEach(this::add);
         return this;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 public class ColumnTreeNode {
     private final String name;
     private final String text;
-    private final List<ColumnTreeNode> children = new ArrayList<ColumnTreeNode>(0);
+    private final List<ColumnTreeNode> children = new ArrayList<>(0);
     private String value;
     private ColumnTreeNode parent;
     private int width = 100;

@@ -8,7 +8,7 @@ import java.util.Map;
  * 报表元数据行类
  */
 public class ReportMetaDataRow {
-    private final Map<String, ReportMetaDataCell> cells = new HashMap<String, ReportMetaDataCell>();
+    private final Map<String, ReportMetaDataCell> cells = new HashMap<>();
     private final StringBuilder rowKeyBuilder = new StringBuilder("");
 
     public ReportMetaDataRow() {
@@ -25,9 +25,7 @@ public class ReportMetaDataRow {
     }
 
     public ReportMetaDataRow addAll(List<ReportMetaDataCell> cells) {
-        for (ReportMetaDataCell cell : cells) {
-            this.add(cell);
-        }
+        cells.forEach(this::add);
         return this;
     }
 

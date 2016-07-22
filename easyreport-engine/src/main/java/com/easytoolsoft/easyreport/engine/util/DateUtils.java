@@ -242,7 +242,7 @@ public class DateUtils {
      */
     public static List<String> getDateList(String startDt, String endDt, String pattern) throws ParseException {
         SimpleDateFormat sd = new SimpleDateFormat(pattern);
-        List<String> dateList = new ArrayList<String>();
+        List<String> dateList = new ArrayList<>();
 
         dateList.add(startDt);
         Calendar startCalendar = Calendar.getInstance();

@@ -91,7 +91,7 @@ public abstract class AbstractReportBuilder {
      * @return 树中每个节点的path属性为key, treeNode属性为value的map对象
      */
     protected Map<String, ColumnTreeNode> getTreeNodePathMap(ColumnTree columnTree) {
-        Map<String, ColumnTreeNode> treeNodePathMap = new HashMap<String, ColumnTreeNode>();
+        Map<String, ColumnTreeNode> treeNodePathMap = new HashMap<>();
         for (int level = 0; level < columnTree.getDepth(); level++) {
             for (ColumnTreeNode treeNode : columnTree.getNodesByLevel(level)) {
                 treeNodePathMap.put(treeNode.getPath(), treeNode);

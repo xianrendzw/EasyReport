@@ -160,7 +160,7 @@ public class ReportParameter {
      * @return 报表中启用的统计(含计算)列名集合
      */
     public Set<String> getEnabledStatColumns() {
-        return enabledStatColumns == null ? new HashSet<String>(0) : this.enabledStatColumns;
+        return enabledStatColumns == null ? new HashSet<>(0) : this.enabledStatColumns;
     }
 
     /**

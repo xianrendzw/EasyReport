@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
@@ -134,7 +135,7 @@ public abstract class ReportDataSet {
         int depth = this.getDimColumnCount();
         // 无维度列则直接设置树只有一个节点
         if (depth == 0) {
-            List<ColumnTreeNode> roots = new ArrayList<ColumnTreeNode>();
+            List<ColumnTreeNode> roots = new ArrayList<>();
             ReportDataColumn column = new ReportDataColumn(new ReportMetaDataColumn("stat_value", "值", ColumnType.DIMENSION));
             roots.add(new ColumnTreeNode(column));
             this.dimColumnTree = new ColumnTree(roots, 1);
@@ -156,18 +157,17 @@ public abstract class ReportDataSet {
             return this.statColumnTree;
         }
 
-        List<ColumnTreeNode> treeNodes = new ArrayList<ColumnTreeNode>();
+        List<ColumnTreeNode> treeNodes = new ArrayList<>();
         if (this.isHideStatColumn()) {
             this.statColumnTree = new ColumnTree(treeNodes, 0);
             return this.statColumnTree;
         }
 
         List<ReportDataColumn> statColumns = this.getStatColumns();
-        for (ReportDataColumn statColumn : statColumns) {
-            if (!statColumn.getMetaData().isHidden()) {
-                treeNodes.add(this.createStatColumnTreeNode(statColumn));
-            }
-        }
+        treeNodes.addAll(statColumns.stream().filter(
+                statColumn -> !statColumn.getMetaData().isHidden())
+                .map(this::createStatColumnTreeNode)
+                .collect(Collectors.toList()));
         this.statColumnTree = new ColumnTree(treeNodes, 1);
         return this.statColumnTree;
     }
@@ -185,9 +185,9 @@ public abstract class ReportDataSet {
             }
 
             this.layoutColumns = new ArrayList<>();
-            for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-                this.layoutColumns.add(new ReportDataColumn(metaDataColumn));
-            }
+            this.layoutColumns.addAll(metaDataColumns.stream()
+                    .map(ReportDataColumn::new)
+                    .collect(Collectors.toList()));
         }
         return this.layoutColumns;
     }
@@ -204,9 +204,9 @@ public abstract class ReportDataSet {
 
         this.dimColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
-        for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-            this.dimColumns.add(new ReportDataColumn(metaDataColumn));
-        }
+        this.dimColumns.addAll(metaDataColumns.stream()
+                .map(ReportDataColumn::new)
+                .collect(Collectors.toList()));
         return this.dimColumns;
     }
 
@@ -221,11 +221,8 @@ public abstract class ReportDataSet {
         }
 
         this.enabledStatColumns = new ArrayList<>();
-        for (ReportDataColumn statColumn : this.getStatColumns()) {
-            if (!statColumn.getMetaData().isHidden()) {
-                this.enabledStatColumns.add(statColumn);
-            }
-        }
+        this.enabledStatColumns.addAll(this.getStatColumns().stream()
+                .filter(statColumn -> !statColumn.getMetaData().isHidden()).collect(Collectors.toList()));
         return this.enabledStatColumns;
     }
 
@@ -240,11 +237,9 @@ public abstract class ReportDataSet {
         }
 
         this.computedColumns = new ArrayList<>();
-        for (ReportDataColumn statColumn : this.getStatColumns()) {
-            if (statColumn.getMetaData().getType() == ColumnType.COMPUTED) {
-                this.computedColumns.add(statColumn);
-            }
-        }
+        this.computedColumns.addAll(this.getStatColumns().stream()
+                .filter(statColumn -> statColumn.getMetaData().getType() == ColumnType.COMPUTED)
+                .collect(Collectors.toList()));
         return this.computedColumns;
     }
 
@@ -260,9 +255,9 @@ public abstract class ReportDataSet {
 
         this.statColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getStatColumns();
-        for (ReportMetaDataColumn metaDataColumn : metaDataColumns) {
-            this.statColumns.add(new ReportDataColumn(metaDataColumn));
-        }
+        this.statColumns.addAll(metaDataColumns.stream()
+                .map(ReportDataColumn::new)
+                .collect(Collectors.toList()));
         return this.statColumns;
     }
 
@@ -297,13 +292,13 @@ public abstract class ReportDataSet {
      * @return {@link Map<String, List<String>>}
      */
     public Map<String, List<String>> getUnduplicatedNonStatColumnDataMap() {
-        Map<String, List<String>> nonStatColumnDataMap = new HashMap<String, List<String>>();
+        Map<String, List<String>> nonStatColumnDataMap = new HashMap<>();
         List<ReportMetaDataRow> metaDataRows = this.metaDataSet.getRows();
         List<ReportDataColumn> nonStatColumns = this.getNonStatColumns();
 
         for (ReportDataColumn column : nonStatColumns) {
-            Set<String> columnValueSet = new HashSet<String>();
-            List<String> valueList = new ArrayList<String>();
+            Set<String> columnValueSet = new HashSet<>();
+            List<String> valueList = new ArrayList<>();
             for (ReportMetaDataRow metaDataRow : metaDataRows) {
                 String value = this.getMetaCellValue(metaDataRow, column);
                 if (!columnValueSet.contains(value)) {
@@ -334,7 +329,7 @@ public abstract class ReportDataSet {
      * @return Map<String, ReportDataRow>
      */
     public Map<String, ReportDataRow> getRowMap() {
-        Map<String, ReportDataRow> dataRowMap = new HashMap<String, ReportDataRow>();
+        Map<String, ReportDataRow> dataRowMap = new HashMap<>();
         List<ReportDataColumn> statColumns = this.getStatColumns();
         List<ReportDataColumn> computedColumns = this.getComputedColumns();
         List<ReportDataColumn> nonStatColumns = this.getNonStatColumns();
@@ -343,7 +338,7 @@ public abstract class ReportDataSet {
         for (ReportMetaDataRow metaDataRow : metaDataRows) {
             String key = this.getDataRowMapKey(metaDataRow, nonStatColumns);
             ReportDataRow dataRow = new ReportDataRow();
-            Map<String, Object> exprContext = new HashMap<String, Object>();
+            Map<String, Object> exprContext = new HashMap<>();
             for (ReportDataColumn statColumn : statColumns) {
                 Object value = metaDataRow.getCellValue(statColumn.getName());
                 dataRow.add(new ReportDataCell(statColumn, statColumn.getName(), value));
@@ -371,7 +366,7 @@ public abstract class ReportDataSet {
      * @return ColumnTree
      */
     protected ColumnTree buildColumnTreeByLevel(List<ReportDataColumn> columns, boolean isInitSpansAndDepth) {
-        Map<Integer, List<ColumnTreeNode>> levelNodeMap = new HashMap<Integer, List<ColumnTreeNode>>();
+        Map<Integer, List<ColumnTreeNode>> levelNodeMap = new HashMap<>();
 
         int depth = columns.size();
         for (int level = 0; level < depth; level++) {
@@ -425,8 +420,8 @@ public abstract class ReportDataSet {
 
     protected List<ColumnTreeNode> getTreeNodesByLevel(List<ReportDataColumn> columns, int level) {
         List<ReportMetaDataRow> metaDataRows = this.metaDataSet.getRows();
-        Set<String> pathSet = new HashSet<String>();
-        List<ColumnTreeNode> depthTreeNodes = new ArrayList<ColumnTreeNode>();
+        Set<String> pathSet = new HashSet<>();
+        List<ColumnTreeNode> depthTreeNodes = new ArrayList<>();
 
         for (ReportMetaDataRow metaDataRow : metaDataRows) {
             String path = this.getLevelPath(metaDataRow, columns, level);

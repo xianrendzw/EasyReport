@@ -77,10 +77,10 @@ public class ReportMetaDataSet {
     }
 
     private void initilizeColumn(Set<String> enabledStatColumns) {
-        this.nonComputeColumns = new ArrayList<ReportMetaDataColumn>();
-        this.layoutColumns = new ArrayList<ReportMetaDataColumn>();
-        this.dimColumns = new ArrayList<ReportMetaDataColumn>();
-        this.statColumns = new ArrayList<ReportMetaDataColumn>();
+        this.nonComputeColumns = new ArrayList<>();
+        this.layoutColumns = new ArrayList<>();
+        this.dimColumns = new ArrayList<>();
+        this.statColumns = new ArrayList<>();
 
         for (int i = 0; i < this.columns.size(); i++) {
             ReportMetaDataColumn column = this.columns.get(i);

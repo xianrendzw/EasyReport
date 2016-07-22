@@ -3,10 +3,6 @@ package com.easytoolsoft.easyreport.engine.data;
 /**
  * 报表元数据列类
  */
-
-/**
- * 报表元数据列类
- */
 public class ReportMetaDataColumn {
     private int ordinal;
     private String name;
