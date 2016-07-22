@@ -2,8 +2,8 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class LessThanOrEqualOperand extends AbstractOperand {
 
-    private String columnName;
-    private Object columnValue;
+    private final String columnName;
+    private final Object columnValue;
 
     public LessThanOrEqualOperand(String columnName, Object columnValue) {
         this.columnName = columnName;

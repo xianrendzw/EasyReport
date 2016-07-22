@@ -2,8 +2,8 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class InOperand extends AbstractOperand {
 
-    private String columnName;
-    private Object columnValue;
+    private final String columnName;
+    private final Object columnValue;
 
     public InOperand(String columnName, Object columnValue) {
         this.columnName = columnName;

@@ -2,7 +2,7 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class BracketOperand extends AbstractOperand {
 
-    private Bracket bracket;
+    private final Bracket bracket;
 
     public BracketOperand(Bracket bracket) {
         this.bracket = bracket;
@@ -13,7 +13,7 @@ public class BracketOperand extends AbstractOperand {
         switch (this.bracket) {
             case Left:
                 return "(";
-            case Rgiht:
+            case Right:
                 return ")";
             default:
                 return "";

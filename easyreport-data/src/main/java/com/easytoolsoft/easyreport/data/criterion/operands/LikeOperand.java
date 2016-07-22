@@ -2,8 +2,8 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class LikeOperand extends AbstractOperand {
 
-    private String columnName;
-    private Object columnValue;
+    private final String columnName;
+    private final Object columnValue;
 
     public LikeOperand(String columnName, Object columnValue) {
         this.columnName = columnName;

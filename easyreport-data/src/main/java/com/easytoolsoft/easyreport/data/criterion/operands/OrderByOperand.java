@@ -3,8 +3,8 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 import org.apache.commons.lang3.StringUtils;
 
 public class OrderByOperand extends AbstractOperand {
-    private String _sortType;
-    private String[] _columnNames;
+    private final String _sortType;
+    private final String[] _columnNames;
 
     public OrderByOperand(String sortType, String... columnNames) {
         this._sortType = sortType;

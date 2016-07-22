@@ -10,9 +10,9 @@ import java.util.Map;
  * Dao接口中查询参数构造类
  */
 public class ParameterBuilder {
-    private Map<String, Object> params = new HashMap<>(6);
+    private final Map<String, Object> params = new HashMap<>(6);
 
-    public ParameterBuilder() {
+    private ParameterBuilder() {
     }
 
     public static ParameterBuilder getInstance() {

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class GroupByOperand extends AbstractOperand {
 
-    private String[] _columnNames;
+    private final String[] _columnNames;
 
     public GroupByOperand(String... columnNames) {
         this._columnNames = columnNames;

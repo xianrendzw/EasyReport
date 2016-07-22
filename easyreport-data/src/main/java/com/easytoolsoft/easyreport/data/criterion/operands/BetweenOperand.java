@@ -2,9 +2,9 @@ package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public class BetweenOperand extends AbstractOperand {
 
-    private String columnName;
-    private Object lowerValue;
-    private Object higherValue;
+    private final String columnName;
+    private final Object lowerValue;
+    private final Object higherValue;
 
     public BetweenOperand(String columnName, Object lowerValue, Object higherValue) {
         this.columnName = columnName;
