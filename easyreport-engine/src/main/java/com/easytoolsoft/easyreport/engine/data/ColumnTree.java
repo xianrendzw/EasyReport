@@ -59,7 +59,7 @@ public class ColumnTree {
     private void buildLevelNodesMapByRecursion(ColumnTreeNode parentNode) {
         int level = parentNode.getDepth();
         if (!this.levelNodesMap.containsKey(level)) {
-            List<ColumnTreeNode> treeNodes = new ArrayList<ColumnTreeNode>();
+            List<ColumnTreeNode> treeNodes = new ArrayList<>();
             treeNodes.add(parentNode);
             this.levelNodesMap.put(level, treeNodes);
         } else {

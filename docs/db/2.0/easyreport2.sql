@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2016-07-19 11:42:25
+Date: 2016-07-22 14:21:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -271,6 +271,7 @@ CREATE TABLE `ezrpt_meta_datasource` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '数据源ID',
   `uid` varchar(128) NOT NULL COMMENT '数据源唯一ID,由调接口方传入',
   `name` varchar(50) NOT NULL COMMENT '数据源名称',
+  `driver_class` varchar(100) NOT NULL COMMENT '数据源驱动类',
   `jdbc_url` varchar(500) NOT NULL COMMENT '数据源连接字符串(JDBC)',
   `user` varchar(50) NOT NULL COMMENT '数据源登录用户名',
   `password` varchar(100) NOT NULL COMMENT '数据源登录密码',
@@ -285,8 +286,8 @@ CREATE TABLE `ezrpt_meta_datasource` (
 -- ----------------------------
 -- Records of ezrpt_meta_datasource
 -- ----------------------------
-INSERT INTO `ezrpt_meta_datasource` VALUES ('49', '8b2d3b62-0c08-4d62-a666-8bb97fc9c222', '中国天气(SQLServer)', 'jdbc:sqlserver://localhost;databaseName=ChinaWeatherAir', 'sa', 'ddd', '', '', '2015-01-27 14:32:32', '2015-01-27 14:32:32');
-INSERT INTO `ezrpt_meta_datasource` VALUES ('50', '6423b076-ce78-47fc-8c25-c005be2b85af', '中国天气(MySQL)', 'jdbc:mysql://localhost:3306/china_weather_air?characterEncoding=UTF-8', 'root', 'ddd', '', '', '2015-01-29 17:54:32', '2015-01-29 17:54:32');
+INSERT INTO `ezrpt_meta_datasource` VALUES ('49', '8b2d3b62-0c08-4d62-a666-8bb97fc9c222', '中国天气(SQLServer)', 'com.microsoft.sqlserver.jdbc.SQLServerDriver', 'jdbc:sqlserver://localhost;databaseName=ChinaWeatherAir', 'sa', 'ddd', '', '', '2015-01-27 14:32:32', '2015-01-27 14:32:32');
+INSERT INTO `ezrpt_meta_datasource` VALUES ('50', '6423b076-ce78-47fc-8c25-c005be2b85af', '中国天气(MySQL)', 'com.mysql.jdbc.Driver', 'jdbc:mysql://localhost:3306/china_weather_air?characterEncoding=UTF-8', 'root', 'ddd', '', '', '2015-01-29 17:54:32', '2015-01-29 17:54:32');
 
 -- ----------------------------
 -- Table structure for ezrpt_meta_report
@@ -325,7 +326,7 @@ DROP TABLE IF EXISTS `ezrpt_meta_report_history`;
 CREATE TABLE `ezrpt_meta_report_history` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '报表历史记录id',
   `report_id` int(11) NOT NULL COMMENT '报表ID',
-  `uid` varchar(128) NOT NULL COMMENT '报表唯一编号',
+  `uid` varchar(128) NOT NULL,
   `category_id` int(11) NOT NULL COMMENT '报表分类id',
   `ds_id` int(11) NOT NULL COMMENT '数据源ID',
   `name` varchar(50) NOT NULL COMMENT '报表名称',

@@ -17,8 +17,7 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id , roles , account , password , salt , name , email , telephone , status ,
-        comment , gmt_created ,gmt_modified
+        id , roles , account , password , salt , name , email , telephone , status , comment , gmt_created ,gmt_modified
     </sql>
     <sql id="Insert_Columns">
         <if test="roles != null">roles,</if>

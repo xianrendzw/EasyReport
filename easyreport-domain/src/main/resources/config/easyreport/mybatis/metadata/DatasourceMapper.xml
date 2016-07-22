@@ -6,6 +6,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="driver_class" property="driverClass" jdbcType="VARCHAR"/>
         <result column="jdbc_url" property="jdbcUrl" jdbcType="VARCHAR"/>
         <result column="user" property="user" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
@@ -15,11 +16,12 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id , uid , name , jdbc_url , user , password , options , comment , gmt_created , gmt_modified
+        id , uid , name , driver_class , jdbc_url , user , password , options , comment , gmt_created , gmt_modified
     </sql>
     <sql id="Insert_Columns">
         <if test="uid != null">uid,</if>
         <if test="name != null">name,</if>
+        <if test="driverClass != null">driver_class,</if>
         <if test="jdbcUrl != null">jdbc_url,</if>
         <if test="user != null">user,</if>
         <if test="password != null">password,</if>
@@ -31,6 +33,7 @@
     <sql id="Insert_Values">
         <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
         <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+        <if test="driverClass != null">#{driverClass,jdbcType=VARCHAR},</if>
         <if test="jdbcUrl != null">#{jdbcUrl,jdbcType=VARCHAR},</if>
         <if test="user != null">#{user,jdbcType=VARCHAR},</if>
         <if test="password != null">#{password,jdbcType=VARCHAR},</if>
@@ -43,6 +46,7 @@
         <if test="id != null">#{id,jdbcType=INTEGER},</if>
         <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
         <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+        <if test="driverClass != null">#{driverClass,jdbcType=VARCHAR},</if>
         <if test="jdbcUrl != null">#{jdbcUrl,jdbcType=VARCHAR},</if>
         <if test="user != null">#{user,jdbcType=VARCHAR},</if>
         <if test="password != null">#{password,jdbcType=VARCHAR},</if>
@@ -55,6 +59,7 @@
         <if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
         <if test="uid != null">and uid = #{uid,jdbcType=VARCHAR}</if>
         <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
+        <if test="driverClass != null">and driver_class = #{driverClass,jdbcType=VARCHAR}</if>
         <if test="jdbcUrl != null">and jdbc_url = #{jdbcUrl,jdbcType=VARCHAR}</if>
         <if test="user != null">and user = #{user,jdbcType=VARCHAR}</if>
         <if test="password != null">and password = #{password,jdbcType=VARCHAR}</if>
@@ -66,6 +71,7 @@
     <sql id="Update_Set_From_Bean">
         <if test="uid != null">uid = #{uid,jdbcType=VARCHAR} ,</if>
         <if test="name != null">name = #{name,jdbcType=VARCHAR} ,</if>
+        <if test="driverClass != null">driver_class = #{driverClass,jdbcType=VARCHAR} ,</if>
         <if test="jdbcUrl != null">jdbc_url = #{jdbcUrl,jdbcType=VARCHAR} ,</if>
         <if test="user != null">user = #{user,jdbcType=VARCHAR} ,</if>
         <if test="password != null">password = #{password,jdbcType=VARCHAR} ,</if>
@@ -77,6 +83,7 @@
     <sql id="Update_Set_From_Map">
         <if test="set.uid != null">uid = #{set.uid,jdbcType=VARCHAR} ,</if>
         <if test="set.name != null">name = #{set.name,jdbcType=VARCHAR} ,</if>
+        <if test="set.driverClass != null">driver_class = #{set.driverClass,jdbcType=VARCHAR} ,</if>
         <if test="set.jdbcUrl != null">jdbc_url = #{set.jdbcUrl,jdbcType=VARCHAR} ,</if>
         <if test="set.user != null">user = #{set.user,jdbcType=VARCHAR} ,</if>
         <if test="set.password != null">password = #{set.password,jdbcType=VARCHAR} ,</if>
@@ -89,6 +96,7 @@
         <if test="where.id != null">and id = #{where.id,jdbcType=INTEGER}</if>
         <if test="where.uid != null">and uid = #{where.uid,jdbcType=VARCHAR}</if>
         <if test="where.name != null">and name = #{where.name,jdbcType=VARCHAR}</if>
+        <if test="where.driverClass != null">and driver_class = #{where.driverClass,jdbcType=VARCHAR}</if>
         <if test="where.jdbcUrl != null">and jdbc_url = #{where.jdbcUrl,jdbcType=VARCHAR}</if>
         <if test="where.user != null">and user = #{where.user,jdbcType=VARCHAR}</if>
         <if test="where.password != null">and password = #{where.password,jdbcType=VARCHAR}</if>
@@ -100,6 +108,7 @@
     <sql id="BatchUpdate_Set_From_Bean">
         <if test="item.uid != null">uid = #{item.uid,jdbcType=VARCHAR} ,</if>
         <if test="item.name != null">name = #{item.name,jdbcType=VARCHAR} ,</if>
+        <if test="item.driverClass != null">driver_class = #{item.driverClass,jdbcType=VARCHAR} ,</if>
         <if test="item.jdbcUrl != null">jdbc_url = #{item.jdbcUrl,jdbcType=VARCHAR} ,</if>
         <if test="item.user != null">user = #{item.user,jdbcType=VARCHAR} ,</if>
         <if test="item.password != null">password = #{item.password,jdbcType=VARCHAR} ,</if>

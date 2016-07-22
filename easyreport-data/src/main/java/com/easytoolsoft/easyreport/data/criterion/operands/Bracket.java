@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.data.criterion.operands;
 
 public enum Bracket {
-    Left("("), Rgiht(")");
+    Left("("), Right(")");
 
     private String abbreviation;
 

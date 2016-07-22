@@ -22,7 +22,7 @@ public class ParameterBuilder {
     /**
      * 获取查询参数Map
      *
-     * @param obj
+     * @param obj pojo对象
      * @return Map[String, Object]
      */
     public static <T> Map<String, Object> getQueryParams(T obj) {
