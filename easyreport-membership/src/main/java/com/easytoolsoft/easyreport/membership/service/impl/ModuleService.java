@@ -43,7 +43,7 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
         String[] ids = StringUtils.split(moduleIds, ',');
         List<Module> modules = new ArrayList<>(ids.length);
         for (String id : ids) {
-            int mId = Integer.valueOf(id);
+            Integer mId = Integer.valueOf(id);
             if (moduleMap.containsKey(mId)) {
                 modules.add(moduleMap.get(mId));
             }

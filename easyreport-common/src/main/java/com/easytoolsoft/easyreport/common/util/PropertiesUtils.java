@@ -11,11 +11,18 @@ public class PropertiesUtils {
     }
 
     public static void configure(String configFilename) {
+        FileInputStream fs = null;
         try {
-            FileInputStream fs = new FileInputStream(configFilename);
+            fs = new FileInputStream(configFilename);
             props.load(fs);
         } catch (IOException e) {
             throw new RuntimeException("Property file load error.", e);
+        } finally {
+            try {
+                if (fs != null) fs.close();
+            } catch (IOException e) {
+                throw new RuntimeException("Property file stream close failure.", e);
+            }
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 报表树型列节点类
  */
-public class ColumnTreeNode implements Cloneable {
+public class ColumnTreeNode {
     private final String name;
     private final String text;
     private final List<ColumnTreeNode> children = new ArrayList<>(0);
@@ -187,8 +187,7 @@ public class ColumnTreeNode implements Cloneable {
         return this.children;
     }
 
-    @Override
-    public ColumnTreeNode clone() {
+    public ColumnTreeNode copyToNew() {
         ColumnTreeNode treeNode = new ColumnTreeNode(this.name, this.text, this.value);
         treeNode.setColumn(this.column);
         treeNode.setDepth(this.depth);

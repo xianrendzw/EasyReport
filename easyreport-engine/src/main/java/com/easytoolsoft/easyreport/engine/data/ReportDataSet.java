@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
  */
 public abstract class ReportDataSet {
-    protected final String pathSeparator = "$";
+    protected final static String PATH_SEPARATOR = "$";
     protected final ReportMetaDataSet metaDataSet;
     protected final LayoutType layout;
     protected final LayoutType statColumnLayout;
@@ -52,7 +52,7 @@ public abstract class ReportDataSet {
      * @return
      */
     public String getPathSeparator() {
-        return this.pathSeparator;
+        return PATH_SEPARATOR;
     }
 
     /**
@@ -412,8 +412,8 @@ public abstract class ReportDataSet {
         StringBuilder rowMapKeyBuilder = new StringBuilder("");
         for (ReportDataColumn nonStatColumn : nonStatColumns) {
             String value = this.getMetaCellValue(metaDataRow, nonStatColumn);
-            rowMapKeyBuilder.append(StringUtils.replace(value, this.pathSeparator, "*"));
-            rowMapKeyBuilder.append(this.pathSeparator);
+            rowMapKeyBuilder.append(StringUtils.replace(value, PATH_SEPARATOR, "*"));
+            rowMapKeyBuilder.append(PATH_SEPARATOR);
         }
         return rowMapKeyBuilder.toString();
     }
@@ -460,8 +460,8 @@ public abstract class ReportDataSet {
         for (int i = 0; i <= level; i++) {
             ReportDataColumn column = columns.get(i);
             String value = this.getMetaCellValue(metaDataRow, column);
-            pathBuilder.append(StringUtils.replace(value, this.pathSeparator, "*"));
-            pathBuilder.append(this.pathSeparator);
+            pathBuilder.append(StringUtils.replace(value, PATH_SEPARATOR, "*"));
+            pathBuilder.append(PATH_SEPARATOR);
         }
         return pathBuilder.toString();
     }
@@ -539,7 +539,7 @@ public abstract class ReportDataSet {
     protected ColumnTreeNode createStatColumnTreeNode(String name, String text, ReportDataColumn column) {
         ColumnTreeNode treeNode = new ColumnTreeNode(name, text, text);
         treeNode.setColumn(column);
-        treeNode.setPath(text + this.pathSeparator);
+        treeNode.setPath(text + PATH_SEPARATOR);
         return treeNode;
     }
 }

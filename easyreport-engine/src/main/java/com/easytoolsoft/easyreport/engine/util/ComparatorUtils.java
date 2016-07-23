@@ -16,18 +16,18 @@ public class ComparatorUtils {
         int i = 0, j = 0;
         while (i < xChars.length && j < yChars.length) {
             if (Character.isDigit(xChars[i]) && Character.isDigit(yChars[j])) {
-                String s1 = "", s2 = "";
+                StringBuilder s1 = new StringBuilder(""), s2 = new StringBuilder("");
                 while (i < xChars.length && Character.isDigit(xChars[i])) {
-                    s1 += xChars[i];
+                    s1.append(xChars[i]);
                     i++;
                 }
                 while (j < yChars.length && Character.isDigit(yChars[j])) {
-                    s2 += yChars[j];
+                    s2.append(yChars[j]);
                     j++;
                 }
-                if (Integer.parseInt(s1) > Integer.parseInt(s2))
+                if (Integer.parseInt(s1.toString()) > Integer.parseInt(s2.toString()))
                     return 1;
-                if (Integer.parseInt(s1) < Integer.parseInt(s2))
+                if (Integer.parseInt(s1.toString()) < Integer.parseInt(s2.toString()))
                     return -1;
             } else {
                 if (xChars[i] > yChars[j])

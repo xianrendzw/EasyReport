@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.engine.data;
 /**
  * 报表元数据列类
  */
-public class ReportMetaDataColumn implements Cloneable {
+public class ReportMetaDataColumn {
     private int ordinal;
     private String name;
     private String text;
@@ -338,16 +338,15 @@ public class ReportMetaDataColumn implements Cloneable {
         this.comment = comment;
     }
 
-    @Override
-    public ReportMetaDataColumn clone() {
-        return this.clone(this.name, this.text);
+    public ReportMetaDataColumn copyToNew() {
+        return this.copyToNew(this.name, this.text);
     }
 
-    public ReportMetaDataColumn clone(String name, String text) {
-        return this.clone(name, text, this.isPercent);
+    public ReportMetaDataColumn copyToNew(String name, String text) {
+        return this.copyToNew(name, text, this.isPercent);
     }
 
-    public ReportMetaDataColumn clone(String name, String text, boolean isPercent) {
+    public ReportMetaDataColumn copyToNew(String name, String text, boolean isPercent) {
         ReportMetaDataColumn column = new ReportMetaDataColumn();
         column.setName(name);
         column.setText(text);

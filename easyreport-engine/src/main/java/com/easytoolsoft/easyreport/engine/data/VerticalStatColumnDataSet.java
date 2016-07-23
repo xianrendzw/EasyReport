@@ -84,14 +84,7 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
             return dimColumnTree;
         }
 
-        for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
-            for (ColumnTreeNode statColumnNode : statColumnTree.getRoots()) {
-                ColumnTreeNode treeNode = statColumnNode.clone();
-                treeNode.setParent(leafNode);
-                treeNode.setPath(leafNode.getPath() + treeNode.getPath());
-                leafNode.getChildren().add(treeNode);
-            }
-        }
+        this.appendStatColumnToLeafNode(statColumnTree, dimColumnTree);
         this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
         int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
         this.leftFixedColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
@@ -100,23 +93,30 @@ public class VerticalStatColumnDataSet extends ReportDataSet {
 
     private ColumnTree getVerticalLayoutLeftFixedColumnTree() {
         ColumnTree statColumnTree = this.getStatColumnTree();
-
         ColumnTree layoutTree = this.getLayoutColumnTree();
         if (this.isHideStatColumn()) {
             return layoutTree;
         }
 
-        for (ColumnTreeNode leafNode : layoutTree.getLeafNodes()) {
+        this.appendStatColumnToLeafNode(statColumnTree, layoutTree);
+        this.setTreeNodeSpansAndDepth(layoutTree.getRoots(), this.getLayoutColumns());
+        int depth = layoutTree.getDepth() + statColumnTree.getDepth();
+        this.leftFixedColumnTree = new ColumnTree(layoutTree.getRoots(), depth);
+        return this.leftFixedColumnTree;
+    }
+
+    /**
+     * @param statColumnTree
+     * @param dimColumnTree
+     */
+    private void appendStatColumnToLeafNode(ColumnTree statColumnTree, ColumnTree dimColumnTree) {
+        for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
             for (ColumnTreeNode statColumnNode : statColumnTree.getRoots()) {
-                ColumnTreeNode treeNode = statColumnNode.clone();
+                ColumnTreeNode treeNode = statColumnNode.copyToNew();
                 treeNode.setParent(leafNode);
                 treeNode.setPath(leafNode.getPath() + treeNode.getPath());
                 leafNode.getChildren().add(treeNode);
             }
         }
-        this.setTreeNodeSpansAndDepth(layoutTree.getRoots(), this.getLayoutColumns());
-        int depth = layoutTree.getDepth() + statColumnTree.getDepth();
-        this.leftFixedColumnTree = new ColumnTree(layoutTree.getRoots(), depth);
-        return this.leftFixedColumnTree;
     }
 }

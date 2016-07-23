@@ -3,6 +3,8 @@ package com.easytoolsoft.easyreport.metadata.service;
 import com.easytoolsoft.easyreport.data.service.ICrudService;
 import com.easytoolsoft.easyreport.metadata.po.DataSource;
 
+import java.sql.SQLException;
+
 /**
  * 报表数据源服务类
  *
@@ -16,5 +18,5 @@ public interface IDataSourceService extends ICrudService<DataSource> {
      * @param user
      * @param password
      */
-    boolean testConnection(String url, String user, String password);
+    boolean testConnection(String url, String user, String password) throws SQLException;
 }
