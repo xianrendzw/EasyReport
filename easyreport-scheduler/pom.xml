@@ -26,16 +26,16 @@
         </dependency>
         <!-- third jars -->
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -67,4 +67,59 @@
             <artifactId>powermock-api-mockito</artifactId>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <props>src/main/filters/dev.properties</props>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <props>src/main/filters/test.properties</props>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <props>src/main/filters/prod.properties</props>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+        <finalName>easyreport-scheduler</finalName>
+        <filters>
+            <filter>${props}</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/main/assembly/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

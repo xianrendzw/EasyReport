@@ -332,14 +332,14 @@ public class ReportingGenerationService implements IReportGenerationService {
             if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
                 htmlFormElement = this.getComboBoxFormElements(queryParam, report.getDsId(), buildinParams);
             } else if (formElement.equals("checkbox")) {
-                htmlFormElement = new HtmlCheckBox(queryParam.getName(),
-                        queryParam.getText(), queryParam.getRealDefaultValue());
+                htmlFormElement = new HtmlCheckBox(queryParam.getName(),queryParam.getText(),
+                        queryParam.getRealDefaultValue());
             } else if (formElement.equals("text")) {
-                htmlFormElement = new HtmlTextBox(queryParam.getName(),
-                        queryParam.getText(), queryParam.getRealDefaultValue());
+                htmlFormElement = new HtmlTextBox(queryParam.getName(),queryParam.getText(),
+                        queryParam.getRealDefaultValue());
             } else if (formElement.equals("date")) {
-                htmlFormElement = new HtmlDateBox(queryParam.getName(),
-                        queryParam.getText(), queryParam.getRealDefaultValue());
+                htmlFormElement = new HtmlDateBox(queryParam.getName(),queryParam.getText(),
+                        queryParam.getRealDefaultValue());
             }
             if (htmlFormElement != null) {
                 this.setElementCommonProperities(queryParam, htmlFormElement);
@@ -394,9 +394,9 @@ public class ReportingGenerationService implements IReportGenerationService {
             HashSet<String> set = new HashSet<>();
             String[] optionSplits = StringUtils.split(queryParam.getContent(), '|');
             for (String option : optionSplits) {
-                String[] namevalueSplits = StringUtils.split(option, ',');
-                String name = namevalueSplits[0];
-                String text = namevalueSplits.length > 1 ? namevalueSplits[1] : name;
+                String[] nameValuePairs = StringUtils.split(option, ',');
+                String name = nameValuePairs[0];
+                String text = nameValuePairs.length > 1 ? nameValuePairs[1] : name;
                 if (!set.contains(name)) {
                     set.add(name);
                     options.add(new ReportQueryParamItem(name, text));

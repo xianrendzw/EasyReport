@@ -33,7 +33,8 @@ public class ReportParameter {
      * @param sqlText            报表sql查询语句
      */
     public ReportParameter(String id, String name, int layout, int statColumnLayout,
-                           List<ReportMetaDataColumn> metaColumns, Set<String> enabledStatColumns, boolean isRowSpan, String sqlText) {
+                           List<ReportMetaDataColumn> metaColumns, Set<String> enabledStatColumns,
+                           boolean isRowSpan, String sqlText) {
         this.id = id;
         this.name = name;
         this.layout = LayoutType.valueOf(layout);
