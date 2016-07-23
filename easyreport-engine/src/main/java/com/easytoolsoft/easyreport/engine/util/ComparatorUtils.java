@@ -9,7 +9,7 @@ public class ComparatorUtils {
      * @param y 字符串2
      * @return x == y 为0，x>y为1，x<y为-1
      */
-    public static int CompareByDigitPriority(String x, String y) {
+    public static int compareByDigitPriority(String x, String y) {
         char[] xChars = x.toCharArray();
         char[] yChars = y.toCharArray();
 

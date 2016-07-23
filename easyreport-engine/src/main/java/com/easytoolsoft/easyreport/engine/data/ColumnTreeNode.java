@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 报表树型列节点类
  */
-public class ColumnTreeNode {
+public class ColumnTreeNode implements Cloneable {
     private final String name;
     private final String text;
     private final List<ColumnTreeNode> children = new ArrayList<>(0);

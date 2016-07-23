@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +31,7 @@ public class RoleService extends AbstractCrudService<IRoleDao, Role> implements 
         }
         Map<String, Object> params = ParameterBuilder.getQueryParams(
                 Role.builder().createUser(currentUser.getAccount()).build());
-        return this.getByPage(page, params);
+        return this.getByPage(page, fieldName, keyword, params);
     }
 
     @Override
@@ -114,9 +115,7 @@ public class RoleService extends AbstractCrudService<IRoleDao, Role> implements 
             return StringUtils.EMPTY;
         }
         Set<String> idSet = new HashSet<>(ids.length);
-        for (String id : ids) {
-            idSet.add(id);
-        }
+        Collections.addAll(idSet, ids);
         return StringUtils.join(idSet, ',');
     }
 

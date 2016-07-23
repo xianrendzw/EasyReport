@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Set;
 @Service("EzrptMemberPermissionService")
 public class PermissionService extends AbstractCrudService<IPermissionDao, Permission> implements IPermissionService {
     private static Map<String, Permission> cache;
-    private static byte[] lock = new byte[0];
+    private static final byte[] lock = new byte[0];
 
     @Autowired
     public PermissionService() {
@@ -112,9 +113,7 @@ public class PermissionService extends AbstractCrudService<IPermissionDao, Permi
             return StringUtils.EMPTY;
         }
         Set<String> idSet = new HashSet<>(ids.length);
-        for (String id : ids) {
-            idSet.add(id);
-        }
+        Collections.addAll(idSet, ids);
         return StringUtils.join(idSet, ',');
     }
 }

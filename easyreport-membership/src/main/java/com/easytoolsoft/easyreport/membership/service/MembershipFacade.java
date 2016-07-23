@@ -48,7 +48,7 @@ public class MembershipFacade {
             return Collections.emptySet();
         }
 
-        Set<String> roleSet = new HashSet<String>(roleIdSplit.length);
+        Set<String> roleSet = new HashSet<>(roleIdSplit.length);
         for (String roleId : roleIdSplit) {
             if (!roleSet.contains(roleId.trim())) {
                 roleSet.add(roleId);
@@ -65,7 +65,7 @@ public class MembershipFacade {
 
         Map<String, String> permissionMap = permissionService.getIdCodeMap();
         String[] permissionIdSplit = StringUtils.split(permissionIds, ',');
-        Set<String> permSet = new HashSet<String>(permissionIdSplit.length);
+        Set<String> permSet = new HashSet<>(permissionIdSplit.length);
         for (String permId : permissionIdSplit) {
             if (!permSet.contains(permId.trim())) {
                 permSet.add(permissionMap.get(permId.trim()));

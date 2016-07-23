@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.engine.data;
 /**
  * 报表元数据列类
  */
-public class ReportMetaDataColumn {
+public class ReportMetaDataColumn implements Cloneable {
     private int ordinal;
     private String name;
     private String text;

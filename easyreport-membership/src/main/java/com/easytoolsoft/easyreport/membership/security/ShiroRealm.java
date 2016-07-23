@@ -49,9 +49,10 @@ public class ShiroRealm extends AuthorizingRealm {
         }
 
         // 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                user.getAccount(), user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
-        return authenticationInfo;
+        return new SimpleAuthenticationInfo(
+                user.getAccount(), user.getPassword(),
+                ByteSource.Util.bytes(user.getCredentialsSalt()),
+                getName());
     }
 
     @Override

@@ -309,9 +309,9 @@ public abstract class ReportDataSet {
             final ColumnSortType sortType = column.getMetaData().getSortType();
             Collections.sort(valueList, (o1, o2) -> {
                 if (sortType == ColumnSortType.DIGIT_ASCENDING)
-                    return ComparatorUtils.CompareByDigitPriority(o1, o2);
+                    return ComparatorUtils.compareByDigitPriority(o1, o2);
                 if (sortType == ColumnSortType.DIGIT_DESCENDING)
-                    return ComparatorUtils.CompareByDigitPriority(o2, o1);
+                    return ComparatorUtils.compareByDigitPriority(o2, o1);
                 if (sortType == ColumnSortType.CHAR_ASCENDING)
                     return o1.compareTo(o2);
                 if (sortType == ColumnSortType.CHAR_DESCENDING)
@@ -521,9 +521,9 @@ public abstract class ReportDataSet {
 
         Collections.sort(treeNodes, (o1, o2) -> {
             if (sortType == ColumnSortType.DIGIT_ASCENDING)
-                return ComparatorUtils.CompareByDigitPriority(o1.getValue(), o2.getValue());
+                return ComparatorUtils.compareByDigitPriority(o1.getValue(), o2.getValue());
             if (sortType == ColumnSortType.DIGIT_DESCENDING)
-                return ComparatorUtils.CompareByDigitPriority(o2.getValue(), o1.getValue());
+                return ComparatorUtils.compareByDigitPriority(o2.getValue(), o1.getValue());
             if (sortType == ColumnSortType.CHAR_ASCENDING)
                 return o1.getValue().compareTo(o2.getValue());
             if (sortType == ColumnSortType.CHAR_DESCENDING)
