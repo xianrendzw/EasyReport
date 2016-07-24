@@ -1,0 +1,322 @@
+html, body, span, div, p, table, td, th, tr {
+	padding: 0px;
+	margin: 0px;
+	font-size: 14px;
+	font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica,
+		STHeiti;
+}
+
+* {
+	font-size: 14px;
+}
+
+.l-btn-text {
+	font-size: 14px
+}
+
+.tabs-title {
+	font-size: 14px
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 12px 0;
+}
+
+h4 {
+	font-size: 16px;
+	font-weight: bold;
+	color: #CC0000;
+	margin: 10px 0;
+}
+
+h5 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #990000;
+	margin: 5px 0;
+}
+
+textarea.html, textarea.js {
+	width: 100%;
+	height: 80px;
+	overflow: hidden;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+#header {
+	text-align: center;
+	background: #666;
+	direction: ltr;
+}
+
+#header-inner {
+	text-align: left;
+	margin: 0 auto;
+	width: 960px;
+	padding: 10px 0;
+}
+
+#mainwrap {
+	text-align: center;
+	margin-top: 5px;
+}
+
+#content {
+	text-align: left;
+	width: 960px;
+	margin: 0 auto;
+	padding: 10px;
+	padding: 0;
+	border-radius: 5px;
+	border: 0;
+	background: #fff;
+}
+
+#content img {
+	margin: 0;
+}
+
+#footer {
+	text-align: center;
+	padding: 10px;
+}
+
+#topmenu {
+	text-align: right;
+}
+
+#topmenu a {
+	display: inline-block;
+	padding: 1px 3px;
+	text-decoration: none;
+	color: #fff;
+}
+
+#topmenu a:hover {
+	text-decoration: underline;
+}
+
+a.download-link {
+	color: #0000ff;
+}
+
+.e-btn {
+	display: inline-block;
+	background: #6caef5;
+	padding: 8px 15px;
+	text-decoration: none;
+	border-radius: 2px;
+	color: #fff;
+	transition-property: background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+}
+
+.e-btn:hover {
+	background: #3e8ddd;
+	color: #fff;
+}
+
+.e-link {
+	text-decoration: none;
+	color: #126499;
+}
+
+.e-link:hover {
+	text-decoration: underline;
+	color: #0092C9;
+}
+
+.e-list li {
+	list-style-type: circle;
+	line-height: 22px;
+}
+
+.doc-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+
+.doc-table th, .doc-table td {
+	border: 1px solid #8CACBB;
+	padding: 0.3em 0.7em;
+}
+
+.doc-table th {
+	background: #eee;
+}
+
+.doc-table pre {
+	font-family: Verdana;
+	font-size: 12px;
+	color: #006600;
+	background: #fafafa;
+	padding: 5px;
+}
+
+* {
+	font-size: 12px;
+}
+
+body {
+	font-family: verdana, helvetica, arial, sans-serif;
+	padding: 20px;
+	font-size: 12px;
+	margin: 0;
+}
+
+h2 {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0;
+	margin-bottom: 15px;
+}
+
+.demo-info {
+	padding: 0 0 12px 0;
+}
+
+.demo-tip {
+	display: none;
+}
+
+.tabs-panels {
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px
+}
+
+.datagrid {
+	border: none
+}
+
+.easyui-datagrid {
+	border: none
+}
+
+.datagrid {
+	border-bottom: 0px
+}
+
+.datagrid .panel-body {
+	border-width: 0px;
+	border-style: solid;
+}
+
+.toolbar {
+	padding: 5px;
+	background: #F4F4F4;
+}
+
+.textbox-invalid {
+	background-color: #FFFfff;
+	border-color: #95B8E7
+}
+
+table.form-table {
+	
+}
+
+table.form-table td {
+	padding: 5px
+}
+
+table.form-table td input.text {
+	width: 200px
+}
+
+.bg-header {
+	background: url(../images/ad3_r2_c1.jpg);
+	height: 75px;
+	width: 100%;
+	position: relative
+}
+
+.bg-header span.name {
+	position: absolute;
+	right: 20px;
+	top: 5px;
+	font-size: 12px;
+	color: #FFF
+}
+
+.bg-header span.name a {
+	color: #FFF;
+	text-decoration: none
+}
+
+.bg-header .logo {
+	float: left;
+	margin: 0px 0px;
+	width: 613px;
+	height: 73px;
+	background: url(../images/logo.jpg)
+}
+
+.bg-header .menus {
+	margin-top: 20px;
+	margin-left: 20px;
+	padding: 8px;
+	width: auto;
+	float: right;
+	padding-bottom: 0px;
+}
+
+.footer {
+	width: 100%;
+	background: url(../images/ad3_r2_c1.jpg);
+	height: 35px;
+	color: #FFF;
+}
+
+#footer-left {
+	float: left;
+	margin-left: 3px;
+	line-height: 30px;
+}
+
+#footer-right {
+	float: right;
+	margin-right: 3px;
+	line-height: 30px;
+}
+
+.bg-header .menus .l-btn-text {
+	color: #FFF
+}
+
+.bg-header .menus a:hover .l-btn-text {
+	color: #000
+}
+
+ul.tabs {
+	border-left: none
+}
+
+.tabs-header {
+	border-left: none
+}
+
+#body-layout {
+	border-top: none
+}
+
+#body-layout .panel-header {
+	border-top-width: 0px
+}
+
+#body-layout .panel-body {
+	border-top-width: 0px;
+	border-bottom: none
+}
+
+.checkboxlist .checkbox {
+	margin-right: 10px
+}
