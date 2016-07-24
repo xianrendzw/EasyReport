@@ -11,6 +11,7 @@ import java.util.List;
  * @author Tom Deng
  */
 public interface ICategoryService extends ICrudService<Category> {
+
     List<Category> getChildren(int id);
 
     boolean hasChildren(int id);

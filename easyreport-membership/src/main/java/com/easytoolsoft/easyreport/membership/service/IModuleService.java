@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.membership.service;
 
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.service.ICrudService;
 import com.easytoolsoft.easyreport.membership.po.Module;
 
@@ -11,6 +12,8 @@ import java.util.List;
  * @author Tom Deng
  */
 public interface IModuleService extends ICrudService<Module> {
+    List<Module> getByPage(PageInfo pageInfo, Integer pid);
+
     List<Module> getModules(String moduleIds);
 
     List<Module> getChildren(int moduleId);

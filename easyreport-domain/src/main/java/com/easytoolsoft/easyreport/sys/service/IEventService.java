@@ -9,5 +9,5 @@ import com.easytoolsoft.easyreport.sys.po.Event;
  * @author Tom Deng
  */
 public interface IEventService extends ICrudService<Event> {
-    void add(String source, String message, int userId, String account, String level);
+
 }

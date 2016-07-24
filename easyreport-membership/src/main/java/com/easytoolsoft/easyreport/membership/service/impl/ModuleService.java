@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.membership.dao.IModuleDao;
@@ -23,6 +24,12 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
         this.updateHasChild(record.getParentId(), true);
         String path = this.getPath(record.getParentId(), record.getId());
         return this.updatePath(record.getId(), path);
+    }
+
+    @Override
+    public List<Module> getByPage(PageInfo pageInfo, Integer pid) {
+        Map<String, Object> params = ParameterBuilder.getQueryParams(Module.builder().parentId(pid).build());
+        return this.getByPage(pageInfo, null, null, params);
     }
 
     @Override

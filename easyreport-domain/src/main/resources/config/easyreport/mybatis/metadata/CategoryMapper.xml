@@ -205,9 +205,8 @@
     <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) as total from ezrpt_meta_category
         <where>
-            <if test="where.keyword != null">
-                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
-            </if>
+            <if test="where.parentId != null">and parent_id = #{where.parentId,jdbcType=INTEGER}</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
         </where>
     </select>
     <select id="selectByPager" resultMap="CategoryMap" parameterType="java.util.Map">
@@ -215,9 +214,8 @@
         <include refid="Base_Column_List"/>
         from ezrpt_meta_category
         <where>
-            <if test="where.keyword != null">
-                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
-            </if>
+            <if test="where.parentId != null">and parent_id = #{where.parentId,jdbcType=INTEGER}</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')</if>
         </where>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by ${pager.sortItem} ${pager.sortType}
