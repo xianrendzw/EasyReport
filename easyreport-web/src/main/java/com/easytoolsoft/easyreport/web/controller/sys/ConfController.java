@@ -40,7 +40,6 @@ public class ConfController extends AbstractController {
 
     @RequestMapping(value = "/listChildren")
     public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
-
         List<Conf> list = this.confService.getByParentId(id == null ? 0 : id);
         List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
         for (Conf po : list) {
@@ -52,7 +51,6 @@ public class ConfController extends AbstractController {
             EasyUITreeNode<Conf> vmMode = new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po);
             EasyUITreeNodes.add(vmMode);
         }
-
         return EasyUITreeNodes;
     }
 
@@ -63,7 +61,6 @@ public class ConfController extends AbstractController {
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
-
         return modelMap;
     }
 
@@ -79,14 +76,12 @@ public class ConfController extends AbstractController {
             result.setMsg(String.format("增加配置项:[%s]操作失败!", po.getName()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/edit")
     public JsonResult edit(Conf po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.confService.editById(po);
             this.logSuccessResult(result, String.format("修改配置项[ID:%s]操作成功!", po.getId()), req);
@@ -94,14 +89,12 @@ public class ConfController extends AbstractController {
             result.setMsg(String.format("修改配置项:[%s]操作失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.confService.removeById(id);
             this.logSuccessResult(result, String.format("删除配置项[ID:%s]操作成功!", id), req);
@@ -109,21 +102,18 @@ public class ConfController extends AbstractController {
             result.setMsg(String.format("删除配置项[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/copy")
     public JsonResult copy(Conf po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.confService.add(po);
             this.logSuccessResult(result, String.format("复制系统配置项[%s]成功!", po.getKey()), req);
         } catch (Exception ex) {
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
