@@ -82,7 +82,7 @@ public abstract class AbstractController {
                         .url(req.getRequestURL().toString())
                         .gmtCreated(new Date())
                         .build();
-                eventService.add(event);
+                this.eventService.add(event);
             }
         } catch (Exception e) {
             log.error("记录系统事件出错", e);
