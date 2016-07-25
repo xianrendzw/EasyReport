@@ -7,10 +7,8 @@ import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnExceptio
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
-import com.easytoolsoft.easyreport.metadata.po.ReportingPo;
 import com.easytoolsoft.easyreport.metadata.service.impl.ReportChartService;
 import com.easytoolsoft.easyreport.metadata.service.impl.ReportingGenerationService;
-import com.easytoolsoft.easyreport.metadata.service.impl.ReportingService;
 import com.easytoolsoft.easyreport.web.controller.AbstractController;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
 import org.springframework.stereotype.Controller;

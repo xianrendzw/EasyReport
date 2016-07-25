@@ -1,8 +1,5 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
-import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.metadata.po.ConfigDictPo;
-import com.easytoolsoft.easyreport.metadata.service.impl.ConfigDictService;
 import com.easytoolsoft.easyreport.web.common.JsonResult;
 import com.easytoolsoft.easyreport.web.controller.AbstractController;
 import org.springframework.stereotype.Controller;

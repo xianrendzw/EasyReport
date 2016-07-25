@@ -1,7 +1,6 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.metadata.po.DataSourcePo;
 import com.easytoolsoft.easyreport.metadata.service.impl.DataSourceService;
 import com.easytoolsoft.easyreport.web.common.JsonResult;
 import com.easytoolsoft.easyreport.web.controller.AbstractController;

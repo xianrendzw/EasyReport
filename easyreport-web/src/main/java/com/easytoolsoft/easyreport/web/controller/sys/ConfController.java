@@ -1,7 +1,14 @@
 package com.easytoolsoft.easyreport.web.controller.sys;
 
-import org.springframework.stereotype.Controller;
+import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.sys.po.Conf;
+import com.easytoolsoft.easyreport.sys.service.IConfService;
+import com.easytoolsoft.easyreport.web.common.DataGridPager;
+import com.easytoolsoft.easyreport.web.common.JsonResult;
+import com.easytoolsoft.easyreport.web.controller.AbstractController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping(value = "/sys/dict")
+@RestController
+@RequestMapping(value = "/rest/sys/dict")
 public class ConfController extends AbstractController {
     @Resource
-    private IConfigService configService;
+    private IConfService confService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
@@ -23,49 +30,37 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/list")
-
-    public Map<String, Object> list(Integer id, HttpServletRequest req) {
-        if (id == null) {
-            id = 0;
-        }
-
-        List<Config> list = this.configService.queryByParentId(id);
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
+    public Map<String, Object> list(Integer id) {
+        List<Conf> list = this.confService.getByParentId(id == null ? 0 : id);
+        Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", list.size());
         modelMap.put("rows", list);
         return modelMap;
     }
 
-    @RequestMapping(value = "/listchildren")
+    @RequestMapping(value = "/listChildren")
+    public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
 
-    public List<TreeNode<Config>> listChildren(Integer id, HttpServletRequest req) {
-        if (id == null) {
-            id = 0;
-        }
-        List<Config> list = this.configService.queryByParentId(id);
-        List<TreeNode<Config>> treeNodes = new ArrayList<TreeNode<Config>>(list.size());
-        for (Config po : list) {
-            String configId = Integer.toString(po.getId());
-            String pid = Integer.toString(po.getPid());
+        List<Conf> list = this.confService.getByParentId(id == null ? 0 : id);
+        List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
+        for (Conf po : list) {
+            String ConfId = Integer.toString(po.getId());
+            String pid = Integer.toString(po.getParentId());
             String text = po.getName();
             String state = po.getHasChild() > 0 ? "closed" : "open";
             String icon = po.getHasChild() > 0 ? "icon-dict2" : "icon-item1";
-            TreeNode<Config> vmMode = new TreeNode<Config>(configId, pid, text, state, icon, false, po);
-            treeNodes.add(vmMode);
+            EasyUITreeNode<Conf> vmMode = new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po);
+            EasyUITreeNodes.add(vmMode);
         }
 
-        return treeNodes;
+        return EasyUITreeNodes;
     }
 
     @RequestMapping(value = "/find")
-
-    public Map<String, Object> find(String fieldName, String keyword, DataGridPager pager, HttpServletRequest req) {
-        pager.setDefaultSort(Config.getColumnName(""));
-        pager.setSort(Config.getColumnName(pager.getSort()));
-        PageInfo pageInfo = new PageInfo((pager.getPage() - 1) * pager.getRows(),
-                pager.getRows(), pager.getSort(), pager.getOrder());
-        List<Config> list = this.configService.queryForPage(pageInfo, fieldName, keyword);
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
+    public Map<String, Object> find(String fieldName, String keyword, DataGridPager pager) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Conf> list = this.confService.getByPage(pageInfo, fieldName, keyword);
+        Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
 
@@ -73,13 +68,12 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/add")
-
-    public JsonResult add(Config po, HttpServletRequest req) {
-        JsonResult result = new JsonResult();
+    public JsonResult add(Conf po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            po.setGmtCreate(new Date());
+            po.setGmtCreated(new Date());
             po.setGmtModified(new Date());
-            this.configService.add(po);
+            this.confService.add(po);
             this.logSuccessResult(result, String.format("增加配置项[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
             result.setMsg(String.format("增加配置项:[%s]操作失败!", po.getName()));
@@ -90,12 +84,11 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/edit")
-
-    public JsonResult edit(Config po, HttpServletRequest req) {
-        JsonResult result = new JsonResult();
+    public JsonResult edit(Conf po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
 
         try {
-            this.configService.editSelective(po);
+            this.confService.editById(po);
             this.logSuccessResult(result, String.format("修改配置项[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
             result.setMsg(String.format("修改配置项:[%s]操作失败!", po.getId()));
@@ -106,12 +99,11 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/remove")
-
     public JsonResult remove(int id, HttpServletRequest req) {
-        JsonResult result = new JsonResult();
+        JsonResult<String> result = new JsonResult<>();
 
         try {
-            this.configService.remove(id);
+            this.confService.removeById(id);
             this.logSuccessResult(result, String.format("删除配置项[ID:%s]操作成功!", id), req);
         } catch (Exception ex) {
             result.setMsg(String.format("删除配置项[ID:%s]操作失败!", id));
@@ -122,13 +114,12 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/copy")
-
-    public JsonResult copy(Config po, HttpServletRequest req) {
-        JsonResult result = new JsonResult();
+    public JsonResult copy(Conf po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
 
         try {
-            this.configService.add(po);
-            this.logSuccessResult(result, String.format("复制系统配置项[%s]成功!", po.getK()), req);
+            this.confService.add(po);
+            this.logSuccessResult(result, String.format("复制系统配置项[%s]成功!", po.getKey()), req);
         } catch (Exception ex) {
             this.logExceptionResult(result, ex, req);
         }
@@ -137,15 +128,12 @@ public class ConfController extends AbstractController {
     }
 
     @RequestMapping(value = "/getDepth1Items")
-
-    public List<Config> getDepth1Items(String parentKey) {
-        return this.configService.getDepth1Items(parentKey);
+    public List<Conf> getDepth1Items(String parentKey) {
+        return this.confService.getDepth1Items(parentKey);
     }
 
     @RequestMapping(value = "/getDepth2Items")
-
-    public Map<String, List<Config>> getDepth2Items(String parentKey) {
-        return this.configService.getDepth2Items(parentKey);
+    public Map<String, List<Conf>> getDepth2Items(String parentKey) {
+        return this.confService.getDepth2Items(parentKey);
     }
-
 }

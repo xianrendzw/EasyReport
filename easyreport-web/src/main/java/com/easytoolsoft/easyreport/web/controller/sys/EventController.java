@@ -1,5 +1,10 @@
 package com.easytoolsoft.easyreport.web.controller.sys;
 
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.sys.po.Event;
+import com.easytoolsoft.easyreport.sys.service.IEventService;
+import com.easytoolsoft.easyreport.web.common.DataGridPager;
+import com.easytoolsoft.easyreport.web.controller.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/sys/event")
+@RequestMapping(value = "/rest/sys/event")
 public class EventController extends AbstractController {
     @Resource
     private IEventService eventService;
@@ -21,22 +26,16 @@ public class EventController extends AbstractController {
     }
 
     @RequestMapping(value = "/list")
-
-    public Map<String, Object> list(DataGridPager pager, HttpServletRequest req) {
-        pager.setDefaultSort(Event.getColumnName(""));
-        pager.setSort(Event.getColumnName(pager.getSort()));
-        PageInfo pageInfo = new PageInfo((pager.getPage() - 1) * pager.getRows(),
-                pager.getRows(), pager.getSort(), pager.getOrder());
-        List<Event> list = this.eventService.queryForPage(pageInfo);
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
+    public Map<String, Object> list(DataGridPager pager) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Event> list = this.eventService.getByPage(pageInfo);
+        Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
-
         return modelMap;
     }
 
     @RequestMapping(value = "/find")
-
     public Map<String, Object> find(String fieldName, String keyword, DataGridPager pager, HttpServletRequest req) {
         pager.setDefaultSort(Event.getColumnName(""));
         pager.setSort(Event.getColumnName(pager.getSort()));
@@ -51,7 +50,6 @@ public class EventController extends AbstractController {
     }
 
     @RequestMapping(value = "/remove")
-
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult result = new JsonResult();
 
@@ -67,7 +65,6 @@ public class EventController extends AbstractController {
     }
 
     @RequestMapping(value = "/clear")
-
     public JsonResult clear(HttpServletRequest req) {
         JsonResult result = new JsonResult();
         try {
@@ -78,5 +75,4 @@ public class EventController extends AbstractController {
         }
         return result;
     }
-
 }
