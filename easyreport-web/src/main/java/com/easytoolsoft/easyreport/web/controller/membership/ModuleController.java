@@ -91,14 +91,12 @@ public class ModuleController extends AbstractController {
             result.setMsg(String.format("增加模块:[%s]操作失败!", po.getName()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/edit")
     public JsonResult edit(Module po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.moduleService.editById(po);
             this.logSuccessResult(result, String.format("修改模块[ID:%s]操作成功!", po.getId()), req);
@@ -106,14 +104,12 @@ public class ModuleController extends AbstractController {
             result.setMsg(String.format("修改模块:[%s]操作失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(Integer id, Integer pid, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.moduleService.remove(id, pid);
             this.logSuccessResult(result, String.format("删除模块[ID:%s]操作成功!", id), req);
@@ -121,7 +117,6 @@ public class ModuleController extends AbstractController {
             result.setMsg(String.format("删除模块[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
@@ -148,7 +143,6 @@ public class ModuleController extends AbstractController {
     @RequestMapping(value = "/move")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid, HttpServletRequest req) {
         JsonResult result = new JsonResult();
-
         try {
             this.moduleService.move(sourceId, targetId, sourcePid);
             this.logSuccessResult(result, String.format("移动模块[ID:%s]到[ID:%s]操作成功!", sourceId, targetId), req);
@@ -156,14 +150,12 @@ public class ModuleController extends AbstractController {
             result.setMsg(String.format("移动模块[ID:%s]到[ID:%s]操作失败!", sourceId, targetId));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/rebuildPath")
     public JsonResult rebuildPath(HttpServletRequest req) {
         JsonResult result = new JsonResult();
-
         try {
             this.moduleService.rebuildAllPath();
             this.logSuccessResult(result, "重新模块树路径成功", req);
@@ -171,7 +163,6 @@ public class ModuleController extends AbstractController {
             result.setMsg("重新模块树路径失败");
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 }

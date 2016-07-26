@@ -56,7 +56,6 @@ public class PermissionController extends AbstractController {
     @RequestMapping(value = "/edit")
     public JsonResult edit(Permission po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.permissionService.editById(po);
             this.permissionService.reloadCache();
@@ -65,14 +64,12 @@ public class PermissionController extends AbstractController {
             result.setMsg(String.format("修改权限:[%s]操作失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.permissionService.removeById(id);
             this.permissionService.reloadCache();
@@ -81,7 +78,6 @@ public class PermissionController extends AbstractController {
             result.setMsg(String.format("删除权限[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 }

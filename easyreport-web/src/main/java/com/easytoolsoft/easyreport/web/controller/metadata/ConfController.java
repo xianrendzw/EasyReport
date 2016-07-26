@@ -1,113 +1,109 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
+import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.metadata.po.Conf;
+import com.easytoolsoft.easyreport.metadata.service.IConfService;
+import com.easytoolsoft.easyreport.web.common.DataGridPager;
 import com.easytoolsoft.easyreport.web.common.JsonResult;
 import com.easytoolsoft.easyreport.web.controller.AbstractController;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报表配置控制器
  */
-@Controller
-@RequestMapping(value = "/report/config")
+@RestController
+@RequestMapping(value = "/rest/metadata/conf")
 public class ConfController extends AbstractController {
     @Resource
-    private ConfigDictService configDictService;
+    private IConfService confService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "report/config";
     }
 
-    @RequestMapping(value = "/query")
+    @RequestMapping(value = "/list")
+    public Map<String, Object> list(Integer id) {
+        List<Conf> list = this.confService.getByParentId(id == null ? 0 : id);
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", list.size());
+        modelMap.put("rows", list);
+        return modelMap;
+    }
 
-    public List<ConfigDictPo> query(Integer id) {
-        if (id == null)
-            id = 0;
-        return this.configDictService.getDao().queryByPid(id);
+    @RequestMapping(value = "/listChildren")
+    public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
+        List<Conf> list = this.confService.getByParentId(id == null ? 0 : id);
+        List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
+        for (Conf po : list) {
+            String ConfId = Integer.toString(po.getId());
+            String pid = Integer.toString(po.getParentId());
+            String text = po.getName();
+            String state = po.isHasChild() ? "closed" : "open";
+            String icon = po.isHasChild() ? "icon-dict2" : "icon-item1";
+            EasyUITreeNodes.add(new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po));
+        }
+        return EasyUITreeNodes;
+    }
+
+    @RequestMapping(value = "/find")
+    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Conf> list = this.confService.getByPage(pageInfo, fieldName, keyword);
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", pageInfo.getTotals());
+        modelMap.put("rows", list);
+        return modelMap;
     }
 
     @RequestMapping(value = "/add")
-
-    public JsonResult add(ConfigDictPo po) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult add(Conf po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            this.configDictService.add(po);
-            this.setSuccessResult(result, "");
+            po.setGmtCreated(new Date());
+            po.setGmtModified(new Date());
+            this.confService.add(po);
+            this.logSuccessResult(result, String.format("增加配置项[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("增加配置项:[%s]操作失败!", po.getName()));
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/edit")
-
-    public JsonResult edit(ConfigDictPo po) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult edit(Conf po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            this.configDictService.edit(po);
-            this.setSuccessResult(result, "");
+            this.confService.editById(po);
+            this.logSuccessResult(result, String.format("修改配置项[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("修改配置项:[%s]操作失败!", po.getId()));
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
-
-    public JsonResult remove(int id) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult remove(int id, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            this.configDictService.remove(id);
-            this.setSuccessResult(result, "");
+            this.confService.removeById(id);
+            this.logSuccessResult(result, String.format("删除配置项[ID:%s]操作成功!", id), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("删除配置项[ID:%s]操作失败!", id));
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
-    }
-
-    @RequestMapping(value = "/batchRemove")
-
-    public JsonResult remove(String ids) {
-        JsonResult result = new JsonResult(false, "");
-
-        try {
-            this.configDictService.remove(ids);
-            this.setSuccessResult(result, "");
-        } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
-        }
-
-        return result;
-    }
-
-    @RequestMapping(value = "/listchildnodes")
-
-    public List<EasyUITreeNode<ConfigDictPo>> listChildNodes(Integer id) {
-        if (id == null)
-            id = 0;
-
-        List<ConfigDictPo> configDicts = this.configDictService.getDao().queryByPid(id);
-        List<EasyUITreeNode<ConfigDictPo>> treeNodes = new ArrayList<EasyUITreeNode<ConfigDictPo>>(configDicts.size());
-
-        for (ConfigDictPo po : configDicts) {
-            String configId = Integer.toString(po.getId());
-            String text = po.getName();
-            String state = "closed";
-            EasyUITreeNode<ConfigDictPo> vmMode = new EasyUITreeNode<ConfigDictPo>(configId, text, state, po);
-            treeNodes.add(vmMode);
-        }
-
-        return treeNodes;
     }
 }

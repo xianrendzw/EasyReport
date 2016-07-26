@@ -7,13 +7,13 @@ import java.util.List;
  * jQueryEasyUI(http://www.jeasyui.com/)树节点视图数据模型类
  */
 public class EasyUITreeNode<T> {
-    private final String id;
-    private final String pid;
-    private final String text;
-    private final String state;
-    private final String iconCls;
-    private final boolean checked;
-    private final T attributes;
+    private String id;
+    private String pid;
+    private String text;
+    private String state;
+    private String iconCls;
+    private boolean checked;
+    private T attributes;
     private final List<EasyUITreeNode<T>> children = new ArrayList<>();
 
     public EasyUITreeNode(String id, String pid, String text) {
@@ -28,7 +28,8 @@ public class EasyUITreeNode<T> {
         this(id, pid, text, state, "", false, attributes);
     }
 
-    public EasyUITreeNode(String id, String pid, String text, String state, String iconCls, boolean checked, T attributes) {
+    public EasyUITreeNode(String id, String pid, String text, String state, String iconCls,
+                          boolean checked, T attributes) {
         this.id = id;
         this.pid = pid;
         this.text = text;
@@ -64,6 +65,34 @@ public class EasyUITreeNode<T> {
 
     public T getAttributes() {
         return this.attributes;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void setAttributes(T attributes) {
+        this.attributes = attributes;
     }
 
     public List<EasyUITreeNode<T>> getChildren() {

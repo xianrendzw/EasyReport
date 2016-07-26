@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/report/chart")
-public class ReportChartController extends AbstractController {
+public class ChartReportController extends AbstractController {
     @Resource
     private ReportingService reportingService;
     @Resource

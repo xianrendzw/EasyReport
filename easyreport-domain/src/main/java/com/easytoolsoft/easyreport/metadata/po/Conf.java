@@ -56,4 +56,8 @@ public class Conf implements Serializable {
      * 记录修改时间
      */
     private Date gmtModified;
+    /**
+     * 是否有子配置项
+     */
+    private boolean hasChild;
 }

@@ -46,16 +46,15 @@ public class ConfController extends AbstractController {
             String ConfId = Integer.toString(po.getId());
             String pid = Integer.toString(po.getParentId());
             String text = po.getName();
-            String state = po.getHasChild() > 0 ? "closed" : "open";
-            String icon = po.getHasChild() > 0 ? "icon-dict2" : "icon-item1";
-            EasyUITreeNode<Conf> vmMode = new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po);
-            EasyUITreeNodes.add(vmMode);
+            String state = po.isHasChild() ? "closed" : "open";
+            String icon = po.isHasChild() ? "icon-dict2" : "icon-item1";
+            EasyUITreeNodes.add(new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po));
         }
         return EasyUITreeNodes;
     }
 
     @RequestMapping(value = "/find")
-    public Map<String, Object> find(String fieldName, String keyword, DataGridPager pager) {
+    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<Conf> list = this.confService.getByPage(pageInfo, fieldName, keyword);
         Map<String, Object> modelMap = new HashMap<>(2);
@@ -119,11 +118,13 @@ public class ConfController extends AbstractController {
 
     @RequestMapping(value = "/getDepth1Items")
     public List<Conf> getDepth1Items(String parentKey) {
-        return this.confService.getDepth1Items(parentKey);
+        return new ArrayList<>(0);
+        // return this.confService.getDepth1Items(parentKey);
     }
 
     @RequestMapping(value = "/getDepth2Items")
     public Map<String, List<Conf>> getDepth2Items(String parentKey) {
-        return this.confService.getDepth2Items(parentKey);
+        return new HashMap<>(0);
+        //return this.confService.getDepth2Items(parentKey);
     }
 }

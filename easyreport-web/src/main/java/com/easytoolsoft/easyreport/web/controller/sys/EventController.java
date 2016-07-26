@@ -49,7 +49,6 @@ public class EventController extends AbstractController {
     @RequestMapping(value = "/remove")
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.eventService.removeById(id);
             this.logSuccessResult(result, String.format("删除日志记录[ID:%s]操作成功!", id), req);
@@ -57,7 +56,6 @@ public class EventController extends AbstractController {
             result.setMsg(String.format("删除日志记录[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 

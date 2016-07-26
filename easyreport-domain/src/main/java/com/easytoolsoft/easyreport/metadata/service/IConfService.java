@@ -4,6 +4,7 @@ import com.easytoolsoft.easyreport.data.service.ICrudService;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.metadata.po.Conf;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,6 +13,12 @@ import java.util.Map;
  * @author Tom Deng
  */
 public interface IConfService extends ICrudService<Conf> {
+    /**
+     * @param parentId
+     * @return
+     */
+    List<Conf> getByParentId(Integer parentId);
+
     /**
      * @return
      */

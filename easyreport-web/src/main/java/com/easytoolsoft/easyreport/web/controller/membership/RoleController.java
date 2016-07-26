@@ -86,7 +86,6 @@ public class RoleController extends AbstractController {
             result.setMsg(String.format("增加角色:[%s]操作失败!", po.getName()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
@@ -100,14 +99,12 @@ public class RoleController extends AbstractController {
             result.setMsg(String.format("修改角色:[%s]操作失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.roleService.removeById(id);
             this.logSuccessResult(result, String.format("删除角色[ID:%s]操作成功!", id), req);
@@ -115,7 +112,6 @@ public class RoleController extends AbstractController {
             result.setMsg(String.format("删除角色[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
@@ -135,7 +131,6 @@ public class RoleController extends AbstractController {
     @RequestMapping(value = "/authorize")
     public JsonResult authorize(Role po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             po.setPermissions(StringUtils.stripEnd(po.getPermissions(), ","));
             po.setModules(permissionService.getModuleIds(po.getPermissions()));
@@ -145,7 +140,6 @@ public class RoleController extends AbstractController {
             result.setMsg(String.format("给角色[ID:%s]授权失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
@@ -199,7 +193,7 @@ public class RoleController extends AbstractController {
     }
 
     private List<EasyUITreeNode<String>> buildTree(Collection<EasyUITreeNode<String>> nodes) {
-        if (nodes == null || nodes.size() == 0) {
+        if (CollectionUtils.isEmpty(nodes)) {
             return new ArrayList<>(0);
         }
 
@@ -219,7 +213,7 @@ public class RoleController extends AbstractController {
                 .filter(treeNode -> treeNode.getPId().equals(node.getId()))
                 .collect(Collectors.toList()));
         for (EasyUITreeNode<String> childNode : childNodes) {
-            //node.setState("closed");
+            node.setState("closed");
             node.getChildren().add(childNode);
             getChildNodes(nodes, childNode);
         }

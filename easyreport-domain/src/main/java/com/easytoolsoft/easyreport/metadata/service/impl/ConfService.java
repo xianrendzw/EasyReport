@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.metadata.service.impl;
 
+import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
@@ -31,6 +32,12 @@ public class ConfService extends AbstractCrudService<IConfDao, Conf> implements 
      * 常见可选列对应的配置字典表中的Key
      */
     private static final String OPTION_COLUMN = "optionalColumn";
+
+    @Override
+    public List<Conf> getByParentId(Integer parentId) {
+        Map<String, Object> params = ParameterBuilder.getQueryParams(Conf.builder().parentId(parentId).build());
+        return this.dao.select(params);
+    }
 
     @Override
     public Map<String, ReportMetaDataColumn> getCommonColumns() {

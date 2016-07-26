@@ -1,7 +1,9 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.metadata.service.impl.DataSourceService;
+import com.easytoolsoft.easyreport.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.metadata.service.IDataSourceService;
+import com.easytoolsoft.easyreport.web.common.DataGridPager;
 import com.easytoolsoft.easyreport.web.common.JsonResult;
 import com.easytoolsoft.easyreport.web.controller.AbstractController;
 import org.springframework.stereotype.Controller;
@@ -13,137 +15,107 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * 报表数据源控制器
  */
 @Controller
-@RequestMapping(value = "report/ds")
+@RequestMapping(value = "/rest/metadata/ds")
 public class DataSourceController extends AbstractController {
     @Resource
-    private DataSourceService datasourceService;
+    private IDataSourceService dsService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "report/dataSource";
     }
 
-    @RequestMapping(value = "/list")
-
-    public List<DataSourcePo> list(HttpServletRequest request) {
-        return this.datasourceService.getAll(DataSourcePo.Id, DataSourcePo.Uid, DataSourcePo.Name);
+    @RequestMapping(value = "/listAll")
+    public List<DataSource> listAll(HttpServletRequest req) {
+        return this.dsService.getAll().stream()
+                .map(x -> DataSource.builder()
+                        .id(x.getId())
+                        .uid(x.getUid())
+                        .name(x.getName())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/query")
-
-    public Map<String, Object> query(Integer page, Integer rows, HttpServletRequest request) {
-        if (page == null)
-            page = 1;
-        if (rows == null)
-            rows = 50;
-
-        PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
-        String[] columnNames = new String[]{
-                DataSourcePo.Id, DataSourcePo.Name, DataSourcePo.Uid,
-                DataSourcePo.JdbcUrl, DataSourcePo.CreateUser, DataSourcePo.CreateTime};
-        List<DataSourcePo> list = this.datasourceService.getByPage(pageInfo, columnNames);
-
-        Map<String, Object> modelMap = new HashMap<String, Object>(2);
+    @RequestMapping(value = "/list")
+    public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword,
+                                    HttpServletRequest req) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<DataSource> list = this.dsService.getByPage(pageInfo, fieldName, keyword);
+        Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
         return modelMap;
     }
 
     @RequestMapping(value = "/add")
-
-    public JsonResult add(DataSourcePo po, HttpServletRequest request) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult add(DataSource po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
             po.setUid(UUID.randomUUID().toString());
-            this.datasourceService.add(po);
-            this.setSuccessResult(result, "");
+            this.dsService.add(po);
+            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("修改数据源:[%s]操作失败!", po.getId()));
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/edit")
-
-    public JsonResult edit(DataSourcePo po, HttpServletRequest request) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult edit(DataSource po, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            String[] columnNames = new String[]{
-                    DataSourcePo.Name, DataSourcePo.User,
-                    DataSourcePo.Password, DataSourcePo.JdbcUrl};
-            this.datasourceService.edit(po, columnNames);
-            this.setSuccessResult(result, "");
+            this.dsService.editById(po);
+            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", po.getId()), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("修改数据源:[%s]操作失败!", po.getId()));
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/testConnection")
-
-    public JsonResult testConnection(String url, String pass, String user) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult testConnection(String url, String pass, String user, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            result.setSuccess(this.datasourceService.getDao().testConnection(url, user, pass));
+            result.setSuccess(this.dsService.testConnection(url, user, pass));
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            this.logExceptionResult(result, ex, req);
         }
 
         return result;
     }
 
     @RequestMapping(value = "/testConnectionById")
-
-    public JsonResult testConnection(Integer id) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult testConnection(Integer id, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            DataSourcePo dsPo = this.datasourceService.getById(id);
-            result.setSuccess(this.datasourceService.getDao().testConnection(dsPo.getJdbcUrl(), dsPo.getUser(), dsPo.getPassword()));
+            DataSource dsPo = this.dsService.getById(id);
+            result.setSuccess(this.dsService.testConnection(
+                    dsPo.getJdbcUrl(),
+                    dsPo.getUser(), dsPo.getPassword()));
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
-
-    public JsonResult remove(int id, HttpServletRequest request) {
-        JsonResult result = new JsonResult(false, "");
-
+    public JsonResult remove(int id, HttpServletRequest req) {
+        JsonResult<String> result = new JsonResult<>();
         try {
-            this.datasourceService.removeById(id);
-            this.setSuccessResult(result, "");
+            this.dsService.removeById(id);
+            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", id), req);
         } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
+            result.setMsg(String.format("修改数据源:[%s]操作失败!", id));
+            this.logExceptionResult(result, ex, req);
         }
-
-        return result;
-    }
-
-    @RequestMapping(value = "/batchRemove")
-
-    public JsonResult remove(String ids, HttpServletRequest request) {
-        JsonResult result = new JsonResult(false, "您没有权限执行该操作!");
-
-        try {
-            this.datasourceService.remove(ids);
-            this.setSuccessResult(result, "");
-        } catch (Exception ex) {
-            this.setExceptionResult(result, ex);
-        }
-
         return result;
     }
 }

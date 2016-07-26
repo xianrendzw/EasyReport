@@ -25,8 +25,8 @@ import java.util.Map;
  * 报表设计器控制器
  */
 @Controller
-@RequestMapping(value = "report/designer")
-public class DesignerController extends AbstractController {
+@RequestMapping(value = "/rest/metadata/report")
+public class ReportController extends AbstractController {
     @Resource
     private ReportingService reportingService;
     @Resource

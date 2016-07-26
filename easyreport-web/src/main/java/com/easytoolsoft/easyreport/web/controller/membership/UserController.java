@@ -65,14 +65,12 @@ public class UserController extends AbstractController {
             result.setMsg(String.format("增加用户:[%s]操作失败!", po.getName()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/edit")
     public JsonResult edit(User po, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.userService.editById(po);
             this.logSuccessResult(result, String.format("修改用户[ID:%s]操作成功!", po.getId()), req);
@@ -80,14 +78,12 @@ public class UserController extends AbstractController {
             result.setMsg(String.format("修改用户:[%s]操作失败!", po.getId()));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(int id, HttpServletRequest req) {
         JsonResult<String> result = new JsonResult<>();
-
         try {
             this.userService.removeById(id);
             this.logSuccessResult(result, String.format("删除用户[ID:%s]操作成功!", id), req);
@@ -95,7 +91,6 @@ public class UserController extends AbstractController {
             result.setMsg(String.format("删除用户[ID:%s]操作失败!", id));
             this.logExceptionResult(result, ex, req);
         }
-
         return result;
     }
 

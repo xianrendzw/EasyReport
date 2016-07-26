@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "/report")
-public class ReportController extends AbstractController {
+public class TableReportController extends AbstractController {
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index(HttpServletRequest request) {
