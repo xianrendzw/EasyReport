@@ -3,16 +3,22 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.metadata.po.Category;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
-import com.easytoolsoft.easyreport.metadata.service.impl.DataSourceService;
-import com.easytoolsoft.easyreport.report.impl.TableReportService;
+import com.easytoolsoft.easyreport.metadata.service.ICategoryService;
+import com.easytoolsoft.easyreport.metadata.service.IConfService;
+import com.easytoolsoft.easyreport.metadata.service.IDataSourceService;
+import com.easytoolsoft.easyreport.metadata.service.IReportHistoryService;
+import com.easytoolsoft.easyreport.metadata.service.IReportService;
+import com.easytoolsoft.easyreport.report.ITableReportService;
 import com.easytoolsoft.easyreport.metadata.vo.QueryParameter;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,25 +26,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 报表设计器控制器
  */
-@Controller
+@RestController
 @RequestMapping(value = "/rest/metadata/report")
 public class ReportController extends AbstractController {
     @Resource
-    private ReportingService reportingService;
+    private IReportService reportService;
     @Resource
-    private ReportingTreeService reportingTreeService;
+    private ICategoryService categoryService;
     @Resource
-    private TableReportService generationService;
+    private ITableReportService tableReportService;
     @Resource
-    private DataSourceService datasourceService;
+    private IDataSourceService dsService;
     @Resource
-    private ReportingSqlHistoryService sqlHistoryService;
+    private IReportHistoryService reportHistoryService;
     @Resource
-    private ConfigDictService configDictService;
+    private IConfService confService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String home() {
@@ -46,18 +53,15 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/listChildNodes")
-
-    public List<EasyUITreeNode<ReportingPo>> listChildNodes(Integer id, HttpServletRequest request) {
+    public List<EasyUITreeNode<Category>> listChildNodes(Integer id) {
         if (id == null) {
             id = 0;
         }
 
-        List<EasyUITreeNode<ReportingPo>> treeNodes = new ArrayList<EasyUITreeNode<ReportingPo>>();
+        List<EasyUITreeNode<Category>> treeNodes = new ArrayList<>();
         try {
-            List<ReportingPo> reportingPos = this.reportingService.getByPid(id);
-            for (ReportingPo po : reportingPos) {
-                treeNodes.add(this.createTreeNode(po));
-            }
+            List<Category> reportingPos = this.categoryService.getChildren(id);
+            treeNodes.addAll(reportingPos.stream().map(this::createTreeNode).collect(Collectors.toList()));
         } catch (Exception ex) {
             this.logException(ex);
         }
@@ -66,7 +70,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/loadSqlColumns")
-
     public ParamJsonResult<List<ReportMetaDataColumn>> loadSqlColumns(Integer dsId, String sqlText, Integer dataRange,
                                                                       String jsonQueryParams, HttpServletRequest request) {
         ParamJsonResult<List<ReportMetaDataColumn>> result = new ParamJsonResult<List<ReportMetaDataColumn>>(false, "");
@@ -76,7 +79,7 @@ public class ReportController extends AbstractController {
 
         try {
             sqlText = this.getSqlText(sqlText, dataRange, jsonQueryParams, request);
-            result.setData(this.reportingService.getReportMetaDataColumns(dsId, sqlText));
+            result.setData(this.reportService.getReportMetaDataColumns(dsId, sqlText));
             result.setSuccess(true);
         } catch (Exception ex) {
             this.setExceptionResult(result, ex);
@@ -85,7 +88,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/viewSqlText")
-
     public ParamJsonResult<String> viewSqlText(Integer dsId, String sqlText, Integer dataRange, String jsonQueryParams,
                                                HttpServletRequest request) {
         ParamJsonResult<String> result = new ParamJsonResult<String>(false, "");
@@ -96,7 +98,7 @@ public class ReportController extends AbstractController {
 
         try {
             sqlText = this.getSqlText(sqlText, dataRange, jsonQueryParams, request);
-            this.reportingService.explainSqlText(dsId, sqlText);
+            this.reportService.explainSqlText(dsId, sqlText);
             result.setData(sqlText);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
@@ -106,7 +108,7 @@ public class ReportController extends AbstractController {
     }
 
     private String getSqlText(String sqlText, Integer dataRange, String jsonQueryParams, HttpServletRequest request) {
-        Map<String, Object> formParameters = generationService.getBuildInParameters(request.getParameterMap(),
+        Map<String, Object> formParameters = tableReportService.getBuildInParameters(request.getParameterMap(),
                 dataRange);
         if (StringUtils.isNotBlank(jsonQueryParams)) {
             List<QueryParameter> queryParams = JSON.parseArray(jsonQueryParams, QueryParameter.class);
@@ -120,7 +122,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/getSqlColumn")
-
     public ReportMetaDataColumn getSqlColumn() {
         ReportMetaDataColumn sqlColumnPo = new ReportMetaDataColumn();
         sqlColumnPo.setName("expr");
@@ -131,7 +132,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/getHistorySqlText")
-
     public Map<String, Object> getHistorySqlText(Integer page, Integer rows, Integer reportId,
                                                  HttpServletRequest request) {
         if (reportId == null)
@@ -144,7 +144,7 @@ public class ReportController extends AbstractController {
         PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
         Map<String, Object> modelMap = new HashMap<String, Object>(2);
         try {
-            List<ReportingSqlHistoryPo> list = this.sqlHistoryService.getByPage(pageInfo, reportId);
+            List<ReportingSqlHistoryPo> list = this.reportHistoryService.getByPage(pageInfo, reportId);
             modelMap.put("total", pageInfo.getTotals());
             modelMap.put("rows", list);
         } catch (Exception ex) {
@@ -154,16 +154,15 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/addTreeNode")
-
-    public ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> addTreeNode(ReportingPo po, HttpServletRequest request) {
-        ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> result = new ParamJsonResult<List<EasyUITreeNode<ReportingPo>>>(false,
+    public ParamJsonResult<List<EasyUITreeNode<Report>>> addTreeNode(Report po, HttpServletRequest request) {
+        ParamJsonResult<List<EasyUITreeNode<Report>>> result = new ParamJsonResult<List<EasyUITreeNode<Report>>>(false,
                 "");
 
         try {
-            po.setId(this.reportingService.addReport(po));
-            po = this.reportingService.getById(po.getId());
-            List<EasyUITreeNode<ReportingPo>> nodes = new ArrayList<EasyUITreeNode<ReportingPo>>();
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(po);
+            po.setId(this.reportService.addReport(po));
+            po = this.reportService.getById(po.getId());
+            List<EasyUITreeNode<Report>> nodes = new ArrayList<EasyUITreeNode<Report>>();
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(po);
             nodes.add(treeNode);
             result.setData(nodes);
             this.setSuccessResult(result, "");
@@ -175,14 +174,13 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/editTreeNode")
-
-    public ParamJsonResult<EasyUITreeNode<ReportingPo>> editTreeNode(ReportingPo po, HttpServletRequest request) {
-        ParamJsonResult<EasyUITreeNode<ReportingPo>> result = new ParamJsonResult<EasyUITreeNode<ReportingPo>>(false, "");
+    public ParamJsonResult<EasyUITreeNode<Report>> editTreeNode(Report po, HttpServletRequest request) {
+        ParamJsonResult<EasyUITreeNode<Report>> result = new ParamJsonResult<EasyUITreeNode<Report>>(false, "");
 
         try {
-            this.reportingTreeService.editNode(po);
-            po = this.reportingService.getById(po.getId());
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(po);
+            this.categoryService.editNode(po);
+            po = this.reportService.getById(po.getId());
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(po);
             result.setData(treeNode);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
@@ -192,12 +190,11 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/dragTreeNode")
-
     public JsonResult dragTreeNode(Integer sourceId, Integer targetId, Integer sourcePid, HttpServletRequest request) {
         JsonResult result = new JsonResult(false, "");
 
         try {
-            this.reportingTreeService.dragNode(sourceId, targetId, sourcePid);
+            this.categoryService.dragNode(sourceId, targetId, sourcePid);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
             this.setExceptionResult(result, ex);
@@ -206,10 +203,9 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/pasteTreeNode")
-
-    public ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> pasteTreeNode(Integer sourceId, Integer targetId,
+    public ParamJsonResult<List<EasyUITreeNode<Report>>> pasteTreeNode(Integer sourceId, Integer targetId,
                                                                             HttpServletRequest request) {
-        ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> result = new ParamJsonResult<List<EasyUITreeNode<ReportingPo>>>(false, "");
+        ParamJsonResult<List<EasyUITreeNode<Report>>> result = new ParamJsonResult<List<EasyUITreeNode<Report>>>(false, "");
 
         if (sourceId == null || sourceId <= 0 || targetId == null || targetId < 0) {
             result.setMsg("提交的参数数据出错！");
@@ -217,14 +213,14 @@ public class ReportController extends AbstractController {
         }
 
         try {
-            ReportingPo po = this.reportingTreeService.pasteNode(sourceId, targetId, "");
+            Report po = this.categoryService.pasteNode(sourceId, targetId, "");
             ReportingSqlHistoryPo historyPo = new ReportingSqlHistoryPo();
             historyPo.setReportId(po.getId());
             historyPo.setAuthor(po.getCreateUser());
             historyPo.setSqlText(po.getSqlText());
-            this.sqlHistoryService.add(historyPo);
-            List<EasyUITreeNode<ReportingPo>> nodes = new ArrayList<EasyUITreeNode<ReportingPo>>();
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(po);
+            this.reportHistoryService.add(historyPo);
+            List<EasyUITreeNode<Report>> nodes = new ArrayList<EasyUITreeNode<Report>>();
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(po);
             nodes.add(treeNode);
             result.setData(nodes);
             this.setSuccessResult(result, "");
@@ -236,7 +232,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/cloneTreeNode")
-
     public JsonResult cloneTreeNode(Integer sourceId, Integer targetId, Integer dsId, HttpServletRequest request) {
         JsonResult result = new JsonResult(false, "");
 
@@ -250,7 +245,7 @@ public class ReportController extends AbstractController {
         }
 
         try {
-            this.reportingTreeService.cloneNode(sourceId, targetId, dsId);
+            this.categoryService.cloneNode(sourceId, targetId, dsId);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
             this.setExceptionResult(result, ex);
@@ -260,23 +255,22 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/add")
-
-    public ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> add(ReportingPo po, HttpServletRequest request) {
-        ParamJsonResult<List<EasyUITreeNode<ReportingPo>>> result = new ParamJsonResult<List<EasyUITreeNode<ReportingPo>>>(false, "");
+    public ParamJsonResult<List<EasyUITreeNode<Report>>> add(Report po, HttpServletRequest request) {
+        ParamJsonResult<List<EasyUITreeNode<Report>>> result = new ParamJsonResult<List<EasyUITreeNode<Report>>>(false, "");
 
         try {
             po.setCreateUser("");
             po.setComment("");
             po.setFlag(1);
-            po.setId(this.reportingService.addReport(po));
+            po.setId(this.reportService.addReport(po));
             ReportingSqlHistoryPo historyPo = new ReportingSqlHistoryPo();
             historyPo.setReportId(po.getId());
             historyPo.setAuthor(po.getCreateUser());
             historyPo.setSqlText(po.getSqlText());
-            this.sqlHistoryService.add(historyPo);
-            po = this.reportingService.getById(po.getId());
-            List<EasyUITreeNode<ReportingPo>> nodes = new ArrayList<EasyUITreeNode<ReportingPo>>();
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(po);
+            this.reportHistoryService.add(historyPo);
+            po = this.reportService.getById(po.getId());
+            List<EasyUITreeNode<Report>> nodes = new ArrayList<EasyUITreeNode<Report>>();
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(po);
             nodes.add(treeNode);
             result.setData(nodes);
             this.setSuccessResult(result, "");
@@ -288,20 +282,19 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/edit")
-
-    public ParamJsonResult<EasyUITreeNode<ReportingPo>> edit(ReportingPo po, Boolean isChange, HttpServletRequest request) {
-        ParamJsonResult<EasyUITreeNode<ReportingPo>> result = new ParamJsonResult<EasyUITreeNode<ReportingPo>>(false, "");
+    public ParamJsonResult<EasyUITreeNode<Report>> edit(Report po, Boolean isChange, HttpServletRequest request) {
+        ParamJsonResult<EasyUITreeNode<Report>> result = new ParamJsonResult<EasyUITreeNode<Report>>(false, "");
 
         try {
-            this.reportingService.editReport(po);
+            this.reportService.editReport(po);
             if (isChange == null || isChange) {
                 ReportingSqlHistoryPo historyPo = new ReportingSqlHistoryPo();
                 historyPo.setReportId(po.getId());
                 historyPo.setAuthor(po.getCreateUser());
                 historyPo.setSqlText(po.getSqlText());
-                this.sqlHistoryService.add(historyPo);
+                this.reportHistoryService.add(historyPo);
             }
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(this.reportingService.getById(po.getId()));
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(this.reportService.getById(po.getId()));
             result.setData(treeNode);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
@@ -311,13 +304,12 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/remove")
-
     public JsonResult remove(Integer id, Integer pid, HttpServletRequest request) {
         JsonResult result = new JsonResult(false, "");
 
         try {
-            if (!this.reportingService.hasChild(id)) {
-                this.reportingService.remove(id, pid);
+            if (!this.reportService.hasChild(id)) {
+                this.reportService.remove(id, pid);
                 this.setSuccessResult(result, "");
             } else {
                 this.setFailureResult(result, "操作失败！当前节点还有子节点，请先删除子节点！");
@@ -329,7 +321,6 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/search")
-
     public Map<String, Object> search(Integer page, Integer rows, String fieldName, String keyword,
                                       HttpServletRequest request) {
         if (page == null || page < 1)
@@ -340,7 +331,7 @@ public class ReportController extends AbstractController {
         PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
         Map<String, Object> modelMap = new HashMap<String, Object>(2);
         try {
-            List<ReportingPo> list = this.reportingService.getByPage(fieldName, keyword, pageInfo);
+            List<Report> list = this.reportService.getByPage(fieldName, keyword, pageInfo);
             modelMap.put("total", pageInfo.getTotals());
             modelMap.put("rows", list);
         } catch (Exception ex) {
@@ -350,10 +341,9 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/setQueryParam")
-
-    public ParamJsonResult<EasyUITreeNode<ReportingPo>> setQueryParam(Integer id, String jsonQueryParams,
+    public ParamJsonResult<EasyUITreeNode<Report>> setQueryParam(Integer id, String jsonQueryParams,
                                                                       HttpServletRequest request) {
-        ParamJsonResult<EasyUITreeNode<ReportingPo>> result = new ParamJsonResult<EasyUITreeNode<ReportingPo>>(false, "");
+        ParamJsonResult<EasyUITreeNode<Report>> result = new ParamJsonResult<EasyUITreeNode<Report>>(false, "");
 
         if (id == null) {
             this.setFailureResult(result, "您没有选择报表节点");
@@ -361,9 +351,9 @@ public class ReportController extends AbstractController {
         }
 
         try {
-            this.reportingService.setQueryParams(id, jsonQueryParams);
-            ReportingPo po = this.reportingService.getById(id);
-            EasyUITreeNode<ReportingPo> treeNode = this.createTreeNode(po);
+            this.reportService.setQueryParams(id, jsonQueryParams);
+            Report po = this.reportService.getById(id);
+            EasyUITreeNode<Report> treeNode = this.createTreeNode(po);
             result.setData(treeNode);
             this.setSuccessResult(result, "");
         } catch (Exception ex) {
@@ -373,7 +363,7 @@ public class ReportController extends AbstractController {
         return result;
     }
 
-    private EasyUITreeNode<ReportingPo> createTreeNode(ReportingPo po) {
+    private EasyUITreeNode<Report> createTreeNode(Report po) {
         String configId = Integer.toString(po.getId());
         String text = po.getName();
         String state = po.getHasChild() ? "closed" : "open";
@@ -381,16 +371,15 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/query")
-
     public Map<String, Object> query(Integer page, Integer rows, HttpServletRequest request) {
         if (page == null || page < 1)
             page = 1;
         if (rows == null)
             rows = 30;
 
-        List<ReportingPo> list = null;
+        List<Report> list = null;
         PageInfo pageInfo = new PageInfo((page - 1) * rows, rows);
-        list = this.reportingService.getByPage(pageInfo);
+        list = this.reportService.getByPage(pageInfo);
         Map<String, Object> modelMap = new HashMap<String, Object>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -399,18 +388,17 @@ public class ReportController extends AbstractController {
     }
 
     @RequestMapping(value = "/listAllChildNodes")
-
-    public List<EasyUITreeNode<ReportingPo>> listAllChildNodes() {
-        List<EasyUITreeNode<ReportingPo>> roots = new ArrayList<EasyUITreeNode<ReportingPo>>();
+    public List<EasyUITreeNode<Report>> listAllChildNodes() {
+        List<EasyUITreeNode<Report>> roots = new ArrayList<EasyUITreeNode<Report>>();
 
         try {
-            List<ReportingPo> pos = this.reportingService.getAll();
-            for (ReportingPo po : pos) {
+            List<Report> pos = this.reportService.getAll();
+            for (Report po : pos) {
                 if (po.getPid() == 0) {
                     String configId = Integer.toString(po.getId());
                     String text = po.getName();
                     String state = po.getHasChild() ? "closed" : "open";
-                    EasyUITreeNode<ReportingPo> parentNode = new EasyUITreeNode<ReportingPo>(configId, text, state, null);
+                    EasyUITreeNode<Report> parentNode = new EasyUITreeNode<Report>(configId, text, state, null);
                     this.loadChildNodes(pos, parentNode);
                     roots.add(parentNode);
                 }
@@ -422,14 +410,14 @@ public class ReportController extends AbstractController {
         return roots;
     }
 
-    private void loadChildNodes(List<ReportingPo> pos, EasyUITreeNode<ReportingPo> parentNode) {
+    private void loadChildNodes(List<Report> pos, EasyUITreeNode<Report> parentNode) {
         int id = Integer.valueOf(parentNode.getId());
-        for (ReportingPo po : pos) {
+        for (Report po : pos) {
             if (po.getPid() == id) {
                 String configId = Integer.toString(po.getId());
                 String text = po.getName();
                 String state = po.getHasChild() ? "closed" : "open";
-                EasyUITreeNode<ReportingPo> childNode = new EasyUITreeNode<ReportingPo>(configId, text, state, null);
+                EasyUITreeNode<Report> childNode = new EasyUITreeNode<Report>(configId, text, state, null);
                 this.loadChildNodes(pos, childNode);
                 parentNode.getChildren().add(childNode);
             }

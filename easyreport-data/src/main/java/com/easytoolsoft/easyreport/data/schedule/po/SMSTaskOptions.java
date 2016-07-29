@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @SuppressWarnings("serial")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SMSTaskOptions extends AbstractTaskOptions {
 }
