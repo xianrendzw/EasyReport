@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.sys.service.impl;
 
-import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.sys.dao.IEventDao;
-import com.easytoolsoft.easyreport.sys.po.Event;
+import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.sys.dao.IEventDao;
+import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.sys.service.IEventService;
 import org.springframework.stereotype.Service;
 

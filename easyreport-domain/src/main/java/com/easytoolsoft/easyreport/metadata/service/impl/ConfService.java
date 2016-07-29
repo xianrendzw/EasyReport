@@ -1,11 +1,11 @@
 package com.easytoolsoft.easyreport.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
-import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
+import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
-import com.easytoolsoft.easyreport.metadata.dao.IConfDao;
-import com.easytoolsoft.easyreport.metadata.po.Conf;
+import com.easytoolsoft.easyreport.data.metadata.dao.IConfDao;
+import com.easytoolsoft.easyreport.data.metadata.po.Conf;
 import com.easytoolsoft.easyreport.metadata.service.IConfService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;

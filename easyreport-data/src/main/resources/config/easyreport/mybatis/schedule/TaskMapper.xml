@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.data.schedule.dao.ITaskDao">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="TaskMap" type="com.easytoolsoft.easyreport.data.schedule.po.Task">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="report_ids" property="reportIds" jdbcType="VARCHAR"/>
+        <result column="cron_expr" property="cronExpr" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="options" property="options" jdbcType="LONGVARCHAR"/>
+        <result column="template" property="template" jdbcType="LONGVARCHAR"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id , report_ids , cron_expr , type , options , template , comment , gmt_created , gmt_modified
+    </sql>
+    <sql id="Insert_Columns">
+        <if test="reportIds != null">report_ids,</if>
+        <if test="cronExpr != null">cron_expr,</if>
+        <if test="type != null">type,</if>
+        <if test="options != null">options,</if>
+        <if test="template != null">template,</if>
+        <if test="comment != null">comment,</if>
+        <if test="gmtCreated != null">gmt_created,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+    </sql>
+    <sql id="Insert_Values">
+        <if test="reportIds != null">#{reportIds,jdbcType=VARCHAR},</if>
+        <if test="cronExpr != null">#{cronExpr,jdbcType=VARCHAR},</if>
+        <if test="type != null">#{type,jdbcType=TINYINT},</if>
+        <if test="options != null">#{options,jdbcType=LONGVARCHAR},</if>
+        <if test="template != null">#{template,jdbcType=LONGVARCHAR},</if>
+        <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Batch_Insert_Values">
+        <if test="id != null">#{id,jdbcType=INTEGER},</if>
+        <if test="reportIds != null">#{reportIds,jdbcType=VARCHAR},</if>
+        <if test="cronExpr != null">#{cronExpr,jdbcType=VARCHAR},</if>
+        <if test="type != null">#{type,jdbcType=TINYINT},</if>
+        <if test="options != null">#{options,jdbcType=LONGVARCHAR},</if>
+        <if test="template != null">#{template,jdbcType=LONGVARCHAR},</if>
+        <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Select_Where_From_Map">
+        <if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
+        <if test="reportIds != null">and report_ids = #{reportIds,jdbcType=VARCHAR}</if>
+        <if test="cronExpr != null">and cron_expr = #{cronExpr,jdbcType=VARCHAR}</if>
+        <if test="type != null">and type = #{type,jdbcType=TINYINT}</if>
+        <if test="options != null">and options = #{options,jdbcType=LONGVARCHAR}</if>
+        <if test="template != null">and template = #{template,jdbcType=LONGVARCHAR}</if>
+        <if test="comment != null">and comment = #{comment,jdbcType=VARCHAR}</if>
+        <if test="gmtCreated != null">and gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}</if>
+        <if test="gmtModified != null">and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="Update_Set_From_Bean">
+        <if test="reportIds != null">report_ids = #{reportIds,jdbcType=VARCHAR} ,</if>
+        <if test="cronExpr != null">cron_expr = #{cronExpr,jdbcType=VARCHAR} ,</if>
+        <if test="type != null">type = #{type,jdbcType=TINYINT} ,</if>
+        <if test="options != null">options = #{options,jdbcType=LONGVARCHAR} ,</if>
+        <if test="template != null">template = #{template,jdbcType=LONGVARCHAR} ,</if>
+        <if test="comment != null">comment = #{comment,jdbcType=VARCHAR} ,</if>
+        <if test="gmtCreated != null">gmt_created = #{gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="gmtModified != null">gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Set_From_Map">
+        <if test="set.reportIds != null">report_ids = #{set.reportIds,jdbcType=VARCHAR} ,</if>
+        <if test="set.cronExpr != null">cron_expr = #{set.cronExpr,jdbcType=VARCHAR} ,</if>
+        <if test="set.type != null">type = #{set.type,jdbcType=TINYINT} ,</if>
+        <if test="set.options != null">options = #{set.options,jdbcType=LONGVARCHAR} ,</if>
+        <if test="set.template != null">template = #{set.template,jdbcType=LONGVARCHAR} ,</if>
+        <if test="set.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
+        <if test="set.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="set.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Where_From_Map">
+        <if test="where.id != null">and id = #{where.id,jdbcType=INTEGER}</if>
+        <if test="where.reportIds != null">and report_ids = #{where.reportIds,jdbcType=VARCHAR}</if>
+        <if test="where.cronExpr != null">and cron_expr = #{where.cronExpr,jdbcType=VARCHAR}</if>
+        <if test="where.type != null">and type = #{where.type,jdbcType=TINYINT}</if>
+        <if test="where.options != null">and options = #{where.options,jdbcType=LONGVARCHAR}</if>
+        <if test="where.template != null">and template = #{where.template,jdbcType=LONGVARCHAR}</if>
+        <if test="where.comment != null">and comment = #{where.comment,jdbcType=VARCHAR}</if>
+        <if test="where.gmtCreated != null">and gmt_created = #{where.gmtCreated,jdbcType=TIMESTAMP}</if>
+        <if test="where.gmtModified != null">and gmt_modified = #{where.gmtModified,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="BatchUpdate_Set_From_Bean">
+        <if test="item.reportIds != null">report_ids = #{item.reportIds,jdbcType=VARCHAR} ,</if>
+        <if test="item.cronExpr != null">cron_expr = #{item.cronExpr,jdbcType=VARCHAR} ,</if>
+        <if test="item.type != null">type = #{item.type,jdbcType=TINYINT} ,</if>
+        <if test="item.options != null">options = #{item.options,jdbcType=LONGVARCHAR} ,</if>
+        <if test="item.template != null">template = #{item.template,jdbcType=LONGVARCHAR} ,</if>
+        <if test="item.comment != null">comment = #{item.comment,jdbcType=VARCHAR} ,</if>
+        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ezrpt_schedule_task where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="delete" parameterType="java.util.Map">
+        delete from ezrpt_schedule_task
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </delete>
+    <delete id="deleteIn">
+        delete from ezrpt_schedule_task where id in
+        <foreach collection="records" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into ezrpt_schedule_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Columns"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Values"/>
+        </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ezrpt_schedule_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        values
+        <foreach collection="record" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <include refid="Batch_Insert_Values"/>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="selectById" resultMap="TaskMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_schedule_task
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="select" resultMap="TaskMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_schedule_task
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <select id="selectOne" resultMap="TaskMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_schedule_task
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+        limit 1
+    </select>
+    <select id="selectIn" resultMap="TaskMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_schedule_task
+        where id IN
+        <foreach collection="record" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <update id="updateById" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        update ezrpt_schedule_task
+        <set>
+            <include refid="Update_Set_From_Bean"/>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="java.util.Map">
+        update ezrpt_schedule_task
+        <set>
+            <include refid="Update_Set_From_Map"/>
+        </set>
+        <where>
+            <include refid="Update_Where_From_Map"/>
+        </where>
+    </update>
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="records" item="item" index="index" open="" close="" separator=";">
+            update ezrpt_schedule_task
+            <include refid="BatchUpdate_Set_From_Bean"/>
+            where id=#{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_schedule_task
+        <where>
+            <if test="where.keyword != null">
+                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectByPager" resultMap="TaskMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_schedule_task
+        <where>
+            <if test="where.keyword != null">
+                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <if test="pager.sortItem != null and pager.sortItem != '' ">
+            order by ${pager.sortItem} ${pager.sortType}
+        </if>
+        limit #{pager.startIndex} , #{pager.pageSize}
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_schedule_task
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <!-- My Custom Interfaces -->
+</mapper>

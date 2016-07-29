@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.spring;
 
-import com.easytoolsoft.easyreport.web.common.JsonResult;
+import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;

@@ -1,10 +1,10 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
-import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.membership.dao.IModuleDao;
-import com.easytoolsoft.easyreport.membership.po.Module;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
+import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.membership.dao.IModuleDao;
+import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

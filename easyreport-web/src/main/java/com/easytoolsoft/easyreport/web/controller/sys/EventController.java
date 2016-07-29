@@ -1,11 +1,11 @@
 package com.easytoolsoft.easyreport.web.controller.sys;
 
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.sys.po.Event;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.sys.service.IEventService;
-import com.easytoolsoft.easyreport.web.common.DataGridPager;
-import com.easytoolsoft.easyreport.web.common.JsonResult;
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
+import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

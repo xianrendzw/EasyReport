@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.data.sys.dao.IEventDao">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="EventMap" type="com.easytoolsoft.easyreport.data.sys.po.Event">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="account" property="account" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="VARCHAR"/>
+        <result column="message" property="message" jdbcType="LONGVARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id , source , user_id , account , level , message , url , gmt_created
+    </sql>
+    <sql id="Insert_Columns">
+        <if test="source != null">source,</if>
+        <if test="userId != null">user_id,</if>
+        <if test="account != null">account,</if>
+        <if test="level != null">level,</if>
+        <if test="message != null">message,</if>
+        <if test="url != null">url,</if>
+        <if test="gmtCreated != null">gmt_created,</if>
+    </sql>
+    <sql id="Insert_Values">
+        <if test="source != null">#{source,jdbcType=VARCHAR},</if>
+        <if test="userId != null">#{userId,jdbcType=INTEGER},</if>
+        <if test="account != null">#{account,jdbcType=VARCHAR},</if>
+        <if test="level != null">#{level,jdbcType=VARCHAR},</if>
+        <if test="message != null">#{message,jdbcType=LONGVARCHAR},</if>
+        <if test="url != null">#{url,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Batch_Insert_Values">
+        <if test="id != null">#{id,jdbcType=INTEGER},</if>
+        <if test="source != null">#{source,jdbcType=VARCHAR},</if>
+        <if test="userId != null">#{userId,jdbcType=INTEGER},</if>
+        <if test="account != null">#{account,jdbcType=VARCHAR},</if>
+        <if test="level != null">#{level,jdbcType=VARCHAR},</if>
+        <if test="message != null">#{message,jdbcType=LONGVARCHAR},</if>
+        <if test="url != null">#{url,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Select_Where_From_Map">
+        <if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
+        <if test="source != null">and source = #{source,jdbcType=VARCHAR}</if>
+        <if test="userId != null">and user_id = #{userId,jdbcType=INTEGER}</if>
+        <if test="account != null">and account = #{account,jdbcType=VARCHAR}</if>
+        <if test="level != null">and level = #{level,jdbcType=VARCHAR}</if>
+        <if test="message != null">and message = #{message,jdbcType=LONGVARCHAR}</if>
+        <if test="url != null">and url = #{url,jdbcType=VARCHAR}</if>
+        <if test="gmtCreated != null">and gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="Update_Set_From_Bean">
+        <if test="source != null">source = #{source,jdbcType=VARCHAR} ,</if>
+        <if test="userId != null">user_id = #{userId,jdbcType=INTEGER} ,</if>
+        <if test="account != null">account = #{account,jdbcType=VARCHAR} ,</if>
+        <if test="level != null">level = #{level,jdbcType=VARCHAR} ,</if>
+        <if test="message != null">message = #{message,jdbcType=LONGVARCHAR} ,</if>
+        <if test="url != null">url = #{url,jdbcType=VARCHAR} ,</if>
+        <if test="gmtCreated != null">gmt_created = #{gmtCreated,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Set_From_Map">
+        <if test="set.source != null">source = #{set.source,jdbcType=VARCHAR} ,</if>
+        <if test="set.userId != null">user_id = #{set.userId,jdbcType=INTEGER} ,</if>
+        <if test="set.account != null">account = #{set.account,jdbcType=VARCHAR} ,</if>
+        <if test="set.level != null">level = #{set.level,jdbcType=VARCHAR} ,</if>
+        <if test="set.message != null">message = #{set.message,jdbcType=LONGVARCHAR} ,</if>
+        <if test="set.url != null">url = #{set.url,jdbcType=VARCHAR} ,</if>
+        <if test="set.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Where_From_Map">
+        <if test="where.id != null">and id = #{where.id,jdbcType=INTEGER}</if>
+        <if test="where.source != null">and source = #{where.source,jdbcType=VARCHAR}</if>
+        <if test="where.userId != null">and user_id = #{where.userId,jdbcType=INTEGER}</if>
+        <if test="where.account != null">and account = #{where.account,jdbcType=VARCHAR}</if>
+        <if test="where.level != null">and level = #{where.level,jdbcType=VARCHAR}</if>
+        <if test="where.message != null">and message = #{where.message,jdbcType=LONGVARCHAR}</if>
+        <if test="where.url != null">and url = #{where.url,jdbcType=VARCHAR}</if>
+        <if test="where.gmtCreated != null">and gmt_created = #{where.gmtCreated,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="BatchUpdate_Set_From_Bean">
+        <if test="item.source != null">source = #{item.source,jdbcType=VARCHAR} ,</if>
+        <if test="item.userId != null">user_id = #{item.userId,jdbcType=INTEGER} ,</if>
+        <if test="item.account != null">account = #{item.account,jdbcType=VARCHAR} ,</if>
+        <if test="item.level != null">level = #{item.level,jdbcType=VARCHAR} ,</if>
+        <if test="item.message != null">message = #{item.message,jdbcType=LONGVARCHAR} ,</if>
+        <if test="item.url != null">url = #{item.url,jdbcType=VARCHAR} ,</if>
+        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ezrpt_sys_event where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="delete" parameterType="java.util.Map">
+        delete from ezrpt_sys_event
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </delete>
+    <delete id="deleteIn">
+        delete from ezrpt_sys_event where id in
+        <foreach collection="records" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into ezrpt_sys_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Columns"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Values"/>
+        </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ezrpt_sys_event
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        values
+        <foreach collection="record" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <include refid="Batch_Insert_Values"/>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="selectById" resultMap="EventMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_sys_event
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="select" resultMap="EventMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_sys_event
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <select id="selectOne" resultMap="EventMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_sys_event
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+        limit 1
+    </select>
+    <select id="selectIn" resultMap="EventMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_sys_event
+        where id IN
+        <foreach collection="record" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <update id="updateById" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        update ezrpt_sys_event
+        <set>
+            <include refid="Update_Set_From_Bean"/>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="java.util.Map">
+        update ezrpt_sys_event
+        <set>
+            <include refid="Update_Set_From_Map"/>
+        </set>
+        <where>
+            <include refid="Update_Where_From_Map"/>
+        </where>
+    </update>
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="records" item="item" index="index" open="" close="" separator=";">
+            update ezrpt_sys_event
+            <include refid="BatchUpdate_Set_From_Bean"/>
+            where id=#{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_sys_event
+        <where>
+            <if test="where.keyword != null">
+                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectByPager" resultMap="EventMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_sys_event
+        <where>
+            <if test="where.keyword != null">
+                ${where.fieldName} LIKE CONCAT('%', #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <if test="pager.sortItem != null and pager.sortItem != '' ">
+            order by ${pager.sortItem} ${pager.sortType}
+        </if>
+        limit #{pager.startIndex} , #{pager.pageSize}
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_sys_event
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <!-- My Custom Interfaces -->
+</mapper>

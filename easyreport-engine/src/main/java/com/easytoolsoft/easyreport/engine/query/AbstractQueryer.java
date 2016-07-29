@@ -43,7 +43,7 @@ public abstract class AbstractQueryer {
         List<ReportMetaDataColumn> columns = null;
 
         try {
-            logger.debug(sqlText);
+            logger.debug("Parse Report MetaDataColumns SQL:{},", sqlText);
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(this.preprocessSqlText(sqlText));

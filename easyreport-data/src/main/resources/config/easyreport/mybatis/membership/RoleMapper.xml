@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.data.membership.dao.IRoleDao">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="RoleMap" type="com.easytoolsoft.easyreport.data.membership.po.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="modules" property="modules" jdbcType="VARCHAR"/>
+        <result column="permissions" property="permissions" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="is_system" property="isSystem" jdbcType="TINYINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="sequence" property="sequence" jdbcType="INTEGER"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id , modules , permissions , name , code , is_system , status , sequence , comment ,
+        create_user , gmt_created ,gmt_modified
+    </sql>
+    <sql id="Insert_Columns">
+        <if test="modules != null">modules,</if>
+        <if test="permissions != null">permissions,</if>
+        <if test="name != null">name,</if>
+        <if test="code != null">code,</if>
+        <if test="isSystem != null">is_system,</if>
+        <if test="status != null">status,</if>
+        <if test="sequence != null">sequence,</if>
+        <if test="comment != null">comment,</if>
+        <if test="createUser != null">create_user,</if>
+        <if test="gmtCreated != null">gmt_created,</if>
+        <if test="gmtModified != null">gmt_modified,</if>
+    </sql>
+    <sql id="Insert_Values">
+        <if test="modules != null">#{modules,jdbcType=VARCHAR},</if>
+        <if test="permissions != null">#{permissions,jdbcType=VARCHAR},</if>
+        <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+        <if test="code != null">#{code,jdbcType=VARCHAR},</if>
+        <if test="isSystem != null">#{isSystem,jdbcType=TINYINT},</if>
+        <if test="status != null">#{status,jdbcType=TINYINT},</if>
+        <if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+        <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
+        <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Batch_Insert_Values">
+        <if test="id != null">#{id,jdbcType=INTEGER},</if>
+        <if test="modules != null">#{modules,jdbcType=VARCHAR},</if>
+        <if test="permissions != null">#{permissions,jdbcType=VARCHAR},</if>
+        <if test="name != null">#{name,jdbcType=VARCHAR},</if>
+        <if test="code != null">#{code,jdbcType=VARCHAR},</if>
+        <if test="isSystem != null">#{isSystem,jdbcType=TINYINT},</if>
+        <if test="status != null">#{status,jdbcType=TINYINT},</if>
+        <if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
+        <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
+        <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
+        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Select_Where_From_Map">
+        <if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
+        <if test="modules != null">and modules = #{modules,jdbcType=VARCHAR}</if>
+        <if test="permissions != null">and permissions = #{permissions,jdbcType=VARCHAR}</if>
+        <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
+        <if test="code != null">and code = #{code,jdbcType=VARCHAR}</if>
+        <if test="isSystem != null">and is_system = #{isSystem,jdbcType=TINYINT}</if>
+        <if test="status != null">and status = #{status,jdbcType=TINYINT}</if>
+        <if test="sequence != null">and sequence = #{sequence,jdbcType=INTEGER}</if>
+        <if test="comment != null">and comment = #{comment,jdbcType=VARCHAR}</if>
+        <if test="createUser != null">and create_user = #{createUser,jdbcType=VARCHAR}</if>
+        <if test="gmtCreated != null">and gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}</if>
+        <if test="gmtModified != null">and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="Update_Set_From_Bean">
+        <if test="modules != null">modules = #{modules,jdbcType=VARCHAR} ,</if>
+        <if test="permissions != null">permissions = #{permissions,jdbcType=VARCHAR} ,</if>
+        <if test="name != null">name = #{name,jdbcType=VARCHAR} ,</if>
+        <if test="code != null">code = #{code,jdbcType=VARCHAR} ,</if>
+        <if test="isSystem != null">is_system = #{isSystem,jdbcType=TINYINT} ,</if>
+        <if test="status != null">status = #{status,jdbcType=TINYINT} ,</if>
+        <if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER} ,</if>
+        <if test="comment != null">comment = #{comment,jdbcType=VARCHAR} ,</if>
+        <if test="createUser != null">create_user = #{createUser,jdbcType=VARCHAR} ,</if>
+        <if test="gmtCreated != null">gmt_created = #{gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="gmtModified != null">gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Set_From_Map">
+        <if test="set.modules != null">modules = #{set.modules,jdbcType=VARCHAR} ,</if>
+        <if test="set.permissions != null">permissions = #{set.permissions,jdbcType=VARCHAR} ,</if>
+        <if test="set.name != null">name = #{set.name,jdbcType=VARCHAR} ,</if>
+        <if test="set.code != null">code = #{set.code,jdbcType=VARCHAR} ,</if>
+        <if test="set.isSystem != null">is_system = #{set.isSystem,jdbcType=TINYINT} ,</if>
+        <if test="set.status != null">status = #{set.status,jdbcType=TINYINT} ,</if>
+        <if test="set.sequence != null">sequence = #{set.sequence,jdbcType=INTEGER} ,</if>
+        <if test="set.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
+        <if test="set.createUser != null">create_user = #{set.createUser,jdbcType=VARCHAR} ,</if>
+        <if test="set.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="set.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <sql id="Update_Where_From_Map">
+        <if test="where.id != null">and id = #{where.id,jdbcType=INTEGER}</if>
+        <if test="where.modules != null">and modules = #{where.modules,jdbcType=VARCHAR}</if>
+        <if test="where.permissions != null">and permissions = #{where.permissions,jdbcType=VARCHAR}</if>
+        <if test="where.name != null">and name = #{where.name,jdbcType=VARCHAR}</if>
+        <if test="where.code != null">and code = #{where.code,jdbcType=VARCHAR}</if>
+        <if test="where.isSystem != null">and is_system = #{where.isSystem,jdbcType=TINYINT}</if>
+        <if test="where.status != null">and status = #{where.status,jdbcType=TINYINT}</if>
+        <if test="where.sequence != null">and sequence = #{where.sequence,jdbcType=INTEGER}</if>
+        <if test="where.comment != null">and comment = #{where.comment,jdbcType=VARCHAR}</if>
+        <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
+        <if test="where.gmtCreated != null">and gmt_created = #{where.gmtCreated,jdbcType=TIMESTAMP}</if>
+        <if test="where.gmtModified != null">and gmt_modified = #{where.gmtModified,jdbcType=TIMESTAMP}</if>
+    </sql>
+    <sql id="BatchUpdate_Set_From_Bean">
+        <if test="item.modules != null">modules = #{item.modules,jdbcType=VARCHAR} ,</if>
+        <if test="item.permissions != null">permissions = #{item.permissions,jdbcType=VARCHAR} ,</if>
+        <if test="item.name != null">name = #{item.name,jdbcType=VARCHAR} ,</if>
+        <if test="item.code != null">code = #{item.code,jdbcType=VARCHAR} ,</if>
+        <if test="item.isSystem != null">is_system = #{item.isSystem,jdbcType=TINYINT} ,</if>
+        <if test="item.status != null">status = #{item.status,jdbcType=TINYINT} ,</if>
+        <if test="item.sequence != null">sequence = #{item.sequence,jdbcType=INTEGER} ,</if>
+        <if test="item.comment != null">comment = #{item.comment,jdbcType=VARCHAR} ,</if>
+        <if test="item.createUser != null">create_user = #{item.createUser,jdbcType=VARCHAR} ,</if>
+        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ezrpt_member_role where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="delete" parameterType="java.util.Map">
+        delete from ezrpt_member_role
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </delete>
+    <delete id="deleteIn">
+        delete from ezrpt_member_role where id in
+        <foreach collection="records" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into ezrpt_member_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Columns"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Values"/>
+        </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ezrpt_member_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        values
+        <foreach collection="record" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <include refid="Batch_Insert_Values"/>
+            </trim>
+        </foreach>
+    </insert>
+    <select id="selectById" resultMap="RoleMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_member_role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="select" resultMap="RoleMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_member_role
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <select id="selectOne" resultMap="RoleMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_member_role
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+        limit 1
+    </select>
+    <select id="selectIn" resultMap="RoleMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_member_role
+        where id IN
+        <foreach collection="record" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <update id="updateById" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
+        update ezrpt_member_role
+        <set>
+            <include refid="Update_Set_From_Bean"/>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="update" parameterType="java.util.Map">
+        update ezrpt_member_role
+        <set>
+            <include refid="Update_Set_From_Map"/>
+        </set>
+        <where>
+            <include refid="Update_Where_From_Map"/>
+        </where>
+    </update>
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="records" item="item" index="index" open="" close="" separator=";">
+            update ezrpt_member_role
+            <include refid="BatchUpdate_Set_From_Bean"/>
+            where id=#{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_member_role
+        <where>
+            <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+
+        </where>
+    </select>
+    <select id="selectByPager" resultMap="RoleMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_member_role
+        <where>
+            <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
+            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
+                #{where.keyword, jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        <if test="pager.sortItem != null and pager.sortItem != '' ">
+            order by ${pager.sortItem} ${pager.sortType}
+        </if>
+        limit #{pager.startIndex} , #{pager.pageSize}
+    </select>
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from ezrpt_member_role
+        <where>
+            <include refid="Select_Where_From_Map"/>
+        </where>
+    </select>
+    <!-- My Custom Interfaces -->
+</mapper>

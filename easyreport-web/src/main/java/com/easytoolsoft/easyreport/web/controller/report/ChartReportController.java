@@ -7,10 +7,14 @@ import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnExceptio
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
-import com.easytoolsoft.easyreport.metadata.service.impl.ReportChartService;
-import com.easytoolsoft.easyreport.metadata.service.impl.ReportingGenerationService;
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.metadata.service.impl.ReportService;
+import com.easytoolsoft.easyreport.report.impl.ChartReportService;
+import com.easytoolsoft.easyreport.report.impl.TableReportService;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,37 +26,35 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * 报表图表生成控制器
+ * 图表报表生成控制器
  */
 @Controller
+@Slf4j
 @RequestMapping(value = "/report/chart")
 public class ChartReportController extends AbstractController {
     @Resource
-    private ReportingService reportingService;
+    private ReportService reportService;
     @Resource
-    private ReportingGenerationService generationService;
+    private TableReportService tableReportService;
     @Resource
-    private ReportChartService reportChartService;
+    private ChartReportService chartReportService;
 
     @RequestMapping(value = {"/{uid}"})
     public ModelAndView preview(@PathVariable String uid, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("report/chart");
-
         try {
             ReportUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
         } catch (QueryParamsException | TemplatePraseException ex) {
             modelAndView.addObject("formHtmlText", ex.getMessage());
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         } catch (Exception ex) {
             modelAndView.addObject("formHtmlText", "查询参数生成失败！请联系管理员.");
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         }
-
         return modelAndView;
     }
 
     @RequestMapping(value = "/getData", method = RequestMethod.POST)
-
     public JSONObject getData(String uid, HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("dimColumnMap", null);
@@ -66,21 +68,22 @@ public class ChartReportController extends AbstractController {
         }
 
         try {
-            ReportingPo po = reportingService.getByUid(uid);
-            Map<String, Object> formParameters = generationService.getFormParameters(request.getParameterMap(), po.getDataRange());
-            ReportDataSet reportData = generationService.getReportDataSet(po, formParameters);
-            jsonObject.put("dimColumnMap", reportChartService.getDimColumnMap(reportData));
-            jsonObject.put("dimColumns", reportChartService.getDimColumns(reportData));
-            jsonObject.put("statColumns", reportChartService.getStatColumns(reportData));
-            jsonObject.put("dataRows", reportChartService.getDataRows(reportData));
+            Report po = reportService.getByUid(uid);
+            ReportOptions options = reportService.parseOptions(po.getOptions());
+            Map<String, Object> formParameters = tableReportService.getFormParameters(
+                    request.getParameterMap(), options.getDataRange());
+            ReportDataSet reportData = tableReportService.getReportDataSet(po, formParameters);
+            jsonObject.put("dimColumnMap", chartReportService.getDimColumnMap(reportData));
+            jsonObject.put("dimColumns", chartReportService.getDimColumns(reportData));
+            jsonObject.put("statColumns", chartReportService.getStatColumns(reportData));
+            jsonObject.put("dataRows", chartReportService.getDataRows(reportData));
         } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
             jsonObject.put("msg", ex.getMessage());
-            this.logException("报表生成失败", ex);
+            log.error("报表生成失败", ex);
         } catch (Exception ex) {
             jsonObject.put("msg", "报表生成失败！请联系管理员。");
-            this.logException("报表生成失败", ex);
+            log.error("报表生成失败", ex);
         }
-
         return jsonObject;
     }
 }

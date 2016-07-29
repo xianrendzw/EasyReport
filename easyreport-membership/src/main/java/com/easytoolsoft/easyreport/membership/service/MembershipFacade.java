@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.membership.service;
 
-import com.easytoolsoft.easyreport.membership.po.Module;
-import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.data.membership.po.Module;
+import com.easytoolsoft.easyreport.data.membership.po.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

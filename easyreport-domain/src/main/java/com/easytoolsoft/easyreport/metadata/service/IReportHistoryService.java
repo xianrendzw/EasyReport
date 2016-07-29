@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.metadata.service;
 
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.service.ICrudService;
-import com.easytoolsoft.easyreport.metadata.po.ReportHistory;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 
 import java.util.List;
 

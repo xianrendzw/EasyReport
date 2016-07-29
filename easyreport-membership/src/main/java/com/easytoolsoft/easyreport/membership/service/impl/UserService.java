@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
-import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
-import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.membership.dao.IUserDao;
-import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
+import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.membership.dao.IUserDao;
+import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IUserService;
 import org.springframework.stereotype.Service;

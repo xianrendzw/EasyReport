@@ -1,12 +1,12 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.membership.po.Module;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
-import com.easytoolsoft.easyreport.web.common.DataGridPager;
-import com.easytoolsoft.easyreport.web.common.JsonResult;
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
+import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

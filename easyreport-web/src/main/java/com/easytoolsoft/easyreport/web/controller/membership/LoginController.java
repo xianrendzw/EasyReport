@@ -1,11 +1,11 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Home页控制器
+ * 用户登录页控制器
  */
 @Controller
 @RequestMapping(value = "/membership")

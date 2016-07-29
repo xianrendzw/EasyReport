@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.scheduler;
 
-import com.easytoolsoft.easyreport.schedule.po.Task;
+import com.easytoolsoft.easyreport.data.schedule.po.Task;
 import com.easytoolsoft.easyreport.schedule.service.impl.TaskService;
 
 import java.util.List;

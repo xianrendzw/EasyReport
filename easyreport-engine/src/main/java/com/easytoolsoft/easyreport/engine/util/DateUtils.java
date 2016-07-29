@@ -12,13 +12,15 @@ import java.util.TimeZone;
  * 日期工具类
  */
 public class DateUtils {
+    private static final String YYYY_MM_DD="yyyy-MM-dd";
+
     /**
      * 获取当前时间的yyyy-MM-dd格式字符串
      *
      * @return 当前时间的yyyy-MM-dd格式字符串
      */
     public static String getNow() {
-        return getNow("yyyy-MM-dd");
+        return getNow(YYYY_MM_DD);
     }
 
     /**
@@ -42,7 +44,7 @@ public class DateUtils {
      */
     public static String getDate(String date, String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
             Date theDate = format.parse(date);
             format.applyPattern(pattern);
             return format.format(theDate);
@@ -73,7 +75,7 @@ public class DateUtils {
     @SuppressWarnings("deprecation")
     public static String getUtcDate(String date, String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
             Date now = Calendar.getInstance().getTime();
             Date theDate = format.parse(date);
             theDate.setHours(now.getHours());
@@ -140,7 +142,7 @@ public class DateUtils {
      */
     public static String add(String date, int days, String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
             Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(date));
             cd.add(Calendar.DAY_OF_YEAR, days);
@@ -179,7 +181,7 @@ public class DateUtils {
      */
     public static String addHours(String date, int hours, String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
             Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(date));
             cd.add(Calendar.HOUR_OF_DAY, hours);
@@ -197,7 +199,7 @@ public class DateUtils {
      * @return 相隔的天数
      */
     public static long getDateDiff(String startDt, String endDt) {
-        return getDateDiff(startDt, endDt, "yyyy-MM-dd");
+        return getDateDiff(startDt, endDt, YYYY_MM_DD);
     }
 
     /**
@@ -228,7 +230,7 @@ public class DateUtils {
      * @throws ParseException
      */
     public static List<String> getDateList(String startDt, String endDt) throws ParseException {
-        return getDateList(startDt, endDt, "yyyy-MM-dd");
+        return getDateList(startDt, endDt, YYYY_MM_DD);
     }
 
     /**

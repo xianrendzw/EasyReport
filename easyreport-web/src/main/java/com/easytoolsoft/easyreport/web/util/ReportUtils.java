@@ -10,10 +10,10 @@ import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
-import com.easytoolsoft.easyreport.metadata.po.Report;
-import com.easytoolsoft.easyreport.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.metadata.service.impl.ReportService;
-import com.easytoolsoft.easyreport.metadata.service.impl.ReportingGenerationService;
+import com.easytoolsoft.easyreport.report.impl.TableReportService;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,10 @@ import java.util.Map.Entry;
 @Service
 public class ReportUtils {
     private static ReportService reportService;
-    private static ReportingGenerationService generationService;
+    private static TableReportService generationService;
 
     @Autowired
-    public ReportUtils(ReportService reportService, ReportingGenerationService generationService) {
+    public ReportUtils(ReportService reportService, TableReportService generationService) {
         ReportUtils.reportService = reportService;
         ReportUtils.generationService = generationService;
     }

@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.scheduler;
 
-import com.easytoolsoft.easyreport.schedule.po.Task;
+import com.easytoolsoft.easyreport.data.schedule.po.Task;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;

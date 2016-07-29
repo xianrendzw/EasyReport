@@ -6,8 +6,9 @@ import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnExceptio
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 报表生成控制器
+ * 表格报表生成控制器
  */
 @Controller
+@Slf4j
 @RequestMapping(value = "/report")
 public class TableReportController extends AbstractController {
 
@@ -41,10 +43,10 @@ public class TableReportController extends AbstractController {
             ReportUtils.previewByFormMap(uid, modelAndView, request);
         } catch (QueryParamsException | TemplatePraseException ex) {
             modelAndView.addObject("formHtmlText", ex.getMessage());
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         } catch (Exception ex) {
             modelAndView.addObject("formHtmlText", "查询参数生成失败！请联系管理员.");
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         }
         return modelAndView;
     }
@@ -56,17 +58,16 @@ public class TableReportController extends AbstractController {
             ReportUtils.previewByTemplate(uid, modelAndView, new EasyUIQueryFormView(), request);
         } catch (QueryParamsException | TemplatePraseException ex) {
             modelAndView.addObject("formHtmlText", ex.getMessage());
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         } catch (Exception ex) {
             modelAndView.addObject("formHtmlText", "查询参数生成失败！请联系管理员.");
-            this.logException("查询参数生成失败", ex);
+            log.error("查询参数生成失败", ex);
         }
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST)
-
     public JSONObject generate(String uid, HttpServletRequest request) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -76,10 +77,10 @@ public class TableReportController extends AbstractController {
                 SQLQueryException |
                 TemplatePraseException ex) {
             jsonObject.put("htmlTable", ex.getMessage());
-            this.logException("报表生成失败", ex);
+            log.error("报表生成失败", ex);
         } catch (Exception ex) {
             jsonObject.put("htmlTable", "报表生成失败！请联系管理员.");
-            this.logException("报表生成失败", ex);
+            log.error("报表生成失败", ex);
         }
 
         return jsonObject;
@@ -91,7 +92,7 @@ public class TableReportController extends AbstractController {
         try {
             ReportUtils.exportToExcel(uid, name, htmlText, request, response);
         } catch (Exception ex) {
-            this.logException("导出Excel失败", ex);
+            log.error("导出Excel失败", ex);
         }
     }
 }

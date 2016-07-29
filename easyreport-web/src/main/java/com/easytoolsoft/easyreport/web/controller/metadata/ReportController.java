@@ -2,14 +2,14 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
 import com.easytoolsoft.easyreport.metadata.service.impl.DataSourceService;
-import com.easytoolsoft.easyreport.metadata.service.impl.ReportingGenerationService;
+import com.easytoolsoft.easyreport.report.impl.TableReportService;
 import com.easytoolsoft.easyreport.metadata.vo.QueryParameter;
-import com.easytoolsoft.easyreport.web.common.JsonResult;
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +32,7 @@ public class ReportController extends AbstractController {
     @Resource
     private ReportingTreeService reportingTreeService;
     @Resource
-    private ReportingGenerationService generationService;
+    private TableReportService generationService;
     @Resource
     private DataSourceService datasourceService;
     @Resource

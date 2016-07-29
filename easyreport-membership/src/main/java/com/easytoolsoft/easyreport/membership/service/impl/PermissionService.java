@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
-import com.easytoolsoft.easyreport.data.helper.ParameterBuilder;
-import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.membership.dao.IPermissionDao;
-import com.easytoolsoft.easyreport.membership.po.Permission;
+import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
+import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.membership.dao.IPermissionDao;
+import com.easytoolsoft.easyreport.data.membership.po.Permission;
 import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;

@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.membership.security;
 
-import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

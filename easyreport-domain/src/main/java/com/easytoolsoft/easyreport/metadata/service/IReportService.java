@@ -1,12 +1,12 @@
 package com.easytoolsoft.easyreport.metadata.service;
 
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.common.service.ICrudService;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
-import com.easytoolsoft.easyreport.metadata.po.Report;
-import com.easytoolsoft.easyreport.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.metadata.vo.QueryParameter;
 
 import java.util.List;

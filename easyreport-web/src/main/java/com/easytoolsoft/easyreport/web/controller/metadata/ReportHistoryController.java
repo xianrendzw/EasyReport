@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
-import com.easytoolsoft.easyreport.web.controller.AbstractController;
+import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
