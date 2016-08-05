@@ -3,14 +3,13 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.metadata.service.IDataSourceService;
+import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
-import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +21,15 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(value = "/rest/metadata/ds")
-public class DataSourceController extends AbstractController {
-    @Resource
-    private IDataSourceService dsService;
-
+public class DataSourceController extends BaseController<IDataSourceService, DataSource> {
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "report/dataSource";
     }
 
     @RequestMapping(value = "/listAll")
-    public List<DataSource> listAll(HttpServletRequest req) {
-        return this.dsService.getAll().stream()
+    public List<DataSource> listAll() {
+        return this.service.getAll().stream()
                 .map(x -> DataSource.builder()
                         .id(x.getId())
                         .uid(x.getUid())
@@ -43,10 +39,9 @@ public class DataSourceController extends AbstractController {
     }
 
     @RequestMapping(value = "/list")
-    public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword,
-                                    HttpServletRequest req) {
+    public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<DataSource> list = this.dsService.getByPage(pageInfo, fieldName, keyword);
+        List<DataSource> list = this.service.getByPage(pageInfo, fieldName, keyword);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -54,68 +49,41 @@ public class DataSourceController extends AbstractController {
     }
 
     @RequestMapping(value = "/add")
-    public JsonResult add(DataSource po, HttpServletRequest req) {
+    public JsonResult add(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
-        try {
-            po.setUid(UUID.randomUUID().toString());
-            this.dsService.add(po);
-            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", po.getId()), req);
-        } catch (Exception ex) {
-            result.setMsg(String.format("修改数据源:[%s]操作失败!", po.getId()));
-            this.logExceptionResult(result, ex, req);
-        }
+        po.setUid(UUID.randomUUID().toString());
+        this.service.add(po);
         return result;
     }
 
     @RequestMapping(value = "/edit")
-    public JsonResult edit(DataSource po, HttpServletRequest req) {
+    public JsonResult edit(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
-        try {
-            this.dsService.editById(po);
-            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", po.getId()), req);
-        } catch (Exception ex) {
-            result.setMsg(String.format("修改数据源:[%s]操作失败!", po.getId()));
-            this.logExceptionResult(result, ex, req);
-        }
+        this.service.editById(po);
         return result;
     }
 
     @RequestMapping(value = "/testConnection")
-    public JsonResult testConnection(String url, String pass, String user, HttpServletRequest req) {
+    public JsonResult testConnection(String url, String pass, String user) throws SQLException {
         JsonResult<String> result = new JsonResult<>();
-        try {
-            result.setSuccess(this.dsService.testConnection(url, user, pass));
-        } catch (Exception ex) {
-            this.logExceptionResult(result, ex, req);
-        }
-
+        result.setSuccess(this.service.testConnection(url, user, pass));
         return result;
     }
 
     @RequestMapping(value = "/testConnectionById")
-    public JsonResult testConnection(Integer id, HttpServletRequest req) {
+    public JsonResult testConnection(Integer id) throws SQLException {
         JsonResult<String> result = new JsonResult<>();
-        try {
-            DataSource dsPo = this.dsService.getById(id);
-            result.setSuccess(this.dsService.testConnection(
-                    dsPo.getJdbcUrl(),
-                    dsPo.getUser(), dsPo.getPassword()));
-        } catch (Exception ex) {
-            this.logExceptionResult(result, ex, req);
-        }
+        DataSource dsPo = this.service.getById(id);
+        result.setSuccess(this.service.testConnection(
+                dsPo.getJdbcUrl(),
+                dsPo.getUser(), dsPo.getPassword()));
         return result;
     }
 
     @RequestMapping(value = "/remove")
-    public JsonResult remove(int id, HttpServletRequest req) {
+    public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();
-        try {
-            this.dsService.removeById(id);
-            this.logSuccessResult(result, String.format("修改数据源[ID:%s]操作成功!", id), req);
-        } catch (Exception ex) {
-            result.setMsg(String.format("修改数据源:[%s]操作失败!", id));
-            this.logExceptionResult(result, ex, req);
-        }
+        this.service.removeById(id);
         return result;
     }
 }

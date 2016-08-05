@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 通用的页面控件器
  */
 @Controller
-public class CommonPageController {
+public class PageController {
     private static final Joiner joiner = Joiner.on('/');
 
-    public CommonPageController() {
+    public PageController() {
     }
 
     @RequestMapping(

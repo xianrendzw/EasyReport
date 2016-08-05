@@ -6,7 +6,6 @@ import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnExceptio
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
-import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @Slf4j
 @RequestMapping(value = "/report")
-public class TableReportController extends AbstractController {
+public class TableReportController {
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index(HttpServletRequest request) {

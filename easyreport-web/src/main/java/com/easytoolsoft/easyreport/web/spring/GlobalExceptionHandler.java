@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Component("handlerExceptionResolver")
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,

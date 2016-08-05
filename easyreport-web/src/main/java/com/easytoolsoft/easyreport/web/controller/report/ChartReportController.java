@@ -2,17 +2,16 @@ package com.easytoolsoft.easyreport.web.controller.report;
 
 import com.alibaba.fastjson.JSONObject;
 import com.easytoolsoft.easyreport.common.form.EasyUIQueryFormView;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
 import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.report.impl.ChartReportService;
 import com.easytoolsoft.easyreport.report.impl.TableReportService;
-import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ import java.util.Map;
 @Controller
 @Slf4j
 @RequestMapping(value = "/report/chart")
-public class ChartReportController extends AbstractController {
+public class ChartReportController {
     @Resource
     private ReportService reportService;
     @Resource

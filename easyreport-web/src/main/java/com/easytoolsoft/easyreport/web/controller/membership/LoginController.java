@@ -1,6 +1,5 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
-import com.easytoolsoft.easyreport.web.controller.common.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "/membership")
-public class LoginController extends AbstractController {
-
+public class LoginController {
     @RequestMapping(value = {"/login"})
     public String login() {
         return "membership/login";
