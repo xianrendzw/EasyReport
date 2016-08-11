@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IRoleDao;
+import com.easytoolsoft.easyreport.data.membership.example.RoleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Role;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.service.IRoleService;
@@ -23,15 +23,27 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service("EzrptMemberRoleService")
-public class RoleService extends AbstractCrudService<IRoleDao, Role> implements IRoleService {
+public class RoleService
+        extends AbstractCrudService<IRoleDao, Role, RoleExample>
+        implements IRoleService {
+
+    @Override
+    protected RoleExample getPageExample(String fieldName, String keyword) {
+        RoleExample example = new RoleExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
     @Override
     public List<Role> getByPage(PageInfo page, User currentUser, String fieldName, String keyword) {
         if (this.isSuperAdminRole(currentUser.getRoles())) {
             return this.getByPage(page, fieldName, keyword);
         }
-        Map<String, Object> params = ParameterBuilder.getQueryParams(
-                Role.builder().createUser(currentUser.getAccount()).build());
-        return this.getByPage(page, fieldName, keyword, params);
+        RoleExample example = new RoleExample();
+        example.or()
+                .andCreateUserEqualTo(currentUser.getAccount())
+                .andFieldLike(fieldName, keyword);
+        return this.getByPage(page, example);
     }
 
     @Override
@@ -132,8 +144,8 @@ public class RoleService extends AbstractCrudService<IRoleDao, Role> implements 
     }
 
     private List<Role> getByCreateUser(String createUser) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(
-                Role.builder().createUser(createUser).build());
-        return this.dao.select(params);
+        RoleExample example = new RoleExample();
+        example.or().andCreateUserEqualTo(createUser);
+        return this.dao.selectByExample(example);
     }
 }

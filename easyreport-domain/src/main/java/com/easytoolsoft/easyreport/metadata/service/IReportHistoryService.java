@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.metadata.service;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Tom Deng
  */
-public interface IReportHistoryService extends ICrudService<ReportHistory> {
+public interface IReportHistoryService extends ICrudService<ReportHistory, ReportHistoryExample> {
     /**
      * @param page
      * @param reportId

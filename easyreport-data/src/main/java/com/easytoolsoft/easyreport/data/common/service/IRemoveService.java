@@ -1,9 +1,8 @@
 package com.easytoolsoft.easyreport.data.common.service;
 
 import java.util.List;
-import java.util.Map;
 
-public interface IRemoveService<T> {
+public interface IRemoveService<T, U> {
     /**
      * @param id
      * @return
@@ -11,10 +10,10 @@ public interface IRemoveService<T> {
     int removeById(Integer id);
 
     /**
-     * @param params
+     * @param example
      * @return
      */
-    int remove(Map<String, Object> params);
+    int removeByExample(U example);
 
     /**
      * @param records

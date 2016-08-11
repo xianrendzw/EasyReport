@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-
+/**
+ * @param <Dao>
+ * @param <Po>
+ */
 public abstract class AbstractAddService<Dao extends IInsertDao<Po>, Po> implements IAddService<Po> {
     @Autowired
     protected Dao dao;

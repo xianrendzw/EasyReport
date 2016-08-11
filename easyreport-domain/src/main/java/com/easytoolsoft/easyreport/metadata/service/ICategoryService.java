@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.metadata.service;
 
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @author Tom Deng
  */
-public interface ICategoryService extends ICrudService<Category> {
+public interface ICategoryService extends ICrudService<Category, CategoryExample> {
 
     List<Category> getChildren(int id);
 

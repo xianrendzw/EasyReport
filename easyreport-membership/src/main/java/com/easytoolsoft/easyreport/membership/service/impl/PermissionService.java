@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IPermissionDao;
+import com.easytoolsoft.easyreport.data.membership.example.PermissionExample;
 import com.easytoolsoft.easyreport.data.membership.po.Permission;
 import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import org.apache.commons.collections.MapUtils;
@@ -21,9 +21,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 @Service("EzrptMemberPermissionService")
-public class PermissionService extends AbstractCrudService<IPermissionDao, Permission> implements IPermissionService {
-    private static Map<String, Permission> cache;
+public class PermissionService
+        extends AbstractCrudService<IPermissionDao, Permission, PermissionExample>
+        implements IPermissionService {
+
     private static final byte[] lock = new byte[0];
+    private static Map<String, Permission> cache;
 
     @Autowired
     public PermissionService() {
@@ -50,11 +53,19 @@ public class PermissionService extends AbstractCrudService<IPermissionDao, Permi
         }
     }
 
+
+    @Override
+    protected PermissionExample getPageExample(String fieldName, String keyword) {
+        PermissionExample example = new PermissionExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
     @Override
     public List<Permission> getByModuleId(Integer moduleId) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(
-                Permission.builder().moduleId(moduleId).build());
-        return this.dao.select(params);
+        PermissionExample example = new PermissionExample();
+        example.or().andModuleIdEqualTo(moduleId);
+        return this.dao.selectByExample(example);
     }
 
     @Override

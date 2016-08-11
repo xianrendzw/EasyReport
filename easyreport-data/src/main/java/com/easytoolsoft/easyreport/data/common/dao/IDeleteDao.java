@@ -1,9 +1,12 @@
 package com.easytoolsoft.easyreport.data.common.dao;
 
 import java.util.List;
-import java.util.Map;
 
-public interface IDeleteDao<T> {
+/**
+ * @param <T> Po
+ * @param <U> Example
+ */
+public interface IDeleteDao<T, U> {
     /**
      * 根据主键删除记录
      *
@@ -15,10 +18,10 @@ public interface IDeleteDao<T> {
     /**
      * 根据条件删除记录
      *
-     * @param params 查询条件参数
+     * @param example 查询Example条件参数
      * @return 影响的记录数
      */
-    int delete(Map<String, Object> params);
+    int deleteByExample(U example);
 
     /**
      * @param records

@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IModuleDao;
+import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -17,7 +17,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("EzrptMemberModuleService")
-public class ModuleService extends AbstractCrudService<IModuleDao, Module> implements IModuleService {
+public class ModuleService
+        extends AbstractCrudService<IModuleDao, Module, ModuleExample>
+        implements IModuleService {
+
+    @Override
+    protected ModuleExample getPageExample(String fieldName, String keyword) {
+        ModuleExample example = new ModuleExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
     @Override
     public int add(Module record) {
         this.dao.insert(record);
@@ -28,8 +38,9 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
 
     @Override
     public List<Module> getByPage(PageInfo pageInfo, Integer pid) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(Module.builder().parentId(pid).build());
-        return this.getByPage(pageInfo, null, null, params);
+        ModuleExample example = new ModuleExample();
+        example.or().andParentIdEqualTo(pid);
+        return this.getByPage(pageInfo, example);
     }
 
     @Override
@@ -61,12 +72,16 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
 
     @Override
     public List<Module> getChildren(int id) {
-        return this.dao.select(this.getQueryParams(id));
+        ModuleExample example = new ModuleExample();
+        example.or().andParentIdEqualTo(id);
+        return this.dao.selectByExample(example);
     }
 
     @Override
     public boolean hasChildren(int id) {
-        return this.dao.count(this.getQueryParams(id)) > 0;
+        ModuleExample example = new ModuleExample();
+        example.or().andParentIdEqualTo(id);
+        return this.dao.countByExample(example) > 0;
     }
 
     @Override
@@ -164,8 +179,11 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
     }
 
     private int count(int parentId, String name) {
-        Module module = Module.builder().parentId(parentId).name(name).build();
-        return this.dao.count(ParameterBuilder.getQueryParams(module));
+        ModuleExample example = new ModuleExample();
+        example.or()
+                .andParentIdEqualTo(parentId)
+                .andNameEqualTo(name);
+        return this.dao.countByExample(example);
     }
 
     private int updateHasChild(int id, boolean hasChild) {
@@ -189,9 +207,5 @@ public class ModuleService extends AbstractCrudService<IModuleDao, Module> imple
         }
         Module po = this.dao.selectById(pid);
         return po.getPath() + "," + id;
-    }
-
-    private Map<String, Object> getQueryParams(int pid) {
-        return ParameterBuilder.getQueryParams(Module.builder().parentId(pid).build());
     }
 }

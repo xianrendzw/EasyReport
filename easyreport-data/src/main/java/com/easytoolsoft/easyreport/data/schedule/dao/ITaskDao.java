@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.schedule.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.schedule.example.TaskExample;
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptScheduleITaskDao")
-public interface ITaskDao extends ICrudDao<Task> {
+public interface ITaskDao extends ICrudDao<Task, TaskExample> {
 }

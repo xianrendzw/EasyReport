@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.sys.service;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
 import com.easytoolsoft.easyreport.data.sys.po.Conf;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Tom Deng
  */
-public interface IConfService extends ICrudService<Conf> {
+public interface IConfService extends ICrudService<Conf, ConfExample> {
     /**
      * @param parentId
      * @return

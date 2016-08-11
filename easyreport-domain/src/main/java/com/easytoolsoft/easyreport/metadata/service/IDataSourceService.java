@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.metadata.service;
 
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
 
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
  *
  * @author Tom Deng
  */
-public interface IDataSourceService extends ICrudService<DataSource> {
+public interface IDataSourceService extends ICrudService<DataSource, DataSourceExample> {
     /**
      * 测试当前数据库连接
      *

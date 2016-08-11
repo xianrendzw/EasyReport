@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.membership.service;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Tom Deng
  */
-public interface IModuleService extends ICrudService<Module> {
+public interface IModuleService extends ICrudService<Module, ModuleExample> {
     List<Module> getByPage(PageInfo pageInfo, Integer pid);
 
     List<Module> getModules(String moduleIds);

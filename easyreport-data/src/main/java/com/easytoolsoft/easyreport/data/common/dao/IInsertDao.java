@@ -1,8 +1,10 @@
 package com.easytoolsoft.easyreport.data.common.dao;
 
-
 import java.util.List;
 
+/**
+ * @param <T>
+ */
 public interface IInsertDao<T> {
     /**
      * 插入一条数据，忽略record中的ID

@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.sys.service;
 
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.sys.example.EventExample;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
 
 /**
@@ -8,6 +9,6 @@ import com.easytoolsoft.easyreport.data.sys.po.Event;
  *
  * @author Tom Deng
  */
-public interface IEventService extends ICrudService<Event> {
+public interface IEventService extends ICrudService<Event, EventExample> {
     void clear();
 }

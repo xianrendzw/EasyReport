@@ -2,11 +2,12 @@ package com.easytoolsoft.easyreport.metadata.service;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.metadata.vo.QueryParameter;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author Tom Deng
  */
-public interface IReportService extends ICrudService<Report> {
+public interface IReportService extends ICrudService<Report, ReportExample> {
     List<Report> getByPage(PageInfo page, Integer categoryId, String fieldName, String keyword);
 
     boolean saveQueryParams(int id, String json);

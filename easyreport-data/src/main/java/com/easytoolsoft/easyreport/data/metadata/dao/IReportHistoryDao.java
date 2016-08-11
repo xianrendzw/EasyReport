@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.metadata.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptMetaIReportHistoryDao")
-public interface IReportHistoryDao extends ICrudDao<ReportHistory> {
+public interface IReportHistoryDao extends ICrudDao<ReportHistory, ReportHistoryExample> {
 }

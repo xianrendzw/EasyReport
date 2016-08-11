@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.schedule.service;
 
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.schedule.example.TaskExample;
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
 
 /**
@@ -8,5 +9,5 @@ import com.easytoolsoft.easyreport.data.schedule.po.Task;
  *
  * @author Tom Deng
  */
-public interface ITaskService extends ICrudService<Task> {
+public interface ITaskService extends ICrudService<Task, TaskExample> {
 }

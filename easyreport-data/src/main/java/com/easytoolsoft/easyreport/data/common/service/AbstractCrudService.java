@@ -3,16 +3,16 @@ package com.easytoolsoft.easyreport.data.common.service;
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 基本增删改查(CRUD)数据访问服务基类
  *
- * @param <Dao> crud数据访问类
- * @param <Po>  pojo类
+ * @param <Dao>
+ * @param <Po>
+ * @param <Example>
  */
-public abstract class AbstractCrudService<Dao extends ICrudDao<Po>, Po> extends AbstractGetService<Dao, Po>
-        implements ICrudService<Po> {
+public abstract class AbstractCrudService<Dao extends ICrudDao<Po, Example>, Po, Example>
+        extends AbstractGetService<Dao, Po, Example> implements ICrudService<Po, Example> {
     @Override
     public int add(Po record) {
         return this.dao.insert(record);
@@ -29,8 +29,8 @@ public abstract class AbstractCrudService<Dao extends ICrudDao<Po>, Po> extends 
     }
 
     @Override
-    public int edit(Map<String, Object> params) {
-        return this.dao.update(params);
+    public int editByExample(Po record, Example example) {
+        return this.dao.updateByExample(record, example);
     }
 
     @Override
@@ -44,8 +44,8 @@ public abstract class AbstractCrudService<Dao extends ICrudDao<Po>, Po> extends 
     }
 
     @Override
-    public int remove(Map<String, Object> params) {
-        return this.dao.delete(params);
+    public int removeByExample(Example example) {
+        return this.dao.deleteByExample(example);
     }
 
     @Override

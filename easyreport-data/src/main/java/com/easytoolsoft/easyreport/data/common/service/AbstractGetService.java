@@ -4,17 +4,21 @@ import com.easytoolsoft.easyreport.data.common.dao.ISelectDao;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AbstractGetService<Dao extends ISelectDao<Po>, Po> implements IGetService<Po> {
+/**
+ * @param <Dao>
+ * @param <Po>
+ * @param <Example>
+ */
+public abstract class AbstractGetService<Dao extends ISelectDao<Po, Example>, Po, Example>
+        implements IGetService<Po, Example> {
     @Autowired
     protected Dao dao;
 
     @Override
-    public boolean exists(Map<String, Object> params) {
-        return this.dao.count(params) > 0;
+    public boolean exists(Example example) {
+        return this.dao.countByExample(example) > 0;
     }
 
     @Override
@@ -23,18 +27,18 @@ public class AbstractGetService<Dao extends ISelectDao<Po>, Po> implements IGetS
     }
 
     @Override
-    public List<Po> get(Map<String, Object> params) {
-        return this.dao.select(params);
+    public List<Po> getByExample(Example example) {
+        return this.dao.selectByExample(example);
     }
 
     @Override
     public List<Po> getAll() {
-        return this.dao.select(new HashMap<>(0));
+        return this.dao.selectByExample(null);
     }
 
     @Override
-    public Po getOne(Map<String, Object> params) {
-        return this.dao.selectOne(params);
+    public Po getOneByExample(Example example) {
+        return this.dao.selectOneByExample(example);
     }
 
     @Override
@@ -49,21 +53,14 @@ public class AbstractGetService<Dao extends ISelectDao<Po>, Po> implements IGetS
 
     @Override
     public List<Po> getByPage(PageInfo pageInfo, String fieldName, String keyword) {
-        return this.getByPage(pageInfo, fieldName, keyword, new HashMap<>(2));
+        return this.getByPage(pageInfo, this.getPageExample(fieldName, keyword));
     }
 
     @Override
-    public List<Po> getByPage(PageInfo pageInfo, String fieldName, String keyword, Map<String, Object> where) {
-        if (where == null) {
-            where = new HashMap<>(5);
-        }
-        where.put("fieldName", fieldName);
-        where.put("keyword", keyword);
-
-        Map<String, Object> params = new HashMap<>(2);
-        params.put("pager", pageInfo);
-        params.put("where", where);
-        pageInfo.setTotals(this.dao.countByPager(params));
-        return this.dao.selectByPager(params);
+    public List<Po> getByPage(PageInfo pageInfo, Example example) {
+        pageInfo.setTotals(this.dao.countByPager(pageInfo, example));
+        return this.dao.selectByPager(pageInfo, example);
     }
+
+    protected abstract Example getPageExample(String fieldName, String keyword);
 }

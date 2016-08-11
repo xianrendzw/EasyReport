@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.membership.service.impl;
 import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IUserDao;
+import com.easytoolsoft.easyreport.data.membership.example.UserExample;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IUserService;
@@ -12,15 +13,25 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 @Service("EzrptMemberUserService")
-public class UserService extends AbstractCrudService<IUserDao, User> implements IUserService {
+public class UserService
+        extends AbstractCrudService<IUserDao, User, UserExample>
+        implements IUserService {
+
     @Resource
     private PasswordService passwordService;
 
     @Override
+    protected UserExample getPageExample(String fieldName, String keyword) {
+        UserExample example = new UserExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
+    @Override
     public User getUserByAccount(String account) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(
-                User.builder().account(account).build());
-        return this.dao.selectOne(params);
+        UserExample example = new UserExample();
+        example.or().andAccountEqualTo(account);
+        return this.dao.selectOneByExample(example);
     }
 
     @Override

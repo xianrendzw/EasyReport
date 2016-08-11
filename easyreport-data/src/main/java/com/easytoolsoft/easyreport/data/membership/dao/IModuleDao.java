@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.membership.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptMemberIModuleDao")
-public interface IModuleDao extends ICrudDao<Module> {
+public interface IModuleDao extends ICrudDao<Module, ModuleExample> {
 }

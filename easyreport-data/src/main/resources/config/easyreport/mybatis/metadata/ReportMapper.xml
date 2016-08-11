@@ -9,7 +9,7 @@
         <result column="ds_id" property="dsId" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="sql_text" property="sqlText" jdbcType="LONGVARCHAR"/>
-        <result column="﻿metaColumns" property="﻿meta_columns" jdbcType="LONGVARCHAR"/>
+        <result column="meta_columns" property="metaColumns" jdbcType="LONGVARCHAR"/>
         <result column="query_params" property="queryParams" jdbcType="LONGVARCHAR"/>
         <result column="options" property="options" jdbcType="LONGVARCHAR"/>
         <result column="path" property="path" jdbcType="VARCHAR"/>
@@ -20,18 +20,75 @@
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id , uid , category_id , ds_id , name , sql_text , ﻿meta_columns , query_params , options , path , status ,
-        sequence ,
-        comment , create_user , gmt_created , gmt_modified
+    <sql id="Example_Where_Clause1">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
     </sql>
+    <sql id="Example_Where_Clause2">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+  	  id ,uid ,category_id ,ds_id ,name ,sql_text ,meta_columns ,query_params ,options ,path ,status ,sequence ,comment ,create_user ,gmt_created ,gmt_modified 	  </sql>
     <sql id="Insert_Columns">
         <if test="uid != null">uid,</if>
         <if test="categoryId != null">category_id,</if>
         <if test="dsId != null">ds_id,</if>
         <if test="name != null">name,</if>
         <if test="sqlText != null">sql_text,</if>
-        <if test="﻿metaColumns != null">﻿meta_columns,</if>
+        <if test="metaColumns != null">meta_columns,</if>
         <if test="queryParams != null">query_params,</if>
         <if test="options != null">options,</if>
         <if test="path != null">path,</if>
@@ -48,7 +105,7 @@
         <if test="dsId != null">#{dsId,jdbcType=INTEGER},</if>
         <if test="name != null">#{name,jdbcType=VARCHAR},</if>
         <if test="sqlText != null">#{sqlText,jdbcType=LONGVARCHAR},</if>
-        <if test="﻿metaColumns != null">#{﻿metaColumns,jdbcType=LONGVARCHAR},</if>
+        <if test="metaColumns != null">#{metaColumns,jdbcType=LONGVARCHAR},</if>
         <if test="queryParams != null">#{queryParams,jdbcType=LONGVARCHAR},</if>
         <if test="options != null">#{options,jdbcType=LONGVARCHAR},</if>
         <if test="path != null">#{path,jdbcType=VARCHAR},</if>
@@ -60,40 +117,22 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        <if test="id != null">#{id,jdbcType=INTEGER},</if>
-        <if test="uid != null">#{uid,jdbcType=VARCHAR},</if>
-        <if test="categoryId != null">#{categoryId,jdbcType=INTEGER},</if>
-        <if test="dsId != null">#{dsId,jdbcType=INTEGER},</if>
-        <if test="name != null">#{name,jdbcType=VARCHAR},</if>
-        <if test="sqlText != null">#{sqlText,jdbcType=LONGVARCHAR},</if>
-        <if test="﻿metaColumns != null">#{﻿metaColumns,jdbcType=LONGVARCHAR},</if>
-        <if test="queryParams != null">#{queryParams,jdbcType=LONGVARCHAR},</if>
-        <if test="options != null">#{options,jdbcType=LONGVARCHAR},</if>
-        <if test="path != null">#{path,jdbcType=VARCHAR},</if>
-        <if test="status != null">#{status,jdbcType=INTEGER},</if>
-        <if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
-        <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
-        <if test="createUser != null">#{createUser,jdbcType=VARCHAR},</if>
-        <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
-        <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
-    </sql>
-    <sql id="Select_Where_From_Map">
-        <if test="id != null">and id = #{id,jdbcType=INTEGER}</if>
-        <if test="uid != null">and uid = #{uid,jdbcType=VARCHAR}</if>
-        <if test="categoryId != null">and category_id = #{categoryId,jdbcType=INTEGER}</if>
-        <if test="dsId != null">and ds_id = #{dsId,jdbcType=INTEGER}</if>
-        <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
-        <if test="sqlText != null">and sql_text = #{sqlText,jdbcType=LONGVARCHAR}</if>
-        <if test="﻿metaColumns != null">and ﻿meta_columns = #{﻿metaColumns,jdbcType=LONGVARCHAR}</if>
-        <if test="queryParams != null">and query_params = #{queryParams,jdbcType=LONGVARCHAR}</if>
-        <if test="options != null">and options = #{options,jdbcType=LONGVARCHAR}</if>
-        <if test="path != null">and path = #{path,jdbcType=VARCHAR}</if>
-        <if test="status != null">and status = #{status,jdbcType=INTEGER}</if>
-        <if test="sequence != null">and sequence = #{sequence,jdbcType=INTEGER}</if>
-        <if test="comment != null">and comment = #{comment,jdbcType=VARCHAR}</if>
-        <if test="createUser != null">and create_user = #{createUser,jdbcType=VARCHAR}</if>
-        <if test="gmtCreated != null">and gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}</if>
-        <if test="gmtModified != null">and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}</if>
+        <if test="item.id != null">#{item.id,jdbcType=INTEGER},</if>
+        <if test="item.uid != null">#{item.uid,jdbcType=VARCHAR},</if>
+        <if test="item.categoryId != null">#{item.categoryId,jdbcType=INTEGER},</if>
+        <if test="item.dsId != null">#{item.dsId,jdbcType=INTEGER},</if>
+        <if test="item.name != null">#{item.name,jdbcType=VARCHAR},</if>
+        <if test="item.sqlText != null">#{item.sqlText,jdbcType=LONGVARCHAR},</if>
+        <if test="item.metaColumns != null">#{item.metaColumns,jdbcType=LONGVARCHAR},</if>
+        <if test="item.queryParams != null">#{item.queryParams,jdbcType=LONGVARCHAR},</if>
+        <if test="item.options != null">#{item.options,jdbcType=LONGVARCHAR},</if>
+        <if test="item.path != null">#{item.path,jdbcType=VARCHAR},</if>
+        <if test="item.status != null">#{item.status,jdbcType=INTEGER},</if>
+        <if test="item.sequence != null">#{item.sequence,jdbcType=INTEGER},</if>
+        <if test="item.comment != null">#{item.comment,jdbcType=VARCHAR},</if>
+        <if test="item.createUser != null">#{item.createUser,jdbcType=VARCHAR},</if>
+        <if test="item.gmtCreated != null">#{item.gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="item.gmtModified != null">#{item.gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Update_Set_From_Bean">
         <if test="uid != null">uid = #{uid,jdbcType=VARCHAR} ,</if>
@@ -101,7 +140,7 @@
         <if test="dsId != null">ds_id = #{dsId,jdbcType=INTEGER} ,</if>
         <if test="name != null">name = #{name,jdbcType=VARCHAR} ,</if>
         <if test="sqlText != null">sql_text = #{sqlText,jdbcType=LONGVARCHAR} ,</if>
-        <if test="﻿metaColumns != null">﻿meta_columns = #{﻿metaColumns,jdbcType=LONGVARCHAR} ,</if>
+        <if test="metaColumns != null">meta_columns = #{metaColumns,jdbcType=LONGVARCHAR} ,</if>
         <if test="queryParams != null">query_params = #{queryParams,jdbcType=LONGVARCHAR} ,</if>
         <if test="options != null">options = #{options,jdbcType=LONGVARCHAR} ,</if>
         <if test="path != null">path = #{path,jdbcType=VARCHAR} ,</if>
@@ -113,39 +152,21 @@
         <if test="gmtModified != null">gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="Update_Set_From_Map">
-        <if test="set.uid != null">uid = #{set.uid,jdbcType=VARCHAR} ,</if>
-        <if test="set.categoryId != null">category_id = #{set.categoryId,jdbcType=INTEGER} ,</if>
-        <if test="set.dsId != null">ds_id = #{set.dsId,jdbcType=INTEGER} ,</if>
-        <if test="set.name != null">name = #{set.name,jdbcType=VARCHAR} ,</if>
-        <if test="set.sqlText != null">sql_text = #{set.sqlText,jdbcType=LONGVARCHAR} ,</if>
-        <if test="set.﻿metaColumns != null">﻿meta_columns = #{set.﻿metaColumns,jdbcType=LONGVARCHAR} ,</if>
-        <if test="set.queryParams != null">query_params = #{set.queryParams,jdbcType=LONGVARCHAR} ,</if>
-        <if test="set.options != null">options = #{set.options,jdbcType=LONGVARCHAR} ,</if>
-        <if test="set.path != null">path = #{set.path,jdbcType=VARCHAR} ,</if>
-        <if test="set.status != null">status = #{set.status,jdbcType=INTEGER} ,</if>
-        <if test="set.sequence != null">sequence = #{set.sequence,jdbcType=INTEGER} ,</if>
-        <if test="set.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
-        <if test="set.createUser != null">create_user = #{set.createUser,jdbcType=VARCHAR} ,</if>
-        <if test="set.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
-        <if test="set.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
-    </sql>
-    <sql id="Update_Where_From_Map">
-        <if test="where.id != null">and id = #{where.id,jdbcType=INTEGER}</if>
-        <if test="where.uid != null">and uid = #{where.uid,jdbcType=VARCHAR}</if>
-        <if test="where.categoryId != null">and category_id = #{where.categoryId,jdbcType=INTEGER}</if>
-        <if test="where.dsId != null">and ds_id = #{where.dsId,jdbcType=INTEGER}</if>
-        <if test="where.name != null">and name = #{where.name,jdbcType=VARCHAR}</if>
-        <if test="where.sqlText != null">and sql_text = #{where.sqlText,jdbcType=LONGVARCHAR}</if>
-        <if test="where.﻿metaColumns != null">and ﻿meta_columns = #{where.﻿metaColumns,jdbcType=LONGVARCHAR}</if>
-        <if test="where.queryParams != null">and query_params = #{where.queryParams,jdbcType=LONGVARCHAR}</if>
-        <if test="where.options != null">and options = #{where.options,jdbcType=LONGVARCHAR}</if>
-        <if test="where.path != null">and path = #{where.path,jdbcType=VARCHAR}</if>
-        <if test="where.status != null">and status = #{where.status,jdbcType=INTEGER}</if>
-        <if test="where.sequence != null">and sequence = #{where.sequence,jdbcType=INTEGER}</if>
-        <if test="where.comment != null">and comment = #{where.comment,jdbcType=VARCHAR}</if>
-        <if test="where.createUser != null">and create_user = #{where.createUser,jdbcType=VARCHAR}</if>
-        <if test="where.gmtCreated != null">and gmt_created = #{where.gmtCreated,jdbcType=TIMESTAMP}</if>
-        <if test="where.gmtModified != null">and gmt_modified = #{where.gmtModified,jdbcType=TIMESTAMP}</if>
+        <if test="record.uid != null">uid = #{set.uid,jdbcType=VARCHAR} ,</if>
+        <if test="record.categoryId != null">category_id = #{set.categoryId,jdbcType=INTEGER} ,</if>
+        <if test="record.dsId != null">ds_id = #{set.dsId,jdbcType=INTEGER} ,</if>
+        <if test="record.name != null">name = #{set.name,jdbcType=VARCHAR} ,</if>
+        <if test="record.sqlText != null">sql_text = #{set.sqlText,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.metaColumns != null">meta_columns = #{set.metaColumns,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.queryParams != null">query_params = #{set.queryParams,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.options != null">options = #{set.options,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.path != null">path = #{set.path,jdbcType=VARCHAR} ,</if>
+        <if test="record.status != null">status = #{set.status,jdbcType=INTEGER} ,</if>
+        <if test="record.sequence != null">sequence = #{set.sequence,jdbcType=INTEGER} ,</if>
+        <if test="record.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
+        <if test="record.createUser != null">create_user = #{set.createUser,jdbcType=VARCHAR} ,</if>
+        <if test="record.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="record.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="BatchUpdate_Set_From_Bean">
         <if test="item.uid != null">uid = #{item.uid,jdbcType=VARCHAR} ,</if>
@@ -153,7 +174,7 @@
         <if test="item.dsId != null">ds_id = #{item.dsId,jdbcType=INTEGER} ,</if>
         <if test="item.name != null">name = #{item.name,jdbcType=VARCHAR} ,</if>
         <if test="item.sqlText != null">sql_text = #{item.sqlText,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.﻿metaColumns != null">﻿meta_columns = #{item.﻿metaColumns,jdbcType=LONGVARCHAR} ,</if>
+        <if test="item.metaColumns != null">meta_columns = #{item.metaColumns,jdbcType=LONGVARCHAR} ,</if>
         <if test="item.queryParams != null">query_params = #{item.queryParams,jdbcType=LONGVARCHAR} ,</if>
         <if test="item.options != null">options = #{item.options,jdbcType=LONGVARCHAR} ,</if>
         <if test="item.path != null">path = #{item.path,jdbcType=VARCHAR} ,</if>
@@ -164,21 +185,7 @@
         <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
         <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
-    <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from ezrpt_meta_report where id = #{id,jdbcType=INTEGER}
-    </delete>
-    <delete id="delete" parameterType="java.util.Map">
-        delete from ezrpt_meta_report
-        <where>
-            <include refid="Select_Where_From_Map"/>
-        </where>
-    </delete>
-    <delete id="deleteIn">
-        delete from ezrpt_meta_report where id in
-        <foreach collection="records" item="item" index="index" open="(" separator="," close=")">
-            #{item.id,jdbcType=INTEGER}
-        </foreach>
-    </delete>
+    <!-- insert -->
     <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
         <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
             SELECT LAST_INSERT_ID()
@@ -197,44 +204,31 @@
             <include refid="Base_Column_List"/>
         </trim>
         values
-        <foreach collection="record" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="index" separator=",">
             <trim prefix="(" suffix=")" suffixOverrides=",">
                 <include refid="Batch_Insert_Values"/>
             </trim>
         </foreach>
     </insert>
-    <select id="selectById" resultMap="ReportMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_meta_report
-        where id = #{id,jdbcType=INTEGER}
-    </select>
-    <select id="select" resultMap="ReportMap" parameterType="java.util.Map">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_meta_report
-        <where>
-            <include refid="Select_Where_From_Map"/>
-        </where>
-    </select>
-    <select id="selectOne" resultMap="ReportMap" parameterType="java.util.Map">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_meta_report
-        <where>
-            <include refid="Select_Where_From_Map"/>
-        </where>
-        limit 1
-    </select>
-    <select id="selectIn" resultMap="ReportMap" parameterType="java.util.List">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_meta_report
-        where id IN
-        <foreach collection="record" item="item" index="index" open="(" separator="," close=")">
+    <!-- end insert -->
+    <!-- delete -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ezrpt_meta_report where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.easytoolsoft.easyreport.data.metadata.example.ReportExample">
+        delete from ezrpt_meta_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause1"/>
+        </if>
+    </delete>
+    <delete id="deleteIn">
+        delete from ezrpt_meta_report where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
             #{item.id,jdbcType=INTEGER}
         </foreach>
-    </select>
+    </delete>
+    <!-- end delete -->
+    <!-- update -->
     <update id="updateById" parameterType="com.easytoolsoft.easyreport.data.metadata.po.Report">
         update ezrpt_meta_report
         <set>
@@ -247,46 +241,84 @@
         <set>
             <include refid="Update_Set_From_Map"/>
         </set>
-        <where>
-            <include refid="Update_Where_From_Map"/>
-        </where>
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause2"/>
+        </if>
     </update>
     <update id="batchUpdate" parameterType="java.util.List">
-        <foreach collection="records" item="item" index="index" open="" close="" separator=";">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
             update ezrpt_meta_report
             <include refid="BatchUpdate_Set_From_Bean"/>
             where id=#{item.id,jdbcType=INTEGER}
         </foreach>
     </update>
+    <!-- end update -->
+    <!-- select -->
+    <select id="selectById" resultMap="ReportMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_meta_report
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByExample" resultMap="ReportMap"
+            parameterType="com.easytoolsoft.easyreport.data.metadata.example.ReportExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from ezrpt_meta_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause1"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectOneByExample" resultMap="ReportMap"
+            parameterType="com.easytoolsoft.easyreport.data.metadata.example.ReportExample">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_meta_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause1"/>
+        </if>
+        limit 1
+    </select>
+    <select id="selectIn" resultMap="ReportMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_meta_report
+        where id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <select id="countByExample" resultType="java.lang.Integer"
+            parameterType="com.easytoolsoft.easyreport.data.metadata.example.ReportExample">
+        select count(*) as total from ezrpt_meta_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause1"/>
+        </if>
+    </select>
     <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(*) as total from ezrpt_meta_report
-        <where>
-            <if test="where.categoryId != null">and category_id = #{where.categoryId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
-                #{where.keyword, jdbcType=VARCHAR},'%')
-            </if>
-        </where>
+        <if test="example != null">
+            <include refid="Example_Where_Clause2"/>
+        </if>
     </select>
     <select id="selectByPager" resultMap="ReportMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
         from ezrpt_meta_report
-        <where>
-            <if test="where.categoryId != null">and category_id = #{where.categoryId,jdbcType=INTEGER}</if>
-            <if test="where.keyword != null">and ${where.fieldName} LIKE CONCAT('%',
-                #{where.keyword, jdbcType=VARCHAR},'%')
-            </if>
-        </where>
+        <if test="example != null">
+            <include refid="Example_Where_Clause2"/>
+        </if>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
             order by ${pager.sortItem} ${pager.sortType}
         </if>
         limit #{pager.startIndex} , #{pager.pageSize}
     </select>
-    <select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(*) as total from ezrpt_meta_report
-        <where>
-            <include refid="Select_Where_From_Map"/>
-        </where>
-    </select>
+    <!-- end select -->
     <!-- My Custom Interfaces -->
 </mapper>

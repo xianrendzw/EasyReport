@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.metadata.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptMetaICategoryDao")
-public interface ICategoryDao extends ICrudDao<Category> {
+public interface ICategoryDao extends ICrudDao<Category, CategoryExample> {
 }

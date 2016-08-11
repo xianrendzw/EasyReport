@@ -5,9 +5,9 @@ package com.easytoolsoft.easyreport.data.common.service;
  *
  * @param <T>
  */
-public interface ICrudService<T> extends
+public interface ICrudService<T, U> extends
         IAddService<T>,
-        IRemoveService<T>,
-        IEditService<T>,
-        IGetService<T> {
+        IRemoveService<T, U>,
+        IEditService<T, U>,
+        IGetService<T, U> {
 }

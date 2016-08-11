@@ -4,9 +4,14 @@ import com.easytoolsoft.easyreport.data.common.dao.IDeleteDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Map;
 
-public abstract class AbstractRemoveService<Dao extends IDeleteDao<Po>, Po> implements IRemoveService<Po> {
+/**
+ * @param <Dao>
+ * @param <Po>
+ * @param <Example>
+ */
+public abstract class AbstractRemoveService<Dao extends IDeleteDao<Po, Example>, Po, Example>
+        implements IRemoveService<Po, Example> {
     @Autowired
     protected Dao dao;
 
@@ -16,8 +21,8 @@ public abstract class AbstractRemoveService<Dao extends IDeleteDao<Po>, Po> impl
     }
 
     @Override
-    public int remove(Map<String, Object> params) {
-        return this.dao.delete(params);
+    public int removeByExample(Example example) {
+        return this.dao.deleteByExample(example);
     }
 
     @Override

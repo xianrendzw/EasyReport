@@ -2,9 +2,8 @@ package com.easytoolsoft.easyreport.data.common.service;
 
 
 import java.util.List;
-import java.util.Map;
 
-public interface IEditService<T> {
+public interface IEditService<T, U> {
     /**
      * 根据主键更新用户信息
      *
@@ -16,10 +15,11 @@ public interface IEditService<T> {
     /**
      * 根据条件更新数据
      *
-     * @param params
+     * @param record
+     * @param example
      * @return 影响的记录数
      */
-    int edit(Map<String, Object> params);
+    int editByExample(T record, U example);
 
     /**
      * @param records

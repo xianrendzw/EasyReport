@@ -1,11 +1,11 @@
 package com.easytoolsoft.easyreport.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.data.metadata.dao.IConfDao;
+import com.easytoolsoft.easyreport.data.metadata.example.ConfExample;
+import com.easytoolsoft.easyreport.data.metadata.po.Conf;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
-import com.easytoolsoft.easyreport.data.metadata.dao.IConfDao;
-import com.easytoolsoft.easyreport.data.metadata.po.Conf;
 import com.easytoolsoft.easyreport.metadata.service.IConfService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service("EzrptMetaConfService")
-public class ConfService extends AbstractCrudService<IConfDao, Conf> implements IConfService {
+public class ConfService
+        extends AbstractCrudService<IConfDao, Conf, ConfExample>
+        implements IConfService {
     /**
      * 统计列对应的配置字典表中的Key
      */
@@ -34,9 +36,17 @@ public class ConfService extends AbstractCrudService<IConfDao, Conf> implements 
     private static final String OPTION_COLUMN = "optionalColumn";
 
     @Override
+    protected ConfExample getPageExample(String fieldName, String keyword) {
+        ConfExample example = new ConfExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
+    @Override
     public List<Conf> getByParentId(Integer parentId) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(Conf.builder().parentId(parentId).build());
-        return this.dao.select(params);
+        ConfExample example = new ConfExample();
+        example.or().andParentIdEqualTo(parentId);
+        return this.dao.selectByExample(example);
     }
 
     @Override

@@ -2,9 +2,9 @@ package com.easytoolsoft.easyreport.metadata.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.metadata.dao.IReportDao;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.data.metadata.po.Report;
@@ -29,13 +29,22 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service("EzrptMetaReportService")
-public class ReportService extends AbstractCrudService<IReportDao, Report> implements IReportService {
+public class ReportService
+        extends AbstractCrudService<IReportDao, Report, ReportExample>
+        implements IReportService {
     @Resource
     private IDataSourceService dsService;
     @Resource
     private IConfService confService;
     @Resource
     private ICategoryService categoryService;
+
+    @Override
+    protected ReportExample getPageExample(String fieldName, String keyword) {
+        ReportExample example = new ReportExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
 
     @Override
     public int add(Report po) {
@@ -52,9 +61,11 @@ public class ReportService extends AbstractCrudService<IReportDao, Report> imple
 
     @Override
     public List<Report> getByPage(PageInfo page, Integer categoryId, String fieldName, String keyword) {
-        Map<String, Object> where = ParameterBuilder.getQueryParams(
-                Report.builder().categoryId(categoryId).build());
-        return this.getByPage(page, fieldName, keyword, where);
+        ReportExample example = new ReportExample();
+        example.or()
+                .andCategoryIdEqualTo(categoryId)
+                .andFieldLike(fieldName, keyword);
+        return this.getByPage(page, example);
     }
 
     @Override
@@ -65,9 +76,9 @@ public class ReportService extends AbstractCrudService<IReportDao, Report> imple
 
     @Override
     public Report getByUid(String uid) {
-        Map<String, Object> params = ParameterBuilder.getQueryParams(
-                Report.builder().uid(uid).build());
-        return this.dao.selectOne(params);
+        ReportExample example = new ReportExample();
+        example.or().andUidEqualTo(uid);
+        return this.dao.selectOneByExample(example);
     }
 
     @Override

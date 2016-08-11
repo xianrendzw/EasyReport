@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.sys.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.sys.example.EventExample;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptSysIEventDao")
-public interface IEventDao extends ICrudDao<Event> {
+public interface IEventDao extends ICrudDao<Event, EventExample> {
 }

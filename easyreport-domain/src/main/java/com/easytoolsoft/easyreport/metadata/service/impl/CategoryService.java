@@ -1,19 +1,28 @@
 package com.easytoolsoft.easyreport.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.metadata.dao.ICategoryDao;
+import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import com.easytoolsoft.easyreport.metadata.service.ICategoryService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service("EzrptMetaCategoryService")
-public class CategoryService extends AbstractCrudService<ICategoryDao, Category> implements ICategoryService {
+public class CategoryService
+        extends AbstractCrudService<ICategoryDao, Category, CategoryExample>
+        implements ICategoryService {
+
+    @Override
+    protected CategoryExample getPageExample(String fieldName, String keyword) {
+        CategoryExample example = new CategoryExample();
+        example.createCriteria().andFieldLike(fieldName, keyword);
+        return example;
+    }
+
     @Override
     public int add(Category record) {
         this.dao.insert(record);
@@ -24,12 +33,16 @@ public class CategoryService extends AbstractCrudService<ICategoryDao, Category>
 
     @Override
     public List<Category> getChildren(int id) {
-        return this.dao.select(this.getQueryParams(id));
+        CategoryExample example = new CategoryExample();
+        example.or().andParentIdEqualTo(id);
+        return this.dao.selectByExample(example);
     }
 
     @Override
     public boolean hasChildren(int id) {
-        return this.dao.count(this.getQueryParams(id)) > 0;
+        CategoryExample example = new CategoryExample();
+        example.or().andParentIdEqualTo(id);
+        return this.exists(example);
     }
 
     @Override
@@ -127,8 +140,11 @@ public class CategoryService extends AbstractCrudService<ICategoryDao, Category>
     }
 
     private int count(int parentId, String name) {
-        Category category = Category.builder().parentId(parentId).name(name).build();
-        return this.dao.count(ParameterBuilder.getQueryParams(category));
+        CategoryExample example = new CategoryExample();
+        example.or()
+                .andParentIdEqualTo(parentId)
+                .andNameEqualTo(name);
+        return this.dao.countByExample(example);
     }
 
     private int updateHasChild(int id, boolean hasChild) {
@@ -152,9 +168,5 @@ public class CategoryService extends AbstractCrudService<ICategoryDao, Category>
         }
         Category po = this.dao.selectById(pid);
         return po.getPath() + "," + id;
-    }
-
-    private Map<String, Object> getQueryParams(int pid) {
-        return ParameterBuilder.getQueryParams(Category.builder().parentId(pid).build());
     }
 }

@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.membership.service;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
+import com.easytoolsoft.easyreport.data.membership.example.RoleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Role;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  *
  * @author Tom Deng
  */
-public interface IRoleService extends ICrudService<Role> {
+public interface IRoleService extends ICrudService<Role, RoleExample> {
     boolean isSuperAdminRole(String roleIds);
 
     String getNames(String roleIds);

@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.data.metadata.dao;
 
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @author Tom Deng
  */
 @Repository("EzrptMetaIReportDao")
-public interface IReportDao extends ICrudDao<Report> {
+public interface IReportDao extends ICrudDao<Report, ReportExample> {
 }
