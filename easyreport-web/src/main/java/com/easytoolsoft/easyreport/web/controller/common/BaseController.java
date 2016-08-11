@@ -2,15 +2,11 @@ package com.easytoolsoft.easyreport.web.controller.common;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +17,7 @@ import java.util.Map;
  * @author Tom Deng
  */
 @Slf4j
-public class BaseController<Service extends ICrudService<Model>, Model> {
+public class BaseController<Service extends ICrudService<Model, Example>, Model, Example> {
     @Autowired
     protected Service service;
 

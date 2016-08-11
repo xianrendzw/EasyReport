@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.web.controller.schedule;
 
+import com.easytoolsoft.easyreport.data.schedule.example.TaskExample;
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
 import com.easytoolsoft.easyreport.schedule.service.ITaskService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -14,7 +15,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/rest/schedule/task")
-public class TaskController extends BaseController<ITaskService, Task> {
+public class TaskController
+        extends BaseController<ITaskService, Task, TaskExample> {
+
     @RequestMapping(value = "/list")
     @OpLog(name = "获取任务列表")
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {

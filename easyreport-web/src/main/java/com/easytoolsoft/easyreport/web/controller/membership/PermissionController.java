@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
+import com.easytoolsoft.easyreport.data.membership.example.PermissionExample;
 import com.easytoolsoft.easyreport.data.membership.po.Permission;
 import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -15,7 +16,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/rest/membership/permission")
-public class PermissionController extends BaseController<IPermissionService, Permission> {
+public class PermissionController
+        extends BaseController<IPermissionService, Permission, PermissionExample> {
+
     @RequestMapping(value = "/list")
     @OpLog(name = "获取权限列表")
     public Map<String, Object> list(Integer id) {

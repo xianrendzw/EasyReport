@@ -105,18 +105,18 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        <if test="item.id != null">#{item.id,jdbcType=INTEGER},</if>
-        <if test="item.modules != null">#{item.modules,jdbcType=VARCHAR},</if>
-        <if test="item.permissions != null">#{item.permissions,jdbcType=VARCHAR},</if>
-        <if test="item.name != null">#{item.name,jdbcType=VARCHAR},</if>
-        <if test="item.code != null">#{item.code,jdbcType=VARCHAR},</if>
-        <if test="item.isSystem != null">#{item.isSystem,jdbcType=TINYINT},</if>
-        <if test="item.status != null">#{item.status,jdbcType=TINYINT},</if>
-        <if test="item.sequence != null">#{item.sequence,jdbcType=INTEGER},</if>
-        <if test="item.comment != null">#{item.comment,jdbcType=VARCHAR},</if>
-        <if test="item.createUser != null">#{item.createUser,jdbcType=VARCHAR},</if>
-        <if test="item.gmtCreated != null">#{item.gmtCreated,jdbcType=TIMESTAMP},</if>
-        <if test="item.gmtModified != null">#{item.gmtModified,jdbcType=TIMESTAMP},</if>
+        ﻿#{item.id,jdbcType=INTEGER},
+        #{item.modules,jdbcType=VARCHAR},
+        #{item.permissions,jdbcType=VARCHAR},
+        #{item.name,jdbcType=VARCHAR},
+        #{item.code,jdbcType=VARCHAR},
+        #{item.isSystem,jdbcType=TINYINT},
+        #{item.status,jdbcType=TINYINT},
+        #{item.sequence,jdbcType=INTEGER},
+        #{item.comment,jdbcType=VARCHAR},
+        #{item.createUser,jdbcType=VARCHAR},
+        #{item.gmtCreated,jdbcType=TIMESTAMP},
+        #{item.gmtModified,jdbcType=TIMESTAMP}
     </sql>
     <sql id="Update_Set_From_Bean">
         <if test="modules != null">modules = #{modules,jdbcType=VARCHAR} ,</if>
@@ -145,17 +145,17 @@
         <if test="record.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="BatchUpdate_Set_From_Bean">
-        <if test="item.modules != null">modules = #{item.modules,jdbcType=VARCHAR} ,</if>
-        <if test="item.permissions != null">permissions = #{item.permissions,jdbcType=VARCHAR} ,</if>
-        <if test="item.name != null">name = #{item.name,jdbcType=VARCHAR} ,</if>
-        <if test="item.code != null">code = #{item.code,jdbcType=VARCHAR} ,</if>
-        <if test="item.isSystem != null">is_system = #{item.isSystem,jdbcType=TINYINT} ,</if>
-        <if test="item.status != null">status = #{item.status,jdbcType=TINYINT} ,</if>
-        <if test="item.sequence != null">sequence = #{item.sequence,jdbcType=INTEGER} ,</if>
-        <if test="item.comment != null">comment = #{item.comment,jdbcType=VARCHAR} ,</if>
-        <if test="item.createUser != null">create_user = #{item.createUser,jdbcType=VARCHAR} ,</if>
-        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
-        <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
+        ﻿modules = #{item.modules,jdbcType=VARCHAR} ,
+        permissions = #{item.permissions,jdbcType=VARCHAR} ,
+        name = #{item.name,jdbcType=VARCHAR} ,
+        code = #{item.code,jdbcType=VARCHAR} ,
+        is_system = #{item.isSystem,jdbcType=TINYINT} ,
+        status = #{item.status,jdbcType=TINYINT} ,
+        sequence = #{item.sequence,jdbcType=INTEGER} ,
+        comment = #{item.comment,jdbcType=VARCHAR} ,
+        create_user = #{item.createUser,jdbcType=VARCHAR} ,
+        gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,
+        gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP}
     </sql>
     <!-- insert -->
     <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.membership.po.Role">

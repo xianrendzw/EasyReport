@@ -17,7 +17,7 @@ public class IModuleDaoTest extends BaseDaoTest<IModuleDao, Module, ModuleExampl
                 .id(id)
                 .parentId(0)
                 .name("test_" + id)
-                .code(RandomStringUtils.random(10))
+                .code(RandomStringUtils.randomAlphanumeric(10))
                 .comment("test_" + id)
                 .gmtCreated(new Date())
                 .gmtModified(new Date())
@@ -37,6 +37,6 @@ public class IModuleDaoTest extends BaseDaoTest<IModuleDao, Module, ModuleExampl
     protected ModuleExample getExample() {
         ModuleExample example = new ModuleExample();
         example.or().andNameEqualTo("test_1000");
-        return null;
+        return example;
     }
 }

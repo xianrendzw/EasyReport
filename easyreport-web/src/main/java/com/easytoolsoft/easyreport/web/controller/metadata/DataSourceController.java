@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.metadata.service.IDataSourceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -21,7 +22,9 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(value = "/rest/metadata/ds")
-public class DataSourceController extends BaseController<IDataSourceService, DataSource> {
+public class DataSourceController
+        extends BaseController<IDataSourceService, DataSource, DataSourceExample> {
+
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "report/dataSource";

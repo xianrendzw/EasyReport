@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.membership.example.UserExample;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
@@ -19,7 +20,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/rest/membership/user")
-public class UserController extends BaseController<IUserService, User> {
+public class UserController
+        extends BaseController<IUserService, User, UserExample> {
+
     @Resource
     private PasswordService passwordService;
 

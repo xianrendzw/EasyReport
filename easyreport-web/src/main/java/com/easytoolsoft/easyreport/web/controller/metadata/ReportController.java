@@ -2,7 +2,7 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
+import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
@@ -30,7 +30,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/rest/metadata/report")
-public class ReportController extends BaseController<IReportService, Report> {
+public class ReportController
+        extends BaseController<IReportService, Report, ReportExample> {
     @Resource
     private IReportHistoryService reportHistoryService;
     @Resource
@@ -48,8 +49,7 @@ public class ReportController extends BaseController<IReportService, Report> {
     @RequestMapping(value = "/list")
     public Map<String, Object> list(DataGridPager pager, Integer categoryId, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<Report> list = this.service.getByPage(pageInfo, fieldName, keyword,
-                ParameterBuilder.getQueryParams(Report.builder().categoryId(categoryId).build()));
+        List<Report> list = this.service.getByPage(pageInfo, categoryId, fieldName, keyword);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);

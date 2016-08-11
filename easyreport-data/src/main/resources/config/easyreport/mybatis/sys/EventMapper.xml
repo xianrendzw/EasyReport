@@ -93,14 +93,14 @@
         <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        <if test="item.id != null">#{item.id,jdbcType=INTEGER},</if>
-        <if test="item.source != null">#{item.source,jdbcType=VARCHAR},</if>
-        <if test="item.userId != null">#{item.userId,jdbcType=INTEGER},</if>
-        <if test="item.account != null">#{item.account,jdbcType=VARCHAR},</if>
-        <if test="item.level != null">#{item.level,jdbcType=VARCHAR},</if>
-        <if test="item.message != null">#{item.message,jdbcType=LONGVARCHAR},</if>
-        <if test="item.url != null">#{item.url,jdbcType=VARCHAR},</if>
-        <if test="item.gmtCreated != null">#{item.gmtCreated,jdbcType=TIMESTAMP},</if>
+        ﻿ #{item.id,jdbcType=INTEGER},
+			 #{item.source,jdbcType=VARCHAR},
+			 #{item.userId,jdbcType=INTEGER},
+			 #{item.account,jdbcType=VARCHAR},
+			 #{item.level,jdbcType=VARCHAR},
+			 #{item.message,jdbcType=LONGVARCHAR},
+			 #{item.url,jdbcType=VARCHAR},
+			 #{item.gmtCreated,jdbcType=TIMESTAMP}
     </sql>
     <sql id="Update_Set_From_Bean">
         <if test="source != null">source = #{source,jdbcType=VARCHAR} ,</if>
@@ -121,13 +121,13 @@
         <if test="record.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="BatchUpdate_Set_From_Bean">
-        <if test="item.source != null">source = #{item.source,jdbcType=VARCHAR} ,</if>
-        <if test="item.userId != null">user_id = #{item.userId,jdbcType=INTEGER} ,</if>
-        <if test="item.account != null">account = #{item.account,jdbcType=VARCHAR} ,</if>
-        <if test="item.level != null">level = #{item.level,jdbcType=VARCHAR} ,</if>
-        <if test="item.message != null">message = #{item.message,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.url != null">url = #{item.url,jdbcType=VARCHAR} ,</if>
-        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        ﻿source = #{item.source,jdbcType=VARCHAR} ,
+		user_id = #{item.userId,jdbcType=INTEGER} ,
+		account = #{item.account,jdbcType=VARCHAR} ,
+		level = #{item.level,jdbcType=VARCHAR} ,
+		message = #{item.message,jdbcType=LONGVARCHAR} ,
+		url = #{item.url,jdbcType=VARCHAR} ,
+		gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} 
     </sql>
     <!-- insert -->
     <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.sys.po.Event">

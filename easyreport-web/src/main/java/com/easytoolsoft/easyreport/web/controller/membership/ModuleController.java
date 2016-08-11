@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -19,7 +20,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/rest/membership/module")
-public class ModuleController extends BaseController<IModuleService, Module> {
+public class ModuleController
+        extends BaseController<IModuleService, Module, ModuleExample> {
+
     @RequestMapping(value = "/getModuleTree")
     @OpLog(name = "获取系统模块树型列表")
     public JsonResult getModuleTree() {

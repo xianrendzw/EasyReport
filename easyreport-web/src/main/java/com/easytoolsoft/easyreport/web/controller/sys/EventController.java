@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.web.controller.sys;
 
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.sys.example.EventExample;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.sys.service.IEventService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -16,7 +17,9 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/rest/sys/event")
-public class EventController extends BaseController<IEventService, Event> {
+public class EventController
+        extends BaseController<IEventService, Event, EventExample> {
+
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "sys/event";

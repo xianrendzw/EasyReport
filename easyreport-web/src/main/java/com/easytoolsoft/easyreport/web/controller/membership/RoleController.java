@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.membership.example.RoleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.data.membership.po.Permission;
 import com.easytoolsoft.easyreport.data.membership.po.Role;
@@ -33,7 +34,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/rest/membership/role")
-public class RoleController extends BaseController<IRoleService, Role> {
+public class RoleController
+        extends BaseController<IRoleService, Role, RoleExample> {
+
     @Resource
     private IModuleService moduleService;
     @Resource

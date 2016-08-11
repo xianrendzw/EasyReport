@@ -120,23 +120,23 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        <if test="item.id != null">#{item.id,jdbcType=INTEGER},</if>
-        <if test="item.reportId != null">#{item.reportId,jdbcType=INTEGER},</if>
-        <if test="item.uid != null">#{item.uid,jdbcType=VARCHAR},</if>
-        <if test="item.categoryId != null">#{item.categoryId,jdbcType=INTEGER},</if>
-        <if test="item.dsId != null">#{item.dsId,jdbcType=INTEGER},</if>
-        <if test="item.name != null">#{item.name,jdbcType=VARCHAR},</if>
-        <if test="item.sqlText != null">#{item.sqlText,jdbcType=LONGVARCHAR},</if>
-        <if test="item.metaColumns != null">#{item.metaColumns,jdbcType=LONGVARCHAR},</if>
-        <if test="item.queryParams != null">#{item.queryParams,jdbcType=LONGVARCHAR},</if>
-        <if test="item.options != null">#{item.options,jdbcType=LONGVARCHAR},</if>
-        <if test="item.path != null">#{item.path,jdbcType=VARCHAR},</if>
-        <if test="item.status != null">#{item.status,jdbcType=INTEGER},</if>
-        <if test="item.sequence != null">#{item.sequence,jdbcType=INTEGER},</if>
-        <if test="item.comment != null">#{item.comment,jdbcType=VARCHAR},</if>
-        <if test="item.author != null">#{item.author,jdbcType=VARCHAR},</if>
-        <if test="item.gmtCreated != null">#{item.gmtCreated,jdbcType=TIMESTAMP},</if>
-        <if test="item.gmtModified != null">#{item.gmtModified,jdbcType=TIMESTAMP},</if>
+        ﻿#{item.id,jdbcType=INTEGER},
+        #{item.reportId,jdbcType=INTEGER},
+        #{item.uid,jdbcType=VARCHAR},
+        #{item.categoryId,jdbcType=INTEGER},
+        #{item.dsId,jdbcType=INTEGER},
+        #{item.name,jdbcType=VARCHAR},
+        #{item.sqlText,jdbcType=LONGVARCHAR},
+        #{item.metaColumns,jdbcType=LONGVARCHAR},
+        #{item.queryParams,jdbcType=LONGVARCHAR},
+        #{item.options,jdbcType=LONGVARCHAR},
+        #{item.path,jdbcType=VARCHAR},
+        #{item.status,jdbcType=INTEGER},
+        #{item.sequence,jdbcType=INTEGER},
+        #{item.comment,jdbcType=VARCHAR},
+        #{item.author,jdbcType=VARCHAR},
+        #{item.gmtCreated,jdbcType=TIMESTAMP},
+        #{item.gmtModified,jdbcType=TIMESTAMP}
     </sql>
     <sql id="Update_Set_From_Bean">
         <if test="reportId != null">report_id = #{reportId,jdbcType=INTEGER} ,</if>
@@ -175,22 +175,22 @@
         <if test="record.gmtModified != null">gmt_modified = #{set.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="BatchUpdate_Set_From_Bean">
-        <if test="item.reportId != null">report_id = #{item.reportId,jdbcType=INTEGER} ,</if>
-        <if test="item.uid != null">uid = #{item.uid,jdbcType=VARCHAR} ,</if>
-        <if test="item.categoryId != null">category_id = #{item.categoryId,jdbcType=INTEGER} ,</if>
-        <if test="item.dsId != null">ds_id = #{item.dsId,jdbcType=INTEGER} ,</if>
-        <if test="item.name != null">name = #{item.name,jdbcType=VARCHAR} ,</if>
-        <if test="item.sqlText != null">sql_text = #{item.sqlText,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.metaColumns != null">meta_columns = #{item.metaColumns,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.queryParams != null">query_params = #{item.queryParams,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.options != null">options = #{item.options,jdbcType=LONGVARCHAR} ,</if>
-        <if test="item.path != null">path = #{item.path,jdbcType=VARCHAR} ,</if>
-        <if test="item.status != null">status = #{item.status,jdbcType=INTEGER} ,</if>
-        <if test="item.sequence != null">sequence = #{item.sequence,jdbcType=INTEGER} ,</if>
-        <if test="item.comment != null">comment = #{item.comment,jdbcType=VARCHAR} ,</if>
-        <if test="item.author != null">author = #{item.author,jdbcType=VARCHAR} ,</if>
-        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
-        <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
+        ﻿report_id = #{item.reportId,jdbcType=INTEGER} ,
+        uid = #{item.uid,jdbcType=VARCHAR} ,
+        category_id = #{item.categoryId,jdbcType=INTEGER} ,
+        ds_id = #{item.dsId,jdbcType=INTEGER} ,
+        name = #{item.name,jdbcType=VARCHAR} ,
+        sql_text = #{item.sqlText,jdbcType=LONGVARCHAR} ,
+        meta_columns = #{item.metaColumns,jdbcType=LONGVARCHAR} ,
+        query_params = #{item.queryParams,jdbcType=LONGVARCHAR} ,
+        options = #{item.options,jdbcType=LONGVARCHAR} ,
+        path = #{item.path,jdbcType=VARCHAR} ,
+        status = #{item.status,jdbcType=INTEGER} ,
+        sequence = #{item.sequence,jdbcType=INTEGER} ,
+        comment = #{item.comment,jdbcType=VARCHAR} ,
+        author = #{item.author,jdbcType=VARCHAR} ,
+        gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,
+        gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP}
     </sql>
     <!-- insert -->
     <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.metadata.po.ReportHistory">

@@ -1,6 +1,7 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
+import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import com.easytoolsoft.easyreport.metadata.service.ICategoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -17,7 +18,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/rest/metadata/category")
-public class CategoryController extends BaseController<ICategoryService, Category> {
+public class CategoryController
+        extends BaseController<ICategoryService, Category, CategoryExample> {
+
     @RequestMapping(value = "/getCategoryTree")
     public JsonResult getCategoryTree() {
         JsonResult result = new JsonResult();

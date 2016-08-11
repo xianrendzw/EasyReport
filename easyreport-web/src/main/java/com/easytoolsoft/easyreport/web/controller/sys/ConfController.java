@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.web.controller.sys;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
 import com.easytoolsoft.easyreport.data.sys.po.Conf;
 import com.easytoolsoft.easyreport.sys.service.IConfService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
@@ -18,7 +19,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/rest/sys/dict")
-public class ConfController extends BaseController<IConfService, Conf> {
+public class ConfController
+        extends BaseController<IConfService, Conf, ConfExample> {
+
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
         return "sys/dict";
