@@ -12,6 +12,14 @@ import java.util.Date;
 @Slf4j
 public class IModuleDaoTest extends BaseDaoTest<IModuleDao, Module, ModuleExample> {
     @Override
+    protected Integer getId() {
+        ModuleExample example = new ModuleExample();
+        example.or().andNameEqualTo("test_" + 999);
+        Module module = this.dao.selectOneByExample(example);
+        return module == null ? 0 : module.getId();
+    }
+
+    @Override
     protected Module getPo(Integer id) {
         return Module.builder()
                 .id(id)

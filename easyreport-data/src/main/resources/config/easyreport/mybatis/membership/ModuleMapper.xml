@@ -173,21 +173,21 @@
         <if test="record.gmtModified != null">gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <sql id="BatchUpdate_Set_From_Bean">
-        ﻿parent_id = #{item.parentId,jdbcType=INTEGER} ,
-        name = #{item.name,jdbcType=VARCHAR} ,
-        code = #{item.code,jdbcType=VARCHAR} ,
-        icon = #{item.icon,jdbcType=VARCHAR} ,
-        url = #{item.url,jdbcType=VARCHAR} ,
-        path = #{item.path,jdbcType=VARCHAR} ,
-        has_child = #{item.hasChild,jdbcType=TINYINT} ,
-        link_type = #{item.linkType,jdbcType=TINYINT} ,
-        target = #{item.target,jdbcType=VARCHAR} ,
-        params = #{item.params,jdbcType=VARCHAR} ,
-        sequence = #{item.sequence,jdbcType=INTEGER} ,
-        status = #{item.status,jdbcType=TINYINT} ,
-        comment = #{item.comment,jdbcType=VARCHAR} ,
-        gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,
-        gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP}
+        <if test="item.parentId != null">parent_id = #{item.parentId,jdbcType=INTEGER} ,</if>
+        <if test="item.name != null">`name` = #{item.name,jdbcType=VARCHAR} ,</if>
+        <if test="item.code != null">code = #{item.code,jdbcType=VARCHAR} ,</if>
+        <if test="item.icon != null">icon = #{item.icon,jdbcType=VARCHAR} ,</if>
+        <if test="item.url != null">url = #{item.url,jdbcType=VARCHAR} ,</if>
+        <if test="item.path != null">path = #{item.path,jdbcType=VARCHAR} ,</if>
+        <if test="item.hasChild != null">has_child = #{item.hasChild,jdbcType=TINYINT} ,</if>
+        <if test="item.linkType != null">link_type = #{item.linkType,jdbcType=TINYINT} ,</if>
+        <if test="item.target != null">target = #{item.target,jdbcType=VARCHAR} ,</if>
+        <if test="item.params != null">params = #{item.params,jdbcType=VARCHAR} ,</if>
+        <if test="item.sequence != null">sequence = #{item.sequence,jdbcType=INTEGER} ,</if>
+        <if test="item.status != null">status = #{item.status,jdbcType=TINYINT} ,</if>
+        <if test="item.comment != null">comment = #{item.comment,jdbcType=VARCHAR} ,</if>
+        <if test="item.gmtCreated != null">gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="item.gmtModified != null">gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP} ,</if>
     </sql>
     <!-- insert -->
     <insert id="insert" parameterType="com.easytoolsoft.easyreport.data.membership.po.Module">
@@ -252,7 +252,9 @@
     <update id="batchUpdate" parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" open="" close="" separator=";">
             update ezrpt_member_module
-            <include refid="BatchUpdate_Set_From_Bean"/>
+            <set>
+                <include refid="BatchUpdate_Set_From_Bean"/>
+            </set>
             where id=#{item.id,jdbcType=INTEGER}
         </foreach>
     </update>

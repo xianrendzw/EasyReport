@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.data;
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,79 +15,85 @@ public abstract class BaseDaoTest<Dao extends ICrudDao<Po, Example>, Po, Example
     @Autowired
     protected Dao dao;
 
+    @Before
+    public void setup() {
+        this.dao.deleteIn(this.getRecords());
+        this.dao.deleteById(this.getId());
+    }
+
     @Test
     public void insertTest() {
-        dao.insert(this.getPo(999));
+        this.dao.insert(this.getPo(999));
     }
 
     @Test
     public void batchInsertTest() {
-        dao.batchInsert(this.getRecords());
+        this.dao.batchInsert(this.getRecords());
     }
 
     @Test
     public void deleteByIdTest() {
-        dao.deleteById(1);
+        this.dao.deleteById(this.getId());
     }
 
     @Test
     public void deleteByExampleTest() {
-        dao.deleteByExample(this.getDeleteExample());
+        this.dao.deleteByExample(this.getDeleteExample());
     }
 
     @Test
     public void deleteInTest() {
-        dao.deleteIn(this.getRecords());
+        this.dao.deleteIn(this.getRecords());
     }
 
     @Test
     public void updateByIdTest() {
-        dao.updateById(this.getPo(999));
+        this.dao.updateById(this.getPo(this.getId()));
     }
 
     @Test
     public void updateByExampleTest() {
-        dao.updateByExample(this.getPo(999), this.getUpdateExample());
+        this.dao.updateByExample(this.getPo(this.getId()), this.getUpdateExample());
     }
 
     @Test
     public void batchUpdateTest() {
-        dao.batchUpdate(this.getRecords());
+        this.dao.batchUpdate(this.getRecords());
     }
 
     @Test
     public void selectByIdTest() {
-        dao.selectById(1);
+        this.dao.selectById(this.getId());
     }
 
     @Test
     public void selectByExampleTest() {
-        dao.selectByExample(this.getSelectExample());
+        this.dao.selectByExample(this.getSelectExample());
     }
 
     @Test
     public void selectOneByExampleTest() {
-        dao.selectOneByExample(this.getSelectExample());
+        this.dao.selectOneByExample(this.getSelectExample());
     }
 
     @Test
     public void selectInTest() {
-        dao.selectIn(this.getRecords());
+        this.dao.selectIn(this.getRecords());
     }
 
     @Test
     public void countByPagerTest() {
-        dao.countByPager(new PageInfo(), this.getSelectByPageExample());
+        this.dao.countByPager(new PageInfo(), this.getSelectByPageExample());
     }
 
     @Test
     public void selectByPagerTest() {
-        dao.selectByPager(new PageInfo(), this.getSelectByPageExample());
+        this.dao.selectByPager(new PageInfo(), this.getSelectByPageExample());
     }
 
     @Test
     public void countByExampleTest() {
-        dao.countByExample(this.getCountExample());
+        this.dao.countByExample(this.getCountExample());
     }
 
     protected List<Po> getRecords() {
@@ -116,6 +123,8 @@ public abstract class BaseDaoTest<Dao extends ICrudDao<Po, Example>, Po, Example
     protected Example getCountExample() {
         return this.getExample();
     }
+
+    protected abstract Integer getId();
 
     protected abstract Po getPo(Integer id);
 
