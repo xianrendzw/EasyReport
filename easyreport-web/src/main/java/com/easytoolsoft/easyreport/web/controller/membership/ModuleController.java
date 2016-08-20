@@ -26,7 +26,7 @@ public class ModuleController
     @RequestMapping(value = "/getModuleTree")
     @OpLog(name = "获取系统模块树型列表")
     public JsonResult getModuleTree() {
-        JsonResult<Object> result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Module>> roots = new ArrayList<>();
         List<Module> modules = this.service.getAll();
         modules.stream()
@@ -125,7 +125,7 @@ public class ModuleController
     @RequestMapping(value = "/move")
     @OpLog(name = "移动模块树型关系")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.move(sourceId, targetId, sourcePid);
         return result;
     }
@@ -133,7 +133,7 @@ public class ModuleController
     @RequestMapping(value = "/rebuildPath")
     @OpLog(name = "重新模块树路径")
     public JsonResult rebuildPath() {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.rebuildAllPath();
         return result;
     }

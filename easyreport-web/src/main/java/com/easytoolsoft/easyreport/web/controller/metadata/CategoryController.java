@@ -23,7 +23,7 @@ public class CategoryController
 
     @RequestMapping(value = "/getCategoryTree")
     public JsonResult getCategoryTree() {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Category>> roots = new ArrayList<>();
         List<Category> categories = this.service.getAll();
         categories.stream().filter(category -> category.getParentId() == 0).forEach(category -> {
@@ -56,7 +56,7 @@ public class CategoryController
 
     @RequestMapping(value = "/add")
     public JsonResult add(Category po) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         po.setHasChild((byte) 0);
         po.setPath("");
         po.setGmtCreated(new Date());
@@ -67,28 +67,28 @@ public class CategoryController
 
     @RequestMapping(value = "/edit")
     public JsonResult edit(Category po) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.editById(po);
         return result;
     }
 
     @RequestMapping(value = "/remove")
     public JsonResult remove(Integer id, Integer pid) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.remove(id, pid);
         return result;
     }
 
     @RequestMapping(value = "/move")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.move(sourceId, targetId, sourcePid);
         return result;
     }
 
     @RequestMapping(value = "/paste")
     public JsonResult paste(Integer sourceId, Integer targetId) {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Category>> nodes = new ArrayList<>(1);
         Category po = this.service.paste(sourceId, targetId);
         String id = Integer.toString(po.getId());
@@ -102,7 +102,7 @@ public class CategoryController
 
     @RequestMapping(value = "/rebuildPath")
     public JsonResult rebuildPath() {
-        JsonResult result = new JsonResult();
+        JsonResult<Object> result = new JsonResult<>();
         this.service.rebuildAllPath();
         return result;
     }
