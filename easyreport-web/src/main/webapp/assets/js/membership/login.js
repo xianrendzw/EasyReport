@@ -1,6 +1,6 @@
 MembershipLogin = {
     URL: {
-        "login": XFrame.getContextPath() + '/authenticate',
+        "login": XFrame.getContextPath() + '/membership/authenticate',
         "successUrl": XFrame.getContextPath() + '/home/index'
     },
     init: function () {

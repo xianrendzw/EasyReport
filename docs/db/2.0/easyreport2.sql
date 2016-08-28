@@ -59,7 +59,7 @@ INSERT INTO `ezrpt_member_module` VALUES ('31', '7', '模块管理', 'membership
 INSERT INTO `ezrpt_member_module` VALUES ('32', '0', '系统管理', 'sys', 'icon-settings4', 'sys/settings', '32', '1', '0', '', '', '7', '1', '系统管理', '2014-11-12 04:20:57', '2015-12-17 18:13:28');
 INSERT INTO `ezrpt_member_module` VALUES ('38', '32', '数据字典', 'sys.dict', 'icon-dict', 'sys/dict', '32,38', '0', '0', '', '', '1', '1', '数据字典', '2014-11-27 07:27:51', '2015-12-17 18:13:57');
 INSERT INTO `ezrpt_member_module` VALUES ('39', '32', '系统配置', 'sys.settings', 'icon-settings2', 'sys/settings', '32,39', '0', '0', ' ', ' ', '2', '0', '系统配置', '2015-08-08 02:48:03', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('40', '0', '数据服务化', 'dse', 'icon-dse', 'dse/api', '40', '1', '0', '', '', '1', '1', '数据服务化管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('40', '0', '报表工具', 'dse', 'icon-dse', 'dse/api', '40', '1', '0', '', '', '1', '1', '数据服务化管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
 INSERT INTO `ezrpt_member_module` VALUES ('41', '40', 'APP管理', 'dse.app', 'icon-app', 'dse/app', '40,41', '0', '0', '', '', '1', '1', '数据服务化APP管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
 INSERT INTO `ezrpt_member_module` VALUES ('42', '40', '指标策略管理', 'dse.strategy', 'icon-strategy', 'dse/strategy', '40,42', '0', '0', '', '', '4', '1', '数据服务化API策略管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
 

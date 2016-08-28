@@ -4,6 +4,7 @@ import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 /**
  * 用户登录页控制器
  */
+@Slf4j
 @Controller
 @RequestMapping(value = "/membership")
 public class MemberController {
@@ -52,6 +54,8 @@ public class MemberController {
             token.setRememberMe(rememberMe);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
+            result.setSuccess(true);
+            result.setMsg("登录成功!");
         } catch (IncorrectCredentialsException | UnknownAccountException ex) {
             result.setMsg("用户名/密码错误!");
         } catch (Exception ex) {

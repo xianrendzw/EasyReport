@@ -62,6 +62,6 @@ public class PageController {
 
     private String routeTo(String... paths) {
         return Arrays.asList(paths).stream()
-                .filter(StringUtils::isBlank).collect(Collectors.joining("/"));
+                .filter(StringUtils::isNotBlank).collect(Collectors.joining("/"));
     }
 }

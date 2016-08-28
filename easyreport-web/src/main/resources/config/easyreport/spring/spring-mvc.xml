@@ -31,6 +31,9 @@
                 </property>
             </bean>
         </mvc:message-converters>
+        <mvc:argument-resolvers>
+            <bean class="com.easytoolsoft.easyreport.membership.common.CurrentUserMethodArgumentResolver" />
+        </mvc:argument-resolvers>
     </mvc:annotation-driven>
     <mvc:view-controller path="/" view-name="index"/>
 
