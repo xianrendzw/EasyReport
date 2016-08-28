@@ -475,7 +475,8 @@ public abstract class ReportDataSet {
         this.setTreeNodeSpansAndDepth(roots, true, columns);
     }
 
-    protected void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, boolean isSort, List<ReportDataColumn> columns) {
+    protected void setTreeNodeSpansAndDepth(List<ColumnTreeNode> roots, boolean isSort,
+                                            List<ReportDataColumn> columns) {
         if (isSort) {
             this.sortTreeNodesByLevel(roots, 0, columns);
         }

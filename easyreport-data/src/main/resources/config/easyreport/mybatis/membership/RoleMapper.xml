@@ -76,8 +76,13 @@
             </foreach>
         </where>
     </sql>
+    <sql id="Base_Column_List_Without_Id">
+  	  modules ,permissions ,name ,code ,is_system ,status ,sequence ,comment ,create_user ,gmt_created ,gmt_modified
+    </sql>
     <sql id="Base_Column_List">
-  	  id ,modules ,permissions ,name ,code ,is_system ,status ,sequence ,comment ,create_user ,gmt_created ,gmt_modified 	  </sql>
+        id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
     <sql id="Insert_Columns">
         <if test="modules != null">modules,</if>
         <if test="permissions != null">permissions,</if>
@@ -105,7 +110,6 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        ﻿#{item.id,jdbcType=INTEGER},
         #{item.modules,jdbcType=VARCHAR},
         #{item.permissions,jdbcType=VARCHAR},
         #{item.name,jdbcType=VARCHAR},
@@ -173,7 +177,7 @@
     <insert id="batchInsert" parameterType="java.util.List">
         insert into ezrpt_member_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <include refid="Base_Column_List"/>
+            <include refid="Base_Column_List_Without_Id"/>
         </trim>
         values
         <foreach collection="list" item="item" index="index" separator=",">

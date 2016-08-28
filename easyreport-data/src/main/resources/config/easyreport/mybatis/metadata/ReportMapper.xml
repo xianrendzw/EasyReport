@@ -80,8 +80,13 @@
             </foreach>
         </where>
     </sql>
+    <sql id="Base_Column_List_Without_Id">
+  	  uid ,category_id ,ds_id ,name ,sql_text ,meta_columns ,query_params ,options ,path ,status ,sequence ,comment ,create_user ,gmt_created ,gmt_modified
+    </sql>
     <sql id="Base_Column_List">
-  	  id ,uid ,category_id ,ds_id ,name ,sql_text ,meta_columns ,query_params ,options ,path ,status ,sequence ,comment ,create_user ,gmt_created ,gmt_modified 	  </sql>
+        id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
     <sql id="Insert_Columns">
         <if test="uid != null">uid,</if>
         <if test="categoryId != null">category_id,</if>
@@ -117,7 +122,6 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        ﻿#{item.id,jdbcType=INTEGER},
         #{item.uid,jdbcType=VARCHAR},
         #{item.categoryId,jdbcType=INTEGER},
         #{item.dsId,jdbcType=INTEGER},
@@ -201,7 +205,7 @@
     <insert id="batchInsert" parameterType="java.util.List">
         insert into ezrpt_meta_report
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <include refid="Base_Column_List"/>
+            <include refid="Base_Column_List_Without_Id"/>
         </trim>
         values
         <foreach collection="list" item="item" index="index" separator=",">

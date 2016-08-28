@@ -28,9 +28,8 @@ public class PermissionService
     private static final byte[] lock = new byte[0];
     private static Map<String, Permission> cache;
 
-    @Autowired
     public PermissionService() {
-        this.loadCache();
+        //this.loadCache();
     }
 
     @Override

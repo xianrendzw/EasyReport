@@ -74,8 +74,13 @@
             </foreach>
         </where>
     </sql>
+    <sql id="Base_Column_List_Without_Id">
+  	  parent_id ,name ,path ,has_child ,status ,sequence ,comment ,gmt_created ,gmt_modified
+    </sql>
     <sql id="Base_Column_List">
-  	  id ,parent_id ,name ,path ,has_child ,status ,sequence ,comment ,gmt_created ,gmt_modified 	  </sql>
+        id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
     <sql id="Insert_Columns">
         <if test="parentId != null">parent_id,</if>
         <if test="name != null">name,</if>
@@ -99,7 +104,6 @@
         <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
     </sql>
     <sql id="Batch_Insert_Values">
-        ﻿ #{item.id,jdbcType=INTEGER},
         #{item.parentId,jdbcType=INTEGER},
         #{item.name,jdbcType=VARCHAR},
         #{item.path,jdbcType=VARCHAR},
@@ -159,7 +163,7 @@
     <insert id="batchInsert" parameterType="java.util.List">
         insert into ezrpt_meta_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <include refid="Base_Column_List"/>
+            <include refid="Base_Column_List_Without_Id"/>
         </trim>
         values
         <foreach collection="list" item="item" index="index" separator=",">

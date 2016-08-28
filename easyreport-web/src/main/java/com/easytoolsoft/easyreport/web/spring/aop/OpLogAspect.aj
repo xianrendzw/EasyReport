@@ -58,17 +58,13 @@ public class OpLogAspect {
 
     private void logEvent(JoinPoint joinPoint, String level, String message) {
         try {
-            HttpServletRequest req = ((ServletRequestAttributes)
-                    RequestContextHolder.getRequestAttributes()).getRequest();
+            HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             User user = (User) req.getAttribute(Constants.CURRENT_USER);
             if (user != null) {
                 Map<String, String> methodInfo = this.getMethodInfo(joinPoint);
-                String source = MapUtils.getString(methodInfo, "source", "") + ";params:" +
-                        MapUtils.getString(methodInfo, "params", "");
-                message = MapUtils.getString(methodInfo, "name", "") + ";" +
-                        MapUtils.getString(methodInfo, "desc", "") + "detail:" + message;
-                Event event = Event.builder()
-                        .source(source)
+                String source = MapUtils.getString(methodInfo, "source", "") + ";params:" + MapUtils.getString(methodInfo, "params", "");
+                message = MapUtils.getString(methodInfo, "name", "") + ";" + MapUtils.getString(methodInfo, "desc", "") + "detail:" + message;
+                Event event = Event.builder().source(source)
                         .account(user.getAccount())
                         .userId(user.getId())
                         .message(message)

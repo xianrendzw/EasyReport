@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * 报表配置控制器
  */
-@RestController
+@RestController("MetaDataConfController")
 @RequestMapping(value = "/rest/metadata/conf")
 public class ConfController
         extends BaseController<IConfService, Conf, ConfExample> {

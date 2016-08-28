@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Home页控制器
  */
 @Controller
-@RequestMapping(value = "/home")
+@RequestMapping(value = {"", "/", "/home"})
 public class HomeController {
     @RequestMapping(value = {"", "/", "/index"})
     public String index() {
-        return "home";
+        return "index";
     }
 }

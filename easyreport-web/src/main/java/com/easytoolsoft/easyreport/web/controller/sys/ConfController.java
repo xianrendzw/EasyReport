@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@RestController("SysConfController")
 @RequestMapping(value = "/rest/sys/dict")
 public class ConfController
         extends BaseController<IConfService, Conf, ConfExample> {

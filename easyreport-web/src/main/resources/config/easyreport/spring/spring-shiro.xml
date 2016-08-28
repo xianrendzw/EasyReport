@@ -8,8 +8,8 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/login"/>
-        <property name="successUrl" value="/home"/>
+        <property name="loginUrl" value="/membership/login"/>
+        <property name="successUrl" value="/home/index"/>
         <property name="unauthorizedUrl" value="/error/unauthorized"/>
         <property name="filters">
             <util:map>
@@ -21,11 +21,9 @@
             <value>
                 /assets/** = anon
                 /error/** = anon
-                /login = anon
-                /authenticate = anon
-                /logout = logout
-                /client.action = anon
-                /checkpreload* = anon
+                /membership/login = anon
+                /membership/authenticate = anon
+                /membership/logout = logout
                 /** = authc,membership
             </value>
         </property>
