@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,7 +30,6 @@ public class PermissionService
     private static Map<String, Permission> cache;
 
     public PermissionService() {
-        //this.loadCache();
     }
 
     @Override
@@ -40,6 +40,7 @@ public class PermissionService
         this.loadCache();
     }
 
+    @PostConstruct
     private void loadCache() {
         synchronized (lock) {
             if (MapUtils.isEmpty(cache)) {

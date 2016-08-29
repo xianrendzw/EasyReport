@@ -68,7 +68,7 @@ var HomeIndex = {
         var pwdRepeat = $('#passwordRepeat').val();
         if (pwd === pwdRepeat) {
             $('#my-profile-form').form('submit', {
-                url: XFrame.getContextPath() + '/membership/user/changemypassword',
+                url: XFrame.getContextPath() + '/rest/membership/user/changeMyPassword',
                 onSubmit: function () {
                     return $(this).form('validate');
                 },

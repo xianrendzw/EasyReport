@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2016-07-22 14:21:53
+Date: 2016-08-29 10:46:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,25 +43,25 @@ CREATE TABLE `ezrpt_member_module` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_module_code` (`code`),
   UNIQUE KEY `uk_module_parent_id_name` (`parent_id`,`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ezrpt_member_module
 -- ----------------------------
-INSERT INTO `ezrpt_member_module` VALUES ('3', '40', '数据源管理', 'dse.ds', 'icon-datasource', 'dse/ds', '40,3', '0', '0', '', '', '3', '1', '设备参数', '2014-10-30 06:41:24', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('4', '40', '指标管理', 'dse.api', 'icon-api', 'dse/api', '40,4', '0', '0', '', '', '2', '1', '站点管理', '2014-10-30 06:41:42', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('7', '0', '用户权限', 'membership', 'icon-user', 'membership/user', '7', '1', '0', '', '', '6', '1', '用户权限', '2014-10-30 06:45:47', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('23', '7', '用户管理', 'membership.user', 'icon-member', 'membership/user', '7,23', '0', '0', '', '', '1', '1', '用户管理', '2014-10-30 07:38:22', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('24', '7', '角色管理', 'membership.role', 'icon-group', 'membership/role', '7,24', '0', '0', '', '', '2', '1', '角色管理', '2014-10-30 07:38:44', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('25', '7', '权限管理', 'membership.permission', 'icon-perm', 'membership/permission', '7,25', '0', '0', '', '', '3', '1', '操作管理', '2014-10-30 07:39:03', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('26', '32', '系统日志', 'sys.event', 'icon-event', 'sys/event', '32,26', '0', '0', '', '', '3', '1', '系统日志', '2014-10-30 07:41:06', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('31', '7', '模块管理', 'membership.module', 'icon-org', 'membership/module', '7,31', '0', '0', '', '', '4', '1', '模块管理', '2014-10-31 02:21:46', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('32', '0', '系统管理', 'sys', 'icon-settings4', 'sys/settings', '32', '1', '0', '', '', '7', '1', '系统管理', '2014-11-12 04:20:57', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('38', '32', '数据字典', 'sys.dict', 'icon-dict', 'sys/dict', '32,38', '0', '0', '', '', '1', '1', '数据字典', '2014-11-27 07:27:51', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('39', '32', '系统配置', 'sys.settings', 'icon-settings2', 'sys/settings', '32,39', '0', '0', ' ', ' ', '2', '0', '系统配置', '2015-08-08 02:48:03', '2015-12-17 18:13:57');
-INSERT INTO `ezrpt_member_module` VALUES ('40', '0', '报表工具', 'dse', 'icon-dse', 'dse/api', '40', '1', '0', '', '', '1', '1', '数据服务化管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('41', '40', 'APP管理', 'dse.app', 'icon-app', 'dse/app', '40,41', '0', '0', '', '', '1', '1', '数据服务化APP管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
-INSERT INTO `ezrpt_member_module` VALUES ('42', '40', '指标策略管理', 'dse.strategy', 'icon-strategy', 'dse/strategy', '40,42', '0', '0', '', '', '4', '1', '数据服务化API策略管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('3', '40', '数据源', 'report.ds', 'icon-datasource', 'views/metadata/ds', '40,3', '0', '0', '', '', '2', '1', '数据源', '2014-10-30 06:41:24', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('4', '40', '报表设计', 'report.designer', 'icon-chart', 'views/metadata/designer', '40,4', '0', '0', '', '', '1', '1', '报表设计', '2014-10-30 06:41:42', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('7', '0', '用户权限', 'membership', 'icon-user', 'views/membership/user', '7', '1', '0', '', '', '3', '1', '用户权限', '2014-10-30 06:45:47', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('23', '7', '用户管理', 'membership.user', 'icon-member', 'views/membership/user', '7,23', '0', '0', '', '', '1', '1', '用户管理', '2014-10-30 07:38:22', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('24', '7', '角色管理', 'membership.role', 'icon-group', 'views/membership/role', '7,24', '0', '0', '', '', '2', '1', '角色管理', '2014-10-30 07:38:44', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('25', '7', '权限管理', 'membership.permission', 'icon-perm', 'views/membership/permission', '7,25', '0', '0', '', '', '3', '1', '操作管理', '2014-10-30 07:39:03', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('26', '32', '系统日志', 'sys.event', 'icon-event', 'views/sys/event', '32,26', '0', '0', '', '', '3', '1', '系统日志', '2014-10-30 07:41:06', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('31', '7', '模块管理', 'membership.module', 'icon-org', 'views/membership/module', '7,31', '0', '0', '', '', '4', '1', '模块管理', '2014-10-31 02:21:46', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('32', '0', '系统管理', 'sys', 'icon-settings4', 'views/sys/conf', '32', '1', '0', '', '', '4', '1', '系统管理', '2014-11-12 04:20:57', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('39', '32', '系统配置', 'sys.conf', 'icon-settings2', 'views/sys/conf', '32,39', '0', '0', ' ', ' ', '2', '1', '系统配置', '2015-08-08 02:48:03', '2015-12-17 18:13:57');
+INSERT INTO `ezrpt_member_module` VALUES ('40', '0', '报表管理', 'report', 'icon-designer1', 'views/metadata/designer', '40', '1', '0', '', '', '1', '1', '报表管理', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('41', '40', '参数配置', 'report.conf', 'icon-settings', 'views/metadata/conf', '40,41', '0', '0', '', '', '3', '1', '参数配置', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('42', '0', '计划任务', 'schedule', 'icon-scheduled1', 'views/schedule/task', '42', '1', '0', '', '', '2', '1', '计划任务', '2015-12-14 03:45:36', '2015-12-17 18:13:28');
+INSERT INTO `ezrpt_member_module` VALUES ('54', '42', '任务管理', 'schedule.task', 'icon-task2', 'views/schedule/task', '42,54', '0', '0', ' ', ' ', '1', '1', '任备管理', '2016-08-29 09:43:08', '2016-08-29 09:43:12');
 
 -- ----------------------------
 -- Table structure for ezrpt_member_permission
@@ -100,24 +100,21 @@ INSERT INTO `ezrpt_member_permission` VALUES ('21', '2', '查看', 'dashboard:vi
 INSERT INTO `ezrpt_member_permission` VALUES ('37', '23', '管理', 'membership.user:*', '1', '用户管理', '2014-11-12 03:26:41', '2014-11-12 03:26:41');
 INSERT INTO `ezrpt_member_permission` VALUES ('38', '24', '管理', 'membership.role:*', '1', '角色管理', '2014-11-12 03:27:49', '2014-11-12 03:27:49');
 INSERT INTO `ezrpt_member_permission` VALUES ('58', '26', '日志管理', 'sys.event:*', '2', '日志管理', '2014-11-27 07:51:02', '2014-11-27 07:51:04');
-INSERT INTO `ezrpt_member_permission` VALUES ('59', '3', '删除数据源', 'dse.ds:delete', '1', '删除数据源', '2015-06-23 06:55:58', '2015-06-23 06:55:58');
-INSERT INTO `ezrpt_member_permission` VALUES ('60', '3', '创建数据源', 'dse.ds:create', '2', '创建数据源', '2015-06-23 06:56:18', '2015-06-23 06:56:18');
-INSERT INTO `ezrpt_member_permission` VALUES ('61', '3', '修改数据源', 'dse.ds:update', '3', '修改数据源', '2015-06-23 06:56:37', '2015-06-23 06:56:37');
-INSERT INTO `ezrpt_member_permission` VALUES ('62', '3', '查看数据源', 'dse.ds:view', '4', '查看数据源', '2015-06-23 06:57:36', '2015-06-23 06:57:36');
-INSERT INTO `ezrpt_member_permission` VALUES ('63', '3', '管理数据源', 'dse.ds:*', '5', '管理数据源', '2015-06-23 06:59:14', '2015-06-23 06:59:14');
-INSERT INTO `ezrpt_member_permission` VALUES ('64', '4', '管理指标', 'dse.api:*', '1', '管理指标所有功能', '2015-06-23 07:01:44', '2015-06-23 07:01:44');
-INSERT INTO `ezrpt_member_permission` VALUES ('65', '4', '创建指标', 'dse.api:create', '2', '创建指标', '2015-06-23 07:02:04', '2015-06-23 07:02:04');
-INSERT INTO `ezrpt_member_permission` VALUES ('66', '41', '管理', 'dse.app:*', '10', '管理所有', '2015-12-17 13:24:08', '2015-12-17 13:24:08');
-INSERT INTO `ezrpt_member_permission` VALUES ('67', '41', '查看', 'dse.app:view', '10', '查看', '2015-12-17 13:24:40', '2015-12-17 13:24:52');
-INSERT INTO `ezrpt_member_permission` VALUES ('69', '42', '管理', 'dse.strategy:*', '10', '管理', '2015-12-17 17:43:58', '2015-12-17 17:43:58');
-INSERT INTO `ezrpt_member_permission` VALUES ('70', '39', '管理', 'sys.settings:*', '10', '管理', '2015-12-17 17:44:20', '2015-12-17 17:44:20');
-INSERT INTO `ezrpt_member_permission` VALUES ('71', '38', '管理', 'sys.dict:*', '10', '管理', '2015-12-17 17:44:35', '2015-12-17 17:44:35');
-INSERT INTO `ezrpt_member_permission` VALUES ('72', '4', '修改指标', 'dse.api:update', '10', '修改指标', '2015-12-17 17:45:36', '2015-12-17 17:45:43');
-INSERT INTO `ezrpt_member_permission` VALUES ('73', '4', '删除指标', 'dse.api:delete', '10', '删除指标', '2015-12-17 17:46:00', '2015-12-17 17:46:00');
-INSERT INTO `ezrpt_member_permission` VALUES ('74', '4', '查看指标', 'dse.api:view', '10', '查看指标', '2015-12-17 17:46:19', '2015-12-17 17:46:19');
-INSERT INTO `ezrpt_member_permission` VALUES ('75', '41', '创建', 'dse.app:create', '10', '创建', '2015-12-17 17:46:50', '2015-12-17 17:46:50');
-INSERT INTO `ezrpt_member_permission` VALUES ('76', '41', '修改', 'dse.app:update', '10', '修改', '2015-12-17 17:47:07', '2015-12-17 17:47:07');
-INSERT INTO `ezrpt_member_permission` VALUES ('77', '41', '删除', 'dse.app:delete', '10', '删除', '2015-12-17 17:47:19', '2015-12-17 17:47:19');
+INSERT INTO `ezrpt_member_permission` VALUES ('59', '3', '删除数据源', 'report.ds:delete', '1', '删除数据源', '2015-06-23 06:55:58', '2015-06-23 06:55:58');
+INSERT INTO `ezrpt_member_permission` VALUES ('60', '3', '创建数据源', 'report.ds:create', '2', '创建数据源', '2015-06-23 06:56:18', '2015-06-23 06:56:18');
+INSERT INTO `ezrpt_member_permission` VALUES ('61', '3', '修改数据源', 'report.ds:update', '3', '修改数据源', '2015-06-23 06:56:37', '2015-06-23 06:56:37');
+INSERT INTO `ezrpt_member_permission` VALUES ('62', '3', '查看数据源', 'report.ds:view', '4', '查看数据源', '2015-06-23 06:57:36', '2015-06-23 06:57:36');
+INSERT INTO `ezrpt_member_permission` VALUES ('63', '3', '管理数据源', 'report.ds:*', '5', '管理数据源', '2015-06-23 06:59:14', '2015-06-23 06:59:14');
+INSERT INTO `ezrpt_member_permission` VALUES ('64', '41', '管理', 'report.conf:*', '1', '管理报表参数配置', '2015-06-23 07:01:44', '2015-06-23 07:01:44');
+INSERT INTO `ezrpt_member_permission` VALUES ('65', '4', '管理', 'report.designer:*', '2', '报表设计管理', '2015-06-23 07:02:04', '2015-06-23 07:02:04');
+INSERT INTO `ezrpt_member_permission` VALUES ('66', '4', '查看报表', 'report.designer:view', '10', '查看', '2015-12-17 13:24:08', '2015-12-17 13:24:08');
+INSERT INTO `ezrpt_member_permission` VALUES ('67', '4', '增加报表', 'report.designer:create', '10', '添加', '2015-12-17 13:24:40', '2015-12-17 13:24:52');
+INSERT INTO `ezrpt_member_permission` VALUES ('69', '4', '修改报表', 'report.designer:update', '10', '编辑', '2015-12-17 17:43:58', '2015-12-17 17:43:58');
+INSERT INTO `ezrpt_member_permission` VALUES ('71', '39', '管理', 'sys.conf:*', '10', '管理', '2015-12-17 17:44:35', '2015-12-17 17:44:35');
+INSERT INTO `ezrpt_member_permission` VALUES ('72', '42', '修改', 'schedule.task:update', '10', '修改任务', '2015-12-17 17:45:36', '2015-12-17 17:45:43');
+INSERT INTO `ezrpt_member_permission` VALUES ('73', '42', '删除', 'schedule.task:delete', '10', '删除任务', '2015-12-17 17:46:00', '2015-12-17 17:46:00');
+INSERT INTO `ezrpt_member_permission` VALUES ('74', '42', '查看', 'schedule.task:view', '10', '查看任务', '2015-12-17 17:46:19', '2015-12-17 17:46:19');
+INSERT INTO `ezrpt_member_permission` VALUES ('75', '42', '管理', 'schedule.task:*', '10', '管理所有任务', '2015-12-17 17:46:50', '2015-12-17 17:46:50');
 
 -- ----------------------------
 -- Table structure for ezrpt_member_role

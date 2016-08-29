@@ -11,6 +11,7 @@
         <result column="comment" property="comment" jdbcType="VARCHAR"/>
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause1">
         <where>
@@ -269,4 +270,9 @@
     </select>
     <!-- end select -->
     <!-- My Custom Interfaces -->
+    <select id="selectAllWithModulePath" resultMap="PermissionMap">
+        select t1.*, t2.path
+        from ezrpt_member_permission t1
+        inner join ezrpt_member_module t2 ON t1.module_id = t2.id
+    </select>
 </mapper>

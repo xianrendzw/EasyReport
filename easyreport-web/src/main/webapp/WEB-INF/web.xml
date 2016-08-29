@@ -65,4 +65,20 @@
         <session-timeout>-1</session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
+    <error-page>
+        <error-code>405</error-code>
+        <location>/error/405</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error/500</location>
+    </error-page>
 </web-app>

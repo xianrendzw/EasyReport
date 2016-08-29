@@ -19,9 +19,6 @@
 .icon-group{
 	background:url('icons/group.png') no-repeat center center;
 }
-.icon-opt{
-	background:url('icons/opt.png') no-repeat center center;
-}
 .icon-event{
 	background:url('icons/event.png') no-repeat center center;
 }
@@ -148,3 +145,28 @@
 .icon-category{
 	background:url('icons/category.png') no-repeat center left;
 }
+.icon-chart{
+	background:url('icons/chart.png') no-repeat center center;
+}
+.icon-scheduled1{
+	background:url('icons/scheduled1.png') no-repeat center center;
+}
+.icon-scheduled2{
+	background:url('icons/scheduled2.png') no-repeat center center;
+}
+.icon-scheduled3{
+	background:url('icons/scheduled3.png') no-repeat center center;
+}
+.icon-task1{
+	background:url('icons/task1.png') no-repeat center center;
+}
+.icon-task2{
+	background:url('icons/task2.png') no-repeat center center;
+}
+.icon-designer1{
+	background:url('icons/designer1.png') no-repeat center center;
+}
+.icon-designer2{
+	background:url('icons/designer2.png') no-repeat center center;
+}
+

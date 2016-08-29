@@ -12,7 +12,7 @@
 <body>
 <div class="easyui-layout" fit="true">
     <div region="north" class="bg-header">
-        <span class="name">[${user.name}],欢迎你!</span>
+        <span class="name">[<a id="btn-my-profile" title="点击修改个人信息" href="#">${user.name}</a>],欢迎你!</span>
         <div class=""></div>
         <div class="menus">${menus}</div>
     </div>
@@ -29,7 +29,7 @@
         <div id="footer-left">
             <div>EasyReport(v2.0)</div>
         </div>
-        <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com inc.</div>
+        <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com Inc.</div>
     </div>
 </div>
 <!-- tabs右键菜单  -->
