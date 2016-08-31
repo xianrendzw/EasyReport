@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.data;
 
+import com.easytoolsoft.easyreport.BaseTest;
 import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import lombok.extern.slf4j.Slf4j;

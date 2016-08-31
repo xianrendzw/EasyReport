@@ -1,4 +1,4 @@
-package com.easytoolsoft.easyreport.data;
+package com.easytoolsoft.easyreport;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
