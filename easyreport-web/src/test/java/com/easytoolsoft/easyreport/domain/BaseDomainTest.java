@@ -2,10 +2,10 @@ package com.easytoolsoft.easyreport.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 @Slf4j
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
 public abstract class BaseDomainTest {
 
 }
