@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
+import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -12,8 +13,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -28,27 +30,27 @@ public class MemberController {
     @Resource
     private MembershipFacade membershipFacade;
 
-    @RequestMapping(value = {"/login"})
+    @GetMapping(value = {"/login"})
     public String login() {
         return "membership/login";
     }
 
-    @RequestMapping(value = "/logout")
+    @GetMapping(value = "/logout")
     public String logout() {
         SecurityUtils.getSubject().logout();
         return "/membership/login";
     }
 
-    @RequestMapping(value = "/profile")
+    @GetMapping(value = "/profile")
     public String profile(@CurrentUser User loginUser, Model model) {
         model.addAttribute("roleNames", membershipFacade.getRoleNames(loginUser.getRoles()));
         return "membership/profile";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @PostMapping(value = "/authenticate")
     public JsonResult authenticate(String account, String password, boolean rememberMe) {
-        JsonResult result = new JsonResult(false, "用户名/密码错误!");
+        JsonResult result = new JsonResult<>(false, "用户名/密码错误!");
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(account, password);
             token.setRememberMe(rememberMe);

@@ -1,5 +1,5 @@
-var permPageUrl = XFrame.getContextPath() + '/membership/permission/';
-var modulePageUrl = XFrame.getContextPath() + '/membership/module/'
+var permPageUrl = XFrame.getContextPath() + '/rest/membership/permission/';
+var modulePageUrl = XFrame.getContextPath() + '/rest/membership/module/'
 $(function () {
     // 左边模块树
     $('#west').panel({

@@ -2,9 +2,8 @@ package com.easytoolsoft.easyreport.web.controller.common;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -14,33 +13,25 @@ import java.util.stream.Collectors;
  */
 @Controller
 public class PageController {
-    @RequestMapping(
-            value = {"/views/{path1}"},
-            method = {RequestMethod.GET})
+    @GetMapping(value = {"/views/{path1}"})
     public String to(@PathVariable("path1") String path1) {
         return this.routeTo(path1);
     }
 
-    @RequestMapping(
-            value = {"/views/{path1}/{path2}"},
-            method = {RequestMethod.GET})
+    @GetMapping(value = {"/views/{path1}/{path2}"})
     public String to(@PathVariable("path1") String path1,
                      @PathVariable("path2") String path2) {
         return this.routeTo(path1, path2);
     }
 
-    @RequestMapping(
-            value = {"/views/{path1}/{path2}/{path3}"},
-            method = {RequestMethod.GET})
+    @GetMapping(value = {"/views/{path1}/{path2}/{path3}"})
     public String to(@PathVariable("path1") String path1,
                      @PathVariable("path2") String path2,
                      @PathVariable("path3") String path3) {
         return this.routeTo(path1, path2, path3);
     }
 
-    @RequestMapping(
-            value = {"/views/{path1}/{path2}/{path3}/{path4}"},
-            method = {RequestMethod.GET})
+    @GetMapping(value = {"/views/{path1}/{path2}/{path3}/{path4}"})
     public String to(@PathVariable("path1") String path1,
                      @PathVariable("path2") String path2,
                      @PathVariable("path3") String path3,
@@ -48,10 +39,7 @@ public class PageController {
         return this.routeTo(path1, path2, path3, path4);
     }
 
-    @RequestMapping(
-            value = {"/views/{path1}/{path2}/{path3}/{path4}/{path5}"},
-            method = {RequestMethod.GET}
-    )
+    @GetMapping(value = {"/views/{path1}/{path2}/{path3}/{path4}/{path5}"})
     public String to(@PathVariable("path1") String path1,
                      @PathVariable("path2") String path2,
                      @PathVariable("path3") String path3,

@@ -20,7 +20,8 @@
         <div id="login-main">
             <div id="login-left">
                 <div id="login-left-main">
-                    <img id="logo" title="EasyReport" src="<%=request.getContextPath()%>/assets/images/favicon_64.ico"><br/>
+                    <img id="logo" title="EasyReport"
+                         src="<%=request.getContextPath()%>/assets/images/favicon_64.ico"><br/>
                     <p class="system-name"></p>
                 </div>
             </div>
@@ -52,7 +53,8 @@
                 <div id="login-message-tips"></div>
             </div>
         </div>
-        <img class="login-bg-image" alt="EasyReport" src="<%=request.getContextPath()%>/assets/images/login_bg_right.gif"> <br
+        <img class="login-bg-image" alt="EasyReport"
+             src="<%=request.getContextPath()%>/assets/images/login_bg_right.gif"> <br
             class="clear"/>
     </div>
 </form>

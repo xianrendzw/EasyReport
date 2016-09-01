@@ -9,6 +9,8 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +25,7 @@ import java.util.Map;
 public class ModuleController
         extends BaseController<IModuleService, Module, ModuleExample> {
 
-    @RequestMapping(value = "/getModuleTree")
+    @GetMapping(value = "/getModuleTree")
     @OpLog(name = "获取系统模块树型列表")
     public JsonResult getModuleTree() {
         JsonResult<Object> result = new JsonResult<>();
@@ -72,7 +74,7 @@ public class ModuleController
         return modelMap;
     }
 
-    @RequestMapping(value = "/add")
+    @PostMapping(value = "/add")
     @OpLog(name = "新增系统模块")
     public JsonResult add(Module po) {
         JsonResult<Object> result = new JsonResult<>();
@@ -84,7 +86,7 @@ public class ModuleController
         return result;
     }
 
-    @RequestMapping(value = "/edit")
+    @PostMapping(value = "/edit")
     @OpLog(name = "编辑指定ID的系统模块")
     public JsonResult edit(Module po) {
         JsonResult<String> result = new JsonResult<>();
@@ -92,7 +94,7 @@ public class ModuleController
         return result;
     }
 
-    @RequestMapping(value = "/remove")
+    @PostMapping(value = "/remove")
     @OpLog(name = "邮件指定ID的系统模块")
     public JsonResult remove(Integer id, Integer pid) {
         JsonResult<String> result = new JsonResult<>();
@@ -100,13 +102,13 @@ public class ModuleController
         return result;
     }
 
-    @RequestMapping(value = "/getModule")
+    @GetMapping(value = "/getModule")
     @OpLog(name = "获取指定ID系统模块信息")
     public Module getModule(Integer id) {
         return this.service.getById(id);
     }
 
-    @RequestMapping(value = "/getChildModules")
+    @GetMapping(value = "/getChildModules")
     @OpLog(name = "获取子模块树型列表")
     public List<EasyUITreeNode<Module>> getChildModules(Integer id) {
         int parentId = (id == null ? 0 : id);
@@ -122,7 +124,7 @@ public class ModuleController
         return treeNodes;
     }
 
-    @RequestMapping(value = "/move")
+    @PostMapping(value = "/move")
     @OpLog(name = "移动模块树型关系")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
         JsonResult<Object> result = new JsonResult<>();
@@ -130,7 +132,7 @@ public class ModuleController
         return result;
     }
 
-    @RequestMapping(value = "/rebuildPath")
+    @GetMapping(value = "/rebuildPath")
     @OpLog(name = "重新模块树路径")
     public JsonResult rebuildPath() {
         JsonResult<Object> result = new JsonResult<>();

@@ -1,4 +1,4 @@
-var rolePageUrl = XFrame.getContextPath() + '/membership/role/';
+var rolePageUrl = XFrame.getContextPath() + '/rest/membership/role/';
 
 $(function () {
     $('#role-datagrid').datagrid({

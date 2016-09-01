@@ -1,4 +1,4 @@
-var sysEventRootPageUrl = XFrame.getContextPath() + '/sys/event/';
+var sysEventRootPageUrl = XFrame.getContextPath() + '/rest/sys/event/';
 $(function() {
     $('#event-datagrid').datagrid({
         method: 'get',

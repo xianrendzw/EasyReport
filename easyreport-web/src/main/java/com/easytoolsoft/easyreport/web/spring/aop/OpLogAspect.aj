@@ -87,6 +87,7 @@ public class OpLogAspect {
         Class targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
         methodInfoMap.put("source", targetName + ":" + methodName);
+
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
                 Class[] methodParameterTypes = method.getParameterTypes();
@@ -98,6 +99,7 @@ public class OpLogAspect {
                 }
             }
         }
+
         return methodInfoMap;
     }
 

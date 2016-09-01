@@ -1,4 +1,4 @@
-var membershipUserPageUrl = XFrame.getContextPath() + '/membership/user/';
+var membershipUserPageUrl = XFrame.getContextPath() + '/rest/membership/user/';
 
 $(function () {
     $('#user-datagrid').datagrid({

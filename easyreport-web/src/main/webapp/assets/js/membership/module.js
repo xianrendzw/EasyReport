@@ -1,4 +1,4 @@
-var membershipModulePageUrl = XFrame.getContextPath() + '/membership/module/';
+var membershipModulePageUrl = XFrame.getContextPath() + '/rest/membership/module/';
 
 $(function () {
     // 左边字典树
@@ -88,7 +88,7 @@ $(function () {
             return $.messager.alert('失败', src.msg, 'error');
         },
         columns: [[{
-                    field: 'moduleId',
+                    field: 'id',
                     title: 'ID',
                     width: 50,
                     sortable: true
@@ -262,7 +262,7 @@ var MembershipModule = {
         row = row || node;
 
         var postData = {
-            id: row.moduleId,
+            id: row.id,
             pid: row.parentId
         };
         EasyUIUtils.removeWithCallback(row, membershipModulePageUrl + 'remove', postData, function (data) {

@@ -6,6 +6,7 @@ import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ public class HomeController {
     @Resource
     private MembershipFacade membershipFacade;
 
-    @RequestMapping(value = {"", "/", "/index"})
+    @GetMapping(value = {"", "/", "/index"})
     public String index(@CurrentUser User loginUser, Model model, HttpServletRequest req) {
         List<Module> modules = membershipFacade.getModules(loginUser.getRoles());
         model.addAttribute("menus", this.buildMenuItems(modules, req.getContextPath()));

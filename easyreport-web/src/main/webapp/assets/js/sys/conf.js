@@ -1,4 +1,4 @@
-var configDictPageUrl = XFrame.getContextPath() + '/sys/dict/';
+var configDictPageUrl = XFrame.getContextPath() + '/rest/sys/dict/';
 $(function () {
     // 左边字典树
     $('#west').panel({
