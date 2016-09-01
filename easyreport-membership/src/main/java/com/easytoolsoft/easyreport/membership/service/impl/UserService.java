@@ -1,6 +1,5 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.ParameterBuilder;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IUserDao;
 import com.easytoolsoft.easyreport.data.membership.example.UserExample;
@@ -10,7 +9,6 @@ import com.easytoolsoft.easyreport.membership.service.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 @Service("EzrptMemberUserService")
 public class UserService

@@ -8,7 +8,6 @@ import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -32,14 +31,6 @@ public class PermissionService
     public PermissionService() {
     }
 
-    @Override
-    public void reloadCache() {
-        if (cache != null) {
-            cache.clear();
-        }
-        this.loadCache();
-    }
-
     @PostConstruct
     private void loadCache() {
         synchronized (lock) {
@@ -53,6 +44,13 @@ public class PermissionService
         }
     }
 
+    @Override
+    public void reloadCache() {
+        if (cache != null) {
+            cache.clear();
+        }
+        this.loadCache();
+    }
 
     @Override
     protected PermissionExample getPageExample(String fieldName, String keyword) {
