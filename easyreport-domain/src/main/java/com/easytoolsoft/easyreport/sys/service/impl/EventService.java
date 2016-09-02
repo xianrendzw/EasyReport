@@ -7,6 +7,8 @@ import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.sys.service.IEventService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service("EzrptSysEventService")
 public class EventService
         extends AbstractCrudService<IEventDao, Event, EventExample>
@@ -22,5 +24,19 @@ public class EventService
     @Override
     public void clear() {
         this.dao.deleteByExample(null);
+    }
+
+    @Override
+    public void add(String source, String account, String message, String level, String url) {
+        Event event = Event.builder()
+                .source(source)
+                .account(account)
+                .userId(-1)
+                .message(message)
+                .level(level)
+                .url(url)
+                .gmtCreated(new Date())
+                .build();
+        this.add(event);
     }
 }

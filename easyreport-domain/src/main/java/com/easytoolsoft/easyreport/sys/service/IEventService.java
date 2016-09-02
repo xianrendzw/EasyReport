@@ -11,4 +11,6 @@ import com.easytoolsoft.easyreport.data.sys.po.Event;
  */
 public interface IEventService extends ICrudService<Event, EventExample> {
     void clear();
+
+    void add(String source, String account, String message, String level, String url);
 }

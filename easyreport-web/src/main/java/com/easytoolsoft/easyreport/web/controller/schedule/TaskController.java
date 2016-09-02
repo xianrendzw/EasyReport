@@ -7,6 +7,8 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +20,13 @@ import java.util.Map;
 public class TaskController
         extends BaseController<ITaskService, Task, TaskExample> {
 
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     @OpLog(name = "获取任务列表")
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         return super.find(pager, fieldName, keyword);
     }
 
-    @RequestMapping(value = "/add")
+    @PostMapping(value = "/add")
     @OpLog(name = "增加任务")
     public JsonResult add(Task po) {
         po.setGmtCreated(new Date());
@@ -32,13 +34,13 @@ public class TaskController
         return super.add(po);
     }
 
-    @RequestMapping(value = "/edit")
+    @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
     public JsonResult edit(Task po) {
         return super.edit(po);
     }
 
-    @RequestMapping(value = "/remove")
+    @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
     public JsonResult remove(int id) {
         return super.remove(id);

@@ -8,6 +8,8 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +21,7 @@ import java.util.Map;
 @RequestMapping(value = "/rest/sys/event")
 public class EventController
         extends BaseController<IEventService, Event, EventExample> {
-
-    @RequestMapping(value = {"", "/", "/index"})
-    public String index() {
-        return "sys/event";
-    }
-
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     public Map<String, Object> list(DataGridPager pager) {
         PageInfo pageInfo = pager.toPageInfo();
         List<Event> list = this.service.getByPage(pageInfo);
@@ -35,7 +31,7 @@ public class EventController
         return modelMap;
     }
 
-    @RequestMapping(value = "/find")
+    @GetMapping(value = "/find")
     public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<Event> list = this.service.getByPage(pageInfo, fieldName, keyword);
@@ -45,15 +41,15 @@ public class EventController
         return modelMap;
     }
 
-    @RequestMapping(value = "/remove")
+    @PostMapping(value = "/remove")
     public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();
         this.service.removeById(id);
         return result;
     }
 
-    @RequestMapping(value = "/clear")
-    public JsonResult clear(HttpServletRequest req) {
+    @GetMapping(value = "/clear")
+    public JsonResult clear() {
         JsonResult<String> result = new JsonResult<>();
         this.service.clear();
         return result;

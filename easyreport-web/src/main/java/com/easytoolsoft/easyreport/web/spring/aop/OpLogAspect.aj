@@ -64,7 +64,8 @@ public class OpLogAspect {
                 Map<String, String> methodInfo = this.getMethodInfo(joinPoint);
                 String source = MapUtils.getString(methodInfo, "source", "") + ";params:" + MapUtils.getString(methodInfo, "params", "");
                 message = MapUtils.getString(methodInfo, "name", "") + ";" + MapUtils.getString(methodInfo, "desc", "") + "detail:" + message;
-                Event event = Event.builder().source(source)
+                Event event = Event.builder()
+                        .source(source)
                         .account(user.getAccount())
                         .userId(user.getId())
                         .message(message)

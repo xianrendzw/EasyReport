@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
-import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
+import com.easytoolsoft.easyreport.sys.service.IEventService;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户登录页控制器
@@ -29,6 +30,8 @@ import javax.annotation.Resource;
 public class MemberController {
     @Resource
     private MembershipFacade membershipFacade;
+    @Resource
+    private IEventService eventService;
 
     @GetMapping(value = {"/login"})
     public String login() {
@@ -49,7 +52,7 @@ public class MemberController {
 
     @ResponseBody
     @PostMapping(value = "/authenticate")
-    public JsonResult authenticate(String account, String password, boolean rememberMe) {
+    public JsonResult authenticate(String account, String password, boolean rememberMe, HttpServletRequest req) {
         JsonResult result = new JsonResult<>(false, "用户名/密码错误!");
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(account, password);
@@ -67,6 +70,8 @@ public class MemberController {
                 result.setMsg("您重试密码超过10次,账号已被锁定!");
             }
         }
+        this.eventService.add("authenticate", account, result.getMsg(), "INFO", req.getRequestURL().toString());
+
         return result;
     }
 }
