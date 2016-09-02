@@ -1,13 +1,11 @@
 package com.easytoolsoft.easyreport.engine.util;
 
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.commons.collections4.MapUtils;
+import com.easytoolsoft.easyreport.engine.dbpool.DataSourcePoolFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,27 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JdbcUtils {
     private static final Logger logger = LoggerFactory.getLogger(JdbcUtils.class);
-    private static Map<String, ComboPooledDataSource> dataSourceMap = new ConcurrentHashMap<>(100);
+    private static Map<String, DataSource> dataSourceMap = new ConcurrentHashMap<>(100);
 
-    public static DataSource getDataSource(ReportDataSource ds) throws PropertyVetoException {
-        ComboPooledDataSource dataSource = dataSourceMap.get(ds.getUid());
-        if (dataSource != null) {
-            dataSource = new ComboPooledDataSource();
-            dataSource.setDriverClass(ds.getDriverClass());
-            dataSource.setJdbcUrl(ds.getJdbcUrl());
-            dataSource.setUser(ds.getUser());
-            dataSource.setPassword(ds.getPassword());
-            dataSource.setInitialPoolSize(MapUtils.getInteger(ds.getOptions(), "initialPoolSize", 3));
-            dataSource.setMinPoolSize(MapUtils.getInteger(ds.getOptions(), "minPoolSize", 1));
-            dataSource.setMaxPoolSize(MapUtils.getInteger(ds.getOptions(), "maxPoolSize", 10));
-            dataSource.setMaxStatements(MapUtils.getInteger(ds.getOptions(), "maxStatements", 50));
-            dataSource.setMaxIdleTime(MapUtils.getInteger(ds.getOptions(), "maxIdleTime", 1800));
-            dataSource.setAcquireIncrement(MapUtils.getInteger(ds.getOptions(), "acquireIncrement", 3));
-            dataSource.setAcquireRetryAttempts(MapUtils.getInteger(ds.getOptions(), "acquireRetryAttempts", 30));
-            dataSource.setIdleConnectionTestPeriod(MapUtils.getInteger(ds.getOptions(), "idleConnectionTestPeriod", 60));
-            dataSource.setBreakAfterAcquireFailure(MapUtils.getBoolean(ds.getOptions(), "breakAfterAcquireFailure", false));
-            dataSource.setTestConnectionOnCheckout(MapUtils.getBoolean(ds.getOptions(), "testConnectionOnCheckout", false));
-            dataSourceMap.put(ds.getUid(), dataSource);
+    public static DataSource getDataSource(ReportDataSource rptDs) {
+        DataSource dataSource = dataSourceMap.get(rptDs.getUid());
+        if (dataSource == null) {
+            dataSource = DataSourcePoolFactory.create(rptDs.getUid()).wrap(rptDs);
+            dataSourceMap.put(rptDs.getUid(), dataSource);
         }
         return dataSource;
     }

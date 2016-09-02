@@ -29,6 +29,9 @@
         <slf4j-version>1.7.21</slf4j-version>
         <shiro-version>1.2.5</shiro-version>
         <powermock-version>1.6.4</powermock-version>
+        <c3p0-version>0.9.5.2</c3p0-version>
+        <dbcp2-version>2.1.1</dbcp2-version>
+        <druid-version>1.0.25</druid-version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -124,7 +127,17 @@
             <dependency>
                 <groupId>com.mchange</groupId>
                 <artifactId>c3p0</artifactId>
-                <version>0.9.5.2</version>
+                <version>${c3p0-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-dbcp2</artifactId>
+                <version>${dbcp2-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid-version}</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
