@@ -571,17 +571,57 @@
   -webkit-border-radius: 0 0 0 0;
   border-radius: 0 0 0 0;
 }
-.textbox-button-right,
-.textbox-button-right:hover {
+.textbox .textbox-button-right,
+.textbox .textbox-button-right:hover {
+  right: 0;
   border-width: 0 0 0 1px;
 }
-.textbox-button-left,
-.textbox-button-left:hover {
+.textbox .textbox-button-left,
+.textbox .textbox-button-left:hover {
+  left: 0;
   border-width: 0 1px 0 0;
+}
+.textbox .textbox-button-top,
+.textbox .textbox-button-top:hover {
+  left: 0;
+  border-width: 0 0 1px 0;
+}
+.textbox .textbox-button-bottom,
+.textbox .textbox-button-bottom:hover {
+  top: auto;
+  bottom: 0;
+  left: 0;
+  border-width: 1px 0 0 0;
 }
 .textbox-addon {
   position: absolute;
   top: 0;
+}
+.textbox-label {
+  display: inline-block;
+  width: 80px;
+  height: 22px;
+  line-height: 22px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0;
+  padding-right: 5px;
+}
+.textbox-label-after {
+  padding-left: 5px;
+  padding-right: 0;
+}
+.textbox-label-top {
+  display: block;
+  width: auto;
+  padding: 0;
+}
+.textbox-disabled,
+.textbox-label-disabled {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
 }
 .textbox-icon {
   display: inline-block;
@@ -617,6 +657,12 @@
 .textbox-invalid {
   border-color: #ffa8a8;
   background-color: #fff;
+}
+.passwordbox-open {
+  background: url('images/passwordbox_open.png') no-repeat center center;
+}
+.passwordbox-close {
+  background: url('images/passwordbox_close.png') no-repeat center center;
 }
 .filebox .textbox-value {
   vertical-align: top;
@@ -1262,6 +1308,15 @@
   border-width: 2px;
   border-style: solid;
   display: none;
+}
+.datagrid-empty {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
 }
 .datagrid-sort-icon {
   padding: 0;
@@ -1978,6 +2033,12 @@
 }
 .spinner-arrow-down {
   background: url('images/spinner_arrows.png') no-repeat -15px center;
+}
+.spinner-button-up {
+  background: url('images/spinner_arrows.png') no-repeat -32px center;
+}
+.spinner-button-down {
+  background: url('images/spinner_arrows.png') no-repeat -48px center;
 }
 .progressbar {
   border-width: 1px;
