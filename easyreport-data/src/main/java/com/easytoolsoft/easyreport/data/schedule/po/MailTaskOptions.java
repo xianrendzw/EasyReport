@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 @Builder
 public class MailTaskOptions extends AbstractTaskOptions {
+    private String cc;
 }
