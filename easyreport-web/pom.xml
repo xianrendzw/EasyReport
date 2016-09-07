@@ -214,7 +214,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>easyreport-web</finalName>
+        <finalName>${project.artifactId}</finalName>
         <filters>
             <filter>${props}</filter>
         </filters>
@@ -223,6 +223,30 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>WEB-INF/web.xml</include>
+                </includes>
+            </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/web.xml</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

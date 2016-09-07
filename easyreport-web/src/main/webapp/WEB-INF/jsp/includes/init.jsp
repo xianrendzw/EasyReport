@@ -3,9 +3,9 @@
     var EasyReport = {
         env: 'dev',//dev|prod
         ctx: {
-            path: '<%=request.getContextPath()%>',
+            path: '${ctxPath}',
         },
-        version: '2.0',
+        version: '${version}',
         config: {
             pageSize: 30
         },

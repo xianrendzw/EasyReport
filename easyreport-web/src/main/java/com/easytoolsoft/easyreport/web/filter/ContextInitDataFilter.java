@@ -15,8 +15,13 @@ import java.io.IOException;
  * ServletContext 初始化数据 Filter
  */
 public class ContextInitDataFilter implements Filter {
+    private String version = Constants.VERSION_CODE;
+    private String env = Constants.ENV_CODE;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        this.version = filterConfig.getInitParameter(Constants.VERSION);
+        this.env = filterConfig.getInitParameter(Constants.ENV);
     }
 
     @Override
@@ -28,7 +33,10 @@ public class ContextInitDataFilter implements Filter {
             request.setAttribute(Constants.CONTEXT_PATH, req.getContextPath());
         }
         if (request.getAttribute(Constants.VERSION) == null) {
-            request.setAttribute(Constants.VERSION, Constants.VERSION_CODE);
+            request.setAttribute(Constants.VERSION, this.version);
+        }
+        if (request.getAttribute(Constants.ENV) == null) {
+            request.setAttribute(Constants.ENV, this.env);
         }
         chain.doFilter(request, response);
     }

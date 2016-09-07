@@ -35,6 +35,14 @@
     <filter>
         <filter-name>contextInitDataFilter</filter-name>
         <filter-class>com.easytoolsoft.easyreport.web.filter.ContextInitDataFilter</filter-class>
+        <init-param>
+            <param-name>version</param-name>
+            <param-value>${easyreport.app.version}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>env</param-name>
+            <param-value>${easyreport.app.env}</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>contextInitDataFilter</filter-name>
