@@ -1,4 +1,4 @@
-package com.easytoolsoft.easyreport.web.controller;
+package com.easytoolsoft.easyreport.web.controller.home;
 
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 import com.easytoolsoft.easyreport.data.membership.po.User;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,7 @@ public class HomeController {
         model.addAttribute("menus", this.buildMenuItems(modules, req.getContextPath()));
         model.addAttribute("roleNames", membershipFacade.getRoleNames(loginUser.getRoles()));
         model.addAttribute("user", loginUser);
-        return "index";
+        return "home/index";
     }
 
     private String buildMenuItems(List<Module> modules, String contextPath) {

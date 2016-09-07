@@ -175,7 +175,19 @@
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4-rule</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
         </dependency>
     </dependencies>
     <profiles>

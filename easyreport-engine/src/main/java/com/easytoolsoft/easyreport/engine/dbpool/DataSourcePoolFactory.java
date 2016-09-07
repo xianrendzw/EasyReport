@@ -8,7 +8,7 @@ public class DataSourcePoolFactory {
         try {
             return (DataSourcePoolWrapper) Class.forName(className).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new RuntimeException("DataSourcePoolFactory Create Class Error", e);
+            throw new RuntimeException("DataSourcePoolFactory Load Class Error", e);
         }
     }
 }

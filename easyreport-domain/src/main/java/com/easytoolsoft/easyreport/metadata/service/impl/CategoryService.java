@@ -7,6 +7,7 @@ import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import com.easytoolsoft.easyreport.metadata.service.ICategoryService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +25,11 @@ public class CategoryService
     }
 
     @Override
+    @Transactional
     public int add(Category record) {
         this.dao.insert(record);
         this.updateHasChild(record.getParentId(), true);
-        String path = this.getPath(record.getParentId(), record.getId());
-        return this.updatePath(record.getId(), path);
+        return this.updatePath(record.getId(), this.getPath(record.getParentId(), record.getId()));
     }
 
     @Override
@@ -48,8 +49,7 @@ public class CategoryService
     @Override
     public boolean remove(int id, int pid) {
         this.dao.deleteById(id);
-        boolean hasChild = this.hasChildren(pid);
-        return this.updateHasChild(pid, hasChild) > 0;
+        return this.updateHasChild(pid,  this.hasChildren(pid)) > 0;
     }
 
     @Override
@@ -66,6 +66,7 @@ public class CategoryService
     }
 
     @Override
+    @Transactional
     public Category paste(int sourceId, int targetId) {
         Category category = this.dao.selectById(sourceId);
         int count = this.count(targetId, category.getName());

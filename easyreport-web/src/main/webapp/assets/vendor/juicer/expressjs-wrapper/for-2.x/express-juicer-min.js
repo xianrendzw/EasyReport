@@ -1,0 +1,1 @@
+var juicer=require("juicer");exports.compile=function(b,a){return juicer.compile(b,a).render;};

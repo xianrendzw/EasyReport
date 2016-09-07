@@ -54,8 +54,8 @@
             </div>
         </div>
         <img class="login-bg-image" alt="EasyReport"
-             src="<%=request.getContextPath()%>/assets/images/login_bg_right.gif"> <br
-            class="clear"/>
+             src="<%=request.getContextPath()%>/assets/images/login_bg_right.gif">
+            <br class="clear"/>
     </div>
 </form>
 </body>
