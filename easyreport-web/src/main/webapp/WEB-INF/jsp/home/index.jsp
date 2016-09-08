@@ -6,8 +6,6 @@
     <title>EasyReport-A simple and easy to use Web Report System</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/init.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/js/home/index.js?v=<%=Math.random()%>"></script>
 </head>
 <body>
 <div class="easyui-layout" fit="true">
@@ -75,3 +73,19 @@
 </div>
 </body>
 </html>
+<script>
+    (function () {
+        var libs = [
+            '${ctxPath}/assets/js/home/index1.js?v=${version}',
+            'easyreport',
+        ];
+        require(libs, function (HomeIndex, Ezrp) {
+            Ezrp.utils.debug("dependencies loaded.");
+            $(document).ready(function () {
+                Ezrp.utils.debug("document ready.");
+                Ezrp.temp.func = new HomeIndex();
+                Ezrp.temp.func.init();
+            });
+        });
+    }());
+</script>

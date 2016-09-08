@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2016-08-29 10:46:58
+Date: 2016-09-08 20:54:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -78,7 +78,7 @@ CREATE TABLE `ezrpt_member_permission` (
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统操作记录更新时间戳',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_permisson_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ezrpt_member_permission
@@ -272,6 +272,8 @@ CREATE TABLE `ezrpt_meta_datasource` (
   `jdbc_url` varchar(500) NOT NULL COMMENT '数据源连接字符串(JDBC)',
   `user` varchar(50) NOT NULL COMMENT '数据源登录用户名',
   `password` varchar(100) NOT NULL COMMENT '数据源登录密码',
+  `queryer_class` varchar(100) NOT NULL COMMENT '获取报表引擎查询器类名',
+  `dbpool_class` varchar(100) NOT NULL COMMENT '报表引擎查询器使用的数据源连接池类名',
   `options` varchar(1000) NOT NULL COMMENT '数据源配置选项(JSON格式）',
   `comment` varchar(100) NOT NULL COMMENT '说明备注',
   `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
@@ -283,8 +285,8 @@ CREATE TABLE `ezrpt_meta_datasource` (
 -- ----------------------------
 -- Records of ezrpt_meta_datasource
 -- ----------------------------
-INSERT INTO `ezrpt_meta_datasource` VALUES ('49', '8b2d3b62-0c08-4d62-a666-8bb97fc9c222', '中国天气(SQLServer)', 'com.microsoft.sqlserver.jdbc.SQLServerDriver', 'jdbc:sqlserver://localhost;databaseName=ChinaWeatherAir', 'sa', 'ddd', '', '', '2015-01-27 14:32:32', '2015-01-27 14:32:32');
-INSERT INTO `ezrpt_meta_datasource` VALUES ('50', '6423b076-ce78-47fc-8c25-c005be2b85af', '中国天气(MySQL)', 'com.mysql.jdbc.Driver', 'jdbc:mysql://localhost:3306/china_weather_air?characterEncoding=UTF-8', 'root', 'ddd', '', '', '2015-01-29 17:54:32', '2015-01-29 17:54:32');
+INSERT INTO `ezrpt_meta_datasource` VALUES ('49', '8b2d3b62-0c08-4d62-a666-8bb97fc9c222', '中国天气(SQLServer)', 'com.microsoft.sqlserver.jdbc.SQLServerDriver', 'jdbc:sqlserver://localhost;databaseName=ChinaWeatherAir', 'sa', 'ddd', 'com.easytoolsoft.easyreport.engine.query.MySqlQueryer', 'com.easytoolsoft.easyreport.engine.dbpool.C3p0DataSourcePool', '', '', '2015-01-27 14:32:32', '2015-01-27 14:32:32');
+INSERT INTO `ezrpt_meta_datasource` VALUES ('50', '6423b076-ce78-47fc-8c25-c005be2b85af', '中国天气(MySQL)', 'com.mysql.jdbc.Driver', 'jdbc:mysql://localhost:3306/china_weather_air?characterEncoding=UTF-8', 'root', 'ddd', 'com.easytoolsoft.easyreport.engine.query.MySqlQueryer', 'com.easytoolsoft.easyreport.engine.dbpool.C3p0DataSourcePool', '', '', '2015-01-29 17:54:32', '2015-01-29 17:54:32');
 
 -- ----------------------------
 -- Table structure for ezrpt_meta_report

@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -51,6 +48,20 @@ public class DataSource implements Serializable {
      * 数据源登录密码
      */
     private String password;
+    /**
+     * 获取报表引擎查询器类名
+     * (如:com.easytoolsoft.easyreport.engine.query.MySqlQueryer)
+     *
+     * @return 具体Queryer类完全名称
+     */
+    private String queryerClass;
+    /**
+     * 获取报表引擎查询器使用的数据源连接池类名
+     * (如:com.easytoolsoft.easyreport.engine.dbpool.C3p0DataSourcePool)
+     *
+     * @return 具体DataSourcePoolWrapper类完全名称
+     */
+    private String dbPoolClass;
     /**
      * 数据源配置选项(JSON格式）
      */

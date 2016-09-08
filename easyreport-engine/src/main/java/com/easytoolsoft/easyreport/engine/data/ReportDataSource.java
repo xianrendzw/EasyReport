@@ -8,23 +8,29 @@ import java.util.Map;
  */
 public class ReportDataSource {
     private final String uid;
+    private final String queryerClass;
+    private final String dbPoolClass;
     private final String driverClass;
     private final String jdbcUrl;
     private final String user;
     private final String password;
     private final Map<String, Object> options;
 
-    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password) {
-        this(uid, driverClass, jdbcUrl, user, password, new HashMap<>(3));
+    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password,
+                            String queryerClass, String dbPoolClass) {
+        this(uid, driverClass, jdbcUrl, user, password, queryerClass, dbPoolClass, new HashMap<>(3));
     }
 
     public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password,
+                            String queryerClass, String dbPoolClass,
                             Map<String, Object> options) {
         this.uid = uid;
         this.driverClass = driverClass;
         this.jdbcUrl = jdbcUrl;
         this.user = user;
         this.password = password;
+        this.queryerClass = queryerClass;
+        this.dbPoolClass = dbPoolClass;
         this.options = options;
     }
 
@@ -34,7 +40,7 @@ public class ReportDataSource {
      * @return 数据源唯一标识
      */
     public String getUid() {
-        return uid;
+        return this.uid;
     }
 
     /**
@@ -72,6 +78,26 @@ public class ReportDataSource {
      */
     public String getPassword() {
         return this.password;
+    }
+
+    /**
+     * 获取报表引擎查询器类名(如:com.easytoolsoft.easyreport.engine.query.MySqlQueryer)
+     *
+     * @return 具体Queryer类完全名称
+     * @see com.easytoolsoft.easyreport.engine.query.Queryer
+     */
+    public String getQueryerClass() {
+        return this.queryerClass;
+    }
+
+    /**
+     * 获取报表引擎查询器使用的数据源连接池类名(如:com.easytoolsoft.easyreport.engine.dbpool.C3p0DataSourcePool)
+     *
+     * @return 具体DataSourcePoolWrapper类完全名称
+     * @see com.easytoolsoft.easyreport.engine.dbpool.DataSourcePoolWrapper
+     */
+    public String getDbPoolClass() {
+        return this.dbPoolClass;
     }
 
     /**

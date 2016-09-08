@@ -6,8 +6,7 @@
     <title>日志管理</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/xframejs.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/js/sys/event.js?v=<%=Math.random()%>"></script>
+    <script src="${ctxPath}/assets/js/sys/event.js?v=${version}"></script>
 </head>
 <body class="easyui-layout">
 <div id="toolbar" class="toolbar">关键字:<input class="easyui-textbox" type="text" id="keyword" name="keyword"/>

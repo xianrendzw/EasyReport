@@ -21,7 +21,7 @@ public class JdbcUtils {
     private static Map<String, DataSource> dataSourceMap = new ConcurrentHashMap<>(100);
 
     public static DataSource getDataSource(ReportDataSource rptDs) {
-        DataSource dataSource = dataSourceMap.get(rptDs.getUid());
+        DataSource dataSource = dataSourceMap.get(rptDs.getDbPoolClass());
         if (dataSource == null) {
             dataSource = DataSourcePoolFactory.create(rptDs.getUid()).wrap(rptDs);
             dataSourceMap.put(rptDs.getUid(), dataSource);

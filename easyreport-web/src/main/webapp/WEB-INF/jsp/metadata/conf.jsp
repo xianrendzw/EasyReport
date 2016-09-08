@@ -6,8 +6,8 @@
     <title>配置字典</title>
     <%@ include file="/WEB-INF/jsp-views/includes/header.jsp" %>
     <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/config.js?v=<%=Math.random()%>"></script>
+    <script src="${ctxPath}/assets/modules/report/js/common.js"></script>
+    <script src="${ctxPath}/assets/modules/report/js/config.js?v=<%=Math.random()%>"></script>
 </head>
 <body class="easyui-layout" style="text-align: left">
 <!-- 左边tree -->

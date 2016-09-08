@@ -11,64 +11,87 @@ var conf = {
         'jquery-filedownload': 'vendor/jquery.fileDownload',
         'jquery-fixtableheader': 'vendor/jquery.fixtableheader',
         'jquery-number': 'vendor/jquery.number.min',
-        'juicer': 'vendor/juicer/juicer-min',
-        'require-css': 'vendor/require-css/css.min',
-        'select2': 'vendor/select2/select2.full.min',
+        'jquery-tablesorter': 'vendor/tablesorter/jquery.tablesorter.min',
+        'select2': 'vendor/select2/select2.min',
         'select2-zhcn': 'vendor/select2/js/i18n/zh-CN',
         'echarts': 'vendor/echarts.min',
         'moment': 'vendor/moment.min',
+        'juicer': 'vendor/juicer/juicer-min',
         'datatables': 'vendor/datatables/media/js/jquery.dataTables.min',
-        'datatables-utils': 'custom/datatables/media/js/datatable.utils',
-        'easyreport-utils': 'js/utils/easyreport.utils'
+        'require-css': 'vendor/require-css/css.min',
+        'easyui-utils': 'js/utils/easyui.utils',
+        'easyreport': 'js/utils/easyreport.utils'
     },
     packages: [{
         name: "codemirror",
         location: "vendor/codemirror",
         main: "vendor/codemirror"
     }],
+    config: {
+        moment: {
+            noGlobal: true
+        }
+    },
     map: {
         '*': {
             'css': 'require-css'
         }
     },
     shim: {
-        'bootstrap-datepicker': {
-            deps: ['jquery', 'bootstrap', 'bootstrap-datepicker-basic'],
-            exports: "$"
-        },
-        'bootstrap-datepicker-basic': {
-            deps: ['jquery', 'bootstrap',
-                'css!vendor/bootstrap-datepicker/css/bootstrap-datepicker' + (Biz.Config.prod ? '.min' : '')],
-            exports: "$"
-        },
-        'datatables': {
-            deps: ["jquery", 'datatables-utils', 'css!custom/datatables/media/css/jquery.dataTables'],
-            exports: "$.fn.popover"
-        },
-        'jBox': {
-            deps: ['jquery', 'css!custom/jBox/jBox'],
-            exports: 'jBox'
-        },
-        'jqueryForm': {
+        'jquery-form': {
             deps: ['jquery'],
             exports: "$"
         },
-        'jqueryFormAutofill': {
-            deps: ['jquery', 'jqueryForm'],
+        'jquery-form-autofill': {
+            deps: ['jquery', 'jquery-form'],
             exports: "$"
         },
-        'jqueryValidate': {
-            deps: ['jquery', 'jqueryValidate-basic'],
+        'jquery-validate': {
+            deps: ['jquery', 'jquery-metadata'],
+            exports: "$"
+        },
+        'jquery-validate-msg-zhcn': {
+            deps: ['jquery', 'jquery-validate'],
+            exports: "$"
+        },
+        'jquery-extension': {
+            deps: ['jquery'],
+            exports: "$"
+        },
+        'jquery-filedownload': {
+            deps: ['jquery'],
+            exports: "$"
+        },
+        'jquery-fixtableheader': {
+            deps: ['jquery'],
+            exports: "$"
+        },
+        'jquery-number': {
+            deps: ['jquery'],
+            exports: "$"
+        },
+        'jquery-tablesorter': {
+            deps: ["jquery", 'css!vendor/tablesorter/css/theme.default'],
+            exports: "$"
+        },
+        'datatables': {
+            deps: ["jquery", 'css!vendor/datatables/media/css/jquery.dataTables.min'],
             exports: "$"
         },
         'juicer': {
             exports: 'juicer'
         },
+        'select2-zhcn': {
+            deps: ['jquery', 'select2'],
+            exports: "$"
+        },
         'select2': {
-            deps: ['jquery', 'select2-basic'],
+            deps: ['jquery'],
             exports: "$"
         }
-    }
+    },
+    enforceDefine: true,
+    urlArgs: 'v=' + EasyReport.version
 };
 
 require.config(conf);

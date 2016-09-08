@@ -6,8 +6,7 @@
     <title>配置字典</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/xframejs.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/js/sys/conf.js?v=<%=Math.random()%>"></script>
+    <script src="${ctxPath}/assets/js/sys/conf.js?v=${version}"></script>
 </head>
 <body class="easyui-layout" id="body-layout">
 <!-- 左边tree -->

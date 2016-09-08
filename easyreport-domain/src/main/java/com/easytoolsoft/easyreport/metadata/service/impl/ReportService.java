@@ -160,6 +160,8 @@ public class ReportService
                 ds.getUid(),
                 ds.getDriverClass(),
                 ds.getJdbcUrl(), ds.getUser(), ds.getPassword(),
+                ds.getQueryerClass(),
+                ds.getDbPoolClass(),
                 options);
     }
 }

@@ -1,13 +1,13 @@
 define(function (require, exports, module) {
     var $ = require('jquery');
+    var moment = require('moment');
 
     EasyReport.utils.debug = function (msg) {
         if (EasyReport.env == "prod") {
             return;
         }
-        var t = new Date();
-        var timeStr = t.getHours() + ':' + t.getMinutes() + ':' + t.getSeconds() + '_' + t.getMilliseconds();
-        console.trace('[' + timeStr + ']: ' + msg);
+        var time = moment().format("YYYY MM DD HH:mm:ss:SSS")
+        console.trace('[%s]:%s', time, msg);
     };
 
     return EasyReport;

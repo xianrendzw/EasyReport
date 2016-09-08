@@ -6,8 +6,7 @@
     <title>用户管理</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/xframejs.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/js/membership/user.js?v=<%=Math.random()%>"></script>
+    <script src="${ctxPath}/assets/js/membership/user.js?v=${version}"></script>
 </head>
 <body class="easyui-layout">
 <div id="toolbar" class="toolbar">

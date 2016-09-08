@@ -20,6 +20,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /assets/** = anon
+                /dynamic/** = anon
                 /error/** = anon
                 /membership/login = anon
                 /membership/authenticate = anon
