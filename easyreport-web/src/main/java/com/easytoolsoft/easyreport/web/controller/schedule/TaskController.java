@@ -2,7 +2,7 @@ package com.easytoolsoft.easyreport.web.controller.schedule;
 
 import com.easytoolsoft.easyreport.data.schedule.example.TaskExample;
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
-import com.easytoolsoft.easyreport.schedule.service.ITaskService;
+import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;

@@ -4,10 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>配置字典</title>
-    <%@ include file="/WEB-INF/jsp-views/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp" %>
-    <script src="${ctxPath}/assets/modules/report/js/common.js"></script>
-    <script src="${ctxPath}/assets/modules/report/js/config.js?v=<%=Math.random()%>"></script>
+    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+    <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+    <script src="${ctxPath}/assets/js/metadata/conf.js?v=${version}"></script>
 </head>
 <body class="easyui-layout" style="text-align: left">
 <!-- 左边tree -->
@@ -42,12 +41,10 @@
             </tr>
             <tr>
                 <td class="text_r blueside top" width="80">说明:</td>
-                <td><textarea name="comment" style="width: 99%; height: 80px;"></textarea><input id="configDictPid"
-                                                                                                 type="hidden"
-                                                                                                 name="pid" value="0"/>
-                    <input
-                            id="configDictId" type="hidden" name="id" value="0"/> <input id="configDictAction"
-                                                                                         type="hidden" name="action"/>
+                <td><textarea name="comment" style="width: 99%; height: 80px;"></textarea>
+                    <input id="configDictPid" type="hidden" name="pid" value="0"/>
+                    <input id="configDictId" type="hidden" name="id" value="0"/>
+                    <input id="configDictAction" type="hidden" name="action"/>
                 </td>
             </tr>
         </table>

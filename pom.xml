@@ -279,6 +279,17 @@
                 <artifactId>shiro-quartz</artifactId>
                 <version>${shiro-version}</version>
             </dependency>
+            <!-- JSR 303 with Hibernate Validator -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>1.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.2.4.Final</version>
+            </dependency>
             <!-- others -->
             <dependency>
                 <groupId>com.googlecode.aviator</groupId>

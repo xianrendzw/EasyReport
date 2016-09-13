@@ -4,7 +4,7 @@ import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
 import com.easytoolsoft.easyreport.data.sys.po.Conf;
-import com.easytoolsoft.easyreport.sys.service.IConfService;
+import com.easytoolsoft.easyreport.domain.sys.service.IConfService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;

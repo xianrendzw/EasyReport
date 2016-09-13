@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.membership.common.Constants;
-import com.easytoolsoft.easyreport.sys.service.IEventService;
+import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;

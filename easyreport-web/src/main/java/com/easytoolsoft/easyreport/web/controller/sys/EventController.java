@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.sys;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.sys.example.EventExample;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
-import com.easytoolsoft.easyreport.sys.service.IEventService;
+import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

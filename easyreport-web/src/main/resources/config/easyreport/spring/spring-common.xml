@@ -7,5 +7,8 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
     <context:property-placeholder location="classpath*:config/config.properties"/>
-    <context:component-scan base-package="com.easytoolsoft.easyreport.*"/>
+    <context:component-scan base-package="com.easytoolsoft.easyreport.common"/>
+    <context:component-scan base-package="com.easytoolsoft.easyreport.data"/>
+    <context:component-scan base-package="com.easytoolsoft.easyreport.domain"/>
+    <context:component-scan base-package="com.easytoolsoft.easyreport.membership"/>
 </beans>

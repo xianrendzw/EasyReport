@@ -5,7 +5,7 @@ import com.easytoolsoft.easyreport.common.form.EasyUIQueryFormView;
 import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
-import com.easytoolsoft.easyreport.metadata.exception.QueryParamsException;
+import com.easytoolsoft.easyreport.domain.metadata.exception.QueryParamsException;
 import com.easytoolsoft.easyreport.web.util.ReportUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

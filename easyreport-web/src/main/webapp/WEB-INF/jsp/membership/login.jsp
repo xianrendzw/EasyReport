@@ -4,8 +4,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>EasyReport-A simple and easy to use Web Report System</title>
-    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <link rel="stylesheet" href="${ctxPath}/assets/css/login.css?v=${version}">
+    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+    <script	src="${ctxPath}/assets/vendor/jquery-validate/jquery.validate.min.js?v=${version}"></script>
+    <script	src="${ctxPath}/assets/vendor/jquery-validate/jquery.validate.message.zh-cn.js?v=${version}"></script>
     <script src="${ctxPath}/assets/js/membership/login.js?v=${version}"></script>
     <script type="text/javascript">
         if (window != top)
@@ -45,8 +47,7 @@
                         <span></span><input type="checkbox" id="rememberMe" name="rememberMe"/><label>记住密码</label>
                     </p>
                     <p>
-                        <input type="button" id="btnLogin" name="btnLogin" class="login-submit" value="登录"
-                               onclick="javascript:MembershipLogin.login();">
+                        <input type="button" id="btnLogin" name="btnLogin" class="login-submit" value="登录">
                     </p>
                 </div>
                 <div id="login-message-tips"></div>
@@ -54,7 +55,7 @@
         </div>
         <img class="login-bg-image" alt="EasyReport"
              src="${ctxPath}/assets/images/login_bg_right.gif">
-            <br class="clear"/>
+        <br class="clear"/>
     </div>
 </form>
 </body>

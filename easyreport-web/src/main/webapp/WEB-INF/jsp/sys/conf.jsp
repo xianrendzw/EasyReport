@@ -34,30 +34,30 @@
                     <td>名称:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="name"
                                            data-options="required:true"
-                                           style="width: 280px"></input></td>
+                                           style="width: 280px"/></td>
                 </tr>
                 <tr>
                     <td>键(Key):</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="k" id="k"
                                            data-options="required:true"
-                                           style="width: 280px"></input></td>
+                                           style="width: 280px"/></td>
                 </tr>
                 <tr>
                     <td>值(Value):</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="v" id="v"
                                            data-options="required:true"
-                                           style="width: 280px"></input></td>
+                                           style="width: 280px"/></td>
                 </tr>
                 <tr>
                     <td>顺序:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="sequence" id="sequence" value="10"
                                            data-options="required:true,validType:'digit'"
-                                           style="width: 280px"></input></td>
+                                           style="width: 280px" /></td>
                 </tr>
                 <tr>
                     <td>说明:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="comment"
-                                           style="width: 280px"></input>
+                                           style="width: 280px"/>
                         <input id="configDictPid" type="hidden" name="pid" value="0"/>
                         <input id="configDictId" type="hidden" name="id" value="0"/>
                         <input id="configDictAction" type="hidden" name="action"/>

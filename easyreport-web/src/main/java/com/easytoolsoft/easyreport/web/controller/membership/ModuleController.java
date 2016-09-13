@@ -63,11 +63,11 @@ public class ModuleController
                 });
     }
 
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     @OpLog(name = "获取系统模块树型列表")
     public Map<String, Object> list(DataGridPager pager, Integer id) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<Module> list = this.service.getByPage(pageInfo, id);
+        List<Module> list = this.service.getByPage(pageInfo, id == null ? 0 : id);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);

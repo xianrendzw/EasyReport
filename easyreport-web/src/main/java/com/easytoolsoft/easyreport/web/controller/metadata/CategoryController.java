@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
-import com.easytoolsoft.easyreport.metadata.service.ICategoryService;
+import com.easytoolsoft.easyreport.domain.metadata.service.ICategoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -4,10 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>数据源管理</title>
-    <%@ include file="/WEB-INF/jsp-views/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/dataSource.js?v=<%=Math.random()%>"></script>
+    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+    <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+    <script src="${ctxPath}/assets/js/metadata/ds.js?v=${version}"></script>
 </head>
 <body class="easyui-layout" style="text-align: left">
 <!-- 右边tabs -->

@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
-import com.easytoolsoft.easyreport.metadata.service.IReportHistoryService;
+import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import org.springframework.stereotype.Controller;

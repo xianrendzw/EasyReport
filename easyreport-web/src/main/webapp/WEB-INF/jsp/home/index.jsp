@@ -6,6 +6,7 @@
     <title>EasyReport-A simple and easy to use Web Report System</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+    <script src="${ctxPath}/assets/js/home/index.js?v=${version}"></script>
 </head>
 <body>
 <div class="easyui-layout" fit="true">
@@ -15,7 +16,7 @@
         <div class="menus">${menus}</div>
     </div>
     <div region="center">
-        <div id="main-tabs" class="easyui-tabs" border="false" fit="true">
+        <div id="main-tabs" border="false" fit="true">
             <div title="首页">
                 <p style="font-size: 20px; padding: 20px">
                     你好,<font color="red">${user.name}</font>
@@ -31,8 +32,7 @@
     </div>
 </div>
 <!-- tabs右键菜单  -->
-<div id="main-tab-ctx-menu" class="easyui-menu" data-options="onClick:HomeIndex.onTabCtxMenuClick"
-     style="width: 120px;">
+<div id="main-tab-ctx-menu" class="easyui-menu" style="width: 120px;">
     <div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">关闭当前页</div>
     <div id="m-others" data-options="name:'others',iconCls:''">关闭其他页</div>
     <div id="m-all" data-options="name:'all',iconCls:''">关闭所有页</div>
@@ -73,19 +73,3 @@
 </div>
 </body>
 </html>
-<script>
-    (function () {
-        var libs = [
-            '${ctxPath}/assets/js/home/index1.js?v=${version}',
-            'easyreport',
-        ];
-        require(libs, function (HomeIndex, Ezrp) {
-            Ezrp.utils.debug("dependencies loaded.");
-            $(document).ready(function () {
-                Ezrp.utils.debug("document ready.");
-                Ezrp.temp.func = new HomeIndex();
-                Ezrp.temp.func.init();
-            });
-        });
-    }());
-</script>

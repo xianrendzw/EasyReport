@@ -4,18 +4,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>报表设计</title>
-    <%@ include file="/WEB-INF/jsp-views/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp" %>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/codemirror.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/theme/rubyblue.css"/>
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/show-hint.css"/>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/codemirror.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/mode/sql/sql.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/display/fullscreen.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/show-hint.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/codemirror/addon/hint/sql-hint.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/designer.js?v=<%=Math.random()%>"></script>
+    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+    <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+    <link rel="stylesheet" href="${ctxPath}/assets/js/plugins/codemirror/codemirror.css?v=${version}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/js/plugins/codemirror/theme/rubyblue.css?v=${version}"/>
+    <link rel="stylesheet" href="${ctxPath}/assets/js/plugins/codemirror/addon/hint/show-hint.css?v=${version}"/>
+    <script src="${ctxPath}/assets/js/plugins/codemirror/codemirror.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/js/plugins/codemirror/mode/sql/sql.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/js/plugins/codemirror/addon/display/fullscreen.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/js/plugins/codemirror/addon/hint/show-hint.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/js/plugins/codemirror/addon/hint/sql-hint.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/js/metadata/designer.js?v=${version}"></script>
 </head>
 <body id="layout" class="easyui-layout" style="text-align: left">
 <!-- 左边树控件 -->
