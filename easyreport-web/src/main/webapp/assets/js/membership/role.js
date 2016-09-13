@@ -13,7 +13,7 @@ $(function () {
         toolbar: [{
                 iconCls: 'icon-add',
                 handler: function () {
-                    MembershipRole.add();
+                    MembershipRole.openAddDlg();
                 }
             }, '-', {
                 iconCls: 'icon-edit1',

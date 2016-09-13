@@ -1,27 +1,42 @@
 var EasyUIUtils = {
-    add: function (dlgId, formId, actId, rowId, title) {
-        $(formId).form('clear');
-        $(actId).val("add");
-        $(rowId).val(0);
-        $(dlgId).dialog('open').dialog('setTitle', title);
-        $(dlgId).dialog('center');
+    /**
+     *
+     * @param options
+     * var options = {
+     *        dlgId: '#module-dlg',
+     *        formId: '#module-form',
+     *        actId: '#modal-action',
+     *        rowId: '#moduleId',
+     *        title: '新增子模块',
+     *        iconCls: 'icon-add',
+     *        data: {},
+     *        callback: function (arg) {},
+     *        gridId:'#gridId'
+     *  }
+     */
+    openAddDlg: function (options) {
+        $(options.formId).form('clear');
+        $(options.actId).val("add");
+        $(options.rowId).val(0);
+        $(options.dlgId).dialog({iconCls: options.iconCls})
+            .dialog('open')
+            .dialog('center')
+            .dialog('setTitle', options.title);
     },
-    edit: function (dlgId, formId, actId, gridId, rowId, title) {
-        var row = $(gridId).datagrid('getSelected');
-        EasyUIUtils.editWithData(dlgId, formId, actId, rowId, title, row);
-    },
-    editWithData: function (dlgId, formId, actId, rowId, title, data) {
-        EasyUIUtils.editWithCallback(dlgId, formId, actId, rowId, title, data, function (data) {});
-    },
-    editWithCallback: function (dlgId, formId, actId, rowId, title, data, callback) {
-        if (data) {
-            $(formId).form('clear');
-            $(actId).val("edit");
-            $(rowId).val(data.id);
-            $(dlgId).dialog('open').dialog('setTitle', title);
-            $(dlgId).dialog('center');
-            $(formId).form('load', data);
-            callback(data);
+    openEditDlg: function (options) {
+        if (options.gridId) {
+            options.data = $(options.gridId).datagrid('getSelected');
+        }
+        if (options.data) {
+            $(options.formId).form('clear');
+            $(options.actId).val("edit");
+            $(options.rowId).val(options.data.id);
+            $(options.dlgId).dialog({iconCls: options.iconCls})
+                .dialog('open')
+                .dialog('center')
+                .dialog('setTitle', options.title);
+            $(options.formId).form('load', options.data);
+            options.callback(options.data);
         } else {
             EasyUIUtils.showMsg("请您先选择一个选项!");
         }
@@ -33,7 +48,7 @@ var EasyUIUtils = {
         }
         EasyUIUtils.removeWithCallback(row, 'remove', {
             id: row.id
-        }, function (data) {
+        }, function () {
             EasyUIUtils.loadToDatagrid(gridId, gridUrl);
         });
     },
@@ -122,7 +137,7 @@ var EasyUIUtils = {
             success: function (data) {
                 var result = $.parseJSON(data)
                 if (result.success) {
-                    EasyUIUtils.showMsg(result.msg);
+                    EasyUIUtils.showMsg(result.msg || "操作成功");
                     callback();
                     $(dlgId).dialog('close');
                 } else {

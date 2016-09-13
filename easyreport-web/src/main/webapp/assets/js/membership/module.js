@@ -18,9 +18,17 @@ var ModuleCommon = {
 
 var ModuleMVC = {
     URLs: {
+        add: {
+            url: ModuleCommon.baseUrl + 'add',
+            method: 'POST'
+        },
+        edit: {
+            url: ModuleCommon.baseUrl + 'edit',
+            method: 'POST'
+        },
         list: {
             url: ModuleCommon.baseUrl + 'list',
-            method: 'POST'
+            method: 'GET'
         },
         move: {
             url: ModuleCommon.baseUrl + 'move',
@@ -32,7 +40,7 @@ var ModuleMVC = {
         },
         getModuleTree: {
             url: ModuleCommon.baseUrl + 'getModuleTree',
-            method: 'POST'
+            method: 'GET'
         }
     },
     View: {
@@ -87,7 +95,7 @@ var ModuleMVC = {
             $('tree_ctx_menu').menu({
                 onClick: function (item) {
                     if (item.name == "add") {
-                        return ModuleMVC.Controller.add();
+                        return ModuleMVC.Controller.openAddDlg();
                     }
                     if (item.name == "edit") {
                         return ModuleMVC.Controller.editNode();
@@ -191,7 +199,7 @@ var ModuleMVC = {
                     width: 50,
                     sortable: true
                 }, {
-                    field: 'gmtCreate',
+                    field: 'gmtCreated',
                     title: '创建时间',
                     width: 50,
                     sortable: true
@@ -202,36 +210,17 @@ var ModuleMVC = {
             });
 
             // dialogs
-            $('#add-module-dlg').dialog({
+            $('#module-dlg').dialog({
                 closed: true,
                 modal: false,
                 width: 560,
-                height: 450,
+                height: 480,
                 iconCls: 'icon-add',
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function () {
-                        $("#add-module-dlg").dialog('close');
-                    }
-                }, {
-                    text: '保存',
-                    iconCls: 'icon-save',
-                    handler: ModuleMVC.Controller.save
-                }]
-            });
-
-            $('#edit-module-dlg').dialog({
-                closed: true,
-                modal: false,
-                width: 560,
-                height: 420,
-                iconCls: 'icon-edit1',
-                buttons: [{
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function () {
-                        $("#edit-module-dlg").dialog('close');
+                        $("#module-dlg").dialog('close');
                     }
                 }, {
                     text: '保存',
@@ -249,43 +238,27 @@ var ModuleMVC = {
         addRoot: function () {
             var name = "主模块";
             var id = "0";
-            ModuleMVC.Controller._initAdd(id, name);
+            ModuleMVC.Util.initAdd(id, name);
         },
         add: function () {
             var node = $('#module-tree').tree('getSelected');
             if (node) {
                 var name = node.attributes.name;
                 var id = node.id;
-                ModuleMVC.Controller._initAdd(id, name);
+                ModuleMVC.Util.initAdd(id, name);
             } else {
                 $.messager.alert('警告', '请选中一个父模块!', 'info');
             }
         },
-        _initAdd: function (id, name) {
-            EasyUIUtils.add('#add-module-dlg', '#add-form', '#modal-action', '#moduleId', '新增[' + name + ']的子模块');
-            $("#parentId").val(id);
-            $("#parent-module-name").text(name);
-            $("#sequence").textbox('setValue', 10);
-            $('#linkType').combobox('setValue', '0');
-            $('#target').combobox('setValue', '0');
-            $('#status').combobox('setValue', '0');
-        },
         editNode: function () {
             var node = $('#module-tree').tree('getSelected');
             if (node) {
-                var row = node.attributes;
-                EasyUIUtils.editWithData('#edit-module-dlg', '#edit-form', '#modal-action', '#edit-moduleId', '修改['
-                    + row.name + ']模块', row);
+                ModuleMVC.Util.edit(node.attributes);
             }
         },
         edit: function () {
             var row = $('#module-datagrid').datagrid('getSelected');
-            if (row) {
-                EasyUIUtils.editWithData('#edit-module-dlg', '#edit-form', '#modal-action', '#edit-moduleId', '修改['
-                    + row.name + ']模块', row);
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+            ModuleMVC.Util.edit(row);
         },
         remove: function () {
             var row = $('#module-datagrid').datagrid('getSelected');
@@ -304,12 +277,12 @@ var ModuleMVC = {
         },
         save: function () {
             var action = $('#modal-action').val();
-            var dlgId = action == "edit" ? "#edit-module-dlg" : "#add-module-dlg";
-            var formId = action == "edit" ? "#edit-form" : "#add-form";
-            var parentId = action == "edit" ? "#edit-parentId" : "#parentId";
+            var dlgId = "#module-dlg";
+            var formId = "#module-form";
+            var parentId = "#parentId";
             var pid = $(parentId).val();
             var gridUrl = ModuleMVC.URLs.list.url + '?id=' + pid;
-            var actUrl = ModuleCommon.baseUrl + action;
+            var actUrl = action === "edit" ? ModuleMVC.URLs.edit.url : ModuleMVC.URLs.add.url;
             EasyUIUtils.saveWithCallback(dlgId, formId, actUrl, function () {
                 ModuleMVC.Controller.refreshNode(pid);
                 EasyUIUtils.loadToDatagrid('#module-datagrid', gridUrl);
@@ -336,6 +309,43 @@ var ModuleMVC = {
                     $('#module-tree').tree('loadData', src.data);
                 }
             });
+        }
+    },
+    Util: {
+        initAdd: function (id, name) {
+            var options = ModuleMVC.Util.getOptions();
+            options.title = '新增[' + name + ']的子模块';
+            EasyUIUtils.openAddDlg(options);
+
+            $('#tr-parent-module-name').show();
+            $("#parentId").val(id);
+            $("#parent-module-name").text(name);
+            $("#sequence").textbox('setValue', 10);
+            $('#linkType').combobox('setValue', '0');
+            $('#target').combobox('setValue', '0');
+            $('#status').combobox('setValue', '0');
+        },
+        edit: function (data) {
+            $('#tr-parent-module-name').hide();
+            var options = ModuleMVC.Util.getOptions();
+            options.iconCls = 'icon-edit1';
+            options.data = data;
+            options.title = '修改[' + options.data.name + ']模块';
+            EasyUIUtils.openEditDlg(options);
+        },
+        getOptions: function () {
+            return {
+                dlgId: '#module-dlg',
+                formId: '#module-form',
+                actId: '#modal-action',
+                rowId: '#moduleId',
+                title: '',
+                iconCls: 'icon-add',
+                data: {},
+                callback: function (arg) {
+                },
+                gridId: null,
+            };
         }
     }
 };

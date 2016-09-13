@@ -5,7 +5,7 @@ $(function () {
     $('#west').panel({
         tools: [{
                 iconCls: 'icon-add',
-                handler: MembershipPerm.add
+                handler: MembershipPerm.openAddDlg
             }, {
                 iconCls: 'icon-reload',
                 handler: function () {
@@ -53,7 +53,7 @@ $(function () {
         toolbar: [{
                 text: '增加',
                 iconCls: 'icon-add',
-                handler: MembershipPerm.add
+                handler: MembershipPerm.openAddDlg
             }, '-', {
                 text: '修改',
                 iconCls: 'icon-edit1',
@@ -128,14 +128,14 @@ $(function () {
 var MembershipPerm = {
     treeContextMenu: function (item) {
         if (item.name == "add") {
-            return MembershipPerm.add();
+            return MembershipPerm.openAddDlg();
         }
         return;
     },
     add: function () {
         var node = $('#module-tree').tree('getSelected');
         if (node) {
-            EasyUIUtils.add('#perm-dlg', '#perm-form', '#permAction', '#permId', '新增[' + node.text + ']模块的权限');
+            EasyUIUtils.openAddDlg('#perm-dlg', '#perm-form', '#permAction', '#permId', '新增[' + node.text + ']模块的权限');
             $('#moduleId').val(node.id);
             $("#code").textbox('setValue', node.attributes.code + ":");
             $("#sequence").textbox('setValue', 10);

@@ -3,8 +3,8 @@ package com.easytoolsoft.easyreport.web.spring.aop;
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
-import com.easytoolsoft.easyreport.membership.common.Constants;
 import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
+import com.easytoolsoft.easyreport.membership.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -62,8 +62,12 @@ public class OpLogAspect {
             User user = (User) req.getAttribute(Constants.CURRENT_USER);
             if (user != null) {
                 Map<String, String> methodInfo = this.getMethodInfo(joinPoint);
-                String source = MapUtils.getString(methodInfo, "source", "") + ";params:" + MapUtils.getString(methodInfo, "params", "");
-                message = MapUtils.getString(methodInfo, "name", "") + ";" + MapUtils.getString(methodInfo, "desc", "") + "detail:" + message;
+                String source = MapUtils.getString(methodInfo, "source", "");
+                message = String.format("name:%s;params:%s;desc:%s;detail:%s",
+                        MapUtils.getString(methodInfo, "name", ""),
+                        MapUtils.getString(methodInfo, "params", ""),
+                        MapUtils.getString(methodInfo, "desc", ""),
+                        message);
                 Event event = Event.builder()
                         .source(source)
                         .account(user.getAccount())

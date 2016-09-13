@@ -21,11 +21,11 @@
         <input id="modal-action" type="hidden" name="action" value=""/>
     </div>
 </div>
-<div id="add-module-dlg" title="添加模块">
-    <form id="add-form" name="add-form" method="post">
+<div id="module-dlg">
+    <form id="module-form" name="module-form" method="post">
         <center>
             <table cellpadding="5" style="margin: 30px auto" class="form-table">
-                <tr>
+                <tr id="tr-parent-module-name">
                     <td>父模块:</td>
                     <td colspan="3"><label id="parent-module-name"></label></td>
                 </tr>
@@ -81,70 +81,7 @@
                     <td colspan="3"><input class="easyui-textbox" type="text" id="comment" name="comment"
                                            style="width: 380px"/>
                         <input id="parentId" type="hidden" name="parentId" value="0"/>
-                        <input id="moduleId" type="hidden" name="moduleId" value="0"/>
-                    </td>
-                </tr>
-            </table>
-        </center>
-    </form>
-</div>
-<div id="edit-module-dlg" title="编辑模块">
-    <form id="edit-form" name="edit-form" method="post">
-        <center>
-            <table cellpadding="5" style="margin: 30px auto" class="form-table">
-                <tr>
-                    <td>名称:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="edit-name" value=""
-                                           data-options="required:true" style="width: 380px"/></td>
-                </tr>
-                <tr>
-                    <td>编码:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="code" id="edit-code" value="0x"
-                                           data-options="required:true" style="width: 380px"/></td>
-                </tr>
-                <tr>
-                    <td>icon:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="icon" id="edit-icon" value=""
-                                           data-options="required:true" style="width: 380px"/></td>
-                </tr>
-                <tr>
-                    <td>Url:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="url" id="edit-url" value=""
-                                           data-options="required:true" style="width: 380px"/></td>
-                </tr>
-                <tr>
-                    <td>是否外链:</td>
-                    <td><select class="easyui-combobox" id="edit-linkType" name="linkType" style="width: 138px">
-                        <option selected="selected" value="0">否</option>
-                        <option value="1">是</option>
-                    </select></td>
-                    <td>Url Target:</td>
-                    <td><select class="easyui-combobox" id="edit-target" name="target" style="width: 138px">
-                        <option selected="selected" value="0">_blank</option>
-                        <option value="1">_self</option>
-                    </select></td>
-                </tr>
-                <tr>
-                    <td>Url参数:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" id="edit-params" name="params"
-                                           style="width: 380px"/></td>
-                </tr>
-                <tr>
-                    <td>状态:</td>
-                    <td><select class="easyui-combobox" id="edit-status" name="status" style="width: 148px">
-                        <option selected="selected" value="1">启用</option>
-                        <option value="0">禁用</option>
-                    </select></td>
-                    <td>排序:</td>
-                    <td><input class="easyui-textbox" type="text" id="edit-sequence" name="sequence"
-                               data-options="required:true,validType:'digit'" style="width: 138px"/></td>
-                </tr>
-                <tr>
-                    <td>备注:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" id="edit-comment" name="comment"
-                                           style="width: 380px"/>
-                        <input id="edit-parentId" type="hidden" name="parentId"/>
-                        <input id="edit-moduleId" type="hidden" name="moduleId"/>
+                        <input id="moduleId" type="hidden" name="id" value="0"/>
                     </td>
                 </tr>
             </table>

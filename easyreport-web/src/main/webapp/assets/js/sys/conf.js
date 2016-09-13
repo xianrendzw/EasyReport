@@ -7,7 +7,7 @@ $(function () {
                 handler: ConfigDict.searchNodeDlg.open
             }, {
                 iconCls: 'icon-add',
-                handler: ConfigDict.add
+                handler: ConfigDict.openAddDlg
             }, {
                 iconCls: 'icon-reload',
                 handler: function () {
@@ -56,7 +56,7 @@ $(function () {
         toolbar: [{
                 text: '增加',
                 iconCls: 'icon-add',
-                handler: ConfigDict.add
+                handler: ConfigDict.openAddDlg
             }, '-', {
                 text: '修改',
                 iconCls: 'icon-edit1',
@@ -193,7 +193,7 @@ $(function () {
 var ConfigDict = {
     treeContextMenu: function (item) {
         if (item.name == "add") {
-            return ConfigDict.add();
+            return ConfigDict.openAddDlg();
         }
         if (item.name == "edit") {
             return ConfigDict.editNode();
@@ -216,7 +216,7 @@ var ConfigDict = {
             name = configNode.name;
             id = configNode.id;
         }
-        EasyUIUtils.add('#dict-dlg', '#dict-form', '#configDictAction', '#configDictId', '新增[' + name + ']配置字典的子项');
+        EasyUIUtils.openAddDlg('#dict-dlg', '#dict-form', '#configDictAction', '#configDictId', '新增[' + name + ']配置字典的子项');
         $("#configDictPid").val(id);
         $("#configDictPNameDiv").show();
         $("#configDictPName").html(name);
