@@ -6,6 +6,8 @@ import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +21,7 @@ import java.util.Map;
 public class PermissionController
         extends BaseController<IPermissionService, Permission, PermissionExample> {
 
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     @OpLog(name = "获取权限列表")
     public Map<String, Object> list(Integer id) {
         int moduleId = (id == null ? 0 : id);
@@ -30,7 +32,7 @@ public class PermissionController
         return modelMap;
     }
 
-    @RequestMapping(value = "/add")
+    @PostMapping(value = "/add")
     @OpLog(name = "增加权限")
     public JsonResult add(Permission po) {
         JsonResult<String> result = new JsonResult<>();
@@ -41,7 +43,7 @@ public class PermissionController
         return result;
     }
 
-    @RequestMapping(value = "/edit")
+    @PostMapping(value = "/edit")
     @OpLog(name = "修改权限")
     public JsonResult edit(Permission po) {
         JsonResult<String> result = new JsonResult<>();
@@ -50,7 +52,7 @@ public class PermissionController
         return result;
     }
 
-    @RequestMapping(value = "/remove")
+    @PostMapping(value = "/remove")
     @OpLog(name = "删除权限")
     public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();

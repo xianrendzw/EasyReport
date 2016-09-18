@@ -94,7 +94,7 @@ var HomeIndexMVC = {
             var pwdRepeat = $('#passwordRepeat').val();
             if (pwd === pwdRepeat) {
                 $('#my-profile-form').form('submit', {
-                    url: HomeIndex.URLs.changeMyPassword.url,
+                    url: HomeIndexMVC.URLs.changeMyPassword.url,
                     onSubmit: function () {
                         return $(this).form('validate');
                     },

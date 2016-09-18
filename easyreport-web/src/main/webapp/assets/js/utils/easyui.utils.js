@@ -41,49 +41,36 @@ var EasyUIUtils = {
             EasyUIUtils.showMsg("请您先选择一个选项!");
         }
     },
-    remove: function (gridId, gridUrl) {
-        var row = $(gridId).datagrid('getSelected');
-        if (!row) {
-            return $.messager.alert('警告', '请选中一条记录!', 'info');
+    /**
+     *
+     * @param options
+     *  options = {
+     *      gridId:'#gridId',
+     *      gridUrl:'gridUrl',
+     *      rows: [row,...],
+     *      url: ModuleMVC.URLs.remove.url,
+     *      data: data,
+     *      callback: function (row) {}
+     *  }
+     * @returns {*}
+     */
+    remove: function (options) {
+        if (!options || !options.rows || options.rows.length == 0) {
+            return $.messager.alert('警告', '请选中至少一条记录!', 'info');
         }
-        EasyUIUtils.removeWithCallback(row, 'remove', {
-            id: row.id
-        }, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    removeWithActUrl: function (gridId, gridUrl, actUrl) {
-        var row = $(gridId).datagrid('getSelected');
-        if (!row) {
-            return $.messager.alert('警告', '请选中一条记录!', 'info');
+
+        if (options.gridId && options.gridUrl) {
+            options.callback = function (rows) {
+                EasyUIUtils.loadToDatagrid(options.gridId, options.gridUrl);
+            };
         }
-        EasyUIUtils.removeWithCallback(row, actUrl, {
-            id: row.id
-        }, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    removeWithIdFieldName: function (gridId, gridUrl, actUrl, idFieldName) {
-        var row = $(gridId).datagrid('getSelected');
-        if (!row) {
-            return $.messager.alert('警告', '请选中一条记录!', 'info');
-        }
-        EasyUIUtils.removeWithCallback(row, actUrl, {
-            id: row[idFieldName]
-        }, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    removeWithCallback: function (row, postUrl, postData, callback) {
-        if (!row) {
-            return $.messager.alert('警告', '请选中一条记录!', 'info');
-        }
+
         return $.messager.confirm('删除', '您确定要删除记录吗?', function (r) {
             if (r) {
-                $.post(postUrl, postData, function (result) {
+                $.post(options.url, options.data, function (result) {
                     if (result.success) {
-                        EasyUIUtils.showMsg(result.msg);
-                        callback(row);
+                        EasyUIUtils.showMsg(result.msg || "操作成功");
+                        options.callback(options.rows);
                     } else {
                         $.messager.show({
                             title: '错误',
@@ -94,43 +81,42 @@ var EasyUIUtils = {
             }
         });
     },
-    batchRemove: function (gridId, gridUrl) {
-        var rows = $(gridId).datagrid('getChecked');
+    batchRemove: function (options) {
+        var rows = $(options.gridId).datagrid('getChecked');
         var ids = $.map(rows, function (row) {
             return row.id;
         }).join();
-        EasyUIUtils.removeWithCallback(rows, 'batchRemove', {
+
+        options.rows = rows;
+        options.data = {
             id: ids
-        }, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
+        };
+        EasyUIUtils.remove(options);
     },
-    batchRemoveWithActUrl: function (gridId, gridUrl, actUrl) {
-        var rows = $(gridId).datagrid('getChecked');
-        var ids = $.map(rows, function (row) {
-            return row.id;
-        }).join();
-        EasyUIUtils.removeWithCallback(rows, actUrl, {
-            id: ids
-        }, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    save: function (dlgId, formId, actId, gridId, gridUrl) {
-        var action = $(actId).val();
-        EasyUIUtils.saveWithCallback(dlgId, formId, action, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    saveWithActUrl: function (dlgId, formId, actId, gridId, gridUrl, actRootUrl) {
-        var action = actRootUrl + $(actId).val();
-        EasyUIUtils.saveWithCallback(dlgId, formId, action, function () {
-            EasyUIUtils.loadToDatagrid(gridId, gridUrl);
-        });
-    },
-    saveWithCallback: function (dlgId, formId, postUrl, callback) {
-        $(formId).form('submit', {
-            url: postUrl,
+    /**
+     *
+     * @param options
+     * var options = {
+     *        dlgId: '#dlgId',
+     *        formId: '#formId',
+     *        url: 'add',
+     *        gridId: '#gridId',
+     *        gridUrl: 'list?id=',
+     *        callback:function(){}
+     *  };
+     */
+    save: function (options) {
+        if (!options) {
+            return $.messager.alert('警告', '参数不正确!', 'info');
+        }
+
+        if (options.gridId && options.gridUrl) {
+            options.callback = function () {
+                EasyUIUtils.loadToDatagrid(options.gridId, options.gridUrl);
+            };
+        }
+        $(options.formId).form('submit', {
+            url: options.url,
             onSubmit: function () {
                 return $(this).form('validate');
             },
@@ -138,8 +124,8 @@ var EasyUIUtils = {
                 var result = $.parseJSON(data)
                 if (result.success) {
                     EasyUIUtils.showMsg(result.msg || "操作成功");
-                    callback();
-                    $(dlgId).dialog('close');
+                    options.callback();
+                    $(options.dlgId).dialog('close');
                 } else {
                     $.messager.show({
                         title: '错误',

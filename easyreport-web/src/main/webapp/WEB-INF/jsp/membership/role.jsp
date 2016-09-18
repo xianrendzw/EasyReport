@@ -17,20 +17,20 @@
 <div style="height: 93%; padding: 2px">
     <div id="role-datagrid"></div>
 </div>
-<div id="add-role-dlg" title="添加角色">
-    <form id="add-form" name="add-form" method="post">
+<div id="role-dlg">
+    <form id="role-form" name="role-form" method="post">
         <center>
             <table cellpadding="5" style="margin: 30px auto" class="form-table">
                 <tr>
                     <td>角色名称:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="name"
                                            data-options="required:true"
-                                           style="width: 380px"></input></td>
+                                           style="width: 380px"/></td>
                 </tr>
                 <tr>
                     <td>角色代号:</td>
                     <td><input class="easyui-textbox" type="text" name="code" id="code"
-                               data-options="required:true,validType:'code'"></input></td>
+                               data-options="required:true,validType:'code'"/></td>
                     <td>系统角色:</td>
                     <td><select class="easyui-combobox" id="isSystem" name="isSystem" style="width: 148px">
                         <option selected="selected" value="0">否</option>
@@ -45,52 +45,13 @@
                     </select></td>
                     <td>排序：</td>
                     <td><input class="easyui-textbox" type="text" name="sequence" id="sequence" value="10"
-                               data-options="required:true,validType:'digit'"></input></td>
+                               data-options="required:true,validType:'digit'"/></td>
                 </tr>
                 <tr>
                     <td>描述:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="comment"
-                                           data-options="required:true" style="width: 380px"></input></td>
-                </tr>
-            </table>
-        </center>
-    </form>
-</div>
-<div id="edit-role-dlg" title="编辑角色">
-    <form id="edit-form" name="edit-form" method="post">
-        <center>
-            <table cellpadding="5" style="margin: 30px auto" class="form-table">
-                <tr>
-                    <td>角色名称:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="edit-name"
-                                           data-options="required:true" style="width: 380px"></input> <input
-                            id="edit-role-id" type="hidden" name="roleId"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>角色代号:</td>
-                    <td><input class="easyui-textbox" type="text" name="code" id="edit-code"
-                               data-options="required:true,validType:code"></input></td>
-                    <td>系统角色:</td>
-                    <td><select class="easyui-combobox" id="edit-isSystem" name="isSystem" style="width: 148px">
-                        <option selected="selected" value="0">否</option>
-                        <option value="1">是</option>
-                    </select></td>
-                </tr>
-                <tr>
-                    <td>状态:</td>
-                    <td><select class="easyui-combobox" id="edit-status" name="status" style="width: 148px">
-                        <option selected="selected" value="1">启用</option>
-                        <option value="0">禁用</option>
-                    </select></td>
-                    <td>排序：</td>
-                    <td><input class="easyui-textbox" type="text" name="sequence" id="edit-sequence" value="10"
-                               data-options="required:true,validType:'digit'"></input></td>
-                </tr>
-                <tr>
-                    <td>描述:</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="edit-comment"
-                                           data-options="required:true" style="width: 380px"></input></td>
+                                           data-options="required:true" style="width: 380px"/></td>
+                    <input id="roleId" type="hidden" name="id"/>
                 </tr>
             </table>
         </center>
@@ -102,13 +63,11 @@
             <!-- 左边tree -->
             <div id="west" data-options="region:'west',split:true,collapsible:false" title="权限树" style="width: 538px;">
                 <div id="perm-tree"></div>
-                <input id="permissions" type="hidden" name="permissions"/> <input id="perm-role-id" type="hidden"
-                                                                                  name="roleId"/>
+                <input id="permissions" type="hidden" name="permissions"/>
+                <input id="perm-role-id" type="hidden" name="id"/>
             </div>
         </div>
     </form>
-
 </div>
-
 </body>
 </html>

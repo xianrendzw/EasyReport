@@ -28,7 +28,7 @@
         <div id="footer-left">
             <div>EasyReport(v2.0)</div>
         </div>
-        <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com Inc.</div>
+        <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com inc.</div>
     </div>
 </div>
 <!-- tabs右键菜单  -->

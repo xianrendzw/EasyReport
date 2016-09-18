@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.membership.service.IUserService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,26 +27,11 @@ public class UserController
     @Resource
     private PasswordService passwordService;
 
-    @RequestMapping(value = {"", "/", "/index"})
-    public String index() {
-        return "membership/user";
-    }
-
-    @RequestMapping(value = "/list")
-    public Map<String, Object> list(@CurrentUser User loginUser, DataGridPager pager) {
+    @GetMapping(value = "/list")
+    public Map<String, Object> list(@CurrentUser User loginUser, DataGridPager pager,
+                                    String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<User> list = this.service.getByPage(pageInfo);
-        Map<String, Object> modelMap = new HashMap<>(2);
-        modelMap.put("total", pageInfo.getTotals());
-        modelMap.put("rows", list);
-        return modelMap;
-    }
-
-    @RequestMapping(value = "/find")
-    public Map<String, Object> find(@CurrentUser User loginUser,
-                                    String fieldName, String keyword, DataGridPager pager) {
-        PageInfo pageInfo = pager.toPageInfo();
-        List<User> list = this.service.getByPage(pageInfo, fieldName, keyword);
+        List<User> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -65,6 +51,7 @@ public class UserController
     @RequestMapping(value = "/edit")
     public JsonResult edit(User po) {
         JsonResult<String> result = new JsonResult<>();
+        this.service.encryptPassword(po);
         this.service.editById(po);
         return result;
     }

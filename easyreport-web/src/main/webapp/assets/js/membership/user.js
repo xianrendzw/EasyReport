@@ -1,49 +1,97 @@
-var membershipUserPageUrl = XFrame.getContextPath() + '/rest/membership/user/';
-
 $(function () {
-    $('#user-datagrid').datagrid({
-        method: 'get',
-        fit: true,
-        fitColumns: true,
-        singleSelect: true,
-        pagination: true,
-        rownumbers: true,
-        pageSize: 50,
-        url: membershipUserPageUrl + 'list',
-        toolbar: [{
-                iconCls: 'icon-add',
-                handler: function () {
-                    MembershipUser.openAddDlg();
-                }
-            }, '-', {
-                iconCls: 'icon-edit1',
-                handler: function () {
-                    MembershipUser.edit();
-                }
-            }, '-', {
-                iconCls: 'icon-pwd',
-                handler: function () {
-                    MembershipUser.resetPwd();
-                }
-            }, '-', {
-                iconCls: 'icon-remove1',
-                handler: function () {
-                    MembershipUser.remove();
-                }
-            }, '-', {
-                iconCls: 'icon-reload',
-                handler: function () {
-                    EasyUIUtils.reloadDatagrid('#user-datagrid');
-                }
-            }],
-        loadFilter: function (src) {
-            if (src.success) {
-                return src.data;
-            }
-            return $.messager.alert('失败', src.msg, 'error');
+    MembershipUser.init();
+});
+
+var MembershipUser = {
+    init: function () {
+        UserMVC.View.initControl();
+        UserMVC.View.bindEvent();
+        UserMVC.View.bindValidate();
+        UserMVC.View.initData();
+    }
+};
+
+var UserCommon = {
+    baseUrl: EasyReport.ctxPath + '/rest/membership/user/',
+    roleBaseUrl: EasyReport.ctxPath + '/rest/membership/role/',
+    baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
+};
+
+var UserMVC = {
+    URLs: {
+        add: {
+            url: UserCommon.baseUrl + 'add',
+            method: 'POST'
         },
-        columns: [[{
-                    field: 'userId',
+        edit: {
+            url: UserCommon.baseUrl + 'edit',
+            method: 'POST'
+        },
+        list: {
+            url: UserCommon.baseUrl + 'list',
+            method: 'GET'
+        },
+        remove: {
+            url: UserCommon.baseUrl + 'remove',
+            method: 'POST'
+        },
+        getRoleList: {
+            url: UserCommon.roleBaseUrl + 'getRoleList',
+            method: 'GET'
+        },
+        editPassword: {
+            url: UserCommon.baseUrl + 'editPassword',
+            method: 'POST'
+        }
+    },
+    Model: {
+        roles: {}
+    },
+    View: {
+        initControl: function () {
+            $('#user-datagrid').datagrid({
+                method: 'get',
+                fit: true,
+                fitColumns: true,
+                singleSelect: true,
+                pagination: true,
+                rownumbers: true,
+                pageSize: 50,
+                url: UserMVC.URLs.list.url,
+                toolbar: [{
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        UserMVC.Controller.add();
+                    }
+                }, '-', {
+                    iconCls: 'icon-edit1',
+                    handler: function () {
+                        UserMVC.Controller.edit();
+                    }
+                }, '-', {
+                    iconCls: 'icon-pwd',
+                    handler: function () {
+                        UserMVC.Controller.resetPwd();
+                    }
+                }, '-', {
+                    iconCls: 'icon-remove1',
+                    handler: function () {
+                        UserMVC.Controller.remove();
+                    }
+                }, '-', {
+                    iconCls: 'icon-reload',
+                    handler: function () {
+                        EasyUIUtils.reloadDatagrid('#user-datagrid');
+                    }
+                }],
+                loadFilter: function (src) {
+                    if (src.success) {
+                        return src.data;
+                    }
+                    return $.messager.alert('失败', src.msg, 'error');
+                },
+                columns: [[{
+                    field: 'id',
                     title: '用户ID',
                     width: 50,
                     sortable: true
@@ -76,7 +124,7 @@ $(function () {
                         return value == 1 ? "启用" : "禁用";
                     }
                 }, {
-                    field: 'gmtCreate',
+                    field: 'gmtCreated',
                     title: '创建时间',
                     width: 50,
                     sortable: true
@@ -85,203 +133,218 @@ $(function () {
                     title: '操作',
                     width: 100,
                     formatter: function (value, row, index) {
-                        var imgPath = XFrame.getContextPath() + '/assets/custom/easyui/themes/icons/';
                         var icons = [{
-                                "name": "edit",
-                                "title": "编辑"
-                            }, {
-                                "name": "pwd",
-                                "title": "修改密码"
-                            }, {
-                                "name": "remove",
-                                "title": "删除"
-                            }];
+                            "name": "edit",
+                            "title": "编辑"
+                        }, {
+                            "name": "pwd",
+                            "title": "修改密码"
+                        }, {
+                            "name": "remove",
+                            "title": "删除"
+                        }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
-                            var tmpl = '<a href="#" title ="{{title}}" '
-                                    + 'onclick="MembershipUser.doAction(\'{{index}}\',\'{{name}}\')">'
-                                    + '<img src="{{imgSrc}}" alt="{{title}}"/"></a>';
+                            var tmpl = '<a href="#" title ="${title}" '
+                                + 'onclick="UserMVC.Controller.doOption(\'${index}\',\'${name}\')">'
+                                + '<img src="${imgSrc}" alt="${title}"/"></a>';
                             var data = {
                                 title: icons[i].title,
                                 name: icons[i].name,
                                 index: index,
-                                imgSrc: imgPath + icons[i].name + ".png"
+                                imgSrc: UserCommon.baseIconUrl + icons[i].name + ".png"
                             };
-                            buttons.push(template.compile(tmpl)(data));
+                            buttons.push(juicer(tmpl, data));
                         }
                         return buttons.join(' ');
                     }
                 }]],
-        onDblClickRow: function (rowIndex, rowData) {
-            return MembershipUser.edit(rowIndex, rowData);
-        }
-    });
-
-    // dialogs
-    $('#add-user-dlg').dialog({
-        closed: true,
-        modal: false,
-        width: 560,
-        height: 450,
-        iconCls: 'icon-add',
-        buttons: [{
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function () {
-                    $("#add-user-dlg").dialog('close');
+                onDblClickRow: function (rowIndex, rowData) {
+                    return UserMVC.Controller.edit();
                 }
-            }, {
-                text: '保存',
-                iconCls: 'icon-save',
-                handler: MembershipUser.save
-            }]
-    });
+            });
 
-    $('#edit-user-dlg').dialog({
-        closed: true,
-        modal: false,
-        width: 560,
-        height: 400,
-        iconCls: 'icon-edit',
-        buttons: [{
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function () {
-                    $("#edit-user-dlg").dialog('close');
+            // dialogs
+            $('#user-dlg').dialog({
+                closed: true,
+                modal: false,
+                width: 560,
+                height: 460,
+                iconCls: 'icon-add',
+                buttons: [{
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        $("#user-dlg").dialog('close');
+                    }
+                }, {
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: UserMVC.Controller.save
+                }]
+            });
+
+            $('#reset-pwd-dlg').dialog({
+                closed: true,
+                modal: false,
+                width: 560,
+                height: 250,
+                iconCls: 'icon-pwd',
+                buttons: [{
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        $("#reset-pwd-dlg").dialog('close');
+                    }
+                }, {
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: UserMVC.Controller.save
+                }]
+            });
+        },
+        bindEvent: function () {
+            $('#btn-search').bind('click', UserMVC.Controller.find);
+        },
+        bindValidate: function () {
+        },
+        initData: function () {
+            UserMVC.Util.loadRoleList();
+        }
+    },
+    Controller: {
+        doOption: function (index, name) {
+            $('#user-datagrid').datagrid('selectRow', index);
+            if (name == "edit") {
+                return UserMVC.Controller.edit();
+            }
+            if (name == "remove") {
+                return UserMVC.Controller.remove();
+            }
+            if (name == "pwd") {
+                return UserMVC.Controller.resetPwd();
+            }
+        },
+        add: function () {
+            var options = UserMVC.Util.getOptions();
+            options.title = '新增用户';
+            EasyUIUtils.openAddDlg(options);
+            UserMVC.Util.fillUserCombox("add", []);
+            $('#status').combobox('setValue', "1");
+            $('#account').textbox('readonly', false);
+        },
+        edit: function () {
+            var row = $('#user-datagrid').datagrid('getSelected');
+            if (row) {
+                var options = UserMVC.Util.getOptions();
+                options.iconCls = 'icon-edit1';
+                options.data = row;
+                options.title = '修改[' + options.data.name + ']用户';
+                EasyUIUtils.openEditDlg(options);
+                $('#password').textbox('setValue', '');
+                $('#account').textbox('readonly', true);
+                var roleIds = row.roles || "";
+                UserMVC.Util.fillUserCombox("edit", roleIds.split(','));
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
+        },
+        resetPwd: function () {
+            var row = $('#user-datagrid').datagrid('getSelected');
+            if (row) {
+                $('#reset-pwd-dlg').dialog('open').dialog('center');
+                $("#modal-action").val("resetPwd");
+                $("#reset-pwd-form").form('clear');
+                $("#reset-userId").val(row.userId);
+                $("#reset-account").text(row.account);
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
+        },
+        find: function () {
+            var fieldName = $("#field-name").combobox('getValue');
+            var keyword = $("#keyword").val();
+            var url = UserMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
+            EasyUIUtils.loadToDatagrid('#user-datagrid', url)
+        },
+        remove: function () {
+            var row = $('#user-datagrid').datagrid('getSelected');
+            if (row) {
+                var options = {
+                    rows: [row],
+                    url: UserMVC.URLs.remove.url,
+                    data: {
+                        id: row.id
+                    },
+                    gridId: '#user-datagrid',
+                    gridUrl: UserMVC.URLs.list.url,
+                    callback: function (rows) {
+                    }
+                };
+                EasyUIUtils.remove(options);
+            }
+        },
+        save: function () {
+            var action = $('#modal-action').val();
+            var options = {
+                gridId: null,
+                gridUrl: UserMVC.URLs.list.url,
+                dlgId: "#user-dlg",
+                formId: "#user-form",
+                url: null,
+                callback: function () {
                 }
-            }, {
-                text: '保存',
-                iconCls: 'icon-save',
-                handler: MembershipUser.save
-            }]
-    });
+            };
 
-    $('#reset-pwd-dlg').dialog({
-        closed: true,
-        modal: false,
-        width: 560,
-        height: 250,
-        iconCls: 'icon-pwd',
-        buttons: [{
-                text: '关闭',
-                iconCls: 'icon-no',
-                handler: function () {
-                    $("#reset-pwd-dlg").dialog('close');
-                }
-            }, {
-                text: '保存',
-                iconCls: 'icon-save',
-                handler: MembershipUser.save
-            }]
-    });
-
-    MembershipUser.init();
-    // end
-});
-
-var MembershipUser = {
-    roleDict: {},
-    init: function () {
-        this.initEvent();
-        MembershipUser.loadRoleList();
-    },
-    initEvent: function () {
-        $('#btn-search').bind('click', MembershipUser.find);
-    },
-    loadRoleList: function () {
-        $.getJSON(XFrame.getContextPath() + '/membership/role/getrolelist', function (src) {
-            MembershipUser.roleDict = src.data;
-        });
-    },
-    doAction: function (index, name) {
-        $('#user-datagrid').datagrid('selectRow', index);
-        if (name == "edit") {
-            return MembershipUser.edit();
-        }
-        if (name == "remove") {
-            return MembershipUser.remove();
-        }
-        if (name == "pwd") {
-            return MembershipUser.resetPwd();
+            if (action === "resetPwd") {
+                options.dlgId = '#reset-pwd-dlg';
+                options.formId = '#reset-pwd-form';
+                options.url = UserMVC.URLs.editPassword.url;
+            } else {
+                $('#roles').val($('#combox-roles').combobox('getValues'));
+                options.url = (action === "edit" ? UserMVC.URLs.edit.url : UserMVC.URLs.add.url);
+                options.gridId = '#user-datagrid';
+            }
+            return EasyUIUtils.save(options);
         }
     },
-    fillRoleCombox: function (act, values) {
-        var id = act == "add" ? "#add-combox-roles" : "#edit-combox-roles";
-        $(id).combobox('clear');
-        var data = [];
-        var items = MembershipUser.roleDict;
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-            data.push({
-                "value": item.id,
-                "name": item.name,
-                "selected": i == 0
+    Util: {
+        getOptions: function () {
+            return {
+                dlgId: '#user-dlg',
+                formId: '#user-form',
+                actId: '#modal-action',
+                rowId: '#roleId',
+                title: '',
+                iconCls: 'icon-add',
+                data: {},
+                callback: function (arg) {
+                },
+                gridId: null,
+            };
+        },
+        fillUserCombox: function (act, values) {
+            var id = '#combox-roles';
+            $(id).combobox('clear');
+            var data = [];
+            var items = UserMVC.Model.roles;
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+                data.push({
+                    "value": item.id,
+                    "name": item.name,
+                    "selected": i == 0
+                });
+            }
+            $(id).combobox('loadData', data);
+            if (act == "edit") {
+                $(id).combobox('setValues', values);
+            }
+        },
+        loadRoleList: function () {
+            $.getJSON(UserMVC.URLs.getRoleList.url, function (src) {
+                UserMVC.Model.roles = src.data;
             });
         }
-        $(id).combobox('loadData', data);
-        if (act == "edit") {
-            $(id).combobox('setValues', values);
-        }
-    },
-    add: function () {
-        $('#add-user-dlg').dialog('open').dialog('center');
-        $("#modal-action").val("add");
-        $("#add-form").form('reset');
-        MembershipUser.fillRoleCombox("add", []);
-    },
-    edit: function () {
-        var row = $('#user-datagrid').datagrid('getSelected');
-        if (row) {
-            $('#edit-user-dlg').dialog('open').dialog('center');
-            $("#modal-action").val("edit");
-            $("#edit-form").form('reset');
-            $("#edit-account").text(row.account);
-            var roleIds = row.roles || "";
-            MembershipUser.fillRoleCombox("edit", roleIds.split(','));
-            $("#edit-form").form('load', row);
-        } else {
-            $.messager.alert('警告', '请选中一条记录!', 'info');
-        }
-    },
-    resetPwd: function () {
-        var row = $('#user-datagrid').datagrid('getSelected');
-        if (row) {
-            $('#reset-pwd-dlg').dialog('open').dialog('center');
-            $("#modal-action").val("resetPwd");
-            $("#reset-pwd-form").form('clear');
-            $("#reset-userId").val(row.userId);
-            $("#reset-account").text(row.account);
-        } else {
-            $.messager.alert('警告', '请选中一条记录!', 'info');
-        }
-    },
-    find: function () {
-        var fieldName = $("#field-name").combobox('getValue');
-        var keyword = $("#keyword").val();
-        var url = membershipUserPageUrl + 'find?fieldName=' + fieldName + '&keyword=' + keyword;
-        EasyUIUtils.loadToDatagrid('#user-datagrid', url)
-    },
-    remove: function () {
-        var gridUrl = membershipUserPageUrl + 'list';
-        var actUrl = membershipUserPageUrl + 'remove';
-        return EasyUIUtils.removeWithIdFieldName('#user-datagrid', gridUrl, actUrl, "userId");
-    },
-    save: function () {
-        var action = $('#modal-action').val();
-        if (action == "resetPwd") {
-            var url = membershipUserPageUrl + 'editpassword';
-            EasyUIUtils.saveWithCallback('#reset-pwd-dlg', '#reset-pwd-form', url, function () {
-            });
-        } else {
-            var formId = action == "edit" ? "#edit-form" : "#add-form";
-            var dlgId = action == "edit" ? "#edit-user-dlg" : "#add-user-dlg";
-            var comboxRoleId = action == "edit" ? "#edit-combox-roles" : "#add-combox-roles";
-            var roleId = action == "edit" ? "#edit-roles" : "#add-roles";
-            var roles = $(comboxRoleId).combobox('getValues');
-            $(roleId).val(roles);
-            var gridUrl = membershipUserPageUrl + 'list';
-            return EasyUIUtils.saveWithActUrl(dlgId, formId, '#modal-action', '#user-datagrid', gridUrl,
-                    membershipUserPageUrl);
-        }
-    },
+    }
 };

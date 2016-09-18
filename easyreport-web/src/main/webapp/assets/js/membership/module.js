@@ -92,10 +92,10 @@ var ModuleMVC = {
                 }
             });
 
-            $('tree_ctx_menu').menu({
+            $('#tree_ctx_menu').menu({
                 onClick: function (item) {
                     if (item.name == "add") {
-                        return ModuleMVC.Controller.openAddDlg();
+                        return ModuleMVC.Controller.add();
                     }
                     if (item.name == "edit") {
                         return ModuleMVC.Controller.editNode();
@@ -236,7 +236,7 @@ var ModuleMVC = {
     },
     Controller: {
         addRoot: function () {
-            var name = "主模块";
+            var name = "根模块";
             var id = "0";
             ModuleMVC.Util.initAdd(id, name);
         },
@@ -270,23 +270,32 @@ var ModuleMVC = {
                 id: row.id,
                 pid: row.parentId
             };
-            EasyUIUtils.removeWithCallback(row, ModuleMVC.URLs.remove.url, data, function () {
-                ModuleMVC.Controller.refreshNode(row.parentId);
-                EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + row.parentId);
-            });
+            var options = {
+                rows: [row],
+                url: ModuleMVC.URLs.remove.url,
+                data: data,
+                callback: function (rows) {
+                    var row = rows[0];
+                    ModuleMVC.Controller.refreshNode(row.parentId);
+                    EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + row.parentId);
+                }
+            };
+            EasyUIUtils.remove(options);
         },
         save: function () {
             var action = $('#modal-action').val();
-            var dlgId = "#module-dlg";
-            var formId = "#module-form";
-            var parentId = "#parentId";
-            var pid = $(parentId).val();
-            var gridUrl = ModuleMVC.URLs.list.url + '?id=' + pid;
+            var gridUrl = ModuleMVC.URLs.list.url + '?id=' + $("#parentId").val();
             var actUrl = action === "edit" ? ModuleMVC.URLs.edit.url : ModuleMVC.URLs.add.url;
-            EasyUIUtils.saveWithCallback(dlgId, formId, actUrl, function () {
-                ModuleMVC.Controller.refreshNode(pid);
-                EasyUIUtils.loadToDatagrid('#module-datagrid', gridUrl);
-            });
+            var options = {
+                dlgId: "#module-dlg",
+                formId: "#module-form",
+                url: actUrl,
+                callback: function () {
+                    ModuleMVC.Controller.reloadTree();
+                    EasyUIUtils.loadToDatagrid('#module-datagrid', gridUrl);
+                }
+            };
+            EasyUIUtils.save(options);
         },
         refreshNode: function (pid) {
             if (pid == "0") {
@@ -323,7 +332,7 @@ var ModuleMVC = {
             $("#sequence").textbox('setValue', 10);
             $('#linkType').combobox('setValue', '0');
             $('#target').combobox('setValue', '0');
-            $('#status').combobox('setValue', '0');
+            $('#status').combobox('setValue', '1');
         },
         edit: function (data) {
             $('#tr-parent-module-name').hide();

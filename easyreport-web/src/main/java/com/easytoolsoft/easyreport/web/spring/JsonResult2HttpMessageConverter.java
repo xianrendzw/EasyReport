@@ -1,10 +1,12 @@
 package com.easytoolsoft.easyreport.web.spring;
 
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -16,7 +18,6 @@ import java.lang.reflect.Type;
  */
 @Slf4j
 public class JsonResult2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
-    private static int cnt = 0;
     public JsonResult2HttpMessageConverter() {
         log.debug("load {}", this.getClass().getName());
     }

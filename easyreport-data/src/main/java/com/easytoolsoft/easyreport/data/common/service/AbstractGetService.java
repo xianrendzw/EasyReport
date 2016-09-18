@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.data.common.service;
 
 import com.easytoolsoft.easyreport.data.common.dao.ISelectDao;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -48,11 +49,14 @@ public abstract class AbstractGetService<Dao extends ISelectDao<Po, Example>, Po
 
     @Override
     public List<Po> getByPage(PageInfo pageInfo) {
-        return this.getByPage(pageInfo, null, null);
+        return this.getByPage(pageInfo, "", "");
     }
 
     @Override
     public List<Po> getByPage(PageInfo pageInfo, String fieldName, String keyword) {
+        if (StringUtils.isBlank(fieldName)) {
+            return this.getByPage(pageInfo, null);
+        }
         return this.getByPage(pageInfo, this.getPageExample(fieldName, keyword));
     }
 
