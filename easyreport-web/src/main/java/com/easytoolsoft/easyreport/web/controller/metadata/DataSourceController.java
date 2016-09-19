@@ -25,11 +25,6 @@ import java.util.stream.Collectors;
 public class DataSourceController
         extends BaseController<IDataSourceService, DataSource, DataSourceExample> {
 
-    @RequestMapping(value = {"", "/", "/index"})
-    public String index() {
-        return "report/dataSource";
-    }
-
     @RequestMapping(value = "/listAll")
     public List<DataSource> listAll() {
         return this.service.getAll().stream()

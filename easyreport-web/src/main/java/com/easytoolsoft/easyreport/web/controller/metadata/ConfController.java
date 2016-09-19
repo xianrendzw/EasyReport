@@ -26,11 +26,6 @@ import java.util.Map;
 public class ConfController
         extends BaseController<IConfService, Conf, ConfExample> {
 
-    @RequestMapping(value = {"", "/", "/index"})
-    public String index() {
-        return "report/config";
-    }
-
     @RequestMapping(value = "/list")
     @OpLog(name = "")
     public Map<String, Object> list(Integer id) {
