@@ -32,7 +32,7 @@ var HomeIndexMVC = {
                 }
             });
 
-            $('main-tab-ctx-menu').menu({
+            $('#main-tab-ctx-menu').menu({
                 onClick: function (item) {
                     if (item.name == "current") {
                         return EasyUIUtils.closeCurrentTab('#main-tabs');
