@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>配置字典</title>
+    <title>系统配置</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
     <script src="${ctxPath}/assets/js/sys/conf.js?v=${version}"></script>
 </head>
 <body class="easyui-layout" id="body-layout">
 <!-- 左边tree -->
-<div id="west" data-options="region:'west',split:true" title="字典分类" style="width: 220px;">
+<div id="west" data-options="region:'west',split:true" title="配置分类" style="width: 220px;">
     <div class="easyui-panel" style="padding: 5px; border: none">
         <ul id="dict-tree"></ul>
     </div>
@@ -19,6 +19,7 @@
 <div region="center" data-options="region:'center'">
     <div id="configDictDiv" style="width: 100%; height: 99%">
         <div id="dict-datagrid"></div>
+        <input id="modal-action" type="hidden" name="action" value=""/>
     </div>
 </div>
 <!-- 新增与修改配置字典dialog  -->
@@ -26,9 +27,9 @@
     <form id="dict-form" name="dict-form" method="post">
         <center>
             <table cellpadding="5" style="margin: 30px auto" class="form-table">
-                <tr id="configDictPNameDiv">
+                <tr id="confParentNameDiv">
                     <td>父节点:</td>
-                    <td colspan="3"><label id="configDictPName"></label></td>
+                    <td colspan="3"><label id="confParentName"></label></td>
                 </tr>
                 <tr>
                     <td>名称:</td>
@@ -58,9 +59,8 @@
                     <td>说明:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="comment"
                                            style="width: 280px"/>
-                        <input id="configDictPid" type="hidden" name="pid" value="0"/>
-                        <input id="configDictId" type="hidden" name="id" value="0"/>
-                        <input id="configDictAction" type="hidden" name="action"/>
+                        <input id="confPid" type="hidden" name="pid" value="0"/>
+                        <input id="confId" type="hidden" name="id" value="0"/>
                     </td>
                 </tr>
             </table>
@@ -81,8 +81,8 @@
         <div id="search-node-result"></div>
     </div>
 </div>
-<!-- tree右键菜单  -->
-<div id="tree_ctx_menu" class="easyui-menu" data-options="onClick:ConfigDict.treeContextMenu" style="width: 120px;">
+<!-- tree右键菜单 -->
+<div id="tree_ctx_menu" class="easyui-menu" style="width: 120px;">
     <div id="m-add" data-options="name:'add',iconCls:'icon-add'">增加</div>
     <div id="m-edit" data-options="name:'edit',iconCls:'icon-edit'">修改</div>
     <div id="m-remove" data-options="name:'remove',iconCls:'icon-remove'">删除</div>

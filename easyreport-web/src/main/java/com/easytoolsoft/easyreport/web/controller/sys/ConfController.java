@@ -6,6 +6,7 @@ import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
 import com.easytoolsoft.easyreport.data.sys.po.Conf;
 import com.easytoolsoft.easyreport.domain.sys.service.IConfService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
+import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController("SysConfController")
-@RequestMapping(value = "/rest/sys/dict")
+@RequestMapping(value = "/rest/sys/conf")
 public class ConfController
         extends BaseController<IConfService, Conf, ConfExample> {
     @GetMapping(value = "/list")
+    @OpLog(name = "编辑指定ID的系统模块")
     public Map<String, Object> list(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
         Map<String, Object> modelMap = new HashMap<>(2);
@@ -33,6 +35,7 @@ public class ConfController
     }
 
     @GetMapping(value = "/listChildren")
+    @OpLog(name = "编辑指定ID的系统模块")
     public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
         List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
@@ -48,9 +51,10 @@ public class ConfController
     }
 
     @GetMapping(value = "/find")
+    @OpLog(name = "编辑指定ID的系统模块")
     public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<Conf> list = this.service.getByPage(pageInfo, fieldName, keyword);
+        List<Conf> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -58,6 +62,7 @@ public class ConfController
     }
 
     @PostMapping(value = "/add")
+    @OpLog(name = "编辑指定ID的系统模块")
     public JsonResult add(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
@@ -67,6 +72,7 @@ public class ConfController
     }
 
     @PostMapping(value = "/edit")
+    @OpLog(name = "编辑指定ID的系统模块")
     public JsonResult edit(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
@@ -81,6 +87,7 @@ public class ConfController
     }
 
     @PostMapping(value = "/copy")
+    @OpLog(name = "编辑指定ID的系统模块")
     public JsonResult copy(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.add(po);
@@ -88,12 +95,14 @@ public class ConfController
     }
 
     @GetMapping(value = "/getDepth1Items")
+    @OpLog(name = "编辑指定ID的系统模块")
     public List<Conf> getDepth1Items(String parentKey) {
         return new ArrayList<>(0);
         // return this.service.getDepth1Items(parentKey);
     }
 
     @GetMapping(value = "/getDepth2Items")
+    @OpLog(name = "编辑指定ID的系统模块")
     public Map<String, List<Conf>> getDepth2Items(String parentKey) {
         return new HashMap<>(0);
         //return this.service.getDepth2Items(parentKey);
