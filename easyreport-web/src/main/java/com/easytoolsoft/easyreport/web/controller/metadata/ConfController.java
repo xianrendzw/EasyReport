@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,6 +98,14 @@ public class ConfController
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
         this.service.add(po);
+        return result;
+    }
+
+    @GetMapping(value = "/getConfItems")
+    @OpLog(name = "获取指定父key下的所有配置项")
+    public JsonResult getConfItems(String key) {
+        JsonResult<List<Conf>> result = new JsonResult<>();
+        result.setData(this.service.getByParentKey(key));
         return result;
     }
 }

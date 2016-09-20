@@ -78,7 +78,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List_Without_Id">
-  	   uid ,name ,driver_class ,jdbc_url ,user ,password ,options ,comment ,gmt_created ,gmt_modified 	  </sql>
+  	   uid ,name ,driver_class ,jdbc_url,user,password,queryer_class, dbpool_class, options ,comment ,gmt_created ,gmt_modified 	  </sql>
     <sql id="Base_Column_List">
         id ,
         <include refid="Base_Column_List_Without_Id"/>

@@ -297,6 +297,6 @@
         select
         <include refid="Base_Column_List"/>
         from ezrpt_meta_conf
-        where parent_id in (SELECT id FROM ezrpt_meta_conf where `key` = ${key})
+        where parent_id in (SELECT id FROM ezrpt_meta_conf where `key` = #{key,jdbcType=VARCHAR})
     </select>
 </mapper>

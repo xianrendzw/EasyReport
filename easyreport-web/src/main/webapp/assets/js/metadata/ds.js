@@ -1,157 +1,389 @@
-var dsPageRootUrl = WebAppRequest.getContextPath() + '/report/ds/';
-$(function() {
-	// 数据源grid
-	$('#datasourceGrid').datagrid({
-		method : 'get',
-		url : dsPageRootUrl + 'query',
-		idField : 'id',
-		pageSize : 30,
-		fit : true,
-		pagination : true,
-		rownumbers : true,
-		fitColumns : true,
-		singleSelect : true,
-		toolbar : [ {
-			text : '增加',
-			iconCls : 'icon-add',
-			handler : DataSource.add
-		}, '-', {
-			text : '修改',
-			iconCls : 'icon-edit',
-			handler : DataSource.edit
-		}, '-', {
-			text : '删除',
-			iconCls : 'icon-remove',
-			handler : DataSource.remove
-		} ],
-		frozenColumns : [ [ {
-			field : 'ck',
-			checkbox : true
-		} ] ],
-		columns : [ [ {
-			field : 'id',
-			title : '标识',
-			width : 50
-		}, {
-			field : 'name',
-			title : '数据源名称',
-			width : 100
-		}, {
-			field : 'uid',
-			title : '数据源唯一ID',
-			width : 100
-		}, {
-			field : 'jdbcUrl',
-			title : '数据源连接字符串',
-			width : 200
-		}, {
-			field : 'createTime',
-			title : '创建日期',
-			width : 100
-		}, {
-			field : 'options',
-			title : '操作',
-			width : 300,
-			formatter : function(value, row, index) {
-				return DataSource.optionsFormatter(value, row, index);
-			}
-		} ] ],
-		onDblClickRow : function(index, row) {
-			DataSource.edit();
-		}
-	});
-
-	// 初始化数据源dialog
-	$('#checkDlg').dialog({
-		closed : true,
-		modal : true,
-		buttons : [ {
-			text : '关闭',
-			iconCls : 'icon-no',
-			handler : function() {
-				$("#checkDlg").dialog('close');
-			}
-		} ]
-	});
-
-	$('#datasourceDlg').dialog({
-		closed : true,
-		modal : true,
-		buttons : [ {
-			text : '测试连接',
-			iconCls : 'icon-search',
-			handler : function() {
-				DataSource.testConnection();
-			}
-		}, {
-			text : '关闭',
-			iconCls : 'icon-no',
-			handler : function() {
-				$("#datasourceDlg").dialog('close');
-			}
-		}, {
-			text : '保存',
-			iconCls : 'icon-save',
-			handler : DataSource.save
-		} ]
-	});
+$(function () {
+    MetaDataDs.init();
 });
 
-var DataSource = function() {
+var MetaDataDs = {
+    init: function () {
+        DsMVC.View.initControl();
+        DsMVC.View.bindEvent();
+        DsMVC.View.bindValidate();
+        DsMVC.View.initData();
+    }
 };
 
-// 数据源增删改操作
-DataSource.add = function() {
-	ReportCommon.add('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceId', '新增数据源配置');
+var DsCommon = {
+    baseUrl: EasyReport.ctxPath + '/rest/metadata/ds/',
+    confBaseUrl: EasyReport.ctxPath + '/rest/metadata/conf/',
+    baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/',
+    keys: {
+        dbType: 'dbType',
+        dbPoolType: 'dbPoolType'
+    }
 };
 
-DataSource.edit = function() {
-	ReportCommon.edit('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', '#datasourceId', '修改数据源配置');
-};
+var DsMVC = {
+    URLs: {
+        add: {
+            url: DsCommon.baseUrl + 'add',
+            method: 'POST'
+        },
+        edit: {
+            url: DsCommon.baseUrl + 'edit',
+            method: 'POST'
+        },
+        list: {
+            url: DsCommon.baseUrl + 'list',
+            method: 'GET'
+        },
+        remove: {
+            url: DsCommon.baseUrl + 'remove',
+            method: 'POST'
+        },
+        testConnection: {
+            url: DsCommon.baseUrl + 'testConnection',
+            method: 'POST'
+        },
+        testConnectionById: {
+            url: DsCommon.baseUrl + 'testConnectionById',
+            method: 'POST'
+        },
+        getConfItems: {
+            url: DsCommon.confBaseUrl + 'getConfItems',
+            method: 'GET'
+        }
+    },
+    Model: {
+        dbTypes: [],
+        dbPoolTypes: []
+    },
+    View: {
+        initControl: function () {
+            $('#ds-datagrid').datagrid({
+                method: 'get',
+                fit: true,
+                fitColumns: true,
+                singleSelect: true,
+                pagination: true,
+                rownumbers: true,
+                pageSize: 50,
+                url: DsMVC.URLs.list.url,
+                toolbar: [{
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        DsMVC.Controller.add();
+                    }
+                }, '-', {
+                    iconCls: 'icon-edit1',
+                    handler: function () {
+                        DsMVC.Controller.edit();
+                    }
+                }, '-', {
+                    iconCls: 'icon-remove1',
+                    handler: function () {
+                        DsMVC.Controller.remove();
+                    }
+                }, '-', {
+                    iconCls: 'icon-reload',
+                    handler: function () {
+                        EasyUIUtils.reloadDatagrid('#ds-datagrid');
+                    }
+                }],
+                loadFilter: function (src) {
+                    if (src.success) {
+                        return src.data;
+                    }
+                    return $.messager.alert('失败', src.msg, 'error');
+                },
+                columns: [[{
+                    field: 'id',
+                    title: '标识',
+                    width: 50
+                }, {
+                    field: 'name',
+                    title: '名称',
+                    width: 100
+                }, {
+                    field: 'uid',
+                    title: 'UID',
+                    width: 100
+                }, {
+                    field: 'jdbcUrl',
+                    title: 'JdbcUrl',
+                    width: 200
+                }, {
+                    field: 'driverClass',
+                    title: '驱动类',
+                    width: 100
+                }, {
+                    field: 'queryerClass',
+                    title: '查询器类',
+                    width: 100
+                }, {
+                    field: 'dbPoolClass',
+                    title: '连接池类',
+                    width: 100
+                }, {
+                    field: 'gmtCreated',
+                    title: '创建时间',
+                    width: 50,
+                    sortable: true
+                }, {
+                    field: 'options',
+                    title: '操作',
+                    width: 100,
+                    formatter: function (value, row, index) {
+                        var icons = [{
+                            "name": "edit",
+                            "title": "编辑"
+                        }, {
+                            "name": "connect",
+                            "title": "测试连接"
+                        }, {
+                            "name": "remove",
+                            "title": "删除"
+                        }];
+                        var buttons = [];
+                        for (var i = 0; i < icons.length; i++) {
+                            var tmpl = '<a href="#" title ="${title}" '
+                                + 'onclick="DsMVC.Controller.doOption(\'${index}\',\'${name}\')">'
+                                + '<img src="${imgSrc}" alt="${title}"/"></a>';
+                            var data = {
+                                title: icons[i].title,
+                                name: icons[i].name,
+                                index: index,
+                                imgSrc: DsCommon.baseIconUrl + icons[i].name + ".png"
+                            };
+                            buttons.push(juicer(tmpl, data));
+                        }
+                        return buttons.join(' ');
+                    }
+                }]],
+                onDblClickRow: function (rowIndex, rowData) {
+                    return DsMVC.Controller.edit();
+                }
+            });
 
-DataSource.remove = function() {
-	ReportCommon.removeWithActUrl('#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl + 'remove');
-};
+            // dialogs
+            $('#ds-dlg').dialog({
+                closed: true,
+                modal: false,
+                width: 650,
+                height: 450,
+                iconCls: 'icon-add',
+                buttons: [{
+                    text: '测试连接',
+                    iconCls: 'icon-connect',
+                    handler: DsMVC.Controller.testConnection
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        $("#ds-dlg").dialog('close');
+                    }
+                }, {
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: DsMVC.Controller.save
+                }]
+            });
 
-DataSource.batchRemove = function() {
-	ReportCommon.batchRemoveWithActUrl('#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl + 'remove');
-};
+            $('#dbType').combobox({
+                onChange: function (newValue, oldValue) {
+                    $('#jdbcUrl').textbox('setValue',
+                        DsMVC.Model.dbTypes[newValue].value.jdbcUrl
+                    );
+                    $('#driverClass').textbox('setValue',
+                        DsMVC.Model.dbTypes[newValue].value.driverClass
+                    );
+                    $('#queryerClass').textbox('setValue',
+                        DsMVC.Model.dbTypes[newValue].value.queryerClass
+                    );
+                }
+            });
 
-DataSource.save = function() {
-	ReportCommon.saveWithActUrl('#datasourceDlg', '#datasourceForm', '#datasourceAction', '#datasourceGrid', dsPageRootUrl + 'query', dsPageRootUrl
-			+ '');
-};
+            $('#dbPoolType').combobox({
+                onChange: function (newValue, oldValue) {
+                    $('#dbPoolClass').textbox('setValue',
+                        DsMVC.Model.dbTypes[newValue].value.dbPoolClass
+                    );
+                    var options = DsMVC.Model.dbTypes[newValue].value.options;
+                }
+            });
 
-DataSource.optionsFormatter = function(value, row, index) {
-	var path = WebAppRequest.getContextPath() + '/assets/modules/report/icons/connect.png';
-	return '<a href="#" title="测试连接" onclick="javascript:DataSource.applyConnection(' + index + ')"><img src="' + path + '" alt="测试连接"/"></a>';
-};
+            $('#ds-options-pg').propertygrid({
+                showGroup: true,
+                scrollbarSize: 0,
+                height: 300
+            });
+        },
+        bindEvent: function () {
+            $('#btn-search').bind('click', DsMVC.Controller.find);
+        },
+        bindValidate: function () {
+        },
+        initData: function () {
+            DsMVC.Util.loadConfigItems();
+        }
+    },
+    Controller: {
+        doOption: function (index, name) {
+            $('#ds-datagrid').datagrid('selectRow', index);
+            if (name == "edit") {
+                return DsMVC.Controller.edit();
+            }
+            if (name == "remove") {
+                return DsMVC.Controller.remove();
+            }
+            if (name == "connect") {
+                return DsMVC.Controller.testConnectionById(index);
+            }
+        },
+        add: function () {
+            var options = DsMVC.Util.getOptions();
+            options.title = '新增数据源';
+            EasyUIUtils.openAddDlg(options);
+            DsMVC.Util.fillCombox("#dbType", "add", DsMVC.Model.dbTypes, "driverClass", "");
+            DsMVC.Util.fillCombox("#dbPoolType", "add", DsMVC.Model.dbPoolTypes, "dbPoolClass", "");
+        },
+        edit: function () {
+            var row = $('#ds-datagrid').datagrid('getSelected');
+            if (row) {
+                var options = DsMVC.Util.getOptions();
+                options.iconCls = 'icon-edit1';
+                options.data = row;
+                options.title = '修改[' + options.data.name + ']数据源';
+                EasyUIUtils.openEditDlg(options);
+                DsMVC.Util.fillCombox("#dbType", "edit", DsMVC.Model.dbTypes, "driverClass", row.driverClass);
+                DsMVC.Util.fillCombox("#dbPoolType", "edit", DsMVC.Model.dbPoolTypes, "dbPoolClass", row.dbPoolClass);
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
+        },
+        find: function () {
+            var fieldName = $("#field-name").combobox('getValue');
+            var keyword = $("#keyword").val();
+            var url = DsMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
+            EasyUIUtils.loadToDatagrid('#ds-datagrid', url)
+        },
+        remove: function () {
+            var row = $('#ds-datagrid').datagrid('getSelected');
+            if (row) {
+                var options = {
+                    rows: [row],
+                    url: DsMVC.URLs.remove.url,
+                    data: {
+                        id: row.id
+                    },
+                    gridId: '#ds-datagrid',
+                    gridUrl: DsMVC.URLs.list.url,
+                    callback: function (rows) {
+                    }
+                };
+                EasyUIUtils.remove(options);
+            }
+        },
+        testConnectionById: function (index) {
+            $('#ds-datagrid').datagrid('selectRow', index);
+            var row = $('#ds-datagrid').datagrid('getSelected');
+            $.post(DsMVC.URLs.testConnectionById.url, {
+                id: row.id
+            }, function callback(data) {
+                if (data.success) {
+                    $.messager.alert('成功', "测试成功", 'success');
+                } else {
+                    $.messager.alert('失败', "测试失败", 'error');
+                }
+            }, 'json');
+        },
+        testConnection: function () {
+            $.post(DsMVC.URLs.testConnection.url, {
+                url: $("#jdbcUrl").val(),
+                pass: $("#password").val(),
+                user: $("#user").val()
+            }, function callback(data) {
+                if (data.success) {
+                    $.messager.alert('成功', "测试成功", 'success');
+                } else {
+                    $.messager.alert('失败', "测试失败", 'error');
+                }
+            }, 'json');
+        },
+        save: function () {
+            var action = $('#modal-action').val();
+            var options = {
+                gridId: null,
+                gridUrl: DsMVC.URLs.list.url,
+                dlgId: "#ds-dlg",
+                formId: "#ds-form",
+                url: null,
+                callback: function () {
+                }
+            };
 
-DataSource.applyConnection = function(index) {
-	$('#datasourceGrid').datagrid('selectRow', index);
-	var row = $('#datasourceGrid').datagrid('getSelected');
-
-	$.post(dsPageRootUrl + 'testConnectionById', {
-		id : row.id
-	}, function callback(data) {
-		if (data.success) {
-			$.messager.alert('成功', "测试成功", 'success');
-		} else {
-			$.messager.alert('失败', "测试失败", 'error');
-		}
-	}, 'json');
-};
-
-DataSource.testConnection = function() {
-	$.post(dsPageRootUrl + 'testConnection', {
-		url : $("#configJdbcUrl").val(),
-		pass : $("#configPassword").val(),
-		user : $("#configUser").val()
-	}, function callback(data) {
-		if (data.success) {
-			$.messager.alert('成功', "测试成功", 'success');
-		} else {
-			$.messager.alert('失败', "测试失败", 'error');
-		}
-	}, 'json');
+            $('#roles').val($('#combox-roles').combobox('getValues'));
+            options.url = (action === "edit" ? DsMVC.URLs.edit.url : DsMVC.URLs.add.url);
+            options.gridId = '#ds-datagrid';
+            return EasyUIUtils.save(options);
+        }
+    },
+    Util: {
+        getOptions: function () {
+            return {
+                dlgId: '#ds-dlg',
+                formId: '#ds-form',
+                actId: '#modal-action',
+                rowId: '#dsId',
+                title: '',
+                iconCls: 'icon-add',
+                data: {},
+                callback: function (arg) {
+                },
+                gridId: null,
+            };
+        },
+        fillCombox: function (id, act, map, fieldName, value) {
+            $(id).combobox('clear');
+            var data = [];
+            var i = 0;
+            for (var key in map) {
+                var item = map[key];
+                data.push({
+                    "value": item.key,
+                    "name": item.name,
+                    "selected": i == 0
+                });
+                i++;
+            }
+            $(id).combobox('loadData', data);
+            if (act == "edit") {
+                var key = DsMVC.Util.findKey(map, fieldName, value);
+                $(id).combobox('setValues', key);
+            }
+        },
+        loadConfigItems: function () {
+            $.getJSON(DsMVC.URLs.getConfItems.url + "?key=" + DsCommon.keys.dbType, function (result) {
+                DsMVC.Util.toMap(DsMVC.Model.dbTypes, result.data);
+            });
+            $.getJSON(DsMVC.URLs.getConfItems.url + "?key=" + DsCommon.keys.dbPoolType, function (result) {
+                DsMVC.Util.toMap(DsMVC.Model.dbPoolTypes, result.data);
+            });
+        },
+        toMap: function (srcMap, data) {
+            if (!data || data.length == 0) return {};
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                item.value = $.parseJSON(item.value);
+                srcMap[item.key] = item;
+            }
+            return srcMap;
+        },
+        findKey: function (map, fieldName, value) {
+            for (var key in map) {
+                if (value === map[key].value[fieldName]) {
+                    return key;
+                }
+            }
+            return "";
+        }
+    }
 };

@@ -8,6 +8,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,8 @@ import java.util.Map;
 /**
  * 报表历史记录控制器
  */
-@Controller
-@RequestMapping(value = "/rest/metadata/reporthistory")
+@RestController
+@RequestMapping(value = "/rest/metadata/history")
 public class ReportHistoryController
         extends BaseController<IReportHistoryService, ReportHistory, ReportHistoryExample> {
 

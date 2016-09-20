@@ -1,8 +1,8 @@
 $(function () {
-    SysConf.init();
+    MetaDataConf.init();
 });
 
-var SysConf = {
+var MetaDataConf = {
     init: function () {
         ConfMVC.View.initControl();
         ConfMVC.View.bindEvent();
