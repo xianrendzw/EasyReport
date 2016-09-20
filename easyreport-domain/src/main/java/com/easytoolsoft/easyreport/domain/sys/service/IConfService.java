@@ -6,6 +6,7 @@ import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
 import com.easytoolsoft.easyreport.data.sys.po.Conf;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统配置服务类
@@ -18,6 +19,20 @@ public interface IConfService extends ICrudService<Conf, ConfExample> {
      * @return
      */
     List<Conf> getByParentId(Integer parentId);
+
+    /**
+     * @param key
+     * @return
+     */
+    List<Conf> getByParentKey(String key);
+
+    /**
+     * 获取指定parent key下2层深度的配置项
+     *
+     * @param key
+     * @return
+     */
+    Map<String, List<Conf>> getDepth2ByParentKey(String key);
 
     /**
      * @param page

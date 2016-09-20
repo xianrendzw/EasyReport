@@ -12,6 +12,7 @@
         <result column="comment" property="comment" jdbcType="VARCHAR"/>
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="has_child" property="hasChild" jdbcType="TINYINT"/>
     </resultMap>
     <sql id="Example_Where_Clause1">
         <where>
@@ -74,7 +75,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List_Without_Id">
-  	   parent_id ,name ,key ,value ,sequence ,comment ,gmt_created ,gmt_modified
+  	   parent_id ,name ,`key` ,`value` ,sequence ,comment ,gmt_created ,gmt_modified
     </sql>
     <sql id="Base_Column_List">
         id ,
@@ -83,8 +84,8 @@
     <sql id="Insert_Columns">
         <if test="parentId != null">parent_id,</if>
         <if test="name != null">name,</if>
-        <if test="key != null">key,</if>
-        <if test="value != null">value,</if>
+        <if test="key != null">`key`,</if>
+        <if test="value != null">`value`,</if>
         <if test="sequence != null">sequence,</if>
         <if test="comment != null">comment,</if>
         <if test="gmtCreated != null">gmt_created,</if>
@@ -113,8 +114,8 @@
     <sql id="Update_Set_From_Bean">
         <if test="parentId != null">parent_id = #{parentId,jdbcType=INTEGER} ,</if>
         <if test="name != null">name = #{name,jdbcType=VARCHAR} ,</if>
-        <if test="key != null">key = #{key,jdbcType=VARCHAR} ,</if>
-        <if test="value != null">value = #{value,jdbcType=VARCHAR} ,</if>
+        <if test="key != null">`key` = #{key,jdbcType=VARCHAR} ,</if>
+        <if test="value != null">`value` = #{value,jdbcType=VARCHAR} ,</if>
         <if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER} ,</if>
         <if test="comment != null">comment = #{comment,jdbcType=VARCHAR} ,</if>
         <if test="gmtCreated != null">gmt_created = #{gmtCreated,jdbcType=TIMESTAMP} ,</if>
@@ -123,8 +124,8 @@
     <sql id="Update_Set_From_Map">
         <if test="record.parentId != null">parent_id = #{set.parentId,jdbcType=INTEGER} ,</if>
         <if test="record.name != null">name = #{set.name,jdbcType=VARCHAR} ,</if>
-        <if test="record.key != null">key = #{set.key,jdbcType=VARCHAR} ,</if>
-        <if test="record.value != null">value = #{set.value,jdbcType=VARCHAR} ,</if>
+        <if test="record.key != null">`key` = #{set.key,jdbcType=VARCHAR} ,</if>
+        <if test="record.value != null">`value` = #{set.value,jdbcType=VARCHAR} ,</if>
         <if test="record.sequence != null">sequence = #{set.sequence,jdbcType=INTEGER} ,</if>
         <if test="record.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
         <if test="record.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
@@ -133,8 +134,8 @@
     <sql id="BatchUpdate_Set_From_Bean">
         ﻿parent_id = #{item.parentId,jdbcType=INTEGER} ,
         name = #{item.name,jdbcType=VARCHAR} ,
-        key = #{item.key,jdbcType=VARCHAR} ,
-        value = #{item.value,jdbcType=VARCHAR} ,
+        `key` = #{item.key,jdbcType=VARCHAR} ,
+        `value` = #{item.value,jdbcType=VARCHAR} ,
         sequence = #{item.sequence,jdbcType=INTEGER} ,
         comment = #{item.comment,jdbcType=VARCHAR} ,
         gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,
@@ -276,4 +277,26 @@
     </select>
     <!-- end select -->
     <!-- My Custom Interfaces -->
+    <select id="selectByParentId" resultMap="ConfMap" parameterType="java.lang.Integer">
+        SELECT
+            t.*,
+            (SELECT
+                IF (count(*) > 0, 1, 0)
+             FROM
+                ezrpt_meta_conf t1
+            WHERE
+                t1.parent_id = t.id) AS has_child
+        FROM
+          ezrpt_meta_conf t
+        WHERE
+          t.parent_id = #{parentId,jdbcType=INTEGER}
+        ORDER BY
+         t.sequence asc
+    </select>
+    <select id="selectByParentKey" resultMap="ConfMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from ezrpt_meta_conf
+        where parent_id in (SELECT id FROM ezrpt_meta_conf where `key` = ${key})
+    </select>
 </mapper>

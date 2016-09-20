@@ -44,23 +44,26 @@ public class ConfService
 
     @Override
     public List<Conf> getByParentId(Integer parentId) {
-        ConfExample example = new ConfExample();
-        example.or().andParentIdEqualTo(parentId);
-        return this.dao.selectByExample(example);
+        return this.dao.selectByParentId(parentId);
+    }
+
+    @Override
+    public List<Conf> getByParentKey(String key) {
+        return this.dao.selectByParentKey(key);
     }
 
     @Override
     public Map<String, ReportMetaDataColumn> getCommonColumns() {
         Map<String, ReportMetaDataColumn> commonColumnMap =
-                this.listToMap(this.dao.selectByParentKey(STAT_COLUMN), ColumnType.STATISTICAL, false);
-        commonColumnMap.putAll(this.listToMap(this.dao.selectByParentKey(DATE_COLUMN), ColumnType.LAYOUT, false));
-        commonColumnMap.putAll(this.listToMap(this.dao.selectByParentKey(DIM_COLUMN), ColumnType.DIMENSION, false));
+                this.listToMap(this.getByParentKey(STAT_COLUMN), ColumnType.STATISTICAL, false);
+        commonColumnMap.putAll(this.listToMap(this.getByParentKey(DATE_COLUMN), ColumnType.LAYOUT, false));
+        commonColumnMap.putAll(this.listToMap(this.getByParentKey(DIM_COLUMN), ColumnType.DIMENSION, false));
         return commonColumnMap;
     }
 
     @Override
     public Map<String, ReportMetaDataColumn> getCommonOptionalColumns() {
-        return this.listToMap(this.dao.selectByParentKey(OPTION_COLUMN), ColumnType.STATISTICAL, true);
+        return this.listToMap(this.getByParentKey(OPTION_COLUMN), ColumnType.STATISTICAL, true);
     }
 
     private Map<String, ReportMetaDataColumn> listToMap(List<Conf> confItems, ColumnType type, boolean isOptional) {

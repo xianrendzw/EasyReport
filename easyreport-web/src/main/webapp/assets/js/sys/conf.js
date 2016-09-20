@@ -66,10 +66,11 @@ var ConfMVC = {
                 method: 'get',
                 animate: true,
                 dnd: true,
+                url: ConfMVC.URLs.listChildren.url,
                 onClick: function (node) {
                     $('#dict-tree').tree('expand', node.target);
                     $('#dict-tree').tree('options').url = ConfMVC.URLs.listChildren.url;
-                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=0');
+                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + node.id);
                 },
                 onContextMenu: function (e, node) {
                     e.preventDefault();
@@ -78,6 +79,12 @@ var ConfMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
+                },
+                loadFilter: function (src, parent) {
+                    if (src.success) {
+                        return src.data;
+                    }
+                    return $.messager.alert('失败', src.msg, 'error');
                 }
             });
 
@@ -188,7 +195,7 @@ var ConfMVC = {
                     title: '标识',
                     width: 50
                 }, {
-                    field: 'pid',
+                    field: 'parentId',
                     title: '父标识',
                     hidden: true
                 }, {
@@ -196,11 +203,11 @@ var ConfMVC = {
                     title: '名称',
                     width: 150
                 }, {
-                    field: 'k',
+                    field: 'key',
                     title: '对应键',
                     width: 100
                 }, {
-                    field: 'v',
+                    field: 'value',
                     title: '对应值',
                     width: 100
                 }]],
@@ -211,8 +218,8 @@ var ConfMVC = {
             $('#dict-dlg').dialog({
                 closed: true,
                 modal: true,
-                width: 500,
-                height: 400,
+                width: 600,
+                height: 450,
                 iconCls: 'icon-save',
                 buttons: [{
                     text: '关闭',
@@ -269,13 +276,11 @@ var ConfMVC = {
             var node = $('#dict-tree').tree('getSelected');
             if (node) {
                 ConfMVC.Util.edit(node.attributes);
-                $("#confParentNameDiv").hide();
             }
         },
         edit: function () {
             var row = $('#dict-datagrid').datagrid('getSelected');
             ConfMVC.Util.edit(row);
-            $("#confParentNameDiv").hide();
         },
         copy: function () {
             $("#confParentNameDiv").hide();
@@ -299,8 +304,8 @@ var ConfMVC = {
                 },
                 callback: function (rows) {
                     var row = rows[0];
-                    ConfMVC.Controller.refreshNode(row.pid);
-                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + row.pid);
+                    ConfMVC.Controller.reloadTree();
+                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + row.parentId);
                 }
             };
             EasyUIUtils.remove(options);
@@ -309,6 +314,10 @@ var ConfMVC = {
             var action = $('#modal-action').val();
             var gridUrl = ConfMVC.URLs.list.url + '?id=' + $("#confPid").val();
             var actUrl = action === "edit" ? ConfMVC.URLs.edit.url : ConfMVC.URLs.add.url;
+            if (action === "copy") {
+                actUrl = ConfMVC.URLs.copy.url;
+            }
+
             var options = {
                 dlgId: "#dict-dlg",
                 formId: "#dict-form",
@@ -357,7 +366,7 @@ var ConfMVC = {
             $("#sequence").textbox('setValue', 10);
         },
         edit: function (data) {
-            $('#tr-parent-module-name').hide();
+            $("#confParentNameDiv").hide();
             var options = ConfMVC.Util.getOptions();
             options.iconCls = 'icon-edit1';
             options.data = data;

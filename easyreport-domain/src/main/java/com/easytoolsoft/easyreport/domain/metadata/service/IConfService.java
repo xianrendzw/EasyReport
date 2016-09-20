@@ -21,6 +21,12 @@ public interface IConfService extends ICrudService<Conf, ConfExample> {
     List<Conf> getByParentId(Integer parentId);
 
     /**
+     * @param key
+     * @return
+     */
+    List<Conf> getByParentKey(String key);
+
+    /**
      * @return
      */
     Map<String, ReportMetaDataColumn> getCommonColumns();

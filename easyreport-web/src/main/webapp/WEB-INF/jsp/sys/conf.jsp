@@ -35,31 +35,31 @@
                     <td>名称:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="name"
                                            data-options="required:true"
-                                           style="width: 280px"/></td>
+                                           style="width: 380px"/></td>
                 </tr>
                 <tr>
                     <td>键(Key):</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="k" id="k"
+                    <td colspan="3"><input class="easyui-textbox" type="text" name="key" id="key"
                                            data-options="required:true"
-                                           style="width: 280px"/></td>
+                                           style="width: 380px"/></td>
                 </tr>
                 <tr>
                     <td>值(Value):</td>
-                    <td colspan="3"><input class="easyui-textbox" type="text" name="v" id="v"
-                                           data-options="required:true"
-                                           style="width: 280px"/></td>
+                    <td colspan="3"><input class="easyui-textbox" type="text" name="value" id="value"
+                                           data-options="required:true,multiline:true"
+                                           style="width: 380px;height:150px"/></td>
                 </tr>
                 <tr>
                     <td>顺序:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="sequence" id="sequence" value="10"
                                            data-options="required:true,validType:'digit'"
-                                           style="width: 280px" /></td>
+                                           style="width: 380px"/></td>
                 </tr>
                 <tr>
                     <td>说明:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="comment"
-                                           style="width: 280px"/>
-                        <input id="confPid" type="hidden" name="pid" value="0"/>
+                                           style="width: 380px"/>
+                        <input id="confPid" type="hidden" name="parentId" value="0"/>
                         <input id="confId" type="hidden" name="id" value="0"/>
                     </td>
                 </tr>
