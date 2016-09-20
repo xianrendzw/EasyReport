@@ -38,6 +38,10 @@ var TaskMVC = {
         getAllReports: {
             url: TaskCommon.reportBaseUrl + 'getAll',
             method: 'POST'
+        },
+        getJsonOptions: {
+            url: TaskCommon.baseUrl + 'getJsonOptions',
+            method: 'GET'
         }
     },
     Model: {
@@ -177,6 +181,12 @@ var TaskMVC = {
                 }]
             });
 
+            $('#type').combobox({
+                onChange: function (newValue, oldValue) {
+                    TaskMVC.Util.getJsonOptions(newValue);
+                }
+            });
+
             $('#cronExprDiv').cron({
                 initial: "42 3 1 * *",
                 onChange: function () {
@@ -209,7 +219,7 @@ var TaskMVC = {
             options.title = '新增任务';
             EasyUIUtils.openAddDlg(options);
             $('#type').combobox('setValue', "1");
-            $('#cronExpr').textbox('setValue','42 3 1 * *');
+            $('#cronExpr').textbox('setValue', '42 3 1 * *');
             TaskMVC.Util.fillReportCombox("add", []);
         },
         edit: function () {
@@ -302,6 +312,13 @@ var TaskMVC = {
         loadReportList: function () {
             $.getJSON(TaskMVC.URLs.getAllReports.url, function (src) {
                 TaskMVC.Model.reports = src.data;
+            });
+        },
+        getJsonOptions: function (type) {
+            $.getJSON(TaskMVC.URLs.getJsonOptions.url + '?type=' + type, function (result) {
+                if (result.success) {
+                    $('#options').textbox('setValue', result.data);
+                }
             });
         }
     }

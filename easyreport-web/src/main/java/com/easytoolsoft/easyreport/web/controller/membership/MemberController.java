@@ -50,6 +50,7 @@ public class MemberController {
         return "membership/profile";
     }
 
+    @ResponseBody
     @PostMapping(value = "/authenticate")
     public JsonResult authenticate(String account, String password, boolean rememberMe, HttpServletRequest req) {
         JsonResult result = new JsonResult<>(false, "用户名/密码错误!");

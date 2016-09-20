@@ -23,7 +23,7 @@
                 <div id="login-left-main">
                     <img id="logo" title="EasyReport"
                          src="${ctxPath}/assets/images/favicon_64.ico"><br/>
-                    <p class="system-name"></p>
+                    <p class="system-name">EasyReport</p>
                 </div>
             </div>
             <div id="login-right">

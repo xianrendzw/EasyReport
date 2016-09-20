@@ -31,7 +31,7 @@
                 <tr>
                     <td>选择报表:</td>
                     <td colspan="3"><select class="easyui-combobox" id="combox-reports" name="comboxReports"
-                                            data-options="valueField:'value',textField:'name',multiple:true"
+                                            data-options="required:true,valueField:'value',textField:'name',multiple:true"
                                             style="width: 380px"></select>
                         <input id="reportIds" type="hidden" name="reportIds"/>
                         <input id="taskId" type="hidden" name="id"/>
