@@ -13,7 +13,7 @@ var ScheduleTask = {
 
 var TaskCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/schedule/task/',
-    reportBaseUrl: EasyReport.ctxPath + '/rest/metadata/report/',
+    baseReportUrl: EasyReport.ctxPath + '/rest/metadata/report/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
 
@@ -36,7 +36,7 @@ var TaskMVC = {
             method: 'POST'
         },
         getAllReports: {
-            url: TaskCommon.reportBaseUrl + 'getAll',
+            url: TaskCommon.baseReportUrl + 'getAll',
             method: 'POST'
         },
         getJsonOptions: {

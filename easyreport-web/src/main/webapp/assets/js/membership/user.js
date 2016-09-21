@@ -13,7 +13,7 @@ var MembershipUser = {
 
 var UserCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/membership/user/',
-    roleBaseUrl: EasyReport.ctxPath + '/rest/membership/role/',
+    baseRoleUrl: EasyReport.ctxPath + '/rest/membership/role/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
 
@@ -36,7 +36,7 @@ var UserMVC = {
             method: 'POST'
         },
         getRoleList: {
-            url: UserCommon.roleBaseUrl + 'getRoleList',
+            url: UserCommon.baseRoleUrl + 'getRoleList',
             method: 'GET'
         },
         editPassword: {

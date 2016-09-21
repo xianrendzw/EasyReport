@@ -13,7 +13,7 @@ var MetaDataDs = {
 
 var DsCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/metadata/ds/',
-    confBaseUrl: EasyReport.ctxPath + '/rest/metadata/conf/',
+    baseConfUrl: EasyReport.ctxPath + '/rest/metadata/conf/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/',
     keys: {
         dbType: 'dbType',
@@ -48,7 +48,7 @@ var DsMVC = {
             method: 'POST'
         },
         getConfItems: {
-            url: DsCommon.confBaseUrl + 'getConfItems',
+            url: DsCommon.baseConfUrl + 'getConfItems',
             method: 'GET'
         }
     },

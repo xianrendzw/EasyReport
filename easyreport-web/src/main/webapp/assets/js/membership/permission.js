@@ -12,7 +12,7 @@ var MembershipPerm = {
 
 var PermCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/membership/permission/',
-    moduleBaseUrl: EasyReport.ctxPath + '/rest/membership/module/',
+    baseModuleUrl: EasyReport.ctxPath + '/rest/membership/module/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
 
@@ -35,7 +35,7 @@ var PermMVC = {
             method: 'POST'
         },
         getChildModules: {
-            url: PermCommon.moduleBaseUrl + 'getChildModules',
+            url: PermCommon.baseModuleUrl + 'getChildModules',
             method: 'GET'
         }
     },

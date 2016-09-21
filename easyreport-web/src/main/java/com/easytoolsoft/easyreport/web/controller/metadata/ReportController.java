@@ -21,6 +21,7 @@ import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,7 @@ public class ReportController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取报表列表")
+    @RequiresPermissions("report.designer:view")
     public Map<String, Object> list(DataGridPager pager, Integer categoryId, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<Report> list = this.service.getByPage(pageInfo, categoryId, fieldName, keyword);
@@ -63,6 +65,7 @@ public class ReportController
 
     @GetMapping(value = "/getAll")
     @OpLog(name = "获取所有报表")
+    @RequiresPermissions("report.designer:view")
     public List<IdNamePair> getAll(@CurrentUser User loginUser) {
         List<Report> reportList = this.service.getAll();
         if (CollectionUtils.isEmpty(reportList)) {
@@ -78,6 +81,7 @@ public class ReportController
 
     @PostMapping(value = "/add")
     @OpLog(name = "新增报表")
+    @RequiresPermissions("report.designer:add")
     public JsonResult add(Report po) {
         JsonResult<String> result = new JsonResult<>();
         po.setCreateUser("");
@@ -92,6 +96,7 @@ public class ReportController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
+    @RequiresPermissions("report.designer:edit")
     public JsonResult edit(Report po, Boolean isChange) {
         JsonResult result = new JsonResult<>();
         this.service.editById(po);
@@ -107,6 +112,7 @@ public class ReportController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除报表")
+    @RequiresPermissions("report.designer:remove")
     public JsonResult remove(Integer id) {
         JsonResult result = new JsonResult<>();
         this.service.removeById(id);
@@ -115,6 +121,7 @@ public class ReportController
 
     @PostMapping(value = "/loadSqlColumns")
     @OpLog(name = "获取报表元数据列集合")
+    @RequiresPermissions("report.designer:view")
     public JsonResult loadSqlColumns(Integer dsId, String sqlText, Integer dataRange,
                                      String queryParams, HttpServletRequest request) {
         JsonResult<List<ReportMetaDataColumn>> result = new JsonResult<>();
@@ -128,6 +135,7 @@ public class ReportController
 
     @GetMapping(value = "/viewSqlText")
     @OpLog(name = "查看报表SQL语句")
+    @RequiresPermissions("report.designer:view")
     public JsonResult viewSqlText(Integer dsId, String sqlText, Integer dataRange, String queryParams,
                                   HttpServletRequest request) {
         JsonResult<String> result = new JsonResult<>();
@@ -141,6 +149,7 @@ public class ReportController
 
     @GetMapping(value = "/getSqlColumn")
     @OpLog(name = "获取报表元数据列结构")
+    @RequiresPermissions("report.designer:view")
     public ReportMetaDataColumn getSqlColumn() {
         ReportMetaDataColumn sqlColumnPo = new ReportMetaDataColumn();
         sqlColumnPo.setName("expr");
@@ -152,6 +161,7 @@ public class ReportController
 
     @PostMapping(value = "/saveQueryParam")
     @OpLog(name = "保存报表查询参数")
+    @RequiresPermissions("report.designer:add")
     public JsonResult saveQueryParam(Integer id, String queryParams) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(Report.builder().id(id).queryParams(queryParams).build());

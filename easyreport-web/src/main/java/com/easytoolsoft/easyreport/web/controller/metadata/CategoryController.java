@@ -1,17 +1,26 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
+import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.service.ICategoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
+import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
+import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报表类别控制器
@@ -21,7 +30,9 @@ import java.util.List;
 public class CategoryController
         extends BaseController<ICategoryService, Category, CategoryExample> {
 
-    @RequestMapping(value = "/getCategoryTree")
+    @GetMapping(value = "/getCategoryTree")
+    @OpLog(name = "获取报表分类树")
+    @RequiresPermissions("report.designer:view")
     public JsonResult getCategoryTree() {
         JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Category>> roots = new ArrayList<>();
@@ -54,7 +65,21 @@ public class CategoryController
         });
     }
 
-    @RequestMapping(value = "/add")
+    @GetMapping(value = "/list")
+    @OpLog(name = "分页查找报表分类")
+    @RequiresPermissions("report.designer:view")
+    public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Category> list = this.service.getByPage(pageInfo, fieldName, keyword);
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", pageInfo.getTotals());
+        modelMap.put("rows", list);
+        return modelMap;
+    }
+
+    @PostMapping(value = "/add")
+    @OpLog(name = "增加报表分类")
+    @RequiresPermissions("report.designer:add")
     public JsonResult add(Category po) {
         JsonResult<Object> result = new JsonResult<>();
         po.setHasChild((byte) 0);
@@ -65,28 +90,36 @@ public class CategoryController
         return result;
     }
 
-    @RequestMapping(value = "/edit")
+    @PostMapping(value = "/edit")
+    @OpLog(name = "编辑报表分类")
+    @RequiresPermissions("report.designer:edit")
     public JsonResult edit(Category po) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.editById(po);
         return result;
     }
 
-    @RequestMapping(value = "/remove")
+    @PostMapping(value = "/remove")
+    @OpLog(name = "删除报表分类")
+    @RequiresPermissions("report.designer:remove")
     public JsonResult remove(Integer id, Integer pid) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.remove(id, pid);
         return result;
     }
 
-    @RequestMapping(value = "/move")
+    @PostMapping(value = "/move")
+    @OpLog(name = "移动报表分类")
+    @RequiresPermissions("report.designer:edit")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.move(sourceId, targetId, sourcePid);
         return result;
     }
 
-    @RequestMapping(value = "/paste")
+    @PostMapping(value = "/paste")
+    @OpLog(name = "复制与粘贴报表分类")
+    @RequiresPermissions("report.designer:edit")
     public JsonResult paste(Integer sourceId, Integer targetId) {
         JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Category>> nodes = new ArrayList<>(1);
@@ -100,7 +133,9 @@ public class CategoryController
         return result;
     }
 
-    @RequestMapping(value = "/rebuildPath")
+    @GetMapping(value = "/rebuildPath")
+    @OpLog(name = "重新构建分类树路径")
+    @RequiresPermissions("report.designer:edit")
     public JsonResult rebuildPath() {
         JsonResult<Object> result = new JsonResult<>();
         this.service.rebuildAllPath();
