@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class DataSourceController
     @OpLog(name = "新增数据源")
     public JsonResult add(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
+        po.setGmtCreated(new Date());
         po.setUid(UUID.randomUUID().toString());
         this.service.add(po);
         return result;

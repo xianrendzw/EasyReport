@@ -53,8 +53,8 @@ var DsMVC = {
         }
     },
     Model: {
-        dbTypes: [],
-        dbPoolTypes: []
+        dbTypes: {},
+        dbPoolTypes: {}
     },
     View: {
         initControl: function () {
@@ -189,31 +189,29 @@ var DsMVC = {
 
             $('#dbType').combobox({
                 onChange: function (newValue, oldValue) {
-                    $('#jdbcUrl').textbox('setValue',
-                        DsMVC.Model.dbTypes[newValue].value.jdbcUrl
-                    );
-                    $('#driverClass').textbox('setValue',
-                        DsMVC.Model.dbTypes[newValue].value.driverClass
-                    );
-                    $('#queryerClass').textbox('setValue',
-                        DsMVC.Model.dbTypes[newValue].value.queryerClass
-                    );
+                    var item = DsMVC.Model.dbTypes[newValue].value;
+                    $('#jdbcUrl').textbox('setValue', item.jdbcUrl);
+                    $('#driverClass').val(item.driverClass);
+                    $('#queryerClass').val(item.queryerClass);
                 }
             });
 
             $('#dbPoolType').combobox({
                 onChange: function (newValue, oldValue) {
-                    $('#dbPoolClass').textbox('setValue',
-                        DsMVC.Model.dbTypes[newValue].value.dbPoolClass
-                    );
-                    var options = DsMVC.Model.dbTypes[newValue].value.options;
+                    var item = DsMVC.Model.dbPoolTypes[newValue].value;
+                    $('#dbPoolClass').val(item.dbPoolClass);
+                    var data = DsMVC.Util.toPropertygridData(item.options);
+                    $('#ds-options-pg').propertygrid('loadData', data);
                 }
             });
 
             $('#ds-options-pg').propertygrid({
-                showGroup: true,
                 scrollbarSize: 0,
-                height: 300
+                height: 200,
+                columns: [[
+                    {field: 'name', title: '配置项', width: 200, sortable: true},
+                    {field: 'value', title: '配置值', width: 100, resizable: false}
+                ]]
             });
         },
         bindEvent: function () {
@@ -255,6 +253,10 @@ var DsMVC = {
                 EasyUIUtils.openEditDlg(options);
                 DsMVC.Util.fillCombox("#dbType", "edit", DsMVC.Model.dbTypes, "driverClass", row.driverClass);
                 DsMVC.Util.fillCombox("#dbPoolType", "edit", DsMVC.Model.dbPoolTypes, "dbPoolClass", row.dbPoolClass);
+                $('#jdbcUrl').textbox('setValue', row.jdbcUrl);
+                $('#options').val(row.options || "{}");
+                EasyReport.utils.debug(row.options);
+                $('#ds-options-pg').propertygrid('loadData', DsMVC.Util.toPropertygridData($.parseJSON(row.options)));
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -296,11 +298,14 @@ var DsMVC = {
             }, 'json');
         },
         testConnection: function () {
-            $.post(DsMVC.URLs.testConnection.url, {
+            var data = {
                 url: $("#jdbcUrl").val(),
                 pass: $("#password").val(),
                 user: $("#user").val()
-            }, function callback(data) {
+            };
+            EasyReport.utils.debug(data);
+
+            $.post(DsMVC.URLs.testConnection.url, data, function callback(data) {
                 if (data.success) {
                     $.messager.alert('成功', "测试成功", 'success');
                 } else {
@@ -309,6 +314,9 @@ var DsMVC = {
             }, 'json');
         },
         save: function () {
+            $('#options').val(JSON.stringify(DsMVC.Util.getPropertygridRowMap()));
+            EasyReport.utils.debug($('#options').val());
+
             var action = $('#modal-action').val();
             var options = {
                 gridId: null,
@@ -320,7 +328,6 @@ var DsMVC = {
                 }
             };
 
-            $('#roles').val($('#combox-roles').combobox('getValues'));
             options.url = (action === "edit" ? DsMVC.URLs.edit.url : DsMVC.URLs.add.url);
             options.gridId = '#ds-datagrid';
             return EasyUIUtils.save(options);
@@ -384,6 +391,30 @@ var DsMVC = {
                 }
             }
             return "";
+        },
+        toPropertygridData: function (options) {
+            var rows = [];
+            for (var key in options) {
+                rows.push({
+                    "name": key,
+                    "value": options[key],
+                    "editor": "text"
+                });
+            }
+
+            return {
+                "total": rows.length,
+                "rows": rows
+            };
+        },
+        getPropertygridRowMap: function () {
+            var options = {};
+            var rows = $('#ds-options-pg').propertygrid('getRows');
+            for (var i = 0; i < rows.length; i++) {
+                var row = rows[i];
+                options[row.name] = row.value;
+            }
+            return options;
         }
     }
 };
