@@ -8,7 +8,10 @@ import com.easytoolsoft.easyreport.data.sys.po.Conf;
 import com.easytoolsoft.easyreport.domain.sys.service.IConfService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service("EzrptSysConfService")
 public class ConfService
@@ -24,9 +27,35 @@ public class ConfService
 
     @Override
     public List<Conf> getByParentId(Integer parentId) {
-        ConfExample example = new ConfExample();
-        example.or().andParentIdEqualTo(parentId);
-        return this.dao.selectByExample(example);
+        return this.dao.selectByParentId(parentId);
+    }
+
+    @Override
+    public List<Conf> getByParentKey(String key) {
+        return this.dao.selectByParentKey(key);
+    }
+
+    @Override
+    public Map<String, List<Conf>> getDepth2ByParentKey(String key) {
+        Map<String, List<Conf>> itemMap = new HashMap<>(10);
+        List<Conf> items = this.getAll();
+
+        Conf parentItem = items.stream()
+                .filter(x -> x.getKey().equals(key))
+                .findFirst()
+                .get();
+
+        List<Conf> subItems = items.stream()
+                .filter(x -> x.getParentId() == parentItem.getId())
+                .collect(Collectors.toList());
+
+        for (Conf subItem : subItems) {
+            itemMap.put(subItem.getKey(), items.stream()
+                    .filter(x -> x.getParentId() == subItem.getId())
+                    .collect(Collectors.toList()));
+        }
+
+        return itemMap;
     }
 
     @Override

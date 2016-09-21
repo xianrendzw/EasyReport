@@ -20,6 +20,12 @@ public class DBCP2DataSourcePool  implements DataSourcePoolWrapper{
             dataSource.setUrl(rptDs.getJdbcUrl());
             dataSource.setUsername(rptDs.getUser());
             dataSource.setPassword(rptDs.getPassword());
+            dataSource.setInitialSize(MapUtils.getInteger(rptDs.getOptions(), "initialSize",3));
+            dataSource.setMaxIdle(MapUtils.getInteger(rptDs.getOptions(), "maxIdle",20));
+            dataSource.setMinIdle(MapUtils.getInteger(rptDs.getOptions(), "minIdle",1));
+            dataSource.setLogAbandoned(MapUtils.getBoolean(rptDs.getOptions(), "logAbandoned",true));
+            dataSource.setRemoveAbandonedTimeout(MapUtils.getInteger(rptDs.getOptions(), "removeAbandonedTimeout",180));
+            dataSource.setMaxWaitMillis(MapUtils.getInteger(rptDs.getOptions(), "maxWait",1000));
             return dataSource;
         } catch (Exception ex) {
             throw new RuntimeException("C3p0DataSourcePool Create Error", ex);

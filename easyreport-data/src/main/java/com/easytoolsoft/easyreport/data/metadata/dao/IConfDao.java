@@ -15,5 +15,7 @@ import java.util.List;
  */
 @Repository("EzrptMetaIConfDao")
 public interface IConfDao extends ICrudDao<Conf, ConfExample> {
+    List<Conf> selectByParentId(Integer parentId);
+
     List<Conf> selectByParentKey(@Param(value = "key") String key);
 }

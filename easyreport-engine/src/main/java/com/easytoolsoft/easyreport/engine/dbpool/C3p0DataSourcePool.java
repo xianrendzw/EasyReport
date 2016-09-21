@@ -21,7 +21,7 @@ public class C3p0DataSourcePool implements DataSourcePoolWrapper {
             dataSource.setPassword(rptDs.getPassword());
             dataSource.setInitialPoolSize(MapUtils.getInteger(rptDs.getOptions(), "initialPoolSize", 3));
             dataSource.setMinPoolSize(MapUtils.getInteger(rptDs.getOptions(), "minPoolSize", 1));
-            dataSource.setMaxPoolSize(MapUtils.getInteger(rptDs.getOptions(), "maxPoolSize", 10));
+            dataSource.setMaxPoolSize(MapUtils.getInteger(rptDs.getOptions(), "maxPoolSize", 20));
             dataSource.setMaxStatements(MapUtils.getInteger(rptDs.getOptions(), "maxStatements", 50));
             dataSource.setMaxIdleTime(MapUtils.getInteger(rptDs.getOptions(), "maxIdleTime", 1800));
             dataSource.setAcquireIncrement(MapUtils.getInteger(rptDs.getOptions(), "acquireIncrement", 3));

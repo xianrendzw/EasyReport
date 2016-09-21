@@ -1,0 +1,384 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>jquery-cron : a jQuery plugin</title>
+    <link type="text/css" href="gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
+    <link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="gentleSelect/jquery-gentleSelect-min.js"></script>
+    <script type="text/javascript" src="cron/jquery-cron.js"></script>
+
+    <style>
+    * { margin: 0; padding: 0; }
+    body { font-family: Helvetica,Arial,sans-serif; color: #222; background-color: #ddd;line-height: 24px; }
+    ul { margin-left: 20px; }
+    ol { margin: 15px 0px 0px 20px; }
+    ol li { margin-top: 10px; }
+    h1 { margin: 30px; font-size: 2.5em; font-weight: bold; color: #000; text-align: center; }
+    h2 { border-bottom: 1px solid #999; margin: 30px 0 10px 0; font-size: 1.3em; color: #555; }
+    h3 { border-left: 20px solid #999; padding-left: 10px; line-height: 1.2; font-size: 1.1em; color: #333; margin: 30px 0 10px 0; }
+    p { line-height: 1.3;  margin-top: 20px; }
+    pre { line-height: 1.3; background-color: #369; color: #fff; padding: 10px; margin-top: 20px;}
+    a { color: #369; font-weight: bold; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .example { margin: 10px; border: 1px dashed #ccc; padding: 10px;}
+    .example-text { font-family: monospace; }
+    #content { margin: 0 auto;  padding: 20px 20px 40px 20px; width: 760px; background-color: #fff; border: 1px solid #777; border-width: 0 1px 0px 1px; }
+    #footer { margin: 0 auto; padding: 20px; padding-top: 2px; width: 760px; font-size: 0.8em; text-align: center; color: #888; }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1').cron({
+            initial: "42 3 * * 5",
+            onChange: function() {
+                $('#example1-val').text($(this).cron("value"));
+            }
+        });
+        $('#example1b').cron({
+            initial: "42 3 * * 5",
+            onChange: function() {
+                $('#example1b-val').text($(this).cron("value"));
+            },
+            useGentleSelect: true
+        });
+        $('#example2').cron({
+            initial: "42 3 * * 5",
+            effectOpts: {
+                openEffect: "fade",
+                openSpeed: "slow"
+            },
+            useGentleSelect: true
+        });
+        $('#example3').cron({
+            initial: "*/5 * * * *",
+            onChange: function() {
+                $('#example3-val').text($(this).cron("value"));
+            },
+            customValues: {
+                "5 Minutes" : "*/5 * * * *",
+                "2 Hours on Weekends" : "0 */2 * * 5,6"
+            },
+            useGentleSelect: true
+        });
+        $('#example4').cron({
+            initial: "42 3 * * 5",
+            onChange: function() {
+                $('#example4-val').text($(this).cron("value"));
+            },
+            useGentleSelect: true
+        });
+    });
+    </script>
+</head>
+<body>
+<div id="content">
+    <h1>jQuery plugin: cron</h1>
+
+    <h2 id='intro'>Introduction</h2>
+    <p>
+    jquery-cron is a <a href='http://jquery.com'>jQuery</a> plugin for
+    presenting a simplified interface for users to specify cron entries.
+    </p>
+
+    <p>
+    Instead of having to specify the five elements of a cron entry (minute,
+    hour, day of month, month, day of week), jquery-cron provides a simpler
+    interface for users to enter the more common combinations. For example:
+    </p>
+
+    <div class='example'>
+    <div id='example1'></div>
+    <p>Generated cron entry: <span class='example-text' id='example1-val'></span></p>
+    </div>
+    
+    Or, with <a href='#option-useGentleSelect'>useGentleSelect</a> enabled:
+    
+    <div class='example'>
+    <div id='example1b'></div>
+    <p>Generated cron entry: <span class='example-text' id='example1b-val'></span></p>
+    </div>
+
+    <p>
+    In addition, the <a href='#option-customvalues'><tt>customValues</tt></a>
+    option can be used to provide a list of canned cron entries. This allow users to
+    cater for common use cases as well as enable more complex cron entries.
+    </p>
+
+    <p>
+    There is much room for improvements and we welcome contributions
+    and bug fixes. Feel free to fork <a href='https://github.com/shawnchin/jquery-cron'>the project</a>
+    and send us pull requests!
+    </p>
+
+    <h2>Download</h2>
+    <ul>
+        <li>Latest Release : <a href='https://github.com/shawnchin/jquery-cron/zipball/v0.1.4.1'>jquery-cron v0.1.4.1</a></li>
+        <li>If you're feeling brave, download the <a href='https://github.com/shawnchin/jquery-cron/zipball/master'>Development Version</a></li>
+    </ul>
+
+    <h2>TODO</h2>
+    <ul>
+        <li>Support multiple entries per field</li>
+        <li>implement option to add CSS class (simplify customisation)</li>
+        <li>make the AJAX POST functionality more generic</li>
+    </ul>
+    <h2>Usage</h2>
+
+    <p>
+    To use this plugin, one simply needs to load <a href='http://jquery.com'>jQuery</a>
+    and the JS/CSS scripts for jquery-cron:
+    </p>
+
+    <pre>
+&lt;script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript" src="cron/jquery-cron.js"&gt;&lt;/script&gt;
+
+&lt;link type="text/css" href="cron/jquery-cron.css" rel="stylesheet" /&gt;
+</pre>
+<p>If used with <a href="#option-useGentleSelect"><tt>useGentleSelect</tt></a> you'll also need:</p>
+<pre>
+&lt;script type="text/javascript" src="gentleSelect/jquery-gentleSelect.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="gentleSelect/jquery-gentleSelect.css" rel="stylesheet" /&gt;
+</pre>
+<p>
+    then attach it to an empty &lt;div&gt; on DOM ready:
+</p>
+<pre>
+&lt;script type="text/javascript"&gt;
+$(document).ready(function() {
+    $('#selector').cron(); // apply cron with default options
+});
+&lt;/script&gt;
+&lt;!--- somewhere within &lt;body&gt; --&gt;
+&lt;div id='selector'&gt;&lt;/div&gt;
+</pre>
+
+    <p>
+    There are several ways one can utilise the generated cron entry:
+    <ol>
+        <li>
+        <strong>Interrogating the object</strong> :
+        See  <a href="#method-value"><tt>value</tt></a> method and <a href="#option-onchange"><tt>onChange</tt></a> option.
+        </li>
+
+        <li>
+        <strong>AJAX POST</strong> :
+        See the <a href="#option-urlset"><tt>url_set</tt></a> option.
+        </li>
+
+        <li>
+        <strong>embed in existing form</strong> (not recommended) :
+        The UI is rendered as a series of &lt;select&gt; boxes within the &lt;div&gt;.
+        Therefore, one can (in theory) embed the whole &lt;div&gt; within a form and on submission
+        interrogate the appropriate fields. The generated fiels will have the names:
+        <ul>
+            <li><tt>cron-period</tt> : possible values are "minute, hour, day, week, month, year"</li>
+            <li><tt>cron-mins</tt> : only relevant when cron-period = "hour"</li>
+            <li><tt>cron-time-hour</tt> : only relevant when cron-period = "day, week, month, year" </li>
+            <li><tt>cron-time-min</tt> : only relevant when cron-period = "day, week, month, year" </li>
+            <li><tt>cron-dom</tt> : only relevant when cron-period = "month, year"</li>
+            <li><tt>cron-month</tt> : only relevant when cron-period = "year"</li>
+            <li><tt>cron-dow</tt> : only relevant when cron-period = "week"</li>
+        </ul>
+        </li>
+    </ol>
+    </p>
+
+    <h2>Options</h2>
+
+    <h3 id='option-initial'>initial</h3>
+    <p>
+    The <tt>initial</tt> option allows you the set the initial cron value. If an initialll value is not set,
+    a default value of <tt>"* * * * *"</tt> is used.
+    </p>
+
+    <p>
+    After the object has been set up, you can still update the value using
+    the <a href="#method-value"><tt>value</tt></a> method.
+    </p>
+
+    <h3 id='option-urlset'>url_set</h3>
+    <p>
+    You can asynchronously submit the current value to you backend script by specifying then
+    the URL using the <tt>url_set</tt> option.
+    </p>
+
+    <p>
+    If this option is set, a "save" icon will appear when changes are made allowing users
+    to submit their changes to the backend for processing.
+    </p>
+
+    <p>
+    jquery-cron will submit the values <tt>{"cron": ??}</tt> using a POST request via AJAX.
+    If a non-error HTTP response is received, the save is considered to be successfule and
+    the "save" icon will be hidden until the next change is made.
+    </p>
+
+
+    <h3 id='option-onchange'>onChange</h3>
+    <p>
+    You can set a callback function using the <tt>onChange</tt> option. The function will be called
+    each time the value changes.
+    For instance, the <a href='#intro'>example in the introduction</a> is implemented as using:
+    </p>
+
+    <pre>
+$('#example1').cron({
+    initial: "42 3 * * 5",
+    onChange: function() {
+        $('#example1-val').text($(this).cron("value"));
+    }
+});</pre>
+
+    <h3 id='option-useGentleSelect'>useGentleSelect</h3>
+    <p>Tells the plugin to use <a href='http://shawnchin.github.com/jquery-gentleSelect'>gentleSelect</a> to show dropdown options instead of the default select inputs.
+    </p>
+
+    <pre>
+$('#example1').cron({
+    initial: "42 3 * * 5",
+    onChange: function() {
+        $('#example1-val').text($(this).cron("value"));
+    },
+    useGentleSelect: true // default: false
+});</pre>
+
+    <div class='example'>
+        <div id='example4'></div>
+        <p>Generated cron entry: <span class='example-text' id='example4-val'></span></p>
+    </div>
+
+    <h3 id='option-effectopts'>effectOpts</h3>
+    <p>
+        You can change the effects used when displaying/hiding the selection menu by changing the
+        parameters in effectOpts. These values will be used as the default options for <tt>gentleSelect</tt>.
+    </p>
+
+    <p>
+        The following parameters can be set:
+        <ul>
+            <li><a href='http://shawnchin.github.com/jquery-gentleSelect/#option-effect'>openEffect</a> (default: <tt>'slide'</tt>)</li>
+            <li><a href='http://shawnchin.github.com/jquery-gentleSelect/#option-effect'>closeEffect</a> (default: <tt>'slide'</tt>)</li>
+            <li><a href='http://shawnchin.github.com/jquery-gentleSelect/#option-speed'>openSpeed</a> (default: <tt>400</tt>)</li>
+            <li><a href='http://shawnchin.github.com/jquery-gentleSelect/#option-speed'>closeSpeed</a> (default: <tt>400</tt>)</li>
+            <li><a href='http://shawnchin.github.com/jquery-gentleSelect/#option-mouseout'>hideOnMouseOut</a> (default: <tt>true</tt>)</li>
+        </ul>
+    </p>
+
+    <p>
+        For example, the following uses the <tt>fade</tt> effect with a slower animation speed:
+    </p>
+
+    <p>
+        <div id='example2'></div>
+        <pre>
+$('#example2').cron({
+    initial: "42 3 * * 5",
+    effectOpts: {
+        openEffect: "fade",
+        openSpeed: "slow"
+    }
+});</pre>
+    </p>
+
+    <h3 id='option-each-element'>Customising individual select boxes</h3>
+    <p>
+        It is possible to customise each of the generated select boxes by sending additional
+        options to its instance of <tt>gentleSelect</tt>.
+        All <a href='http://shawnchin.github.com/jquery-gentleSelect/#option-title'>attributes
+        support by jquery-gentleSelect</a> can be specified.
+    </p>
+
+    <p>
+        The following are the options to use for each select menu:
+        <ul>
+            <li><tt>minuteOpts</tt> - Minutes past the hour (hourly)</li>
+            <li><tt>timeMinuteOpts</tt> - Time:Minute  (daily, weekly, monthly, yearly)</li>
+            <li><tt>timeHourOpts</tt> - Time:Hour  (daily, weekly, monthly, yearly)</li>
+            <li><tt>dowOpts</tt> - Day of week  (weekly)</li>
+            <li><tt>domOpts</tt> - Day of month  (monthly, yearly)</li>
+            <li><tt>monthOpts</tt> - Month (yearly)</li>
+        </ul>
+    </p>
+
+    <p>
+        For example, to change the title of the "Day of Month" select box which appears for monthly and yearly crons:
+        <pre>
+$('#selector').cron({
+    initial: "42 3 * * 5",
+    domOpts: {
+        title: "N-th day of the month"
+    }
+});
+</pre>
+
+    </p>
+
+    <h3 id='option-customvalues'>Adding custom values</h3>
+    <p>
+    Additional entries can be included in the period selection using the <tt>customValues</tt>
+    option. This allows you to specify more complex cron entries that is not currently expressible
+    using the current setup.
+    </p>
+    <p>
+    For example, the following adds two additional entries to the selection:
+        <pre>
+$('#selector').cron({
+    initial: "*/5 * * * *",
+    customValues: {
+        "5 Minutes" : "*/5 * * * *",
+        "2 Hours on Weekends" : "0 */2 * * 5,6"
+    }
+});
+</pre>
+    </p>
+
+    <div class='example'>
+        <div id='example3'></div>
+        <p>Generated cron entry: <span class='example-text' id='example3-val'></span></p>
+    </div>
+
+    <p>
+    <b>Caveats:</b>
+    <ul>
+        <li>
+            At present, cron entries specified in <tt>customValues</tt> are not validated.
+            It is down to the implementer to ensure that provided values are as required.
+        </li>
+        <li>
+            The <a href='#method-value'><tt>value</tt></a> method can be used to retrieve
+            custom cron values. However, it cannot be used to set custom values.
+        </li>
+    </ul>
+    </p>
+    <h2>Methods</h2>
+    <h3 id='method-value'>value</h3>
+    <p>
+    The <tt>value</tt> method enables you to set/get the current cron value.
+    </p>
+
+    <pre>
+// Initialise a cron objecy
+var cron_field = $('#selector').cron();
+
+// Updating the value of an existing cron object
+cron_field.cron("value", "12 23 * * *");
+
+// calling the method with the extra argument returns the current value
+var current_value = cron_field.cron("value")
+</pre>
+
+</div>
+<div id='footer'>
+
+
+Copyright &copy; 2010-2013 <a href='http://github.com/shawnchin'>Shawn Chin</a>
+(Licensed under the <a href='http://www.opensource.org/licenses/mit-license.php'>MIT License</a>)
+</div>
+<a href="http://github.com/shawnchin/jquery-cron"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" /></a>
+
+</body>
+</html>

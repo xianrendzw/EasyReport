@@ -20,7 +20,19 @@ public class DruidDataSourcePool implements DataSourcePoolWrapper {
             dataSource.setUrl(rptDs.getJdbcUrl());
             dataSource.setUsername(rptDs.getUser());
             dataSource.setPassword(rptDs.getPassword());
-            dataSource.setBreakAfterAcquireFailure(MapUtils.getBoolean(rptDs.getOptions(), "breakAfterAcquireFailure", false));
+            dataSource.setInitialSize(MapUtils.getInteger(rptDs.getOptions(), "initialSize", 3));
+            dataSource.setMaxActive(MapUtils.getInteger(rptDs.getOptions(), "maxActive", 20));
+            dataSource.setMinIdle(MapUtils.getInteger(rptDs.getOptions(), "minIdle", 1));
+            dataSource.setMaxWait(MapUtils.getInteger(rptDs.getOptions(), "maxWait", 60000));
+            dataSource.setTimeBetweenEvictionRunsMillis(MapUtils.getInteger(rptDs.getOptions(), "timeBetweenEvictionRunsMillis", 60000));
+            dataSource.setMinEvictableIdleTimeMillis(MapUtils.getInteger(rptDs.getOptions(), "minEvictableIdleTimeMillis", 300000));
+            dataSource.setTestWhileIdle(MapUtils.getBoolean(rptDs.getOptions(), "testWhileIdle", true));
+            dataSource.setTestOnBorrow(MapUtils.getBoolean(rptDs.getOptions(), "testOnBorrow", false));
+            dataSource.setTestOnReturn(MapUtils.getBoolean(rptDs.getOptions(), "testOnReturn", false));
+            dataSource.setMaxOpenPreparedStatements(MapUtils.getInteger(rptDs.getOptions(), "maxOpenPreparedStatements", 20));
+            dataSource.setRemoveAbandoned(MapUtils.getBoolean(rptDs.getOptions(), "removeAbandoned", true));
+            dataSource.setRemoveAbandonedTimeout(MapUtils.getInteger(rptDs.getOptions(), "removeAbandonedTimeout", 1800));
+            dataSource.setLogAbandoned(MapUtils.getBoolean(rptDs.getOptions(), "logAbandoned", true));
             return dataSource;
         } catch (Exception ex) {
             throw new RuntimeException("C3p0DataSourcePool Create Error", ex);

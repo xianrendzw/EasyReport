@@ -1,0 +1,68 @@
+.gentleselect-data { display: none; }
+
+.gentleselect-label {
+    padding: 1px 20px 1px 20px;
+    background-color: #eee;
+    
+    border: 2px solid #ddd;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;   
+
+    background-repeat: no-repeat; 
+    background-position: center right; 
+    
+    cursor: pointer;
+    color: #555;
+    
+    white-space: nowrap;
+}
+
+.gentleselect-label-highlight {
+    border: 2px solid #aaa;
+    background-image: url('img/expand.png');
+}
+
+.gentleselect-dialog {
+    position: absolute;
+    z-index: 500;
+    display: none;
+
+    background-color: #fff;
+    border: 2px solid #999;
+
+    -moz-box-shadow: 0px 0px 12px #555;
+    -webkit-box-shadow: 0px 0px 12px #555;
+    box-shadow: 0px 0px 12px #555;
+
+    margin: 0; padding: 0;
+}
+
+.gentleselect-dialog > ul { padding: 0; margin: 0; list-style: none; }
+.gentleselect-dialog > ul > li {
+    margin: 0;
+    padding: 3px 20px 3px 25px;
+    
+    cursor: pointer;
+}
+.gentleselect-dialog > ul > li.selected {
+    font-weight: bold;
+    color: #369;
+    background-color: #eee;
+}
+.gentleselect-dialog > ul > li.gentleselect-dummy:hover { background-color: #fff; }
+.gentleselect-dialog > ul > li:hover {
+    background-color: #69c;
+    color: #fff;
+}
+
+.gentleselect-dialog > .gentleselect-title {
+    display: block;
+    text-align: center;
+    margin: 0;
+    padding: 2px;
+    background-color: #ddd;
+    font-size: 0.8em;
+    color: #666;
+    overflow: hidden;
+}

@@ -1,55 +1,55 @@
 $(function () {
-    MembershipUser.init();
+    ScheduleTask.init();
 });
 
-var MembershipUser = {
+var ScheduleTask = {
     init: function () {
-        UserMVC.View.initControl();
-        UserMVC.View.bindEvent();
-        UserMVC.View.bindValidate();
-        UserMVC.View.initData();
+        TaskMVC.View.initControl();
+        TaskMVC.View.bindEvent();
+        TaskMVC.View.bindValidate();
+        TaskMVC.View.initData();
     }
 };
 
-var UserCommon = {
-    baseUrl: EasyReport.ctxPath + '/rest/membership/user/',
-    roleBaseUrl: EasyReport.ctxPath + '/rest/membership/role/',
+var TaskCommon = {
+    baseUrl: EasyReport.ctxPath + '/rest/schedule/task/',
+    reportBaseUrl: EasyReport.ctxPath + '/rest/metadata/report/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
 
-var UserMVC = {
+var TaskMVC = {
     URLs: {
         add: {
-            url: UserCommon.baseUrl + 'add',
+            url: TaskCommon.baseUrl + 'add',
             method: 'POST'
         },
         edit: {
-            url: UserCommon.baseUrl + 'edit',
+            url: TaskCommon.baseUrl + 'edit',
             method: 'POST'
         },
         list: {
-            url: UserCommon.baseUrl + 'list',
+            url: TaskCommon.baseUrl + 'list',
             method: 'GET'
         },
         remove: {
-            url: UserCommon.baseUrl + 'remove',
+            url: TaskCommon.baseUrl + 'remove',
             method: 'POST'
         },
-        getRoleList: {
-            url: UserCommon.roleBaseUrl + 'getRoleList',
+        getAllReports: {
+            url: TaskCommon.reportBaseUrl + 'getAll',
+            method: 'POST'
+        },
+        getJsonOptions: {
+            url: TaskCommon.baseUrl + 'getJsonOptions',
             method: 'GET'
-        },
-        editPassword: {
-            url: UserCommon.baseUrl + 'editPassword',
-            method: 'POST'
         }
     },
     Model: {
-        roles: {}
+        reports: {}
     },
     View: {
         initControl: function () {
-            $('#user-datagrid').datagrid({
+            $('#task-datagrid').datagrid({
                 method: 'get',
                 fit: true,
                 fitColumns: true,
@@ -57,31 +57,31 @@ var UserMVC = {
                 pagination: true,
                 rownumbers: true,
                 pageSize: 50,
-                url: UserMVC.URLs.list.url,
+                url: TaskMVC.URLs.list.url,
                 toolbar: [{
                     iconCls: 'icon-add',
                     handler: function () {
-                        UserMVC.Controller.add();
+                        TaskMVC.Controller.add();
                     }
                 }, '-', {
                     iconCls: 'icon-edit1',
                     handler: function () {
-                        UserMVC.Controller.edit();
+                        TaskMVC.Controller.edit();
                     }
                 }, '-', {
-                    iconCls: 'icon-pwd',
+                    iconCls: 'icon-settings',
                     handler: function () {
-                        UserMVC.Controller.resetPwd();
+
                     }
                 }, '-', {
                     iconCls: 'icon-remove1',
                     handler: function () {
-                        UserMVC.Controller.remove();
+                        TaskMVC.Controller.remove();
                     }
                 }, '-', {
                     iconCls: 'icon-reload',
                     handler: function () {
-                        EasyUIUtils.reloadDatagrid('#user-datagrid');
+                        EasyUIUtils.reloadDatagrid('#task-datagrid');
                     }
                 }],
                 loadFilter: function (src) {
@@ -92,37 +92,34 @@ var UserMVC = {
                 },
                 columns: [[{
                     field: 'id',
-                    title: '用户ID',
+                    title: '任务ID',
                     width: 50,
                     sortable: true
                 }, {
-                    field: 'account',
-                    title: '账号',
-                    width: 100,
+                    field: 'reportIds',
+                    title: '报表ids',
+                    width: 200,
                     sortable: true
                 }, {
-                    field: 'name',
-                    title: '姓名',
-                    width: 80,
+                    field: 'cronExpr',
+                    title: 'Cron表达式',
+                    width: 150,
                     sortable: true,
                 }, {
-                    field: 'telephone',
-                    title: '电话',
-                    width: 50,
-                    sortable: true
-                }, {
-                    field: 'email',
-                    title: '邮箱',
-                    width: 80,
-                    sortable: true
-                }, {
-                    field: 'status',
-                    title: '状态',
+                    field: 'type',
+                    title: '类型',
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        if (value === 1) return "电子邮件";
+                        if (value === 2) return "手机短信";
+                        return "其他";
                     }
+                }, {
+                    field: 'comment',
+                    title: '说明',
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'gmtCreated',
                     title: '创建时间',
@@ -137,8 +134,8 @@ var UserMVC = {
                             "name": "edit",
                             "title": "编辑"
                         }, {
-                            "name": "pwd",
-                            "title": "修改密码"
+                            "name": "settings",
+                            "title": "配置项"
                         }, {
                             "name": "remove",
                             "title": "删除"
@@ -146,13 +143,13 @@ var UserMVC = {
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
                             var tmpl = '<a href="#" title ="${title}" '
-                                + 'onclick="UserMVC.Controller.doOption(\'${index}\',\'${name}\')">'
+                                + 'onclick="TaskMVC.Controller.doOption(\'${index}\',\'${name}\')">'
                                 + '<img src="${imgSrc}" alt="${title}"/"></a>';
                             var data = {
                                 title: icons[i].title,
                                 name: icons[i].name,
                                 index: index,
-                                imgSrc: UserCommon.baseIconUrl + icons[i].name + ".png"
+                                imgSrc: TaskCommon.baseIconUrl + icons[i].name + ".png"
                             };
                             buttons.push(juicer(tmpl, data));
                         }
@@ -160,124 +157,101 @@ var UserMVC = {
                     }
                 }]],
                 onDblClickRow: function (rowIndex, rowData) {
-                    return UserMVC.Controller.edit();
+                    return TaskMVC.Controller.edit();
                 }
             });
 
             // dialogs
-            $('#user-dlg').dialog({
+            $('#task-dlg').dialog({
                 closed: true,
                 modal: false,
-                width: 560,
+                width: 650,
                 height: 500,
                 iconCls: 'icon-add',
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function () {
-                        $("#user-dlg").dialog('close');
+                        $("#task-dlg").dialog('close');
                     }
                 }, {
                     text: '保存',
                     iconCls: 'icon-save',
-                    handler: UserMVC.Controller.save
+                    handler: TaskMVC.Controller.save
                 }]
             });
 
-            $('#reset-pwd-dlg').dialog({
-                closed: true,
-                modal: false,
-                width: 560,
-                height: 250,
-                iconCls: 'icon-pwd',
-                buttons: [{
-                    text: '关闭',
-                    iconCls: 'icon-no',
-                    handler: function () {
-                        $("#reset-pwd-dlg").dialog('close');
-                    }
-                }, {
-                    text: '保存',
-                    iconCls: 'icon-save',
-                    handler: UserMVC.Controller.save
-                }]
+            $('#type').combobox({
+                onChange: function (newValue, oldValue) {
+                    TaskMVC.Util.getJsonOptions(newValue);
+                }
+            });
+
+            $('#cronExprDiv').cron({
+                initial: "42 3 1 * *",
+                onChange: function () {
+                    $('#cronExpr').textbox('setValue', $(this).cron("value"));
+                },
+                useGentleSelect: true
             });
         },
         bindEvent: function () {
-            $('#btn-search').bind('click', UserMVC.Controller.find);
+            $('#btn-search').bind('click', TaskMVC.Controller.find);
         },
         bindValidate: function () {
         },
         initData: function () {
-            UserMVC.Util.loadRoleList();
+            TaskMVC.Util.loadReportList();
         }
     },
     Controller: {
         doOption: function (index, name) {
-            $('#user-datagrid').datagrid('selectRow', index);
+            $('#task-datagrid').datagrid('selectRow', index);
             if (name == "edit") {
-                return UserMVC.Controller.edit();
+                return TaskMVC.Controller.edit();
             }
             if (name == "remove") {
-                return UserMVC.Controller.remove();
-            }
-            if (name == "pwd") {
-                return UserMVC.Controller.resetPwd();
+                return TaskMVC.Controller.remove();
             }
         },
         add: function () {
-            var options = UserMVC.Util.getOptions();
-            options.title = '新增用户';
+            var options = TaskMVC.Util.getOptions();
+            options.title = '新增任务';
             EasyUIUtils.openAddDlg(options);
-            UserMVC.Util.fillRoleCombox("add", []);
-            $('#status').combobox('setValue', "1");
-            $('#account').textbox('readonly', false);
+            $('#type').combobox('setValue', "1");
+            $('#cronExpr').textbox('setValue', '42 3 1 * *');
+            TaskMVC.Util.fillReportCombox("add", []);
         },
         edit: function () {
-            var row = $('#user-datagrid').datagrid('getSelected');
+            var row = $('#task-datagrid').datagrid('getSelected');
             if (row) {
-                var options = UserMVC.Util.getOptions();
+                var options = TaskMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']用户';
+                options.title = '修改[' + options.data.name + ']任务';
                 EasyUIUtils.openEditDlg(options);
-                $('#password').textbox('setValue', '');
-                $('#account').textbox('readonly', true);
-                var roleIds = row.roles || "";
-                UserMVC.Util.fillRoleCombox("edit", roleIds.split(','));
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
-        },
-        resetPwd: function () {
-            var row = $('#user-datagrid').datagrid('getSelected');
-            if (row) {
-                $('#reset-pwd-dlg').dialog('open').dialog('center');
-                $("#modal-action").val("resetPwd");
-                $("#reset-pwd-form").form('clear');
-                $("#reset-userId").val(row.userId);
-                $("#reset-account").text(row.account);
+                TaskMVC.Util.fillReportCombox("edit", roleIds.split(','));
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
         },
         find: function () {
-            var fieldName = $("#field-name").combobox('getValue');
+            var fieldName = 'comment';
             var keyword = $("#keyword").val();
-            var url = UserMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
-            EasyUIUtils.loadToDatagrid('#user-datagrid', url)
+            var url = TaskMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
+            EasyUIUtils.loadToDatagrid('#task-datagrid', url)
         },
         remove: function () {
-            var row = $('#user-datagrid').datagrid('getSelected');
+            var row = $('#task-datagrid').datagrid('getSelected');
             if (row) {
                 var options = {
                     rows: [row],
-                    url: UserMVC.URLs.remove.url,
+                    url: TaskMVC.URLs.remove.url,
                     data: {
                         id: row.id
                     },
-                    gridId: '#user-datagrid',
-                    gridUrl: UserMVC.URLs.list.url,
+                    gridId: '#task-datagrid',
+                    gridUrl: TaskMVC.URLs.list.url,
                     callback: function (rows) {
                     }
                 };
@@ -288,33 +262,27 @@ var UserMVC = {
             var action = $('#modal-action').val();
             var options = {
                 gridId: null,
-                gridUrl: UserMVC.URLs.list.url,
-                dlgId: "#user-dlg",
-                formId: "#user-form",
+                gridUrl: TaskMVC.URLs.list.url,
+                dlgId: "#task-dlg",
+                formId: "#task-form",
                 url: null,
                 callback: function () {
                 }
             };
 
-            if (action === "resetPwd") {
-                options.dlgId = '#reset-pwd-dlg';
-                options.formId = '#reset-pwd-form';
-                options.url = UserMVC.URLs.editPassword.url;
-            } else {
-                $('#roles').val($('#combox-roles').combobox('getValues'));
-                options.url = (action === "edit" ? UserMVC.URLs.edit.url : UserMVC.URLs.add.url);
-                options.gridId = '#user-datagrid';
-            }
+            $('#reportIds').val($('#combox-reports').combobox('getValues'));
+            options.url = (action === "edit" ? TaskMVC.URLs.edit.url : TaskMVC.URLs.add.url);
+            options.gridId = '#task-datagrid';
             return EasyUIUtils.save(options);
         }
     },
     Util: {
         getOptions: function () {
             return {
-                dlgId: '#user-dlg',
-                formId: '#user-form',
+                dlgId: '#task-dlg',
+                formId: '#task-form',
                 actId: '#modal-action',
-                rowId: '#roleId',
+                rowId: '#taskId',
                 title: '',
                 iconCls: 'icon-add',
                 data: {},
@@ -323,11 +291,11 @@ var UserMVC = {
                 gridId: null,
             };
         },
-        fillRoleCombox: function (act, values) {
-            var id = '#combox-roles';
+        fillReportCombox: function (act, values) {
+            var id = '#combox-reports';
             $(id).combobox('clear');
             var data = [];
-            var items = UserMVC.Model.roles;
+            var items = TaskMVC.Model.reports;
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 data.push({
@@ -341,9 +309,16 @@ var UserMVC = {
                 $(id).combobox('setValues', values);
             }
         },
-        loadRoleList: function () {
-            $.getJSON(UserMVC.URLs.getRoleList.url, function (src) {
-                UserMVC.Model.roles = src.data;
+        loadReportList: function () {
+            $.getJSON(TaskMVC.URLs.getAllReports.url, function (src) {
+                TaskMVC.Model.reports = src.data;
+            });
+        },
+        getJsonOptions: function (type) {
+            $.getJSON(TaskMVC.URLs.getJsonOptions.url + '?type=' + type, function (result) {
+                if (result.success) {
+                    $('#options').textbox('setValue', result.data);
+                }
             });
         }
     }
