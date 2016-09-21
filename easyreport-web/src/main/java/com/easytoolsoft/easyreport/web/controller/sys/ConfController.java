@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,10 @@ import java.util.Map;
 @RequestMapping(value = "/rest/sys/conf")
 public class ConfController
         extends BaseController<IConfService, Conf, ConfExample> {
+
     @GetMapping(value = "/list")
     @OpLog(name = "获取指定ID的系统配置项")
+    @RequiresPermissions("sys.conf:view")
     public Map<String, Object> list(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
         Map<String, Object> modelMap = new HashMap<>(2);
@@ -36,6 +39,7 @@ public class ConfController
 
     @GetMapping(value = "/listChildren")
     @OpLog(name = "获取指定ID的所有子系统配置项")
+    @RequiresPermissions("sys.conf:view")
     public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
         List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
@@ -52,6 +56,7 @@ public class ConfController
 
     @GetMapping(value = "/find")
     @OpLog(name = "分页查找指定ID的系统配置项")
+    @RequiresPermissions("sys.conf:view")
     public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<Conf> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
@@ -63,6 +68,7 @@ public class ConfController
 
     @PostMapping(value = "/add")
     @OpLog(name = "新增系统配置项")
+    @RequiresPermissions("sys.conf:add")
     public JsonResult add(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
@@ -73,6 +79,7 @@ public class ConfController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑系统配置项")
+    @RequiresPermissions("sys.conf:edit")
     public JsonResult edit(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
@@ -81,6 +88,7 @@ public class ConfController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除系统配置项")
+    @RequiresPermissions("sys.conf:remove")
     public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();
         this.service.removeById(id);
@@ -89,6 +97,7 @@ public class ConfController
 
     @PostMapping(value = "/copy")
     @OpLog(name = "复制系统配置项")
+    @RequiresPermissions("sys.conf:edit")
     public JsonResult copy(Conf po) {
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
@@ -99,12 +108,14 @@ public class ConfController
 
     @GetMapping(value = "/getDepth1Items")
     @OpLog(name = "获取指定父配置项下的所有一级配置项")
+    @RequiresPermissions("sys.conf:view")
     public List<Conf> getDepth1Items(String key) {
         return this.service.getByParentKey(key);
     }
 
     @GetMapping(value = "/getDepth2Items")
     @OpLog(name = "获取指定父配置项下的所有一、二级配置项")
+    @RequiresPermissions("sys.conf:view")
     public Map<String, List<Conf>> getDepth2Items(String key) {
         return this.service.getDepth2ByParentKey(key);
     }

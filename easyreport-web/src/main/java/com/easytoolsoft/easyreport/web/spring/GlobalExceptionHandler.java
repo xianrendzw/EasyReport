@@ -4,6 +4,7 @@ import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +27,9 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
                                          Object handler, Exception ex) {
         String detailMessage = (ex.getCause() == null ? ex.getMessage() : ex.getCause().getMessage());
         JsonResult<String> result = new JsonResult<>(false, StringEscapeUtils.escapeHtml4(detailMessage));
+        if (ex instanceof UnauthorizedException) {
+            result.setMsg("对不起，您没有权限，不能访问！");
+        }
         try {
             String str = mapper.writeValueAsString(result);
             log.error(str, ex);

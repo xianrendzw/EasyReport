@@ -9,6 +9,8 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ public class ModuleController
 
     @GetMapping(value = "/getModuleTree")
     @OpLog(name = "获取系统模块树型列表")
+    @RequiresPermissions("membership.module:view")
     public JsonResult getModuleTree() {
         JsonResult<Object> result = new JsonResult<>();
         List<EasyUITreeNode<Module>> roots = new ArrayList<>();
@@ -65,6 +68,7 @@ public class ModuleController
 
     @GetMapping(value = "/list")
     @OpLog(name = "获取系统模块树型列表")
+    @RequiresPermissions("membership.module:view")
     public Map<String, Object> list(DataGridPager pager, Integer id) {
         int pid = (id == null ? 0 : id);
         PageInfo pageInfo = pager.toPageInfo();
@@ -77,6 +81,7 @@ public class ModuleController
 
     @PostMapping(value = "/add")
     @OpLog(name = "新增系统模块")
+    @RequiresPermissions("membership.module:add")
     public JsonResult add(Module po) {
         JsonResult<Object> result = new JsonResult<>();
         po.setHasChild((byte) 0);
@@ -89,6 +94,7 @@ public class ModuleController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑指定ID的系统模块")
+    @RequiresPermissions("membership.module:edit")
     public JsonResult edit(Module po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
@@ -97,6 +103,7 @@ public class ModuleController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "邮件指定ID的系统模块")
+    @RequiresPermissions("membership.module:remove")
     public JsonResult remove(Integer id, Integer pid) {
         JsonResult<String> result = new JsonResult<>();
         this.service.remove(id, pid);
@@ -105,12 +112,14 @@ public class ModuleController
 
     @GetMapping(value = "/getModule")
     @OpLog(name = "获取指定ID系统模块信息")
+    @RequiresPermissions("membership.module:view")
     public Module getModule(Integer id) {
         return this.service.getById(id);
     }
 
     @GetMapping(value = "/getChildModules")
     @OpLog(name = "获取子模块树型列表")
+    @RequiresPermissions("membership.module:view")
     public List<EasyUITreeNode<Module>> getChildModules(Integer id) {
         int parentId = (id == null ? 0 : id);
         List<Module> modules = this.service.getChildren(parentId);
@@ -127,6 +136,7 @@ public class ModuleController
 
     @PostMapping(value = "/move")
     @OpLog(name = "移动模块树型关系")
+    @RequiresPermissions("membership.module:edit")
     public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.move(sourceId, targetId, sourcePid);
@@ -135,6 +145,7 @@ public class ModuleController
 
     @GetMapping(value = "/rebuildPath")
     @OpLog(name = "重新模块树路径")
+    @RequiresPermissions("membership.module:edit")
     public JsonResult rebuildPath() {
         JsonResult<Object> result = new JsonResult<>();
         this.service.rebuildAllPath();

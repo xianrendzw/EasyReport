@@ -11,6 +11,7 @@ import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +27,14 @@ public class TaskController
 
     @GetMapping(value = "/list")
     @OpLog(name = "获取任务列表")
+    @RequiresPermissions("schedule.task:view")
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         return super.find(pager, fieldName, keyword);
     }
 
     @PostMapping(value = "/add")
     @OpLog(name = "增加任务")
+    @RequiresPermissions("schedule.task:add")
     public JsonResult add(Task po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
@@ -40,18 +43,21 @@ public class TaskController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
+    @RequiresPermissions("schedule.task:edit")
     public JsonResult edit(Task po) {
         return super.edit(po);
     }
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
+    @RequiresPermissions("schedule.task:remove")
     public JsonResult remove(int id) {
         return super.remove(id);
     }
 
     @GetMapping(value = "/getJsonOptions")
     @OpLog(name = "获取配置项JSON结构")
+    @RequiresPermissions("schedule.task:view")
     public JsonResult getJsonOptions(Integer type) throws JsonProcessingException {
         JsonResult<String> result = new JsonResult<>();
         if (type.equals(1)) {

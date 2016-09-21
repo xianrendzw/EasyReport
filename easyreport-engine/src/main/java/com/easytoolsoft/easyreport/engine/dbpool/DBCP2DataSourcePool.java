@@ -1,7 +1,6 @@
 package com.easytoolsoft.easyreport.engine.dbpool;
 
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.dbcp2.BasicDataSource;
 

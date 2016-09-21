@@ -37,6 +37,7 @@ public class DataSourceService
             conn = DriverManager.getConnection(url, user, password);
             return true;
         } catch (Exception e) {
+            log.error("testConnection", e);
             return false;
         } finally {
             this.releaseConnection(conn);

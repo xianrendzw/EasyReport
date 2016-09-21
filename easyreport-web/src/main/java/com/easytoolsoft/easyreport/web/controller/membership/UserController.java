@@ -10,6 +10,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,7 @@ public class UserController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取用户列表")
+    @RequiresPermissions("membership.user:view")
     public Map<String, Object> list(@CurrentUser User loginUser, DataGridPager pager,
                                     String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
@@ -42,6 +44,7 @@ public class UserController
 
     @RequestMapping(value = "/add")
     @OpLog(name = "新增用户")
+    @RequiresPermissions("membership.user:add")
     public JsonResult add(User po) {
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
@@ -53,6 +56,7 @@ public class UserController
 
     @RequestMapping(value = "/edit")
     @OpLog(name = "修改用户")
+    @RequiresPermissions("membership.user:edit")
     public JsonResult edit(User po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.encryptPassword(po);
@@ -62,6 +66,7 @@ public class UserController
 
     @RequestMapping(value = "/remove")
     @OpLog(name = "删除用户")
+    @RequiresPermissions("membership.user:remove")
     public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();
         this.service.removeById(id);
@@ -70,6 +75,7 @@ public class UserController
 
     @RequestMapping(value = "/editPassword")
     @OpLog(name = "修改用户登录密码")
+    @RequiresPermissions("membership.user:editPassword")
     public JsonResult editPassword(Integer userId, String password) {
         JsonResult<String> result = new JsonResult<>();
         User user = this.service.getById(userId);
@@ -81,6 +87,7 @@ public class UserController
 
     @RequestMapping(value = "/changeMyPassword")
     @OpLog(name = "修改个人登录密码")
+    @RequiresPermissions("membership.user:changeMyPassword")
     public JsonResult changeMyPassword(@CurrentUser User loginUser, String password, String oldPassword) {
         JsonResult<String> result = new JsonResult<>();
         String encryptPassword = this.passwordService.encryptPassword(oldPassword, loginUser.getCredentialsSalt());

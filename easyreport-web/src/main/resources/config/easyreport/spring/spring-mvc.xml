@@ -3,8 +3,8 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:task="http://www.springframework.org/schema/task"
-       xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
@@ -38,7 +38,7 @@
             </bean>
         </mvc:message-converters>
         <mvc:argument-resolvers>
-            <bean class="com.easytoolsoft.easyreport.membership.common.CurrentUserMethodArgumentResolver" />
+            <bean class="com.easytoolsoft.easyreport.membership.common.CurrentUserMethodArgumentResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
     <mvc:view-controller path="/" view-name="index"/>

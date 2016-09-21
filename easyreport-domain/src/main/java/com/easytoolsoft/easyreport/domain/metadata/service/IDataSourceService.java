@@ -19,5 +19,5 @@ public interface IDataSourceService extends ICrudService<DataSource, DataSourceE
      * @param user
      * @param password
      */
-    boolean testConnection(String url, String user, String password) throws SQLException;
+    boolean testConnection(String url, String user, String password);
 }

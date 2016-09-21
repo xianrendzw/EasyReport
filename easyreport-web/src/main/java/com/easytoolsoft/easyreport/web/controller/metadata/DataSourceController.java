@@ -8,6 +8,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class DataSourceController
 
     @GetMapping(value = "/listAll")
     @OpLog(name = "获取所有数据源")
+    @RequiresPermissions("report.ds:view")
     public List<DataSource> listAll() {
         return this.service.getAll().stream()
                 .map(x -> DataSource.builder()
@@ -44,6 +46,7 @@ public class DataSourceController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取数据源列表")
+    @RequiresPermissions("report.ds:view")
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
@@ -55,6 +58,7 @@ public class DataSourceController
 
     @RequestMapping(value = "/add")
     @OpLog(name = "新增数据源")
+    @RequiresPermissions("report.ds:add")
     public JsonResult add(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
@@ -65,6 +69,7 @@ public class DataSourceController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑数据源")
+    @RequiresPermissions("report.ds:edit")
     public JsonResult edit(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
@@ -73,6 +78,7 @@ public class DataSourceController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除数据源")
+    @RequiresPermissions("report.ds:remove")
     public JsonResult remove(int id) {
         JsonResult<String> result = new JsonResult<>();
         this.service.removeById(id);
@@ -81,7 +87,8 @@ public class DataSourceController
 
     @PostMapping(value = "/testConnection")
     @OpLog(name = "测试数据源")
-    public JsonResult testConnection(String url, String pass, String user) throws SQLException {
+    @RequiresPermissions("report.ds:view")
+    public JsonResult testConnection(String url, String pass, String user) {
         JsonResult<String> result = new JsonResult<>();
         result.setSuccess(this.service.testConnection(url, user, pass));
         return result;
@@ -89,7 +96,8 @@ public class DataSourceController
 
     @PostMapping(value = "/testConnectionById")
     @OpLog(name = "测试数据源")
-    public JsonResult testConnection(Integer id) throws SQLException {
+    @RequiresPermissions("report.ds:view")
+    public JsonResult testConnection(Integer id) {
         JsonResult<String> result = new JsonResult<>();
         DataSource dsPo = this.service.getById(id);
         result.setSuccess(this.service.testConnection(

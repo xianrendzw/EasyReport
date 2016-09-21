@@ -65,10 +65,11 @@ public class MembershipFacade {
 
         Map<String, String> permissionMap = permissionService.getIdCodeMap();
         String[] permissionIdSplit = StringUtils.split(permissionIds, ',');
-        Set<String> permSet = new HashSet<>(permissionIdSplit.length);
+        Set<String> permSet = new HashSet<>();
         for (String permId : permissionIdSplit) {
-            if (!permSet.contains(permId.trim())) {
-                permSet.add(permissionMap.get(permId.trim()));
+            String perm = permissionMap.get(StringUtils.trim(permId));
+            if (StringUtils.isNotBlank(perm)) {
+                permSet.add(perm);
             }
         }
         return permSet;

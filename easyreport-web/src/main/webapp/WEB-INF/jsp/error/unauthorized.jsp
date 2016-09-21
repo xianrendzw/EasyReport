@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>没有权限</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/error.css" />
+<link rel="stylesheet" href="${ctxPath}/assets/css/error.css?v=${version}" />
 </head>
 <body>
 	<section class="center">

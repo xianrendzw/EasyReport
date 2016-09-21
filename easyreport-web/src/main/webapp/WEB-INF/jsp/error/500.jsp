@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>500 Error</title>
-    <link href="<%=request.getContextPath()%>/assets/css/error.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="${ctxPath}/assets/css/error.css?v=${version}" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 <div class="body-500">
