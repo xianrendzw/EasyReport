@@ -54,9 +54,21 @@ public class ReportController
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取报表列表")
     @RequiresPermissions("report.designer:view")
-    public Map<String, Object> list(DataGridPager pager, Integer categoryId, String fieldName, String keyword) {
+    public Map<String, Object> list(DataGridPager pager, Integer id) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<Report> list = this.service.getByPage(pageInfo, categoryId, fieldName, keyword);
+        List<Report> list = this.service.getByPage(pageInfo, id == null ? 0 : id);
+        Map<String, Object> modelMap = new HashMap<>(2);
+        modelMap.put("total", pageInfo.getTotals());
+        modelMap.put("rows", list);
+        return modelMap;
+    }
+
+    @GetMapping(value = "/find")
+    @OpLog(name = "分页查询报表")
+    @RequiresPermissions("report.designer:view")
+    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Report> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -119,11 +131,11 @@ public class ReportController
         return result;
     }
 
-    @PostMapping(value = "/loadSqlColumns")
+    @PostMapping(value = "/execSqlText")
     @OpLog(name = "获取报表元数据列集合")
     @RequiresPermissions("report.designer:view")
-    public JsonResult loadSqlColumns(Integer dsId, String sqlText, Integer dataRange,
-                                     String queryParams, HttpServletRequest request) {
+    public JsonResult execSqlText(Integer dsId, String sqlText, Integer dataRange,
+                                  String queryParams, HttpServletRequest request) {
         JsonResult<List<ReportMetaDataColumn>> result = new JsonResult<>();
         if (dsId == null) {
             return result;
@@ -133,11 +145,11 @@ public class ReportController
         return result;
     }
 
-    @GetMapping(value = "/viewSqlText")
-    @OpLog(name = "查看报表SQL语句")
+    @GetMapping(value = "/previewSqlText")
+    @OpLog(name = "预览报表SQL语句")
     @RequiresPermissions("report.designer:view")
-    public JsonResult viewSqlText(Integer dsId, String sqlText, Integer dataRange, String queryParams,
-                                  HttpServletRequest request) {
+    public JsonResult previewSqlText(Integer dsId, String sqlText, Integer dataRange, String queryParams,
+                                     HttpServletRequest request) {
         JsonResult<String> result = new JsonResult<>();
         if (dsId == null) return result;
         if (dataRange == null) dataRange = 7;
@@ -147,25 +159,16 @@ public class ReportController
         return result;
     }
 
-    @GetMapping(value = "/getSqlColumn")
+    @GetMapping(value = "/getSqlColumnScheme")
     @OpLog(name = "获取报表元数据列结构")
     @RequiresPermissions("report.designer:view")
-    public ReportMetaDataColumn getSqlColumn() {
-        ReportMetaDataColumn sqlColumnPo = new ReportMetaDataColumn();
-        sqlColumnPo.setName("expr");
-        sqlColumnPo.setType(4);
-        sqlColumnPo.setDataType("DECIMAL");
-        sqlColumnPo.setWidth(42);
-        return sqlColumnPo;
-    }
-
-    @PostMapping(value = "/saveQueryParam")
-    @OpLog(name = "保存报表查询参数")
-    @RequiresPermissions("report.designer:add")
-    public JsonResult saveQueryParam(Integer id, String queryParams) {
-        JsonResult<String> result = new JsonResult<>();
-        this.service.editById(Report.builder().id(id).queryParams(queryParams).build());
-        return result;
+    public ReportMetaDataColumn getSqlColumnScheme() {
+        ReportMetaDataColumn column = new ReportMetaDataColumn();
+        column.setName("expr");
+        column.setType(4);
+        column.setDataType("DECIMAL");
+        column.setWidth(42);
+        return column;
     }
 
     private String getSqlText(String sqlText, Integer dataRange, String queryParams, HttpServletRequest request) {

@@ -95,17 +95,6 @@ public class ConfController
         return result;
     }
 
-    @PostMapping(value = "/copy")
-    @OpLog(name = "复制系统配置项")
-    @RequiresPermissions("sys.conf:edit")
-    public JsonResult copy(Conf po) {
-        JsonResult<String> result = new JsonResult<>();
-        po.setGmtCreated(new Date());
-        po.setGmtModified(new Date());
-        this.service.add(po);
-        return result;
-    }
-
     @GetMapping(value = "/getDepth1Items")
     @OpLog(name = "获取指定父配置项下的所有一级配置项")
     @RequiresPermissions("sys.conf:view")

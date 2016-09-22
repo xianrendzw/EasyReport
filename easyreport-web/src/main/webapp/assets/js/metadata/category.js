@@ -12,7 +12,7 @@ var MetaDataCategory = {
 };
 
 var CategoryCommon = {
-    baseUrl: EasyReport.ctxPath + '/metadata/category/'
+    baseUrl: EasyReport.ctxPath + '/rest/metadata/category/'
 };
 
 var CategoryMVC = {
@@ -70,7 +70,7 @@ var CategoryMVC = {
                 dnd: true,
                 onClick: function (node) {
                     $('#category-tree').tree('expand', node.target);
-                    MetaDataReport.loadData(node.id)
+                    MetaDataReport.listReports(node)
                 },
                 onDblClick: function (node) {
                     CategoryMVC.Controller.edit();
@@ -99,12 +99,6 @@ var CategoryMVC = {
                     var copyNodeId = $('#copyNodeId').val();
                     var item = $('#category-tree-ctx-menu').menu('findItem', '粘贴');
                     $('#category-tree-ctx-menu').menu(copyNodeId == 0 ? 'disableItem' : 'enableItem', item.target);
-                },
-                loadFilter: function (src, parent) {
-                    if (src.success) {
-                        return src.data;
-                    }
-                    return $.messager.alert('失败', src.msg, 'error');
                 }
             });
 
@@ -126,7 +120,7 @@ var CategoryMVC = {
                         return CategoryMVC.Controller.openSearchDlg();
                     }
                     if (item.name == "addReport") {
-                        return MetaDataReport.openDesigner();
+                        return MetaDataReport.addReport();
                     }
                     if (item.name == "refresh") {
                         return CategoryMVC.Controller.reload();
@@ -215,7 +209,7 @@ var CategoryMVC = {
                         if (node) {
                             $('#category-tree').tree('select', node.target);
                             $('#category-tree').tree('expand', node.target);
-                            MetaDataReport.loadData(node.id);
+                            MetaDataReport.listReports(node);
                         }
                     }
                 }
@@ -227,6 +221,7 @@ var CategoryMVC = {
         bindValidate: function () {
         },
         initData: function () {
+            CategoryMVC.Util.loadCategories();
         }
     },
     Controller: {
@@ -254,7 +249,7 @@ var CategoryMVC = {
                 options.title = '修改[' + options.data.name + ']分类';
                 EasyUIUtils.openEditDlg(options);
             } else {
-                $.messager.alert('警告', '请选中一个指标分类!', 'info');
+                $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
         },
         view: function () {
@@ -266,7 +261,7 @@ var CategoryMVC = {
                     $('#view-' + key).text(meta[key]);
                 }
             } else {
-                $.messager.alert('警告', '请选中一个指标分类!', 'info');
+                $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
         },
         remove: function () {
@@ -285,7 +280,7 @@ var CategoryMVC = {
                 };
                 EasyUIUtils.remove(options);
             } else {
-                $.messager.alert('警告', '请选中一个指标分类!', 'info');
+                $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
         },
         openSearchDlg: function () {
@@ -319,7 +314,7 @@ var CategoryMVC = {
             if (node) {
                 $('#copyNodeId').val(node.id);
             } else {
-                $.messager.alert('警告', '请选中一个指标分类!', 'info');
+                $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
         },
         paste: function () {
@@ -356,7 +351,7 @@ var CategoryMVC = {
                     return $.messager.alert('错误', result.msg);
                 }, 'json');
             } else {
-                $.messager.alert('警告', '请选中一个指标分类!', 'info');
+                $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
         },
         reloadSelected: function () {

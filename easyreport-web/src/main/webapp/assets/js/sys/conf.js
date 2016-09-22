@@ -29,10 +29,6 @@ var ConfMVC = {
             url: ConfCommon.baseUrl + 'list',
             method: 'GET'
         },
-        copy: {
-            url: ConfCommon.baseUrl + 'copy',
-            method: 'POST'
-        },
         remove: {
             url: ConfCommon.baseUrl + 'remove',
             method: 'POST'
@@ -286,8 +282,12 @@ var ConfMVC = {
             $("#confParentNameDiv").hide();
             var row = $('#dict-datagrid').datagrid('getSelected');
             if (row) {
-                ConfMVC.Util.edit(row);
-                $('#modal-action').val("copy");
+                var options = ConfMVC.Util.getOptions();
+                options.iconCls = 'icon-copy';
+                options.data = row;
+                options.title = '复制[' + options.data.name + ']配置项';
+                EasyUIUtils.openEditDlg(options);
+                $('#modal-action').val("add");
             }
         },
         remove: function () {

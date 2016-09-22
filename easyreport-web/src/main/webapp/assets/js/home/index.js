@@ -7,6 +7,7 @@ var HomeIndex = {
         HomeIndexMVC.View.initControl();
         HomeIndexMVC.View.bindEvent();
         HomeIndexMVC.View.bindValidate();
+        HomeIndex.addTab('报表设计','/views/metadata/designer','icon-chart');
     },
     addTab: function (title, url, iconCls) {
         HomeIndexMVC.Controller.addTab(title, url, iconCls)

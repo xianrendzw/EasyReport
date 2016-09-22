@@ -229,28 +229,14 @@ var EventMVC = {
             $('#detail-info').text(row.message);
         },
         prev: function () {
-            var index = parseInt($('#current-row-index').val()) - 1;
-            $('#event-datagrid').datagrid('selectRow', index);
-            var row = $('#event-datagrid').datagrid('getSelected');
-            if (row) {
-                $('#current-row-index').val(index);
+            EasyUIUtils.prev('#event-datagrid', '#current-row-index', function (row) {
                 $('#detail-info').text(row.message);
-            } else {
-                $('#event-datagrid').datagrid('selectRow', index + 1);
-                $.messager.alert('失败', '当前已到第一条记录!', 'error');
-            }
+            });
         },
         next: function () {
-            var index = parseInt($('#current-row-index').val()) + 1;
-            $('#event-datagrid').datagrid('selectRow', index);
-            var row = $('#event-datagrid').datagrid('getSelected');
-            if (row) {
-                $('#current-row-index').val(index);
+            EasyUIUtils.next('#event-datagrid', '#current-row-index', function (row) {
                 $('#detail-info').text(row.message);
-            } else {
-                $('#event-datagrid').datagrid('selectRow', index - 1);
-                $.messager.alert('失败', '当前已到最后一条记录', 'error');
-            }
+            });
         }
     }
 };

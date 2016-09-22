@@ -188,7 +188,50 @@ var EasyUIUtils = {
             showType: 'slide'
         });
     },
-    resortDatagrid: function (index, type, grid) {
+    //上移datagrid行
+    up: function () {
+
+    },
+    //
+    //下移datagrid行
+    down: function () {
+
+    },
+    //
+    //上一条记录
+    prev: function (gridId, indexId, fn) {
+        var index = parseInt($(indexId).val()) - 1;
+        $(gridId).datagrid('selectRow', index);
+        var row = $(gridId).datagrid('getSelected');
+        if (row) {
+            $(indexId).val(index);
+            if (fn instanceof Function) {
+                fn(row);
+            }
+        } else {
+            $(gridId).datagrid('selectRow', index + 1);
+            $.messager.alert('失败', '当前已到第一条记录!', 'error');
+        }
+    },
+    //
+    //下一条记录
+    next: function (gridId, indexId, fn) {
+        var index = parseInt($(indexId).val()) + 1;
+        $(gridId).datagrid('selectRow', index);
+        var row = $(gridId).datagrid('getSelected');
+        if (row) {
+            $(indexId).val(index);
+            if (fn instanceof Function) {
+                fn(row);
+            }
+        } else {
+            $(gridId).datagrid('selectRow', index - 1);
+            $.messager.alert('失败', '当前已到最后一条记录', 'error');
+        }
+    },
+    //
+    //datagrid行重排序
+    resort: function (index, type, grid) {
         var maxIndex = grid.datagrid('getRows').length - 1;
         var moveIndex = ("up" == type) ? index - 1 : index + 1;
         if (moveIndex >= 0 && moveIndex <= maxIndex) {

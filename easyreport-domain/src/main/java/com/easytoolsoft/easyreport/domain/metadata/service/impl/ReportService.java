@@ -48,23 +48,19 @@ public class ReportService
 
     @Override
     public int add(Report po) {
-        Category category = this.categoryService.getById(po.getCategoryId());
         po.setUid(UUID.randomUUID().toString());
         this.dao.insert(po);
         po = Report.builder()
                 .id(po.getId())
-                .path(category.getPath() + "|" + po.getId())
                 .build();
         this.dao.updateById(po);
         return po.getId();
     }
 
     @Override
-    public List<Report> getByPage(PageInfo page, Integer categoryId, String fieldName, String keyword) {
+    public List<Report> getByPage(PageInfo page, Integer categoryId) {
         ReportExample example = new ReportExample();
-        example.or()
-                .andCategoryIdEqualTo(categoryId)
-                .andFieldLike(fieldName, keyword);
+        example.or().andCategoryIdEqualTo(categoryId);
         return this.getByPage(page, example);
     }
 

@@ -98,17 +98,6 @@ public class ConfController
         return result;
     }
 
-    @PostMapping(value = "/copy")
-    @OpLog(name = "复制报表元数据配置项")
-    @RequiresPermissions("report.conf:copy")
-    public JsonResult copy(Conf po) {
-        JsonResult<String> result = new JsonResult<>();
-        po.setGmtCreated(new Date());
-        po.setGmtModified(new Date());
-        this.service.add(po);
-        return result;
-    }
-
     @GetMapping(value = "/getConfItems")
     @OpLog(name = "获取指定父key下的所有配置项")
     @RequiresPermissions("report.conf:view")

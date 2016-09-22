@@ -302,7 +302,6 @@ CREATE TABLE `ezrpt_meta_report` (
   `meta_columns` text NOT NULL COMMENT '报表列集合元数据(JSON格式)',
   `query_params` text NOT NULL COMMENT '查询条件列属性集合(JSON格式)',
   `options` text NOT NULL COMMENT '报表配置选项(JSON格式)',
-  `path` varchar(500) NOT NULL COMMENT '报表树型结构路径',
   `status` int(11) NOT NULL COMMENT '报表状态（1表示锁定，0表示编辑)',
   `sequence` int(11) NOT NULL COMMENT '报表节点在其父节点中的顺序',
   `comment` varchar(500) NOT NULL COMMENT '说明备注',
