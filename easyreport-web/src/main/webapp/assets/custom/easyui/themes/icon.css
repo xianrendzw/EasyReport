@@ -85,6 +85,15 @@
 .icon-copy{
 	background:url('icons/copy.png') no-repeat center center;
 }
+.icon-copy1{
+	background:url('icons/copy1.png') no-repeat center center;
+}
+.icon-preview{
+	background:url('icons/preview.png') no-repeat center center;
+}
+.icon-preview1{
+	background:url('icons/preview1.png') no-repeat center center;
+}
 .icon-cancel1{
 	background:url('icons/cancel1.png') no-repeat center center;
 }

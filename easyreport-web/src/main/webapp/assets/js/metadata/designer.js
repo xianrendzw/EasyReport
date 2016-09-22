@@ -163,7 +163,7 @@ var ReportMVC = {
                     iconCls: 'icon-preview',
                     handler: ReportMVC.Controller.preview
                 }, '-', {
-                    text: '查看SQL历史记录',
+                    text: '历史记录',
                     iconCls: 'icon-history',
                     handler: ReportMVC.Controller.showHistorySql
                 }, '-', {
