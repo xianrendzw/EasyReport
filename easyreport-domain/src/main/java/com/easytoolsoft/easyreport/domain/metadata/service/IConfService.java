@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.domain.metadata.service;
 
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
 import com.easytoolsoft.easyreport.data.metadata.example.ConfExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Conf;
@@ -14,6 +15,13 @@ import java.util.Map;
  * @author Tom Deng
  */
 public interface IConfService extends ICrudService<Conf, ConfExample> {
+    /**
+     * @param pageInfo
+     * @param pid
+     * @return
+     */
+    List<Conf> getByPage(PageInfo pageInfo, Integer pid);
+
     /**
      * @param parentId
      * @return

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 public class DataGridPager {
     private Integer page = 1;
-    private Integer rows = 30;
+    private Integer rows = 50;
     private String sort = "id";
     private String order = "desc";
 
@@ -23,8 +23,8 @@ public class DataGridPager {
     public PageInfo toPageInfo(String tablePrefix) {
         String prefix = StringUtils.defaultString(tablePrefix, "").trim();
         String name = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(this.sort), '_');
-        String sorter = prefix + StringUtils.defaultString(name, "");
+        String sortField = prefix + StringUtils.defaultString(name, "").toLowerCase();
         return new PageInfo((this.page - 1) * this.rows,
-                this.rows, sorter, this.order);
+                this.rows, sortField, this.order);
     }
 }

@@ -27,6 +27,13 @@ public class ConfService
     }
 
     @Override
+    public List<Conf> getByPage(PageInfo pageInfo, Integer pid) {
+        ConfExample example = new ConfExample();
+        example.or().andParentIdEqualTo(pid);
+        return this.getByPage(pageInfo, example);
+    }
+
+    @Override
     public List<Conf> getByParentId(Integer parentId) {
         return this.dao.selectByParentId(parentId);
     }

@@ -18,7 +18,7 @@ import java.util.List;
  * @author Tom Deng
  */
 public interface IReportService extends ICrudService<Report, ReportExample> {
-    List<Report> getByPage(PageInfo page, Integer categoryId);
+    List<Report> getByPage(PageInfo page, String fieldName, Integer categoryId);
 
     boolean saveQueryParams(int id, String json);
 

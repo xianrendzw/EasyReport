@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IPermissionDao;
 import com.easytoolsoft.easyreport.data.membership.example.PermissionExample;
@@ -50,6 +51,13 @@ public class PermissionService
             cache.clear();
         }
         this.loadCache();
+    }
+
+    @Override
+    public List<Permission> getByPage(PageInfo pageInfo, Integer moduleId) {
+        PermissionExample example = new PermissionExample();
+        example.or().andModuleIdEqualTo(moduleId);
+        return this.getByPage(pageInfo, example);
     }
 
     @Override

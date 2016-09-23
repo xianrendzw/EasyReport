@@ -11,7 +11,6 @@ import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,8 +31,10 @@ public class ConfController
     @RequestMapping(value = "/list")
     @OpLog(name = "获取指定ID的报表元数据配置项")
     @RequiresPermissions("report.conf:view")
-    public Map<String, Object> list(Integer id) {
-        List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
+    public Map<String, Object> list(DataGridPager pager, Integer id) {
+        int pid = (id == null ? 0 : id);
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Conf> list = this.service.getByPage(pageInfo, pid);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", list.size());
         modelMap.put("rows", list);

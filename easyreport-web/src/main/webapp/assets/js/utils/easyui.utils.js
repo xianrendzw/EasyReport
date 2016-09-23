@@ -135,6 +135,9 @@ var EasyUIUtils = {
             }
         });
     },
+    loadDataWithUrl: function (gridId, href) {
+        $(gridId).datagrid({url: href});
+    },
     loadToDatagrid: function (id, href) {
         var grid = $(id);
         $.getJSON(href, function (data) {
@@ -222,7 +225,7 @@ var EasyUIUtils = {
             return;
         }
 
-        if(type === 'next'){
+        if (type === 'next') {
             $(gridId).datagrid('selectRow', index - 1);
             return $.messager.alert('失败', '当前已到最后一条记录', 'error');
         }

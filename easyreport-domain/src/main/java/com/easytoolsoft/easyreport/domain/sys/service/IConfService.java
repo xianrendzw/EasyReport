@@ -15,6 +15,13 @@ import java.util.Map;
  */
 public interface IConfService extends ICrudService<Conf, ConfExample> {
     /**
+     * @param pageInfo
+     * @param pid
+     * @return
+     */
+    List<Conf> getByPage(PageInfo pageInfo, Integer pid);
+
+    /**
      * @param parentId
      * @return
      */

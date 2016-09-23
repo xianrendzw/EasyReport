@@ -97,31 +97,38 @@ var DsMVC = {
                 columns: [[{
                     field: 'id',
                     title: '标识',
-                    width: 50
+                    width: 50,
+                    sortable: true
                 }, {
                     field: 'name',
                     title: '名称',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'uid',
                     title: 'UID',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'jdbcUrl',
                     title: 'JdbcUrl',
-                    width: 200
+                    width: 200,
+                    sortable: true
                 }, {
                     field: 'driverClass',
                     title: '驱动类',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'queryerClass',
                     title: '查询器类',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'poolClass',
                     title: '连接池类',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'gmtCreated',
                     title: '创建时间',

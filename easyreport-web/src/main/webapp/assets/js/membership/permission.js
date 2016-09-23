@@ -62,7 +62,7 @@ var PermMVC = {
                 onClick: function (node) {
                     $('#module-tree').tree('expand', node.target);
                     $('#module-tree').tree('options').url = PermMVC.URLs.getChildModules.url;
-                    EasyUIUtils.loadToDatagrid('#perm-datagrid', PermMVC.URLs.list.url + '?id=' + node.id);
+                    EasyUIUtils.loadDataWithUrl('#perm-datagrid', PermMVC.URLs.list.url + '?id=' + node.id);
                 },
                 onContextMenu: function (e, node) {
                     e.preventDefault();
@@ -121,7 +121,8 @@ var PermMVC = {
                 columns: [[{
                     field: 'id',
                     title: '标识',
-                    width: 50
+                    width: 50,
+                    sortable: true
                 }, {
                     field: 'name',
                     title: '名称',
@@ -135,7 +136,8 @@ var PermMVC = {
                 }, {
                     field: 'sequence',
                     title: '顺序',
-                    width: 50
+                    width: 50,
+                    sortable: true
                 }, {
                     field: 'comment',
                     title: '说明',
@@ -143,11 +145,13 @@ var PermMVC = {
                 }, {
                     field: 'gmtCreated',
                     title: '创建时间',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'gmtModified',
                     title: '更新时间',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }]],
                 onDblClickRow: function (index, row) {
                     PermMVC.Controller.edit();
@@ -216,7 +220,7 @@ var PermMVC = {
                 callback: function (rows) {
                     var row = rows[0];
                     PermMVC.Controller.refreshNode(row.moduleId);
-                    EasyUIUtils.loadToDatagrid('#perm-datagrid', PermMVC.URLs.list.url + '?id=' + row.moduleId);
+                    EasyUIUtils.loadDataWithUrl('#perm-datagrid', PermMVC.URLs.list.url + '?id=' + row.moduleId);
                 }
             };
             EasyUIUtils.remove(options);
@@ -232,7 +236,7 @@ var PermMVC = {
                 url: actUrl,
                 callback: function () {
                     PermMVC.Controller.refreshNode(0);
-                    EasyUIUtils.loadToDatagrid('#perm-datagrid', gridUrl);
+                    EasyUIUtils.loadDataWithUrl('#perm-datagrid', gridUrl);
                 }
             };
             EasyUIUtils.save(options);

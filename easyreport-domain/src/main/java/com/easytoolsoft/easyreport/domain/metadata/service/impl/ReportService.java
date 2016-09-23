@@ -41,7 +41,7 @@ public class ReportService
     @Override
     protected ReportExample getPageExample(String fieldName, String keyword) {
         ReportExample example = new ReportExample();
-        example.createCriteria().andFieldLike("t1." + fieldName, keyword);
+        example.createCriteria().andFieldLike(fieldName, keyword);
         return example;
     }
 
@@ -57,9 +57,9 @@ public class ReportService
     }
 
     @Override
-    public List<Report> getByPage(PageInfo page, Integer categoryId) {
+    public List<Report> getByPage(PageInfo page, String fieldName, Integer categoryId) {
         ReportExample example = new ReportExample();
-        example.or().andOperand("t1.category_id", "=", categoryId);
+        example.or().andOperand(fieldName, "=", categoryId);
         return this.getByPage(page, example);
     }
 

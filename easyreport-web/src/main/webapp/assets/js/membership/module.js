@@ -54,7 +54,7 @@ var ModuleMVC = {
                     iconCls: 'icon-reload',
                     handler: function () {
                         ModuleMVC.Controller.reloadTree();
-                        EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=0');
+                        EasyUIUtils.loadDataWithUrl('#module-datagrid', ModuleMVC.URLs.list.url + '?id=0');
                     }
                 }]
             });
@@ -66,7 +66,7 @@ var ModuleMVC = {
                 dnd: true,
                 onClick: function (node) {
                     $('#module-tree').tree('expand', node.target);
-                    EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + node.id);
+                    EasyUIUtils.loadDataWithUrl('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + node.id);
                 },
                 onDrop: function (target, source, point) {
                     var targetNode = $('#module-tree').tree('getNode', target);
@@ -136,7 +136,7 @@ var ModuleMVC = {
                     handler: function () {
                         var node = $('#module-tree').tree('getSelected');
                         if (node) {
-                            EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + node.id);
+                            EasyUIUtils.loadDataWithUrl('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + node.id);
                         }
                     }
                 }],
@@ -277,7 +277,7 @@ var ModuleMVC = {
                 callback: function (rows) {
                     var row = rows[0];
                     ModuleMVC.Controller.refreshNode(row.parentId);
-                    EasyUIUtils.loadToDatagrid('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + row.parentId);
+                    EasyUIUtils.loadDataWithUrl('#module-datagrid', ModuleMVC.URLs.list.url + '?id=' + row.parentId);
                 }
             };
             EasyUIUtils.remove(options);
@@ -292,7 +292,7 @@ var ModuleMVC = {
                 url: actUrl,
                 callback: function () {
                     ModuleMVC.Controller.reloadTree();
-                    EasyUIUtils.loadToDatagrid('#module-datagrid', gridUrl);
+                    EasyUIUtils.loadDataWithUrl('#module-datagrid', gridUrl);
                 }
             };
             EasyUIUtils.save(options);

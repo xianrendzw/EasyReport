@@ -55,8 +55,8 @@ public class ReportController
     @OpLog(name = "分页获取报表列表")
     @RequiresPermissions("report.designer:view")
     public Map<String, Object> list(DataGridPager pager, Integer id) {
-        PageInfo pageInfo = pager.toPageInfo("t1.");
-        List<Report> list = this.service.getByPage(pageInfo, id == null ? 0 : id);
+        PageInfo pageInfo = this.getPageInfo(pager);
+        List<Report> list = this.service.getByPage(pageInfo, "t1.category_id", id == null ? 0 : id);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -67,7 +67,7 @@ public class ReportController
     @OpLog(name = "分页查询报表")
     @RequiresPermissions("report.designer:view")
     public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
-        PageInfo pageInfo = pager.toPageInfo("t1.");
+        PageInfo pageInfo = this.getPageInfo(pager);
         List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
@@ -183,5 +183,13 @@ public class ReportController
                     });
         }
         return VelocityUtils.parse(sqlText, formParameters);
+    }
+
+    private PageInfo getPageInfo(DataGridPager pager) {
+        PageInfo pageInfo = pager.toPageInfo("t1.");
+        if ("dsName".equals(pager.getSort())) {
+            pageInfo.setSortItem("t1.ds_id");
+        }
+        return pageInfo;
     }
 }

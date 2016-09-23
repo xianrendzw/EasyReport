@@ -52,7 +52,7 @@ var ConfMVC = {
                     iconCls: 'icon-reload',
                     handler: function () {
                         ConfMVC.Controller.reloadTree();
-                        EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=0');
+                        EasyUIUtils.loadDataWithUrl('#dict-datagrid', ConfMVC.URLs.list.url + '?id=0');
                     }
                 }]
             });
@@ -66,7 +66,7 @@ var ConfMVC = {
                 onClick: function (node) {
                     $('#dict-tree').tree('expand', node.target);
                     $('#dict-tree').tree('options').url = ConfMVC.URLs.listChildren.url;
-                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + node.id);
+                    EasyUIUtils.loadDataWithUrl('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + node.id);
                 },
                 onContextMenu: function (e, node) {
                     e.preventDefault();
@@ -138,15 +138,18 @@ var ConfMVC = {
                 columns: [[{
                     field: 'id',
                     title: '标识',
-                    width: 50
+                    width: 50,
+                    sortable: true
                 }, {
                     field: 'name',
                     title: '名称',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'key',
                     title: '键',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'value',
                     title: '值',
@@ -154,15 +157,18 @@ var ConfMVC = {
                 }, {
                     field: 'sequence',
                     title: '顺序',
-                    width: 50
+                    width: 50,
+                    sortable: true
                 }, {
                     field: 'gmtCreated',
                     title: '创建时间',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }, {
                     field: 'gmtModified',
                     title: '更新时间',
-                    width: 100
+                    width: 100,
+                    sortable: true
                 }]],
                 onDblClickRow: function (index, row) {
                     ConfMVC.Controller.edit();
@@ -305,7 +311,7 @@ var ConfMVC = {
                 callback: function (rows) {
                     var row = rows[0];
                     ConfMVC.Controller.reloadTree();
-                    EasyUIUtils.loadToDatagrid('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + row.parentId);
+                    EasyUIUtils.loadDataWithUrl('#dict-datagrid', ConfMVC.URLs.list.url + '?id=' + row.parentId);
                 }
             };
             EasyUIUtils.remove(options);
@@ -324,7 +330,7 @@ var ConfMVC = {
                 url: actUrl,
                 callback: function () {
                     ConfMVC.Controller.reloadTree();
-                    EasyUIUtils.loadToDatagrid('#dict-datagrid', gridUrl);
+                    EasyUIUtils.loadDataWithUrl('#dict-datagrid', gridUrl);
                 }
             };
             EasyUIUtils.save(options);
@@ -351,7 +357,7 @@ var ConfMVC = {
             var fieldName = $('#field-name').combobox('getValue');
             var keyword = $('#keyword').val();
             var url = ConfMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
-            return EasyUIUtils.loadToDatagrid('#search-node-result', url);
+            return EasyUIUtils.loadDataWithUrl('#search-node-result', url);
         }
     },
     Util: {

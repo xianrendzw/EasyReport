@@ -29,8 +29,10 @@ public class ConfController
     @GetMapping(value = "/list")
     @OpLog(name = "获取指定ID的系统配置项")
     @RequiresPermissions("sys.conf:view")
-    public Map<String, Object> list(Integer id) {
-        List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
+    public Map<String, Object> list(DataGridPager pager, Integer id) {
+        int pid = (id == null ? 0 : id);
+        PageInfo pageInfo = pager.toPageInfo();
+        List<Conf> list = this.service.getByPage(pageInfo, pid);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", list.size());
         modelMap.put("rows", list);

@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
+import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.metadata.dao.IConfDao;
 import com.easytoolsoft.easyreport.data.metadata.example.ConfExample;
@@ -40,6 +41,13 @@ public class ConfService
         ConfExample example = new ConfExample();
         example.createCriteria().andFieldLike(fieldName, keyword);
         return example;
+    }
+
+    @Override
+    public List<Conf> getByPage(PageInfo pageInfo, Integer pid) {
+        ConfExample example = new ConfExample();
+        example.or().andParentIdEqualTo(pid);
+        return this.getByPage(pageInfo, example);
     }
 
     @Override

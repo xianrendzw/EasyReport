@@ -264,14 +264,16 @@
         </if>
     </select>
     <select id="selectByPager" resultMap="ConfMap" parameterType="java.util.Map">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_sys_conf
+        SELECT
+          <include refid="Base_Column_List"/>,
+          (SELECT IF (count(*) > 0, 1, 0) FROM ezrpt_sys_conf t1 WHERE t1.parent_id = t.id) AS has_child
+        FROM
+          ezrpt_sys_conf t
         <if test="example != null">
             <include refid="Example_Where_Clause2"/>
         </if>
         <if test="pager.sortItem != null and pager.sortItem != '' ">
-            order by ${pager.sortItem} ${pager.sortType}
+            order by `${pager.sortItem}` ${pager.sortType}
         </if>
         limit #{pager.startIndex} , #{pager.pageSize}
     </select>

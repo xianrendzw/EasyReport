@@ -874,7 +874,7 @@ var ReportMVC = {
         },
         listReports: function (id) {
             var gridUrl = ReportMVC.URLs.list.url + '?id=' + id;
-            EasyUIUtils.loadToDatagrid('#report-datagrid', gridUrl);
+            EasyUIUtils.loadDataWithUrl('#report-datagrid', gridUrl);
         },
         loadParams: function (params) {
             EasyUIUtils.clearDatagrid('#report-sql-column-grid');
