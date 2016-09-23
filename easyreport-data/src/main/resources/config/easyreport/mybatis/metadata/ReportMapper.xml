@@ -18,6 +18,8 @@
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="ds_name" property="dsName" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause1">
         <where>
@@ -299,15 +301,22 @@
         </if>
     </select>
     <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
-        select count(*) as total from ezrpt_meta_report
+        SELECT count(t1.id) as total
+        FROM ezrpt_meta_report t1
+        INNER JOIN ezrpt_meta_category t2 ON category_id = t2.id
+        INNER JOIN ezrpt_meta_datasource t3 ON ds_id = t3.id
         <if test="example != null">
             <include refid="Example_Where_Clause2"/>
         </if>
     </select>
     <select id="selectByPager" resultMap="ReportMap" parameterType="java.util.Map">
-        select
-        <include refid="Base_Column_List"/>
-        from ezrpt_meta_report
+        SELECT
+            t1.*,
+            t2.name AS category_name,
+            t3.name AS ds_name
+        FROM ezrpt_meta_report t1
+        INNER JOIN ezrpt_meta_category t2 ON category_id = t2.id
+        INNER JOIN ezrpt_meta_datasource t3 ON ds_id = t3.id
         <if test="example != null">
             <include refid="Example_Where_Clause2"/>
         </if>

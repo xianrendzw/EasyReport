@@ -229,12 +229,12 @@ var EventMVC = {
             $('#detail-info').text(row.message);
         },
         prev: function () {
-            EasyUIUtils.prev('#event-datagrid', '#current-row-index', function (row) {
+            EasyUIUtils.cursor('#event-datagrid', '#current-row-index', 'prev', function (row) {
                 $('#detail-info').text(row.message);
             });
         },
         next: function () {
-            EasyUIUtils.next('#event-datagrid', '#current-row-index', function (row) {
+            EasyUIUtils.cursor('#event-datagrid', '#current-row-index', 'next', function (row) {
                 $('#detail-info').text(row.message);
             });
         }

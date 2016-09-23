@@ -291,7 +291,10 @@
         </tr>
         <tr>
             <td>说明:</td>
-            <td colspan="5"><label id="report-detail-comment"/></td>
+            <td colspan="5">
+                <label id="report-detail-comment"/>
+                <input type="hidden" id="current-row-index" name="current-row-index"/>
+            </td>
         </tr>
     </table>
 </div>

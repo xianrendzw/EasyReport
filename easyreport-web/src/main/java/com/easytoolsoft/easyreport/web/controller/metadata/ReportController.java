@@ -55,7 +55,7 @@ public class ReportController
     @OpLog(name = "分页获取报表列表")
     @RequiresPermissions("report.designer:view")
     public Map<String, Object> list(DataGridPager pager, Integer id) {
-        PageInfo pageInfo = pager.toPageInfo();
+        PageInfo pageInfo = pager.toPageInfo("t1.");
         List<Report> list = this.service.getByPage(pageInfo, id == null ? 0 : id);
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
@@ -67,8 +67,8 @@ public class ReportController
     @OpLog(name = "分页查询报表")
     @RequiresPermissions("report.designer:view")
     public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
-        PageInfo pageInfo = pager.toPageInfo();
-        List<Report> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
+        PageInfo pageInfo = pager.toPageInfo("t1.");
+        List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);

@@ -61,7 +61,7 @@ public class DataSource implements Serializable {
      *
      * @return 具体DataSourcePoolWrapper类完全名称
      */
-    private String dbPoolClass;
+    private String poolClass;
     /**
      * 数据源配置选项(JSON格式）
      */

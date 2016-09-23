@@ -119,7 +119,7 @@ var DsMVC = {
                     title: '查询器类',
                     width: 100
                 }, {
-                    field: 'dbPoolClass',
+                    field: 'poolClass',
                     title: '连接池类',
                     width: 100
                 }, {
@@ -199,7 +199,7 @@ var DsMVC = {
             $('#dbPoolType').combobox({
                 onChange: function (newValue, oldValue) {
                     var item = DsMVC.Model.dbPoolTypes[newValue].value;
-                    $('#dbPoolClass').val(item.dbPoolClass);
+                    $('#poolClass').val(item.poolClass);
                     var data = DsMVC.Util.toPropertygridData(item.options);
                     $('#ds-options-pg').propertygrid('loadData', data);
                 }
@@ -241,7 +241,7 @@ var DsMVC = {
             options.title = '新增数据源';
             EasyUIUtils.openAddDlg(options);
             DsMVC.Util.fillCombox("#dbType", "add", DsMVC.Model.dbTypes, "driverClass", "");
-            DsMVC.Util.fillCombox("#dbPoolType", "add", DsMVC.Model.dbPoolTypes, "dbPoolClass", "");
+            DsMVC.Util.fillCombox("#dbPoolType", "add", DsMVC.Model.dbPoolTypes, "poolClass", "");
         },
         edit: function () {
             var row = $('#ds-datagrid').datagrid('getSelected');
@@ -252,7 +252,7 @@ var DsMVC = {
                 options.title = '修改[' + options.data.name + ']数据源';
                 EasyUIUtils.openEditDlg(options);
                 DsMVC.Util.fillCombox("#dbType", "edit", DsMVC.Model.dbTypes, "driverClass", row.driverClass);
-                DsMVC.Util.fillCombox("#dbPoolType", "edit", DsMVC.Model.dbPoolTypes, "dbPoolClass", row.dbPoolClass);
+                DsMVC.Util.fillCombox("#dbPoolType", "edit", DsMVC.Model.dbPoolTypes, "poolClass", row.poolClass);
                 $('#jdbcUrl').textbox('setValue', row.jdbcUrl);
                 $('#options').val(row.options || "{}");
                 EasyReport.utils.debug(row.options);

@@ -240,7 +240,7 @@ var ReportMVC = {
                             "title": "预览"
                         }, {
                             "name": "history",
-                            "title": "查看SQL历史记录"
+                            "title": "历史记录"
                         }, {
                             "name": "remove",
                             "title": "删除"
@@ -466,18 +466,12 @@ var ReportMVC = {
                 tools: [{
                     iconCls: 'icon-up',
                     handler: function () {
-                        var grid = $("#report-query-param-grid");
-                        var row = grid.datagrid('getSelected');
-                        var index = grid.datagrid('getRowIndex', row);
-                        ReportDesigner.resortDatagrid(index, 'up', grid);
+                        EasyUIUtils.move('#report-query-param-grid', 'up');
                     }
                 }, '-', {
                     iconCls: 'icon-down',
                     handler: function () {
-                        var grid = $("#report-query-param-grid");
-                        var row = grid.datagrid('getSelected');
-                        var index = grid.datagrid('getRowIndex', row);
-                        ReportDesigner.resortDatagrid(index, 'down', grid);
+                        EasyUIUtils.move('#report-query-param-grid', 'down');
                     }
                 }],
                 columns: [[{
@@ -638,6 +632,26 @@ var ReportMVC = {
                 maximizable: true,
                 iconCls: 'icon-info',
                 buttons: [{
+                    text: '上一条',
+                    iconCls: 'icon-prev',
+                    handler: function () {
+                        EasyUIUtils.cursor('#report-datagrid',
+                            '#current-row-index',
+                            'prev', function (row) {
+                                ReportMVC.Controller.preview(row);
+                            });
+                    }
+                }, {
+                    text: '下一条',
+                    iconCls: 'icon-next',
+                    handler: function () {
+                        EasyUIUtils.cursor('#report-datagrid',
+                            '#current-row-index',
+                            'next', function (row) {
+                                ReportMVC.Controller.preview(row);
+                            });
+                    }
+                }, {
                     text: '关闭',
                     iconCls: 'icon-no',
                     handler: function () {
@@ -813,12 +827,14 @@ var ReportMVC = {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
         },
-        preview: function () {
+        preview: function (row) {
+            return ReportMVC.Util.showReportProps(row);
         },
         showDetail: function () {
             var row = $('#report-datagrid').datagrid('getSelected');
             if (row) {
                 $('#report-detail-dlg').dialog('open').dialog('center');
+                ReportMVC.Util.showReportProps(row);
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -905,6 +921,79 @@ var ReportMVC = {
         resizeSqlEditor: function () {
             var width = $('#report-designer-dlg').panel('options').width - 180;
             $('#report-sqlText-td>.CodeMirror').css({"width": width});
+        },
+        showReportProps: function (data) {
+            $('#report-detail-dlg label').each(function (i) {
+                $(this).text("");
+            });
+
+            for (var name in data) {
+                var id = "#report-detail-" + name;
+                var value = ReportMVC.Util.getPropertyValue(name, data);
+                $(id).text(value);
+            }
+        },
+        eachSqlColumnRows: function (rows) {
+            if (rows && rows.length) {
+                for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    row.type = ReportMVC.Util.getColumnTypeValue(row.type);
+                    row.sortType = ReportMVC.Util.getColumnSortTypeValue(row.sortType);
+                }
+            }
+            return rows;
+        },
+        getPropertyValue: function (name, object) {
+            var value = object[name];
+            if (name == "layout") {
+                return ReportMVC.Util.getLayoutName(value);
+            }
+            if (name == "status") {
+                return value == 1 ? "启用" : "禁用";
+            }
+            return value;
+        },
+        getLayoutName: function (layout) {
+            if (layout == 1) {
+                return "横向布局";
+            }
+            if (layout == 2) {
+                return "纵向布局";
+            }
+            return "无";
+        },
+        getColumnTypeValue: function (name) {
+            if (name == "LAYOUT") {
+                return 1;
+            }
+            if (name == "DIMENSION") {
+                return 2;
+            }
+            if (name == "STATISTICAL") {
+                return 3;
+            }
+            if (name == "COMPUTED") {
+                return 4;
+            }
+            return 2;
+        },
+        getColumnSortTypeValue: function (name) {
+            if (name == "DEFAULT") {
+                return 0;
+            }
+            if (name == "DIGIT_ASCENDING") {
+                return 1;
+            }
+            if (name == "DIGIT_DESCENDING") {
+                return 2;
+            }
+            if (name == "CHAR_ASCENDING") {
+                return 3;
+            }
+            if (name == "CHAR_DESCENDING") {
+                return 4;
+            }
+            return 0;
         }
     }
 };

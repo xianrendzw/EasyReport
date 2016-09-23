@@ -77,7 +77,7 @@
                         <input id="dsId" type="hidden" name="id"/>
                         <input id="driverClass" type="hidden" name="driverClass"/>
                         <input id="queryerClass" type="hidden" name="queryerClass"/>
-                        <input id="dbPoolClass" type="hidden" name="dbPoolClass"/>
+                        <input id="poolClass" type="hidden" name="poolClass"/>
                         <input id="options" type="hidden" name="options"/>
                     </td>
                 </tr>

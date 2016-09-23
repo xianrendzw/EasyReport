@@ -11,7 +11,7 @@
         <result column="user" property="user" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="﻿queryer_class" property="queryerClass" jdbcType="VARCHAR"/>
-        <result column="﻿dbpool_class" property="dbPoolClass" jdbcType="VARCHAR"/>
+        <result column="pool_class" property="poolClass" jdbcType="VARCHAR"/>
         <result column="options" property="options" jdbcType="VARCHAR"/>
         <result column="comment" property="comment" jdbcType="VARCHAR"/>
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
@@ -78,7 +78,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List_Without_Id">
-  	   uid ,name ,driver_class ,jdbc_url,user,password,queryer_class, dbpool_class, options ,comment ,gmt_created ,gmt_modified 	  </sql>
+  	   uid ,name ,driver_class ,jdbc_url,user,password,queryer_class, pool_class, options ,comment ,gmt_created ,gmt_modified 	  </sql>
     <sql id="Base_Column_List">
         id ,
         <include refid="Base_Column_List_Without_Id"/>
@@ -91,7 +91,7 @@
         <if test="user != null">user,</if>
         <if test="password != null">password,</if>
         <if test="queryerClass != null">queryer_class,</if>
-        <if test="dbPoolClass != null">dbpool_class,</if>
+        <if test="poolClass != null">pool_class,</if>
         <if test="options != null">options,</if>
         <if test="comment != null">comment,</if>
         <if test="gmtCreated != null">gmt_created,</if>
@@ -105,7 +105,7 @@
         <if test="user != null">#{user,jdbcType=VARCHAR},</if>
         <if test="password != null">#{password,jdbcType=VARCHAR},</if>
         <if test="queryerClass != null">#{queryerClass,jdbcType=VARCHAR},</if>
-        <if test="dbPoolClass != null">#{dbPoolClass,jdbcType=VARCHAR},</if>
+        <if test="poolClass != null">#{poolClass,jdbcType=VARCHAR},</if>
         <if test="options != null">#{options,jdbcType=VARCHAR},</if>
         <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
         <if test="gmtCreated != null">#{gmtCreated,jdbcType=TIMESTAMP},</if>
@@ -119,7 +119,7 @@
         #{item.user,jdbcType=VARCHAR},
         #{item.password,jdbcType=VARCHAR},
         #{item.queryerClass,jdbcType=VARCHAR},
-        #{item.dbPoolClass,jdbcType=VARCHAR},
+        #{item.poolClass,jdbcType=VARCHAR},
         #{item.options,jdbcType=VARCHAR},
         #{item.comment,jdbcType=VARCHAR},
         #{item.gmtCreated,jdbcType=TIMESTAMP},
@@ -133,7 +133,7 @@
         <if test="user != null">user = #{user,jdbcType=VARCHAR} ,</if>
         <if test="password != null">password = #{password,jdbcType=VARCHAR} ,</if>
         <if test="queryerClass != null">queryer_class = #{queryerClass,jdbcType=VARCHAR} ,</if>
-        <if test="dbPoolClass != null">dbpool_class = #{dbPoolClass,jdbcType=VARCHAR} ,</if>
+        <if test="poolClass != null">pool_class = #{poolClass,jdbcType=VARCHAR} ,</if>
         <if test="options != null">options = #{options,jdbcType=VARCHAR} ,</if>
         <if test="comment != null">comment = #{comment,jdbcType=VARCHAR} ,</if>
         <if test="gmtCreated != null">gmt_created = #{gmtCreated,jdbcType=TIMESTAMP} ,</if>
@@ -147,7 +147,7 @@
         <if test="record.user != null">user = #{set.user,jdbcType=VARCHAR} ,</if>
         <if test="record.password != null">password = #{set.password,jdbcType=VARCHAR} ,</if>
         <if test="record.queryerClass != null">queryer_class = #{set.queryerClass,jdbcType=VARCHAR} ,</if>
-        <if test="record.dbPoolClass != null">dbpool_class = #{set.dbPoolClass,jdbcType=VARCHAR} ,</if>
+        <if test="record.poolClass != null">pool_class = #{set.poolClass,jdbcType=VARCHAR} ,</if>
         <if test="record.options != null">options = #{set.options,jdbcType=VARCHAR} ,</if>
         <if test="record.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
         <if test="record.gmtCreated != null">gmt_created = #{set.gmtCreated,jdbcType=TIMESTAMP} ,</if>
@@ -161,7 +161,7 @@
         user = #{item.user,jdbcType=VARCHAR} ,
         password = #{item.password,jdbcType=VARCHAR} ,
         ﻿queryer_class = #{item.﻿queryerClass,jdbcType=VARCHAR} ,
-        dbpool_class = #{item.dbPoolClass,jdbcType=VARCHAR} ,
+        pool_class = #{item.poolClass,jdbcType=VARCHAR} ,
         options = #{item.options,jdbcType=VARCHAR} ,
         comment = #{item.comment,jdbcType=VARCHAR} ,
         gmt_created = #{item.gmtCreated,jdbcType=TIMESTAMP} ,

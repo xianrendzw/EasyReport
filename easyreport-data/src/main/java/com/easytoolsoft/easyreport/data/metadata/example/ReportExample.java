@@ -815,6 +815,11 @@ public class ReportExample {
             addCriterion(fieldName + " like ", keyword, fieldName);
             return this;
         }
+
+        public Criteria andOperand(String fieldName, String operator, Object value) {
+            addCriterion(fieldName + operator, value, fieldName);
+            return this;
+        }
     }
 
     public static class Criterion {

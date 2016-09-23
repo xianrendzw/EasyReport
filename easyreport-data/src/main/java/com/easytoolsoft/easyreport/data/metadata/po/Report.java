@@ -82,4 +82,12 @@ public class Report implements Serializable {
      * 记录修改时间
      */
     private Date gmtModified;
+    /**
+     * 报表分类名称
+     */
+    private String categoryName;
+    /**
+     * 报表数据源名称
+     */
+    private String dsName;
 }

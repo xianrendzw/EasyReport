@@ -5,7 +5,6 @@ import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.metadata.dao.IReportDao;
 import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Category;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
@@ -42,7 +41,7 @@ public class ReportService
     @Override
     protected ReportExample getPageExample(String fieldName, String keyword) {
         ReportExample example = new ReportExample();
-        example.createCriteria().andFieldLike(fieldName, keyword);
+        example.createCriteria().andFieldLike("t1." + fieldName, keyword);
         return example;
     }
 
@@ -60,7 +59,7 @@ public class ReportService
     @Override
     public List<Report> getByPage(PageInfo page, Integer categoryId) {
         ReportExample example = new ReportExample();
-        example.or().andCategoryIdEqualTo(categoryId);
+        example.or().andOperand("t1.category_id", "=", categoryId);
         return this.getByPage(page, example);
     }
 
@@ -157,7 +156,7 @@ public class ReportService
                 ds.getDriverClass(),
                 ds.getJdbcUrl(), ds.getUser(), ds.getPassword(),
                 ds.getQueryerClass(),
-                ds.getDbPoolClass(),
+                ds.getPoolClass(),
                 options);
     }
 }
