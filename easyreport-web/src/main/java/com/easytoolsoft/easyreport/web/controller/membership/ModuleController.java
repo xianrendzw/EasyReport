@@ -10,7 +10,6 @@ import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,38 +31,10 @@ public class ModuleController
     @RequiresPermissions("membership.module:view")
     public JsonResult getModuleTree() {
         JsonResult<Object> result = new JsonResult<>();
-        List<EasyUITreeNode<Module>> roots = new ArrayList<>();
         List<Module> modules = this.service.getAll();
-        modules.stream()
-                .filter(module -> module.getParentId().equals(0))
-                .forEach((Module module) -> {
-                    String cateId = Integer.toString(module.getId());
-                    String pid = Integer.toString(module.getParentId());
-                    String text = module.getName();
-                    String state = module.getHasChild() > 0 ? "closed" : "open";
-                    EasyUITreeNode<Module> parentNode = new EasyUITreeNode<>(
-                            cateId, pid, text, state, module.getIcon(), false, module);
-                    this.getChildModules(modules, parentNode);
-                    roots.add(parentNode);
-                });
+        List<EasyUITreeNode<Module>> roots = this.service.getModuleTree(modules, x -> x.getStatus() < 2);
         result.setData(roots);
         return result;
-    }
-
-    private void getChildModules(List<Module> modules, EasyUITreeNode<Module> parentNode) {
-        Integer id = Integer.valueOf(parentNode.getId());
-        modules.stream()
-                .filter(module -> module.getParentId().equals(id))
-                .forEach(module -> {
-                    String cateId = Integer.toString(module.getId());
-                    String pid = Integer.toString(module.getParentId());
-                    String text = module.getName();
-                    String state = module.getHasChild() > 0 ? "closed" : "open";
-                    EasyUITreeNode<Module> childNode = new EasyUITreeNode<>(
-                            cateId, pid, text, state, module.getIcon(), false, module);
-                    this.getChildModules(modules, childNode);
-                    parentNode.getChildren().add(childNode);
-                });
     }
 
     @GetMapping(value = "/list")

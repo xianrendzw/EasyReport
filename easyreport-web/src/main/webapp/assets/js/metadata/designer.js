@@ -133,7 +133,6 @@ var ReportMVC = {
         HistorySqlEditor: null,
         initControl: function () {
             $('#report-datagrid').datagrid({
-                url: ReportMVC.URLs.list.url,
                 method: 'get',
                 pageSize: 50,
                 fit: true,
@@ -163,7 +162,7 @@ var ReportMVC = {
                     iconCls: 'icon-preview',
                     handler: ReportMVC.Controller.preview
                 }, '-', {
-                    text: '历史记录',
+                    text: '版本',
                     iconCls: 'icon-history',
                     handler: ReportMVC.Controller.showHistorySql
                 }, '-', {
@@ -240,7 +239,7 @@ var ReportMVC = {
                             "title": "预览"
                         }, {
                             "name": "history",
-                            "title": "历史记录"
+                            "title": "版本"
                         }, {
                             "name": "remove",
                             "title": "删除"
@@ -262,7 +261,7 @@ var ReportMVC = {
                     }
                 }]],
                 onDblClickRow: function (rowIndex, rowData) {
-                    return ReportMVC.Controller.edit();
+                    return ReportMVC.Controller.preview();
                 }
             });
 
@@ -275,39 +274,33 @@ var ReportMVC = {
                 tools: [{
                     iconCls: 'icon-up',
                     handler: function () {
-                        var grid = $("#report-sql-column-grid");
-                        var row = grid.datagrid('getSelected');
-                        var index = grid.datagrid('getRowIndex', row);
-                        ReportDesigner.resortDatagrid(index, 'up', grid);
+                        EasyUIUtils.move("#report-sql-column-grid", 'up');
                     }
                 }, '-', {
                     iconCls: 'icon-down',
                     handler: function () {
-                        var grid = $("#report-sql-column-grid");
-                        var row = grid.datagrid('getSelected');
-                        var index = grid.datagrid('getRowIndex', row);
-                        ReportDesigner.resortDatagrid(index, 'down', grid);
+                        EasyUIUtils.move("#report-sql-column-grid", 'down');
                     }
                 }, '-', {
                     iconCls: 'icon-add',
                     handler: function () {
                         var index = 1;
                         var rows = $("#report-sql-column-grid").datagrid('getRows');
-                        if (rows && rows.length > 0) {
+                        if (rows && rows.length) {
                             for (var i = 0; i < rows.length; i++) {
                                 var type = $("#type" + i).val();
-                                if (type == 4) {
-                                    index++;
-                                }
+                                if (type == 4) index++;
                             }
                         }
-                        $.post(designerPageRootUrl + 'getSqlColumn', function (row) {
-                            row.name = row.name + index;
-                            row.text = row.name;
-                            row.type = 4;
-                            row.sortType = 0;
-                            $('#report-sql-column-grid').datagrid('appendRow', row);
-                        }, 'json');
+                        $.getJSON(ReportMVC.URLs.getSqlColumnScheme.url, function (result) {
+                            if (result.success) {
+                                row.name = row.name + index;
+                                row.text = row.name;
+                                row.type = 4;
+                                row.sortType = 0;
+                                $('#report-sql-column-grid').datagrid('appendRow', row);
+                            }
+                        });
                     }
                 }, '-', {
                     iconCls: 'icon-cancel',
@@ -321,141 +314,134 @@ var ReportMVC = {
                         }
                     }
                 }],
-                columns: [[
-                    {
-                        field: 'name',
-                        title: '列名',
-                        width: 100,
-                        formatter: function (value, row, index) {
-                            var id = "name" + index;
-                            var tmpl = '<input style="width:98%;" type="text" id="${id}" name="name" value="${value}" />';
-                            return template.compile(tmpl)({
-                                id: id,
-                                value: row.name
-                            });
-                        }
-                    },
-                    {
-                        field: 'text',
-                        title: '标题',
-                        width: 100,
-                        formatter: function (value, row, index) {
-                            var id = "text" + index;
-                            var tmpl = '<input style="width:98%;" type="text" id="${id}" name="text" value="${value}" />';
-                            return template.compile(tmpl)({
-                                id: id,
-                                value: row.text
-                            });
-                        }
-                    },
-                    {
-                        field: 'type',
-                        title: '类型',
-                        width: 75,
-                        formatter: function (value, row, index) {
-                            var id = "type" + index;
-                            var tmpl = '\
+                columns: [[{
+                    field: 'name',
+                    title: '列名',
+                    width: 100,
+                    formatter: function (value, row, index) {
+                        var id = "name" + index;
+                        var tmpl = '<input style="width:98%;" type="text" id="${id}" name="name" value="${value}" />';
+                        return template.compile(tmpl)({
+                            id: id,
+                            value: row.name
+                        });
+                    }
+                }, {
+                    field: 'text',
+                    title: '标题',
+                    width: 100,
+                    formatter: function (value, row, index) {
+                        var id = "text" + index;
+                        var tmpl = '<input style="width:98%;" type="text" id="${id}" name="text" value="${value}" />';
+                        return template.compile(tmpl)({
+                            id: id,
+                            value: row.text
+                        });
+                    }
+                }, {
+                    field: 'type',
+                    title: '类型',
+                    width: 75,
+                    formatter: function (value, row, index) {
+                        var id = "type" + index;
+                        var tmpl = '\
 								<select id="${id}" name=\"type\">\
 								${each list}\
 									<option value="${$value.value}" ${if $value.value == currValue}selected${/if}>${$value.text}</option>\
 								${/each}\
 								</select>';
-                            return template.compile(tmpl)({
-                                id: id,
-                                currValue: value,
-                                list: ReportMVC.Model.SqlColumnTypes
-                            });
+                        return template.compile(tmpl)({
+                            id: id,
+                            currValue: value,
+                            list: ReportMVC.Model.SqlColumnTypes
+                        });
+                    }
+                }, {
+                    field: 'dataType',
+                    title: '数据类型',
+                    width: 75
+                }, {
+                    field: 'width',
+                    title: '宽度',
+                    width: 40
+                }, {
+                    field: 'decimals',
+                    title: '精度',
+                    width: 50,
+                    formatter: function (value, row, index) {
+                        var id = "decimals" + index;
+                        if (!row.decimals) {
+                            row.decimals = 0;
                         }
-                    },
-                    {
-                        field: 'dataType',
-                        title: '数据类型',
-                        width: 75
-                    },
-                    {
-                        field: 'width',
-                        title: '宽度',
-                        width: 40
-                    },
-                    {
-                        field: 'decimals',
-                        title: '精度',
-                        width: 50,
-                        formatter: function (value, row, index) {
-                            var id = "decimals" + index;
-                            if (!row.decimals) {
-                                row.decimals = 0;
-                            }
-                            var tmpl = '<input style="width:42px;" type="text" id="${id}" name="decimals" value="${value}" />';
-                            return template.compile(tmpl)({
-                                id: id,
-                                value: row.decimals
-                            });
-                        }
-                    },
-                    {
-                        field: 'sortType',
-                        title: '排序类型',
-                        width: 100,
-                        formatter: function (value, row, index) {
-                            var id = "sortType" + index;
-                            var tmpl = '\
+                        var tmpl = '<input style="width:42px;" type="text" id="${id}" name="decimals" value="${value}" />';
+                        return template.compile(tmpl)({
+                            id: id,
+                            value: row.decimals
+                        });
+                    }
+                }, {
+                    field: 'sortType',
+                    title: '排序类型',
+                    width: 100,
+                    formatter: function (value, row, index) {
+                        var id = "sortType" + index;
+                        var tmpl = '\
 								<select id="${id}" name=\"sortType\">\
 								${each list}\
 									<option value="${$value.value}" ${if $value.value == currValue}selected${/if}>${$value.text}</option>\
 								${/each}\
 								</select>';
-                            return template.compile(tmpl)({
-                                id: id,
-                                currValue: value,
-                                list: ReportMVC.Model.SqlColumnSortTypes
+                        return template.compile(tmpl)({
+                            id: id,
+                            currValue: value,
+                            list: ReportMVC.Model.SqlColumnSortTypes
+                        });
+                    }
+                }, {
+                    field: 'options',
+                    title: '配置',
+                    width: 300,
+                    formatter: function (value, row, index) {
+                        var subOptions = [];
+                        // 4:计算列,3:统计列,2:维度列,1:布局列
+                        if (row.type == 4) {
+                            subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
+                                return option.type == 1 || option.type == 2 || option.type == 4;
+                            });
+                        } else if (row.type == 3) {
+                            subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
+                                return option.type == 1 || option.type == 2;
+                            });
+                        } else {
+                            subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
+                                return option.type == 2 || option.type == 3;
                             });
                         }
-                    }, {
-                        field: 'options',
-                        title: '配置',
-                        width: 300,
-                        formatter: function (value, row, index) {
-                            var subOptions = [];
-                            // 4:计算列,3:统计列,2:维度列,1:布局列
-                            if (row.type == 4) {
-                                subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
-                                    return option.type == 1 || option.type == 2 || option.type == 4;
-                                });
-                            } else if (row.type == 3) {
-                                subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
-                                    return option.type == 1 || option.type == 2;
-                                });
-                            } else {
-                                subOptions = $.grep(ReportMVC.Model.SqlColumnOptions, function (option, i) {
-                                    return option.type == 2 || option.type == 3;
-                                });
-                            }
 
-                            var htmlOptions = [];
-                            for (var i = 0; i < subOptions.length; i++) {
-                                var name = subOptions[i].name;
-                                var data = {
-                                    id: name + index,
-                                    name: name,
-                                    text: subOptions[i].text,
-                                    checked: row[name] ? " checked=\"checked\"" : "",
-                                    imgSrc: "",
-                                    onClick: ""
-                                };
-                                var tmpl = "";
-                                if (name == "expression" || name == "comment" || name == "format") {
-                                    data.imgSrc = ReportCommon.baseIconUrl + name + ".png";
-                                    data.onClick = "ReportDesigner.showSqlColumnGridOptionDialog('" + index + "','" + name + "')";
-                                    tmpl = '<img style="cursor: pointer;" id="${id}" title="${text}" src="${imgSrc}" onclick="${onClick}" />';
-                                } else {
-                                    tmpl = '<input type="checkbox" id="${id}" name="${name}" ${checked}>${text}</input>'
-                                }
-                                htmlOptions.push(template.compile(tmpl)(data));
+                        var htmlOptions = [];
+                        for (var i = 0; i < subOptions.length; i++) {
+                            var name = subOptions[i].name;
+                            var data = {
+                                id: name + index,
+                                name: name,
+                                text: subOptions[i].text,
+                                checked: row[name] ? " checked=\"checked\"" : "",
+                                imgSrc: "",
+                                onClick: ""
+                            };
+                            var tmpl = "";
+                            if (name == "expression" || name == "comment" || name == "format") {
+                                data.imgSrc = ReportCommon.baseIconUrl + name + ".png";
+                                data.onClick = "ReportDesigner.showSqlColumnGridOptionDialog('" + index + "','" + name + "')";
+                                tmpl = '<img style="cursor: pointer;" id="${id}" title="${text}" src="${imgSrc}" onclick="${onClick}" />';
+                            } else {
+                                tmpl = '<input type="checkbox" id="${id}" name="${name}" ${checked}>${text}</input>'
                             }
-                            return htmlOptions.join(" ");
+                            htmlOptions.push(template.compile(tmpl)(data));
                         }
-                    }]]
+                        return htmlOptions.join(" ");
+                    }
+                }]]
             });
 
             $('#report-query-param-grid').datagrid({
@@ -587,6 +573,8 @@ var ReportMVC = {
                 width: window.screen.width - 350,
                 height: window.screen.height - 350,
                 maximizable: true,
+                minimizable: true,
+                maximized: true,
                 iconCls: 'icon-add',
                 buttons: [{
                     text: '编辑器放大/缩小',
@@ -627,8 +615,8 @@ var ReportMVC = {
             $('#report-detail-dlg').dialog({
                 closed: true,
                 modal: true,
-                width: window.screen.width - 350,
-                height: window.screen.height - 350,
+                width: window.screen.width - 550,
+                height: window.screen.height - 450,
                 maximizable: true,
                 iconCls: 'icon-info',
                 buttons: [{
@@ -763,7 +751,7 @@ var ReportMVC = {
             if (node) {
                 var category = node.attributes;
                 var options = ReportMVC.Util.getOptions();
-                options.title = '新增报表';
+                options.title = '报表设计器--新增报表';
                 EasyUIUtils.openAddDlg(options);
                 ReportMVC.Util.clearSqlEditor();
                 EasyUIUtils.clearDatagrid('#report-sql-column-grid');
@@ -780,7 +768,7 @@ var ReportMVC = {
                 var options = ReportMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']报表';
+                options.title = '报表设计器--修改[' + options.data.name + ']报表';
 
                 ReportMVC.Util.clearSqlEditor();
                 EasyUIUtils.openEditDlg(options);
@@ -815,7 +803,7 @@ var ReportMVC = {
                 var options = ReportMVC.Util.getOptions();
                 options.iconCls = 'icon-copy';
                 options.data = row;
-                options.title = '复制[' + options.data.name + ']报表';
+                options.title = '报表设计器--复制[' + options.data.name + ']报表';
 
                 ReportMVC.Util.clearSqlEditor();
                 EasyUIUtils.openEditDlg(options);
@@ -828,7 +816,7 @@ var ReportMVC = {
             }
         },
         preview: function (row) {
-            return ReportMVC.Util.showReportProps(row);
+
         },
         showDetail: function () {
             var row = $('#report-datagrid').datagrid('getSelected');

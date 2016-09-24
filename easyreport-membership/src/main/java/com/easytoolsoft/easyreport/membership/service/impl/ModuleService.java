@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.membership.service.impl;
 
+import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
 import com.easytoolsoft.easyreport.data.membership.dao.IModuleDao;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service("EzrptMemberModuleService")
@@ -163,6 +166,38 @@ public class ModuleService
             this.rebuildPath(modules, root);
         }
         this.dao.batchUpdate(modules);
+    }
+
+    @Override
+    public List<EasyUITreeNode<Module>> getModuleTree(List<Module> modules, Predicate<Module> predicate) {
+        List<EasyUITreeNode<Module>> roots = new ArrayList<>();
+        modules.stream()
+                .filter(predicate)
+                .filter(module -> Objects.equals(module.getParentId(), 0))
+                .sorted((x, y) -> x.getSequence() > y.getSequence() ? 1 : -1)
+                .forEach((Module module) -> this.addModuleTreeNode(roots, modules, module, predicate));
+        return roots;
+    }
+
+    private void addModuleTreeNode(List<EasyUITreeNode<Module>> children, List<Module> modules, Module module,
+                                   Predicate<Module> predicate) {
+        String cateId = Integer.toString(module.getId());
+        String pid = Integer.toString(module.getParentId());
+        String text = module.getName();
+        String state = module.getHasChild() > 0 ? "closed" : "open";
+        EasyUITreeNode<Module> parentNode = new EasyUITreeNode<>(cateId, pid, text, state, module.getIcon(), false, module);
+        this.addChildModuleTreeNodes(modules, parentNode, predicate);
+        children.add(parentNode);
+    }
+
+    private void addChildModuleTreeNodes(List<Module> modules, EasyUITreeNode<Module> parentNode,
+                                         Predicate<Module> predicate) {
+        Integer id = Integer.valueOf(parentNode.getId());
+        modules.stream()
+                .filter(predicate)
+                .filter(module -> Objects.equals(module.getParentId(), id))
+                .sorted((x, y) -> x.getSequence() > y.getSequence() ? 1 : -1)
+                .forEach(module -> this.addModuleTreeNode(parentNode.getChildren(), modules, module, predicate));
     }
 
     private void rebuildPath(List<Module> modules, final Module parent) {

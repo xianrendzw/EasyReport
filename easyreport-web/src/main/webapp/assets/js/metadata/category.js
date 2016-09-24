@@ -70,6 +70,8 @@ var CategoryMVC = {
                 dnd: true,
                 onClick: function (node) {
                     $('#category-tree').tree('expand', node.target);
+                },
+                onSelect: function (node) {
                     MetaDataReport.listReports(node)
                 },
                 onDblClick: function (node) {
@@ -389,6 +391,10 @@ var CategoryMVC = {
             $.getJSON(CategoryMVC.URLs.getCategoryTree.url, function (src) {
                 if (src.success) {
                     $('#category-tree').tree('loadData', src.data);
+                    var roots = $('#category-tree').tree('getRoots');
+                    if (roots && roots.length) {
+                        $('#category-tree').tree('select', roots[0].target);
+                    }
                 }
             });
         }

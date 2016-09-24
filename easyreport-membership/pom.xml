@@ -16,6 +16,10 @@
         <!-- easyreport modules -->
         <dependency>
             <groupId>com.easytoolsoft</groupId>
+            <artifactId>easyreport-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.easytoolsoft</groupId>
             <artifactId>easyreport-data</artifactId>
         </dependency>
         <!-- third jars -->

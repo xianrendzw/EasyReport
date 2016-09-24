@@ -234,7 +234,7 @@ table.form-table td input.text {
 
 .bg-header {
     background: url(../images/ad3_r2_c1.jpg);
-    height: 75px;
+    height: 35px;
     width: 100%;
     position: relative
 }
@@ -256,14 +256,11 @@ table.form-table td input.text {
     float: left;
     margin: 0px 0px;
     width: 613px;
-    height: 73px;
-    background: url(../images/logo.jpg)
+    height: 30px;
 }
 
 .bg-header .menus {
-    margin-top: 20px;
     margin-left: 20px;
-    padding: 8px;
     width: auto;
     float: right;
     padding-bottom: 0px;
@@ -324,3 +321,4 @@ ul.tabs {
 .top {
     vertical-align: top;
 }
+

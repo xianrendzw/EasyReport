@@ -1,11 +1,13 @@
 package com.easytoolsoft.easyreport.membership.service;
 
+import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.common.service.ICrudService;
 import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
 import com.easytoolsoft.easyreport.data.membership.po.Module;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 系统模块服务类
@@ -32,4 +34,6 @@ public interface IModuleService extends ICrudService<Module, ModuleExample> {
     void rebuildPathById(int id);
 
     void rebuildAllPath();
+
+    List<EasyUITreeNode<Module>> getModuleTree(List<Module> modules, Predicate<Module> predicate);
 }

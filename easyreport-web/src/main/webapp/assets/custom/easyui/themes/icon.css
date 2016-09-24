@@ -7,6 +7,9 @@
 .icon-user{
 	background:url('icons/user.png') no-repeat center center;
 }
+.icon-my{
+	background:url('icons/my.png') no-repeat center center;
+}
 .icon-member{
 	background:url('icons/member.png') no-repeat center center;
 }

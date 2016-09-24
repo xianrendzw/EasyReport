@@ -11,7 +11,7 @@
 <body>
 <div class="easyui-layout" fit="true">
     <div region="north" class="bg-header">
-        <span class="name">当前用户:[<a id="btn-my-profile" title="点击修改个人信息" href="#">${user.name}</a>]</span>
+        <%--<span class="name">当前用户:[<a id="btn-my-profile" title="点击修改个人信息" href="#">${user.name}</a>]</span>--%>
         <div class=""></div>
         <div class="menus">${menus}</div>
     </div>
@@ -20,6 +20,7 @@
             <div title="首页">
                 <p style="font-size: 20px; padding: 20px">
                     你好,<font color="red">${user.name}</font>
+                    <input id="login-user-name" type="hidden" value="${user.name}"/>
                 </p>
             </div>
         </div>
@@ -38,7 +39,31 @@
     <div id="m-all" data-options="name:'all',iconCls:''">关闭所有页</div>
 </div>
 <div id="my-profile-dlg" class="easyui-dialog" title="个人信息修改">
-    <form id="my-profile-form" name="my-profile-form" method="post">
+    <table cellpadding="5" style="margin: 30px auto" class="form-table">
+        <tr>
+            <td>用户信息:</td>
+            <td colspan="3"><span class="name">${user.account}(${user.name})</span></td>
+        </tr>
+        <tr>
+            <td>角色:</td>
+            <td colspan="3"><span class="name">${roleNames}</span></td>
+        </tr>
+        <tr>
+            <td>电子邮箱:</td>
+            <td colspan="3"><span class="name">${user.email}</span></td>
+        </tr>
+        <tr>
+            <td>联系电话:</td>
+            <td colspan="3"><span class="name">${user.telephone}</span></td>
+        </tr>
+        <tr>
+            <td>说明:</td>
+            <td colspan="3"><span class="name">${user.comment}</span></td>
+        </tr>
+    </table>
+</div>
+<div id="change-my-pwd-dlg" class="easyui-dialog" title="修改密码">
+    <form id="change-my-pwd-form" name="my-profile-form" method="post">
         <table cellpadding="5" style="margin: 30px auto" class="form-table">
             <tr>
                 <td>用户信息:<input id="user-id" type="hidden" name="user-id" value="${user.id}"/></td>
