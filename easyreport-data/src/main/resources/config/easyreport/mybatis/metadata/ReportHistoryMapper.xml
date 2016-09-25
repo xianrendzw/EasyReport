@@ -13,7 +13,6 @@
         <result column="meta_columns" property="metaColumns" jdbcType="LONGVARCHAR"/>
         <result column="query_params" property="queryParams" jdbcType="LONGVARCHAR"/>
         <result column="options" property="options" jdbcType="LONGVARCHAR"/>
-        <result column="path" property="path" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="sequence" property="sequence" jdbcType="INTEGER"/>
         <result column="comment" property="comment" jdbcType="VARCHAR"/>
@@ -82,7 +81,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List_Without_Id">
-  	   report_id ,uid ,category_id ,ds_id ,name ,sql_text ,meta_columns ,query_params ,options ,path ,status ,sequence ,comment ,author ,gmt_created ,gmt_modified 	  </sql>
+  	   report_id ,uid ,category_id ,ds_id ,name ,sql_text ,meta_columns ,query_params ,options , status ,sequence ,comment ,author ,gmt_created ,gmt_modified 	  </sql>
     <sql id="Base_Column_List">
         id ,
         <include refid="Base_Column_List_Without_Id"/>
@@ -97,7 +96,6 @@
         <if test="metaColumns != null">meta_columns,</if>
         <if test="queryParams != null">query_params,</if>
         <if test="options != null">options,</if>
-        <if test="path != null">path,</if>
         <if test="status != null">status,</if>
         <if test="sequence != null">sequence,</if>
         <if test="comment != null">comment,</if>
@@ -115,7 +113,6 @@
         <if test="metaColumns != null">#{metaColumns,jdbcType=LONGVARCHAR},</if>
         <if test="queryParams != null">#{queryParams,jdbcType=LONGVARCHAR},</if>
         <if test="options != null">#{options,jdbcType=LONGVARCHAR},</if>
-        <if test="path != null">#{path,jdbcType=VARCHAR},</if>
         <if test="status != null">#{status,jdbcType=INTEGER},</if>
         <if test="sequence != null">#{sequence,jdbcType=INTEGER},</if>
         <if test="comment != null">#{comment,jdbcType=VARCHAR},</if>
@@ -133,7 +130,6 @@
         #{item.metaColumns,jdbcType=LONGVARCHAR},
         #{item.queryParams,jdbcType=LONGVARCHAR},
         #{item.options,jdbcType=LONGVARCHAR},
-        #{item.path,jdbcType=VARCHAR},
         #{item.status,jdbcType=INTEGER},
         #{item.sequence,jdbcType=INTEGER},
         #{item.comment,jdbcType=VARCHAR},
@@ -151,7 +147,6 @@
         <if test="metaColumns != null">meta_columns = #{metaColumns,jdbcType=LONGVARCHAR} ,</if>
         <if test="queryParams != null">query_params = #{queryParams,jdbcType=LONGVARCHAR} ,</if>
         <if test="options != null">options = #{options,jdbcType=LONGVARCHAR} ,</if>
-        <if test="path != null">path = #{path,jdbcType=VARCHAR} ,</if>
         <if test="status != null">status = #{status,jdbcType=INTEGER} ,</if>
         <if test="sequence != null">sequence = #{sequence,jdbcType=INTEGER} ,</if>
         <if test="comment != null">comment = #{comment,jdbcType=VARCHAR} ,</if>
@@ -169,7 +164,6 @@
         <if test="record.metaColumns != null">meta_columns = #{set.metaColumns,jdbcType=LONGVARCHAR} ,</if>
         <if test="record.queryParams != null">query_params = #{set.queryParams,jdbcType=LONGVARCHAR} ,</if>
         <if test="record.options != null">options = #{set.options,jdbcType=LONGVARCHAR} ,</if>
-        <if test="record.path != null">path = #{set.path,jdbcType=VARCHAR} ,</if>
         <if test="record.status != null">status = #{set.status,jdbcType=INTEGER} ,</if>
         <if test="record.sequence != null">sequence = #{set.sequence,jdbcType=INTEGER} ,</if>
         <if test="record.comment != null">comment = #{set.comment,jdbcType=VARCHAR} ,</if>
@@ -187,7 +181,6 @@
         meta_columns = #{item.metaColumns,jdbcType=LONGVARCHAR} ,
         query_params = #{item.queryParams,jdbcType=LONGVARCHAR} ,
         options = #{item.options,jdbcType=LONGVARCHAR} ,
-        path = #{item.path,jdbcType=VARCHAR} ,
         status = #{item.status,jdbcType=INTEGER} ,
         sequence = #{item.sequence,jdbcType=INTEGER} ,
         comment = #{item.comment,jdbcType=VARCHAR} ,

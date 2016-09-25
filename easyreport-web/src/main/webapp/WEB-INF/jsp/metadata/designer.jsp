@@ -145,7 +145,7 @@
                                 <input type="hidden" id="report-id" name="id" value=""/>
                                 <input type="hidden" id="report-uid" name="uid"/>
                                 <input type="hidden" id="report-categoryId" name="categoryId" value="0"/>
-                                <input type="hidden" id="report-sqlTextIsChange" name="sqlTextIsChange" value="0"/>
+                                <input type="hidden" id="report-sqlTextIsChange" name="isChange" value="0"/>
                                 <input type="hidden" id="report-queryParams" name="queryParams"/>
                             </td>
                         </tr>
@@ -160,8 +160,8 @@
                     </table>
                 </form>
             </div>
-            <div id="report-sql-column-div" style="height:180px;">
-                <div id="report-sql-column-grid" title="元数据列配置"></div>
+            <div id="report-meta-column-div" style="height:180px;">
+                <div id="report-meta-column-grid" title="元数据列配置"></div>
             </div>
         </div>
         <div id="report-query-param-tab" title="查询参数" style="padding: 5px;">
@@ -223,9 +223,8 @@
                             <td colspan="7">
                             <textarea id="report-query-param-content" name="content" style="width: 99%; height: 100px;"
                                       placeholder="(select col1 as name,col2 as text from table ...) or (name1,text1|name2,text2|...) or (name1|name2|...)"></textarea>
-                                <input type="hidden" id="report-query-param-gridIndex" value=""/>
-                                <input type="hidden" id="jsonQueryParams"/>
-                                <input type="hidden" id="report-query-param-reportId" value="0"/></td>
+                                <input type="hidden" id="report-query-param-gridIndex" value="0"/>
+                                <input type="hidden" id="report-query-param-json"/>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: center;">
@@ -316,9 +315,31 @@
             <div id="report-history-sql-grid"></div>
         </div>
         <div data-options="region:'east',split:true,title:'属性',collapsible:false" style="width:250px;">
-            <table id="report-history-sql-pgrid" class="easyui-propertygrid"></table>
+            <div id="report-history-sql-pgrid" class="easyui-propertygrid"></div>
         </div>
     </div>
+</div>
+<!-- 预览SQ弹框  -->
+<div id="report-preview-sql-dlg" title="预览SQL">
+    <textarea id="report-preview-sqlText" name="sqlText" style="height:100%"></textarea>
+</div>
+<!-- 设置计算列表达式弹框  -->
+<div id="report-column-expression-dlg" title="列表达式">
+    <table class="designer-table" style="height: 99%">
+        <tr>
+            <td class="top">
+                <textarea id="report-column-expression" name="expression" style="width: 98%; height: 215px;"></textarea></td>
+        </tr>
+    </table>
+</div>
+<!-- 设置列备注弹框  -->
+<div id="report-column-comment-dlg" title="列备注">
+    <table class="designer-table" style="height: 99%">
+        <tr>
+            <td class="top"><textarea id="report-column-comment" name="comment" style="width: 98%; height: 215px;"></textarea>
+            </td>
+        </tr>
+    </table>
 </div>
 <!-- tree右键菜单  -->
 <div id="category-tree-ctx-menu" class="easyui-menu" style="width: 150px;">

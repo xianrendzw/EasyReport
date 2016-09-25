@@ -61,10 +61,6 @@ public class ReportHistory implements Serializable {
      */
     private String options;
     /**
-     * 报表树型结构路径
-     */
-    private String path;
-    /**
      * 报表状态（1表示锁定，0表示编辑)
      */
     private Integer status;

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,30 +95,23 @@ public class ReportController
     @PostMapping(value = "/add")
     @OpLog(name = "新增报表")
     @RequiresPermissions("report.designer:add")
-    public JsonResult add(Report po) {
+    public JsonResult add(@CurrentUser User loginUser, Report po) {
         JsonResult<String> result = new JsonResult<>();
-        po.setCreateUser("");
+        po.setCreateUser(loginUser.getAccount());
         po.setComment("");
         this.service.add(po);
-        ReportHistory historyPo = ReportHistory.builder()
-                .reportId(po.getId())
-                .build();
-        this.reportHistoryService.add(historyPo);
+        this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         return result;
     }
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
     @RequiresPermissions("report.designer:edit")
-    public JsonResult edit(Report po, Boolean isChange) {
-        JsonResult result = new JsonResult<>();
+    public JsonResult edit(@CurrentUser User loginUser, Report po, Boolean isChange) {
+        JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
         if (isChange == null || isChange) {
-            ReportHistory historyPo = new ReportHistory();
-            historyPo.setReportId(po.getId());
-            historyPo.setAuthor(po.getCreateUser());
-            historyPo.setSqlText(po.getSqlText());
-            this.reportHistoryService.add(historyPo);
+            this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         }
         return result;
     }
@@ -126,7 +120,7 @@ public class ReportController
     @OpLog(name = "删除报表")
     @RequiresPermissions("report.designer:remove")
     public JsonResult remove(Integer id) {
-        JsonResult result = new JsonResult<>();
+        JsonResult<String> result = new JsonResult<>();
         this.service.removeById(id);
         return result;
     }
@@ -137,32 +131,39 @@ public class ReportController
     public JsonResult execSqlText(Integer dsId, String sqlText, Integer dataRange,
                                   String queryParams, HttpServletRequest request) {
         JsonResult<List<ReportMetaDataColumn>> result = new JsonResult<>();
-        if (dsId == null) {
-            return result;
+        if (dsId != null) {
+            if (dataRange == null) dataRange = 7;
+            sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
+            result.setData(this.service.getMetaDataColumns(dsId, sqlText));
+        } else {
+            result.setSuccess(false);
+            result.setMsg("没有选择数据源!");
         }
-        sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
-        result.setData(this.service.getMetaDataColumns(dsId, sqlText));
         return result;
     }
 
     @GetMapping(value = "/previewSqlText")
     @OpLog(name = "预览报表SQL语句")
     @RequiresPermissions("report.designer:view")
-    public JsonResult previewSqlText(Integer dsId, String sqlText, Integer dataRange, String queryParams,
-                                     HttpServletRequest request) {
+    public JsonResult previewSqlText(Integer dsId, String sqlText, Integer dataRange,
+                                     String queryParams, HttpServletRequest request) {
         JsonResult<String> result = new JsonResult<>();
-        if (dsId == null) return result;
-        if (dataRange == null) dataRange = 7;
-        sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
-        this.service.explainSqlText(dsId, sqlText);
-        result.setData(sqlText);
+        if (dsId != null) {
+            if (dataRange == null) dataRange = 7;
+            sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
+            this.service.explainSqlText(dsId, sqlText);
+            result.setData(sqlText);
+        } else {
+            result.setSuccess(false);
+            result.setMsg("没有选择数据源!");
+        }
         return result;
     }
 
-    @GetMapping(value = "/getSqlColumnScheme")
+    @GetMapping(value = "/getMetaColumnScheme")
     @OpLog(name = "获取报表元数据列结构")
     @RequiresPermissions("report.designer:view")
-    public ReportMetaDataColumn getSqlColumnScheme() {
+    public ReportMetaDataColumn getMetaColumnScheme() {
         ReportMetaDataColumn column = new ReportMetaDataColumn();
         column.setName("expr");
         column.setType(4);
@@ -171,16 +172,15 @@ public class ReportController
         return column;
     }
 
-    private String getSqlText(String sqlText, Integer dataRange, String queryParams, HttpServletRequest request) {
-        Map<String, Object> formParameters = tableReportService.getBuildInParameters(
-                request.getParameterMap(), dataRange);
+    private String getSqlText(String sqlText, Integer dataRange, String queryParams,
+                              HttpServletRequest request) {
+        Map<String, Object> formParameters =
+                tableReportService.getBuildInParameters(request.getParameterMap(), dataRange);
         if (StringUtils.isNotBlank(queryParams)) {
             List<QueryParameter> queryParameters = JSON.parseArray(queryParams, QueryParameter.class);
-            queryParameters.stream().filter(parameter ->
-                    !formParameters.containsKey(parameter.getName()))
-                    .forEach(parameter -> {
-                        formParameters.put(parameter.getName(), parameter.getRealDefaultValue());
-                    });
+            queryParameters.stream()
+                    .filter(parameter -> !formParameters.containsKey(parameter.getName()))
+                    .forEach(parameter -> formParameters.put(parameter.getName(), parameter.getRealDefaultValue()));
         }
         return VelocityUtils.parse(sqlText, formParameters);
     }
@@ -192,4 +192,25 @@ public class ReportController
         }
         return pageInfo;
     }
+
+    private ReportHistory getReportHistory(@CurrentUser User loginUser, Report po) {
+        return ReportHistory.builder()
+                .reportId(po.getId())
+                .categoryId(po.getCategoryId())
+                .dsId(po.getDsId())
+                .author(loginUser.getAccount())
+                .comment(po.getComment())
+                .name(po.getName())
+                .uid(po.getUid())
+                .metaColumns(po.getMetaColumns())
+                .queryParams(po.getQueryParams())
+                .options(po.getOptions())
+                .sqlText(po.getSqlText())
+                .status(po.getStatus())
+                .sequence(po.getSequence())
+                .gmtCreated(new Date())
+                .gmtModified(new Date())
+                .build();
+    }
+
 }

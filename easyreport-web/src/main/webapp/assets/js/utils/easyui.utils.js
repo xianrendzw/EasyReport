@@ -252,6 +252,29 @@ var EasyUIUtils = {
             $(id).combobox('setValue', defaultValue);
         }
     },
+    toPropertygridRows: function (options) {
+        var rows = [];
+        for (var key in options) {
+            rows.push({
+                "name": key,
+                "value": options[key],
+                "editor": "text"
+            });
+        }
+
+        return {
+            "total": rows.length,
+            "rows": rows
+        };
+    },
+    toPropertygridMap: function (rows) {
+        var options = {};
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            options[row.name] = row.value;
+        }
+        return options;
+    },
     closeCurrentTab: function (id) {
         var tab = $(id).tabs('getSelected');
         var options = tab.panel('options');

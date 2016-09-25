@@ -72,7 +72,7 @@ var CategoryMVC = {
                     $('#category-tree').tree('expand', node.target);
                 },
                 onSelect: function (node) {
-                    MetaDataReport.listReports(node)
+                    MetaDataDesigner.listReports(node)
                 },
                 onDblClick: function (node) {
                     CategoryMVC.Controller.edit();
@@ -122,7 +122,7 @@ var CategoryMVC = {
                         return CategoryMVC.Controller.openSearchDlg();
                     }
                     if (item.name == "addReport") {
-                        return MetaDataReport.addReport();
+                        return MetaDataDesigner.addReport();
                     }
                     if (item.name == "refresh") {
                         return CategoryMVC.Controller.reload();
@@ -211,7 +211,7 @@ var CategoryMVC = {
                         if (node) {
                             $('#category-tree').tree('select', node.target);
                             $('#category-tree').tree('expand', node.target);
-                            MetaDataReport.listReports(node);
+                            MetaDataDesigner.listReports(node);
                         }
                     }
                 }

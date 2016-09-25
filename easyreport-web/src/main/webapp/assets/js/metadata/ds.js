@@ -202,7 +202,7 @@ var DsMVC = {
                 onChange: function (newValue, oldValue) {
                     var item = DsMVC.Model.dbPoolTypes[newValue].value;
                     $('#poolClass').val(item.poolClass);
-                    var data = DsMVC.Util.toPropertygridData(item.options);
+                    var data = EasyUIUtils.toPropertygridRows(item.options);
                     $('#ds-options-pg').propertygrid('loadData', data);
                 }
             });
@@ -258,7 +258,7 @@ var DsMVC = {
                 $('#jdbcUrl').textbox('setValue', row.jdbcUrl);
                 $('#options').val(row.options || "{}");
                 EasyReport.utils.debug(row.options);
-                $('#ds-options-pg').propertygrid('loadData', DsMVC.Util.toPropertygridData($.toJSON(row.options)));
+                $('#ds-options-pg').propertygrid('loadData', EasyUIUtils.toPropertygridRows($.toJSON(row.options)));
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -316,7 +316,8 @@ var DsMVC = {
             }, 'json');
         },
         save: function () {
-            $('#options').val(JSON.stringify(DsMVC.Util.getPropertygridRowMap()));
+            var rows = $('#ds-options-pg').propertygrid('getRows');
+            $('#options').val(JSON.stringify(EasyUIUtils.toPropertygridMap(rows)));
             EasyReport.utils.debug($('#options').val());
 
             var action = $('#modal-action').val();
@@ -393,30 +394,6 @@ var DsMVC = {
                 }
             }
             return "";
-        },
-        toPropertygridData: function (options) {
-            var rows = [];
-            for (var key in options) {
-                rows.push({
-                    "name": key,
-                    "value": options[key],
-                    "editor": "text"
-                });
-            }
-
-            return {
-                "total": rows.length,
-                "rows": rows
-            };
-        },
-        getPropertygridRowMap: function () {
-            var options = {};
-            var rows = $('#ds-options-pg').propertygrid('getRows');
-            for (var i = 0; i < rows.length; i++) {
-                var row = rows[i];
-                options[row.name] = row.value;
-            }
-            return options;
         }
     }
 };
