@@ -105,11 +105,6 @@ var DsMVC = {
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'uid',
-                    title: 'UID',
-                    width: 100,
-                    sortable: true
-                }, {
                     field: 'jdbcUrl',
                     title: 'JdbcUrl',
                     width: 200,
@@ -263,7 +258,7 @@ var DsMVC = {
                 $('#jdbcUrl').textbox('setValue', row.jdbcUrl);
                 $('#options').val(row.options || "{}");
                 EasyReport.utils.debug(row.options);
-                $('#ds-options-pg').propertygrid('loadData', DsMVC.Util.toPropertygridData($.parseJSON(row.options)));
+                $('#ds-options-pg').propertygrid('loadData', DsMVC.Util.toPropertygridData($.toJSON(row.options)));
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -386,7 +381,7 @@ var DsMVC = {
             if (!data || data.length == 0) return {};
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-                item.value = $.parseJSON(item.value);
+                item.value = $.toJSON(item.value);
                 srcMap[item.key] = item;
             }
             return srcMap;

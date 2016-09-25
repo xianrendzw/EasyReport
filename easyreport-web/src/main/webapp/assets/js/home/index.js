@@ -132,7 +132,7 @@ var HomeIndexMVC = {
                         return $(this).form('validate');
                     },
                     success: function (data) {
-                        var result = $.parseJSON(data)
+                        var result = $.toJSON(data);
                         if (result.success) {
                             EasyUIUtils.showMsg("密码修改成功");
                             $("#my-profile-dlg").dialog('close');

@@ -47,12 +47,12 @@
                     <td>数据源:</td>
                     <td>
                         <select class="easyui-combobox" id="dbType" name="dbType"
-                                data-options="valueField:'value',textField:'name'"
+                                data-options="required:true,valueField:'value',textField:'name'"
                                 style="width: 180px"></select>
                     </td>
                     <td>连接池:</td>
                     <td colspan="3"><select class="easyui-combobox" id="dbPoolType" name="dbPoolType"
-                                            data-options="valueField:'value',textField:'name'"
+                                            data-options="required:true,valueField:'value',textField:'name'"
                                             style="width: 180px"></select>
                     </td>
                 </tr>

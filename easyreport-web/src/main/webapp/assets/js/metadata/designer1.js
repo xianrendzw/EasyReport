@@ -998,7 +998,7 @@ ReportDesigner.saveTreeNode = function() {
 			return $(this).form('validate');
 		},
 		success : function(data) {
-			var result = $.parseJSON(data);
+			var result = $.toJSON(data);
 			if (result.success) {
 				ReportDesigner.updateTreeNode(act, result.data);
 				$('#setTreeNodeDlg').dialog('close');

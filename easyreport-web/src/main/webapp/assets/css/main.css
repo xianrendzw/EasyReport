@@ -1,21 +1,20 @@
 html, body, span, div, p, table, td, th, tr {
     padding: 0px;
     margin: 0px;
-    font-size: 14px;
-    font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica,
-    STHeiti;
+    font-size: 12px;
+    font-family: "Microsoft Yahei", Tahoma, Arial, Helvetica;
 }
 
 * {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .l-btn-text {
-    font-size: 14px
+    font-size: 12px
 }
 
 .tabs-title {
-    font-size: 14px
+    font-size: 12px
 }
 
 h3 {
@@ -232,6 +231,28 @@ table.form-table td input.text {
     width: 200px
 }
 
+.designer-table {
+    margin: 5px 5px;
+    width: 98%;
+    border-spacing: 0;
+}
+
+.designer-table td {
+    padding: 2px;
+    max-width: 150px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.designer-table .code {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    border: 1px dashed;
+}
+
+.detail td {
+    padding: 5px;
+}
+
 .bg-header {
     background: url(../images/ad3_r2_c1.jpg);
     height: 35px;
@@ -312,6 +333,14 @@ ul.tabs {
 #body-layout .panel-body {
     border-top-width: 0px;
     border-bottom: none
+}
+
+#report-sql-column-div .panel-header {
+    border-top-width: 1px
+}
+
+#report-query-param-div .panel-header {
+    border-top-width: 1px
 }
 
 .checkboxlist .checkbox {

@@ -10,6 +10,7 @@ var MetaDataReport = {
         ReportMVC.View.initHistorySqlEditor();
         ReportMVC.View.bindEvent();
         ReportMVC.View.bindValidate();
+        ReportMVC.View.initData();
     },
     listReports: function (category) {
         ReportMVC.Controller.listReports(category.id);
@@ -22,6 +23,7 @@ var MetaDataReport = {
 var ReportCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/metadata/report/',
     baseHistoryUrl: EasyReport.ctxPath + '/rest/metadata/history/',
+    baseDsUrl: EasyReport.ctxPath + '/rest/metadata/ds/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
 };
 
@@ -62,6 +64,12 @@ var ReportMVC = {
         getSqlColumnScheme: {
             url: ReportCommon.baseUrl + 'getSqlColumnScheme',
             method: 'GET'
+        },
+        DataSource: {
+            listAll: {
+                url: ReportCommon.baseDsUrl + 'listAll',
+                method: 'GET'
+            }
         }
     },
     Model: {
@@ -126,7 +134,8 @@ var ReportMVC = {
         }, {
             text: "字符优先降序",
             value: 4
-        }]
+        }],
+        DataSourceList: []
     },
     View: {
         SqlEditor: null,
@@ -185,7 +194,7 @@ var ReportMVC = {
                 }, {
                     field: 'name',
                     title: '名称',
-                    width: 100,
+                    width: 150,
                     sortable: true
                 }, {
                     field: 'dsName',
@@ -602,6 +611,7 @@ var ReportMVC = {
                 width: window.screen.width - 350,
                 height: window.screen.height - 350,
                 maximizable: true,
+                maximized: true,
                 iconCls: 'icon-history',
                 buttons: [{
                     text: '关闭',
@@ -618,6 +628,7 @@ var ReportMVC = {
                 width: window.screen.width - 550,
                 height: window.screen.height - 450,
                 maximizable: true,
+                maximized: true,
                 iconCls: 'icon-info',
                 buttons: [{
                     text: '上一条',
@@ -626,7 +637,7 @@ var ReportMVC = {
                         EasyUIUtils.cursor('#report-datagrid',
                             '#current-row-index',
                             'prev', function (row) {
-                                ReportMVC.Controller.preview(row);
+                                ReportMVC.Controller.showDetail(row);
                             });
                     }
                 }, {
@@ -636,7 +647,7 @@ var ReportMVC = {
                         EasyUIUtils.cursor('#report-datagrid',
                             '#current-row-index',
                             'next', function (row) {
-                                ReportMVC.Controller.preview(row);
+                                ReportMVC.Controller.showDetail(row);
                             });
                     }
                 }, {
@@ -722,6 +733,9 @@ var ReportMVC = {
             $('#btn-report-query-param-edit').bind('click', ReportMVC.Controller.find);
         },
         bindValidate: function () {
+        },
+        initData: function () {
+            ReportMVC.Data.loadDataSourceList();
         }
     },
     Controller: {
@@ -749,15 +763,25 @@ var ReportMVC = {
         add: function () {
             var node = $('#category-tree').tree('getSelected');
             if (node) {
+                var dsId = $('#report-dsId').combobox('getValue');
                 var category = node.attributes;
                 var options = ReportMVC.Util.getOptions();
                 options.title = '报表设计器--新增报表';
                 EasyUIUtils.openAddDlg(options);
                 ReportMVC.Util.clearSqlEditor();
                 EasyUIUtils.clearDatagrid('#report-sql-column-grid');
-
-                $('#report-category-name').text(category.name);
-                $('#report-categoryId').text(category.id);
+                var row = {
+                    name: "",
+                    dsId: dsId,
+                    status: 1,
+                    sequence: 10,
+                    options: {
+                        layout: 2,
+                        statColumnLayout: 1,
+                        dataRange: 7
+                    }
+                };
+                ReportMVC.Util.fillReportBasicConfForm(row, row.options);
             } else {
                 $.messager.alert('警告', '请选中一个报表分类!', 'info');
             }
@@ -772,8 +796,30 @@ var ReportMVC = {
 
                 ReportMVC.Util.clearSqlEditor();
                 EasyUIUtils.openEditDlg(options);
+
+                ReportMVC.Util.fillReportBasicConfForm(row, $.toJSON(row.options));
                 ReportMVC.Controller.loadParams(row.params)
                 ReportMVC.View.SqlEditor.setValue(row.sqlText || "");
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
+        },
+        copy: function () {
+            var row = $('#report-datagrid').datagrid('getSelected');
+            if (row) {
+                var options = ReportMVC.Util.getOptions();
+                options.iconCls = 'icon-copy';
+                options.data = row;
+                options.title = '报表设计器--复制[' + options.data.name + ']报表';
+
+                ReportMVC.Util.clearSqlEditor();
+                EasyUIUtils.openEditDlg(options);
+
+                row.name = '';
+                ReportMVC.Util.fillReportBasicConfForm(row, $.toJSON(row.options));
+                ReportMVC.Controller.loadParams(row.params)
+                ReportMVC.View.SqlEditor.setValue(row.sqlText || "");
+                $('#modal-action').val("add");
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -793,24 +839,6 @@ var ReportMVC = {
                     }
                 };
                 EasyUIUtils.remove(options);
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
-        },
-        copy: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
-                var options = ReportMVC.Util.getOptions();
-                options.iconCls = 'icon-copy';
-                options.data = row;
-                options.title = '报表设计器--复制[' + options.data.name + ']报表';
-
-                ReportMVC.Util.clearSqlEditor();
-                EasyUIUtils.openEditDlg(options);
-                $('#modal-action').val("add");
-                $('#report-name').textbox('setValue', '');
-                ReportMVC.Controller.loadParams(row.params)
-                ReportMVC.View.SqlEditor.setValue(row.sqlText || "");
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
@@ -902,6 +930,12 @@ var ReportMVC = {
                 gridId: null,
             };
         },
+        fillReportBasicConfForm: function (row, options) {
+            $('#report-basic-conf-form').form('load', row);
+            $('#report-basic-conf-form').form('load', options);
+            $('#report-category-name').text(row.categoryName);
+            $('#report-categoryId').text(row.categoryId);
+        },
         clearSqlEditor: function () {
             ReportMVC.View.SqlEditor.setValue('');
             ReportMVC.View.SqlEditor.refresh();
@@ -920,6 +954,13 @@ var ReportMVC = {
                 var value = ReportMVC.Util.getPropertyValue(name, data);
                 $(id).text(value);
             }
+
+            var options = $.toJSON(data.options);
+            for (var name in options) {
+                var id = "#report-detail-" + name;
+                var value = ReportMVC.Util.getPropertyValue(name, options);
+                $(id).text(value);
+            }
         },
         eachSqlColumnRows: function (rows) {
             if (rows && rows.length) {
@@ -933,7 +974,8 @@ var ReportMVC = {
         },
         getPropertyValue: function (name, object) {
             var value = object[name];
-            if (name == "layout") {
+            if (name == "layout" ||
+                name == "statColumnLayout") {
                 return ReportMVC.Util.getLayoutName(value);
             }
             if (name == "status") {
@@ -982,6 +1024,17 @@ var ReportMVC = {
                 return 4;
             }
             return 0;
+        }
+    },
+    Data: {
+        loadDataSourceList: function () {
+            $.getJSON(ReportMVC.URLs.DataSource.listAll.url, function (result) {
+                if (!result.success) {
+                    console.info(result.msg);
+                }
+                ReportMVC.Model.DataSourceList = result.data;
+                EasyUIUtils.fillCombox("#report-dsId", "add", result.data, "");
+            });
         }
     }
 };

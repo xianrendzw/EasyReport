@@ -121,7 +121,7 @@ var EasyUIUtils = {
                 return $(this).form('validate');
             },
             success: function (data) {
-                var result = $.parseJSON(data)
+                var result = $.toJSON(data);
                 if (result.success) {
                     EasyUIUtils.showMsg(result.msg || "操作成功");
                     options.callback();
@@ -168,12 +168,6 @@ var EasyUIUtils = {
             total: 0,
             rows: []
         };
-    },
-    parseJSON: function (json) {
-        if (json == null || json == "") {
-            return {};
-        }
-        return $.parseJSON(json);
     },
     showMsg: function (msg) {
         $.messager.show({
@@ -245,6 +239,17 @@ var EasyUIUtils = {
             $grid.datagrid('refreshRow', index);
             $grid.datagrid('refreshRow', moveIndex);
             $grid.datagrid('selectRow', moveIndex);
+        }
+    },
+    fillCombox: function (id, act, list, defaultValue) {
+        $(id).combobox('clear');
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            item["selected"] = (i == 0);
+        }
+        $(id).combobox('loadData', list);
+        if (act == "edit") {
+            $(id).combobox('setValue', defaultValue);
         }
     },
     closeCurrentTab: function (id) {
