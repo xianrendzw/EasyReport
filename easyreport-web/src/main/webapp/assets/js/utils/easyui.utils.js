@@ -111,7 +111,7 @@ var EasyUIUtils = {
         }
 
         if (options.gridId && options.gridUrl) {
-            options.callback = function () {
+            options.callback = function (data) {
                 EasyUIUtils.loadToDatagrid(options.gridId, options.gridUrl);
             };
         }
@@ -124,7 +124,7 @@ var EasyUIUtils = {
                 var result = $.toJSON(data);
                 if (result.success) {
                     EasyUIUtils.showMsg(result.msg || "操作成功");
-                    options.callback();
+                    options.callback(result.data);
                     $(options.dlgId).dialog('close');
                 } else {
                     $.messager.show({

@@ -47,22 +47,21 @@ public class CategoryService
     }
 
     @Override
+    @Transactional
     public boolean remove(int id, int pid) {
         this.dao.deleteById(id);
-        return this.updateHasChild(pid,  this.hasChildren(pid)) > 0;
+        return this.updateHasChild(pid, this.hasChildren(pid)) > 0;
     }
 
     @Override
-    public void move(int sourceId, int targetId, int sourcePid) {
+    @Transactional
+    public void move(int sourceId, int targetId, int sourcePid, String sourcePath) {
         // 修改source节点的pid与path，hasChild值
         this.updateParentId(sourceId, targetId);
         this.updateHasChild(targetId, true);
-        this.updatePath(sourceId, this.getPath(targetId, sourceId));
-        // 递归修改source节点的所有子节点的path值
-        this.rebuildPathById(sourceId);
+        this.dao.updatePath(sourcePath, this.getPath(targetId, sourceId));
         // 修改source节点的父节点hasChild值
         this.updateHasChild(sourcePid, this.hasChildren(sourcePid));
-        this.rebuildAllPath();
     }
 
     @Override
@@ -153,13 +152,13 @@ public class CategoryService
         return this.dao.updateById(category);
     }
 
-    private int updatePath(Integer id, String path) {
-        Category category = Category.builder().id(id).path(path).build();
+    private int updateParentId(int sourceId, int targetId) {
+        Category category = Category.builder().id(sourceId).parentId(targetId).build();
         return this.dao.updateById(category);
     }
 
-    private int updateParentId(int sourceId, int targetId) {
-        Category category = Category.builder().id(sourceId).parentId(targetId).build();
+    private int updatePath(Integer id, String path) {
+        Category category = Category.builder().id(id).path(path).build();
         return this.dao.updateById(category);
     }
 

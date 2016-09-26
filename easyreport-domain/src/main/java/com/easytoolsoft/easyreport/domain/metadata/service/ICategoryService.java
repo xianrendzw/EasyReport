@@ -19,7 +19,7 @@ public interface ICategoryService extends ICrudService<Category, CategoryExample
 
     boolean remove(int id, int pid);
 
-    void move(int sourceId, int targetId, int sourcePid);
+    void move(int sourceId, int targetId, int sourcePid, String sourcePath);
 
     Category paste(int sourceId, int targetId);
 

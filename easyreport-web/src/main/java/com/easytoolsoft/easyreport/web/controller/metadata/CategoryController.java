@@ -4,7 +4,6 @@ import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.Category;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.service.ICategoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
@@ -70,7 +69,7 @@ public class CategoryController
     @RequiresPermissions("report.designer:view")
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
-        List<Category> list = this.service.getByPage(pageInfo, fieldName, keyword);
+        List<Category> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -87,6 +86,7 @@ public class CategoryController
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
         this.service.add(po);
+        result.setData(po);
         return result;
     }
 
@@ -96,6 +96,7 @@ public class CategoryController
     public JsonResult edit(Category po) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.editById(po);
+        result.setData(po);
         return result;
     }
 
@@ -105,15 +106,23 @@ public class CategoryController
     public JsonResult remove(Integer id, Integer pid) {
         JsonResult<Object> result = new JsonResult<>();
         this.service.remove(id, pid);
+        result.setData(pid);
         return result;
     }
 
     @PostMapping(value = "/move")
     @OpLog(name = "移动报表分类")
     @RequiresPermissions("report.designer:edit")
-    public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
+    public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid, String sourcePath) {
         JsonResult<Object> result = new JsonResult<>();
-        this.service.move(sourceId, targetId, sourcePid);
+        this.service.move(sourceId, targetId, sourcePid, sourcePath);
+        result.setData(new HashMap<String, Integer>(3) {
+            {
+                put("sourceId", sourceId);
+                put("targetId", targetId);
+                put("sourcePid", sourcePid);
+            }
+        });
         return result;
     }
 

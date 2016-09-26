@@ -171,10 +171,10 @@
                         <tr>
                             <td>参数名:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-name" name="name"
-                                       required/></td>
+                                       data-options="required:true" /></td>
                             <td>标题:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-text" name="text"
-                                       required/></td>
+                                       data-options="required:true" /></td>
                             <td>默认值:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-defaultValue"
                                        name="defaultValue"/></td>
@@ -185,7 +185,7 @@
                         <tr>
                             <td>数据类型:</td>
                             <td><select class="easyui-combobox" id="report-query-param-dataType" name="dataType"
-                                        style="width:100px">
+                                        data-options="required:true" style="width:100px">
                                 <option value="string" selected="selected">字符串</option>
                                 <option value="float">浮点数（包括双精度、浮点数)</option>
                                 <option value="integer">整数</option>
@@ -193,7 +193,7 @@
                             </select></td>
                             <td>数据长度:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-width" name="width"
-                                       value="100"/></td>
+                                       value="100" data-options="validType:'digit'"/></td>
                             <td>是否必选:</td>
                             <td><input class="easyui-textbox" type="checkbox" id="report-query-param-required"
                                        name="required"/></td>
@@ -203,7 +203,7 @@
                         <tr>
                             <td>表单控件:</td>
                             <td><select class="easyui-combobox" id="report-query-param-formElement" name="formElement"
-                                        style="width:100px">
+                                        data-options="required:true" style="width:100px">
                                 <option value="select">下拉单选</option>
                                 <option value="selectMul">下拉多选</option>
                                 <option value="checkbox">复选框</option>
@@ -212,7 +212,7 @@
                             </select></td>
                             <td>内容来源类型</td>
                             <td colspan="5"><select class="easyui-combobox" id="report-query-param-dataSource"
-                                                    name="dataSource" style="width:100px">
+                                                    name="dataSource" data-options="required:true" style="width:100px">
                                 <option value="sql">SQL语句</option>
                                 <option value="text">文本字符串</option>
                                 <option value="none">无内容</option>
@@ -306,7 +306,7 @@
     </table>
 </div>
 <!-- 查看报表sql历史记录 -->
-<div id="report-history-sql-dlg" title="报表历史版本">
+<div id="report-history-sql-dlg" title="报表版本历史">
     <div style="height: 200px">
         <textarea id="report-history-sqlText" name="sqlText"></textarea>
     </div>

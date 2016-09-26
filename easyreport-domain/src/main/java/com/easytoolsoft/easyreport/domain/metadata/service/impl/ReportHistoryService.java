@@ -6,6 +6,7 @@ import com.easytoolsoft.easyreport.data.metadata.dao.IReportHistoryDao;
 import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +26,11 @@ public class ReportHistoryService
     @Override
     public List<ReportHistory> getByPage(PageInfo page, int reportId, String fieldName, String keyword) {
         ReportHistoryExample example = new ReportHistoryExample();
-        example.or()
-                .andReportIdEqualTo(reportId)
-                .andFieldLike(fieldName, keyword);
+        ReportHistoryExample.Criteria criteria = example.or().andReportIdEqualTo(reportId);
+        if (StringUtils.isNotBlank(fieldName)) {
+            criteria.andFieldLike(fieldName, keyword);
+        }
+
         return this.getByPage(page, example);
     }
 }

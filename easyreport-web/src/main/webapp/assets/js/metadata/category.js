@@ -75,7 +75,7 @@ var CategoryMVC = {
                     MetaDataDesigner.listReports(node)
                 },
                 onDblClick: function (node) {
-                    CategoryMVC.Controller.edit();
+                    $('#category-tree').tree('expand', node.target);
                 },
                 onDrop: function (target, source) {
                     var targetNode = $('#category-tree').tree('getNode', target);
@@ -83,12 +83,13 @@ var CategoryMVC = {
                         $.post(CategoryMVC.URLs.move.url, {
                             sourceId: source.id,
                             targetId: targetNode.id,
-                            sourcePid: source.attributes.parentId
+                            sourcePid: source.attributes.parentId,
+                            sourcePath: source.attributes.path
                         }, function (data) {
                             if (!data.success) {
-                                $.messager.alert('失败', data.msg, 'error');
+                                $.messager.alert('错误', data.msg, 'error');
                             }
-                        });
+                        }, 'json');
                     }
                 },
                 onContextMenu: function (e, node) {
@@ -205,15 +206,9 @@ var CategoryMVC = {
                     width: 150
                 }]],
                 onDblClickRow: function (index, row) {
-                    var ids = row.path.split(',');
-                    for (var i = 0; i < ids.length; i++) {
-                        var node = $('#category-tree').tree('find', ids[i]);
-                        if (node) {
-                            $('#category-tree').tree('select', node.target);
-                            $('#category-tree').tree('expand', node.target);
-                            MetaDataDesigner.listReports(node);
-                        }
-                    }
+                    CategoryMVC.Util.expandByPath(row.path);
+                    var node = $('#category-tree').tree('find', row.id);
+                    $('#category-tree').tree('select', node.target);
                 }
             });
         },
@@ -277,7 +272,7 @@ var CategoryMVC = {
                         pid: node.attributes.parentId
                     },
                     callback: function (rows) {
-                        CategoryMVC.Controller.reload();
+                        CategoryMVC.Controller.reload(rows[0].parentId);
                     }
                 };
                 EasyUIUtils.remove(options);
@@ -301,15 +296,14 @@ var CategoryMVC = {
                 dlgId: "#category-dlg",
                 formId: "#category-form",
                 url: actUrl,
-                callback: function () {
-                    CategoryMVC.Controller.reload();
+                callback: function (node) {
+                    CategoryMVC.Controller.reload(node ? node.id : null);
                 }
             };
             EasyUIUtils.save(options);
         },
-        reload: function () {
-            $('#category-tree').tree('reload');
-            CategoryMVC.Util.loadCategories();
+        reload: function (id) {
+            CategoryMVC.Util.loadCategories(id);
         },
         copy: function () {
             var node = $('#category-tree').tree('getSelected');
@@ -326,40 +320,35 @@ var CategoryMVC = {
                     sourceId: $('#copyNodeId').val(),
                     targetId: node.id
                 }, function (result) {
-                    if (result.success && result.data.length > 0) {
-                        $('#copyNodeId').val(0);
-                        var nodeData = result.data;
-                        var newNode = nodeData[0];
-                        var pid = newNode.attributes.parentId;
-                        // 如果是增加根节点
-                        if (pid == "0") {
-                            var roots = $('#category-tree').tree('getRoots');
-                            if (roots && roots.length > 0) {
-                                $('#category-tree').tree('insert', {
-                                    after: roots[roots.length - 1].target,
-                                    data: newNode
-                                });
-                            } else {
-                                CategoryMVC.Controller.reload();
-                            }
-                        } else {
-                            var parentNode = $('#category-tree').tree('find', pid);
-                            $('#category-tree').tree('append', {
-                                parent: parentNode.target,
-                                data: nodeData
+                    $('#copyNodeId').val(0);
+
+                    if (!result.success || !result.data.length) {
+                        return $.messager.alert('错误', result.msg, 'error');
+                    }
+
+                    var nodeData = result.data;
+                    var newNode = nodeData[0];
+                    var pid = newNode.attributes.parentId;
+
+                    // 如果是增加根节点
+                    if (pid == "0") {
+                        var roots = $('#category-tree').tree('getRoots');
+                        if (roots && roots.length) {
+                            return $('#category-tree').tree('insert', {
+                                after: roots[roots.length - 1].target,
+                                data: newNode
                             });
                         }
+                        return CategoryMVC.Controller.reload();
                     }
-                    return $.messager.alert('错误', result.msg);
+                    var parentNode = $('#category-tree').tree('find', pid);
+                    return $('#category-tree').tree('append', {
+                        parent: parentNode.target,
+                        data: nodeData
+                    });
                 }, 'json');
             } else {
                 $.messager.alert('警告', '请选中一个报表分类!', 'info');
-            }
-        },
-        reloadSelected: function () {
-            var node = $('#category-tree').tree('getSelected');
-            if (node) {
-                $('#category-tree').tree('reload', node.target);
             }
         }
     },
@@ -371,6 +360,7 @@ var CategoryMVC = {
 
             $('#category-parentId').val(id);
             $('#category-parentName').text(name);
+            $('#category-status').combobox('setValue', 1);
             $('#category-sequence').textbox('setValue', "10");
         },
         getOptions: function () {
@@ -387,16 +377,34 @@ var CategoryMVC = {
                 gridId: null,
             };
         },
-        loadCategories: function () {
+        loadCategories: function (id) {
             $.getJSON(CategoryMVC.URLs.getCategoryTree.url, function (src) {
                 if (src.success) {
                     $('#category-tree').tree('loadData', src.data);
-                    var roots = $('#category-tree').tree('getRoots');
-                    if (roots && roots.length) {
-                        $('#category-tree').tree('select', roots[0].target);
+                    var node = null;
+                    if (id) {
+                        node = $('#category-tree').tree('find', id);
+                        CategoryMVC.Util.expandByPath(node.attributes.path);
+                    } else {
+                        var roots = $('#category-tree').tree('getRoots');
+                        if (roots && roots.length) {
+                            node = roots[0];
+                        }
+                    }
+                    if (node) {
+                        $('#category-tree').tree('select', node.target);
                     }
                 }
             });
+        },
+        expandByPath: function (path) {
+            var ids = (path || "").split(',');
+            for (var i = 0; i < ids.length; i++) {
+                var node = $('#category-tree').tree('find', ids[i]);
+                if (node) {
+                    $('#category-tree').tree('expand', node.target);
+                }
+            }
         }
     }
 };

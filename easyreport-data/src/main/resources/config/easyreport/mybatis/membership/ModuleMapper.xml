@@ -327,4 +327,9 @@
     </select>
     <!-- end select -->
     <!-- My Custom Interfaces -->
+    <update id="updatePath" parameterType="java.util.Map">
+        UPDATE ezrpt_member_module
+        SET path = replace(path, '${oldPath}', '${newPath}')
+        WHERE LEFT(path, CHAR_LENGTH('${oldPath}')) = #{oldPath,jdbcType=VARCHAR};
+    </update>
 </mapper>

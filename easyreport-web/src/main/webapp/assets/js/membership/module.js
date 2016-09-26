@@ -74,12 +74,13 @@ var ModuleMVC = {
                         $.post(ModuleMVC.URLs.move.url, {
                             sourceId: source.id,
                             targetId: targetNode.id,
-                            sourcePid: source.attributes.parentId
+                            sourcePid: source.attributes.parentId,
+                            sourcePath: source.attributes.path
                         }, function (data) {
                             if (!data.success) {
                                 $.messager.alert('失败', data.msg, 'error');
                             }
-                        });
+                        }, 'json');
                     }
                 },
                 onContextMenu: function (e, node) {

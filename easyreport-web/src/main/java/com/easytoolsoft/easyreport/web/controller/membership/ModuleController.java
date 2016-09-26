@@ -108,9 +108,16 @@ public class ModuleController
     @PostMapping(value = "/move")
     @OpLog(name = "移动模块树型关系")
     @RequiresPermissions("membership.module:edit")
-    public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid) {
+    public JsonResult move(Integer sourceId, Integer targetId, Integer sourcePid, String sourcePath) {
         JsonResult<Object> result = new JsonResult<>();
-        this.service.move(sourceId, targetId, sourcePid);
+        this.service.move(sourceId, targetId, sourcePid ,sourcePath);
+        result.setData(new HashMap<String, Integer>(3) {
+            {
+                put("sourceId", sourceId);
+                put("targetId", targetId);
+                put("sourcePid", sourcePid);
+            }
+        });
         return result;
     }
 

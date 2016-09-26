@@ -10,6 +10,7 @@ import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +89,7 @@ public class ModuleService
     }
 
     @Override
+    @Transactional
     public boolean remove(int id, int pid) {
         this.dao.deleteById(id);
         boolean hasChild = this.hasChildren(pid);
@@ -95,19 +97,18 @@ public class ModuleService
     }
 
     @Override
-    public void move(int sourceId, int targetId, int sourcePid) {
+    @Transactional
+    public void move(int sourceId, int targetId, int sourcePid, String sourcePath) {
         // 修改source节点的pid与path，hasChild值
         this.updateParentId(sourceId, targetId);
         this.updateHasChild(targetId, true);
-        this.updatePath(sourceId, this.getPath(targetId, sourceId));
-        // 递归修改source节点的所有子节点的path值
-        this.rebuildPathById(sourceId);
+        this.dao.updatePath(sourcePath, this.getPath(targetId, sourceId));
         // 修改source节点的父节点hasChild值
         this.updateHasChild(sourcePid, this.hasChildren(sourcePid));
-        this.rebuildAllPath();
     }
 
     @Override
+    @Transactional
     public Module paste(int sourceId, int targetId) {
         Module module = this.dao.selectById(sourceId);
         int count = this.count(targetId, module.getName());

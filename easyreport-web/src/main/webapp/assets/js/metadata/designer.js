@@ -959,7 +959,7 @@ var DesignerMVC = {
                 $('#report-history-sql-dlg').dialog('open').dialog('center');
                 DesignerMVC.View.HistorySqlEditor.setValue('');
                 DesignerMVC.View.HistorySqlEditor.refresh();
-                var url = DesignerMVC.URLs.historyList.url + 'list?reportId=' + row.id;
+                var url = DesignerMVC.URLs.historyList.url + '?reportId=' + row.id;
                 EasyUIUtils.loadToDatagrid('#report-history-sql-grid', url)
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');

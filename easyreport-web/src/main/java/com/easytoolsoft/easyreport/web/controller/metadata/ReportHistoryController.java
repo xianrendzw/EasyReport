@@ -6,7 +6,6 @@ import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +25,7 @@ public class ReportHistoryController
     public Map<String, Object> list(DataGridPager pager, Integer reportId) {
         PageInfo pageInfo = pager.toPageInfo();
         Map<String, Object> modelMap = new HashMap<>(2);
-        List<ReportHistory> list = this.service.getByPage(pageInfo, reportId, null, null);
+        List<ReportHistory> list = this.service.getByPage(pageInfo, reportId == null ? 0 : reportId, null, null);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
         return modelMap;

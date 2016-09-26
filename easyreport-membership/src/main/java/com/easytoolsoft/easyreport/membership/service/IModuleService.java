@@ -25,7 +25,7 @@ public interface IModuleService extends ICrudService<Module, ModuleExample> {
 
     boolean remove(int id, int pid);
 
-    void move(int sourceId, int targetId, int sourcePid);
+    void move(int sourceId, int targetId, int sourcePid, String sourcePath);
 
     Module paste(int sourceId, int targetId);
 
