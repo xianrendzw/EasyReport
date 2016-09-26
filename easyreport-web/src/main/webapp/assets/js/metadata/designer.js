@@ -572,7 +572,7 @@ var DesignerMVC = {
                 }, {
                     field: 'author',
                     title: '作者',
-                    width: 80
+                    width: 100
                 }]],
                 loadFilter: function (src) {
                     if (src.success) {
@@ -582,20 +582,18 @@ var DesignerMVC = {
                     return EasyUIUtils.getEmptyDatagridRows();
                 },
                 onClickRow: function (index, row) {
-                    DesignerMVC.View.HistorySqlEditor.setValue(row.sqlText || "");
-                    var data = EasyUIUtils.toPropertygridRows(row);
-                    var rows = $.map(data.rows, function (e) {
-                        if (row.name != "sqlText") return e;
-                    });
-                    $('#report-history-sql-pgrid').propertygrid('loadData', {total: rows.length, rows: rows});
+                    DesignerMVC.Controller.showHistorySqlDetail(row);
+                },
+                onSelect: function (index, row) {
+                    DesignerMVC.Controller.showHistorySqlDetail(row);
                 }
             });
 
             $('#report-history-sql-pgrid').propertygrid({
                 scrollbarSize: 0,
                 columns: [[
-                    {field: 'name', title: '配置项', width: 200, sortable: true},
-                    {field: 'value', title: '配置值', width: 100, resizable: false}
+                    {field: 'name', title: '属性项', width: 80, sortable: true},
+                    {field: 'value', title: '属性值', width: 300, resizable: false}
                 ]]
             });
 
@@ -873,6 +871,7 @@ var DesignerMVC = {
                 EasyUIUtils.clearDatagrid('#report-meta-column-grid');
                 var row = {
                     name: "",
+                    categoryId: category.id,
                     dsId: dsId,
                     status: 1,
                     sequence: 10,
@@ -935,7 +934,7 @@ var DesignerMVC = {
                         id: row.id
                     },
                     gridId: '#report-datagrid',
-                    gridUrl: DesignerMVC.URLs.list.url,
+                    gridUrl: DesignerMVC.URLs.list.url + '?id=' + row.categoryId,
                     callback: function (rows) {
                     }
                 };
@@ -962,10 +961,17 @@ var DesignerMVC = {
                 DesignerMVC.View.HistorySqlEditor.setValue('');
                 DesignerMVC.View.HistorySqlEditor.refresh();
                 var url = DesignerMVC.URLs.historyList.url + '?reportId=' + row.id;
-                EasyUIUtils.loadToDatagrid('#report-history-sql-grid', url)
+                EasyUIUtils.loadDataWithCallback('#report-history-sql-grid', url, function () {
+                    $('#report-history-sql-grid').datagrid('selectRow', 0);
+                });
             } else {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
+        },
+        showHistorySqlDetail: function (row) {
+            DesignerMVC.View.HistorySqlEditor.setValue(row.sqlText || "");
+            var data = EasyUIUtils.toPropertygridRows(row);
+            $('#report-history-sql-pgrid').propertygrid('loadData', data);
         },
         find: function () {
             var keyword = $("#report-search-keyword").val();
@@ -1048,6 +1054,7 @@ var DesignerMVC = {
             var actUrl = action === "edit" ? DesignerMVC.URLs.edit.url : DesignerMVC.URLs.add.url;
             var data = $('#report-basic-conf-form').serializeObject();
             data.isChange = $('#report-sqlTextIsChange').val() != 0;
+            data.sqlText = DesignerMVC.View.SqlEditor.getValue();
             data["options"] = JSON.stringify({
                 layout: data.layout,
                 statColumnLayout: data.statColumnLayout,
@@ -1059,10 +1066,11 @@ var DesignerMVC = {
                 $.messager.progress("close");
                 if (result.success) {
                     $('#report-sqlTextIsChange').val('0');
-                    $('#report-designer-dlg').dialog('close');
-                    $.messager.alert('操作提示', "操作成功", 'info');
                     var id = $("#report-categoryId").val();
-                    return DesignerMVC.Controller.listReports(id);
+                    return $.messager.alert('操作提示', "操作成功", 'info', function () {
+                        $('#report-designer-dlg').dialog('close');
+                        DesignerMVC.Controller.listReports(id);
+                    });
                 }
                 $.messager.alert('操作提示', result.msg, 'error');
             }, 'json');

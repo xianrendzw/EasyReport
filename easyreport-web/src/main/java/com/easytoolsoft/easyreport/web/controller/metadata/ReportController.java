@@ -110,12 +110,10 @@ public class ReportController
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
     @RequiresPermissions("report.designer:edit")
-    public JsonResult edit(@CurrentUser User loginUser, Report po, Boolean isChange) {
+    public JsonResult edit(@CurrentUser User loginUser, Report po) {
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
-        if (isChange == null || isChange) {
-            this.reportHistoryService.add(this.getReportHistory(loginUser, po));
-        }
+        this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         return result;
     }
 

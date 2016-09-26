@@ -138,6 +138,15 @@ var EasyUIUtils = {
     loadDataWithUrl: function (gridId, href) {
         $(gridId).datagrid({url: href});
     },
+    loadDataWithCallback: function (id, href, fn) {
+        var grid = $(id);
+        $.getJSON(href, function (data) {
+            grid.datagrid('loadData', data);
+            if (fn instanceof Function) {
+                fn();
+            }
+        });
+    },
     loadToDatagrid: function (id, href) {
         var grid = $(id);
         $.getJSON(href, function (data) {

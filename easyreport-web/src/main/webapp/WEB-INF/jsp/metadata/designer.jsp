@@ -147,6 +147,7 @@
                                 <input type="hidden" id="report-categoryId" name="categoryId" value="0"/>
                                 <input type="hidden" id="report-sqlTextIsChange" name="isChange" value="0"/>
                                 <input type="hidden" id="report-queryParams" name="queryParams"/>
+                                <input type="hidden" id="report-comment" name="comment" value=""/>
                             </td>
                         </tr>
                         <tr>
@@ -310,11 +311,11 @@
     <div style="height: 200px">
         <textarea id="report-history-sqlText" name="sqlText"></textarea>
     </div>
-    <div id="report-history-sql-grid-div" class="easyui-layout">
-        <div data-options="region:'center',title:'历史记录'" style="padding:10px">
+    <div id="report-history-sql-grid-div" class="easyui-layout" style="width:96%;height:60%;margin:5px;">
+        <div data-options="region:'west',title:'历史记录'" style="padding:10px;width:500px;">
             <div id="report-history-sql-grid"></div>
         </div>
-        <div data-options="region:'east',split:true,title:'属性',collapsible:false" style="width:250px;">
+        <div data-options="region:'center',split:true,title:'属性',collapsible:false">
             <div id="report-history-sql-pgrid" class="easyui-propertygrid"></div>
         </div>
     </div>

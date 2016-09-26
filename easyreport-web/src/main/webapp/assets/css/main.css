@@ -343,6 +343,14 @@ ul.tabs {
     border-top-width: 1px
 }
 
+#report-history-sql-grid-div .panel-header {
+    border-top-width: 1px
+}
+
+#report-history-sql-pgrid-div .panel-header {
+    border-top-width: 1px
+}
+
 .checkboxlist .checkbox {
     margin-right: 10px
 }
