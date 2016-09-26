@@ -5,12 +5,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>${name}-报表展示图</title>
-    <%@ include file="/WEB-INF/jsp-views/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp-views/includes/form_scripts.jsp" %>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/echarts/esl.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/js/plugins/echarts/echarts.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/common.js"></script>
-    <script src="<%=request.getContextPath()%>/assets/modules/report/js/chart.js?v=<%=Math.random()%>"></script>
+    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+    <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+    <%@ include file="/WEB-INF/jsp/includes/report.jsp" %>
 </head>
 <body>
 <div id="loading"

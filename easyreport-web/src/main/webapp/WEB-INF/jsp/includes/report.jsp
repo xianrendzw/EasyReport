@@ -8,4 +8,6 @@
 <script src="${ctxPath}/assets/vendor/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js?v=${version}"></script>
 <script src="${ctxPath}/assets/vendor/jquery.fileDownload.js/vendor/jquery.fileDownload.js?v=${version}"></script>
 <script src="${ctxPath}/assets/vendor/jquery.fixtableheader.js/vendor/jquery.fixtableheader.js?v=${version}"></script>
-<script src="${ctxPath}/assets/js/report/template.js?v=${version}"></script>
+<script src="${ctxPath}/assets/vendor/echarts.min.js?v=${version}"></script>
+<script src="${ctxPath}/assets/js/report/table.js?v=${version}"></script>
+<script src="${ctxPath}/assets/js/report/chart.js?v=${version}"></script>

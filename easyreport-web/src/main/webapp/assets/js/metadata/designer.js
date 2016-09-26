@@ -31,7 +31,8 @@ var DesignerCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/metadata/report/',
     baseHistoryUrl: EasyReport.ctxPath + '/rest/metadata/history/',
     baseDsUrl: EasyReport.ctxPath + '/rest/metadata/ds/',
-    baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/'
+    baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/',
+    baseReportUrl: EasyReport.ctxPath + '/report/'
 };
 
 var DesignerMVC = {
@@ -77,6 +78,10 @@ var DesignerMVC = {
                 url: DesignerCommon.baseDsUrl + 'listAll',
                 method: 'GET'
             }
+        },
+        Report: {
+            url: DesignerCommon.baseReportUrl + '/uid/',
+            method: 'GET'
         }
     },
     Model: {
@@ -159,6 +164,7 @@ var DesignerMVC = {
                 fitColumns: true,
                 singleSelect: true,
                 toolbar: [{
+                    text: '详细信息',
                     iconCls: 'icon-info',
                     handler: function () {
                         DesignerMVC.Controller.showDetail();
@@ -280,6 +286,43 @@ var DesignerMVC = {
                 }]],
                 onDblClickRow: function (rowIndex, rowData) {
                     return DesignerMVC.Controller.preview();
+                },
+                onRowContextMenu: function (e, index, row) {
+                    e.preventDefault();
+                    $('#report-datagrid-ctx-menu').menu('show', {
+                        left: e.pageX,
+                        top: e.pageY
+                    });
+                }
+            });
+
+            $('#report-datagrid-ctx-menu').menu({
+                onClick: function (item) {
+                    if (item.name == "preview") {
+                        return DesignerMVC.Controller.preview();
+                    }
+                    if (item.name == "add") {
+                        return DesignerMVC.Controller.add();
+                    }
+                    if (item.name == "edit") {
+                        return DesignerMVC.Controller.edit();
+                    }
+                    if (item.name == "remove") {
+                        return DesignerMVC.Controller.remove();
+                    }
+                    if (item.name == "copy") {
+                        return DesignerMVC.Controller.copy();
+                    }
+                    if (item.name == "info") {
+                        return DesignerMVC.Controller.showDetail();
+                    }
+                    if (item.name == "history") {
+                        return DesignerMVC.Controller.showHistorySql();
+                    }
+                    if (item.name == "refresh") {
+                        return DesignerMVC.Controller.reload();
+                    }
+                    return;
                 }
             });
 
@@ -632,7 +675,6 @@ var DesignerMVC = {
                 width: window.screen.width - 350,
                 height: window.screen.height - 350,
                 maximizable: true,
-                maximized: true,
                 iconCls: 'icon-history',
                 buttons: [{
                     text: '关闭',
@@ -646,10 +688,9 @@ var DesignerMVC = {
             $('#report-detail-dlg').dialog({
                 closed: true,
                 modal: true,
-                width: window.screen.width - 550,
-                height: window.screen.height - 450,
+                width: window.screen.width - 350,
+                height: window.screen.height - 350,
                 maximizable: true,
-                maximized: true,
                 iconCls: 'icon-info',
                 buttons: [{
                     text: '上一条',
@@ -685,8 +726,8 @@ var DesignerMVC = {
                 modal: true,
                 maximizable: true,
                 iconCls: 'icon-sql',
-                width: 800,
-                height: 550,
+                width: window.screen.width - 350,
+                height: window.screen.height - 350,
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
@@ -943,7 +984,14 @@ var DesignerMVC = {
                 $.messager.alert('警告', '请选中一条记录!', 'info');
             }
         },
-        preview: function (row) {
+        preview: function () {
+            var row = $('#report-datagrid').datagrid('getSelected');
+            if (row) {
+                window.location.target = "_blank";
+                window.location.href = DesignerMVC.URLs.Report.url + row.uid;
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
         },
         showDetail: function () {
             var row = $('#report-datagrid').datagrid('getSelected');
@@ -1074,6 +1122,9 @@ var DesignerMVC = {
                 }
                 $.messager.alert('操作提示', result.msg, 'error');
             }, 'json');
+        },
+        reload: function () {
+            EasyUIUtils.reloadDatagrid('#report-datagrid');
         },
         saveChanged: function (data, handler) {
             var isChanged = $("#report-sqlTextIsChange").val() != 0;

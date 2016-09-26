@@ -30,9 +30,10 @@
             <table cellpadding="5" style="margin: 30px auto" class="form-table">
                 <tr>
                     <td>选择报表:</td>
-                    <td colspan="3"><select class="easyui-combobox" id="combox-reports" name="comboxReports"
-                                            data-options="required:true,valueField:'value',textField:'name',multiple:true"
-                                            style="width: 380px"></select>
+                    <td colspan="3">
+                        <select class="easyui-combobox" id="combox-reports" name="comboxReports"
+                                data-options="required:true,valueField:'value',textField:'name',multiple:true"
+                                style="width: 380px"></select>
                         <input id="reportIds" type="hidden" name="reportIds"/>
                         <input id="taskId" type="hidden" name="id"/>
                     </td>
@@ -64,13 +65,14 @@
                 <tr>
                     <td>配置项(JSON):</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" id="options" name="options"
-                               data-options="required:true,multiline:true"
-                               style="width: 380px;height:150px"/></td>
+                                           data-options="required:true,multiline:true"
+                                           style="width: 380px;height:150px"/></td>
                 </tr>
                 <tr>
                     <td>内容模板:</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="template" id="template"
-                               data-options="required:true,multiline:true" style="width: 380px;height:200px"/></td>
+                                           data-options="required:true,multiline:true"
+                                           style="width: 380px;height:200px"/></td>
                 </tr>
             </table>
         </center>
