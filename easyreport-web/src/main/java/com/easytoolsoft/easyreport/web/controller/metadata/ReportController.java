@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -98,7 +99,9 @@ public class ReportController
     public JsonResult add(@CurrentUser User loginUser, Report po) {
         JsonResult<String> result = new JsonResult<>();
         po.setCreateUser(loginUser.getAccount());
+        po.setUid(UUID.randomUUID().toString());
         po.setComment("");
+        po.setGmtCreated(new Date());
         this.service.add(po);
         this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         return result;
@@ -142,7 +145,7 @@ public class ReportController
         return result;
     }
 
-    @GetMapping(value = "/previewSqlText")
+    @PostMapping(value = "/previewSqlText")
     @OpLog(name = "预览报表SQL语句")
     @RequiresPermissions("report.designer:view")
     public JsonResult previewSqlText(Integer dsId, String sqlText, Integer dataRange,

@@ -19,6 +19,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.query.QueryerFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -43,17 +44,6 @@ public class ReportService
         ReportExample example = new ReportExample();
         example.createCriteria().andFieldLike(fieldName, keyword);
         return example;
-    }
-
-    @Override
-    public int add(Report po) {
-        po.setUid(UUID.randomUUID().toString());
-        this.dao.insert(po);
-        po = Report.builder()
-                .id(po.getId())
-                .build();
-        this.dao.updateById(po);
-        return po.getId();
     }
 
     @Override

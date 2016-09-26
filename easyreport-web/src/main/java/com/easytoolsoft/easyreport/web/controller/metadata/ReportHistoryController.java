@@ -5,7 +5,9 @@ import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
 import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
+import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,8 @@ public class ReportHistoryController
         extends BaseController<IReportHistoryService, ReportHistory, ReportHistoryExample> {
 
     @RequestMapping(value = "/list")
+    @OpLog(name = "查看报表版本历史")
+    @RequiresPermissions("report.designer:view")
     public Map<String, Object> list(DataGridPager pager, Integer reportId) {
         PageInfo pageInfo = pager.toPageInfo();
         Map<String, Object> modelMap = new HashMap<>(2);

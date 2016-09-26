@@ -171,21 +171,21 @@
                         <tr>
                             <td>参数名:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-name" name="name"
-                                       data-options="required:true" /></td>
+                                       data-options="required:true" style="width:150px"/></td>
                             <td>标题:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-text" name="text"
-                                       data-options="required:true" /></td>
+                                       data-options="required:true" style="width:150px"/></td>
                             <td>默认值:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-defaultValue"
-                                       name="defaultValue"/></td>
+                                       name="defaultValue" style="width:150px"/></td>
                             <td>默认标题:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-defaultText"
-                                       name="defaultText"/></td>
+                                       name="defaultText" style="width:150px"/></td>
                         </tr>
                         <tr>
                             <td>数据类型:</td>
                             <td><select class="easyui-combobox" id="report-query-param-dataType" name="dataType"
-                                        data-options="required:true" style="width:100px">
+                                        data-options="required:true" style="width:150px">
                                 <option value="string" selected="selected">字符串</option>
                                 <option value="float">浮点数（包括双精度、浮点数)</option>
                                 <option value="integer">整数</option>
@@ -193,7 +193,7 @@
                             </select></td>
                             <td>数据长度:</td>
                             <td><input class="easyui-textbox" type="text" id="report-query-param-width" name="width"
-                                       value="100" data-options="validType:'digit'"/></td>
+                                       value="100" data-options="validType:'digit'" style="width:150px"/></td>
                             <td>是否必选:</td>
                             <td><input class="easyui-textbox" type="checkbox" id="report-query-param-required"
                                        name="required"/></td>
@@ -203,7 +203,7 @@
                         <tr>
                             <td>表单控件:</td>
                             <td><select class="easyui-combobox" id="report-query-param-formElement" name="formElement"
-                                        data-options="required:true" style="width:100px">
+                                        data-options="required:true" style="width:150px">
                                 <option value="select">下拉单选</option>
                                 <option value="selectMul">下拉多选</option>
                                 <option value="checkbox">复选框</option>
@@ -212,7 +212,7 @@
                             </select></td>
                             <td>内容来源类型</td>
                             <td colspan="5"><select class="easyui-combobox" id="report-query-param-dataSource"
-                                                    name="dataSource" data-options="required:true" style="width:100px">
+                                                    name="dataSource" data-options="required:true" style="width:150px">
                                 <option value="sql">SQL语句</option>
                                 <option value="text">文本字符串</option>
                                 <option value="none">无内容</option>
@@ -221,7 +221,7 @@
                         <tr>
                             <td>内容:</td>
                             <td colspan="7">
-                            <textarea id="report-query-param-content" name="content" style="width: 99%; height: 100px;"
+                            <textarea id="report-query-param-content" name="content" style="width: 95%; height: 100px;"
                                       placeholder="(select col1 as name,col2 as text from table ...) or (name1,text1|name2,text2|...) or (name1|name2|...)"></textarea>
                                 <input type="hidden" id="report-query-param-gridIndex" value="0"/>
                                 <input type="hidden" id="report-query-param-json"/>
@@ -325,18 +325,20 @@
 </div>
 <!-- 设置计算列表达式弹框  -->
 <div id="report-column-expression-dlg" title="列表达式">
-    <table class="designer-table" style="height: 99%">
+    <table class="designer-table" style="height: 90%">
         <tr>
             <td class="top">
-                <textarea id="report-column-expression" name="expression" style="width: 98%; height: 215px;"></textarea></td>
+                <textarea id="report-column-expression" name="expression"
+                          style="border:solid 1px; width: 98%; height: 215px;"></textarea></td>
         </tr>
     </table>
 </div>
 <!-- 设置列备注弹框  -->
 <div id="report-column-comment-dlg" title="列备注">
-    <table class="designer-table" style="height: 99%">
+    <table class="designer-table" style="height: 90%">
         <tr>
-            <td class="top"><textarea id="report-column-comment" name="comment" style="width: 98%; height: 215px;"></textarea>
+            <td class="top"><textarea id="report-column-comment" name="comment"
+                                      style="border:solid 1px; width: 98%; height: 215px;"></textarea>
             </td>
         </tr>
     </table>

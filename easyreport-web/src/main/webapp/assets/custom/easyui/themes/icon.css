@@ -70,6 +70,10 @@
     background: url('icons/info.png') no-repeat center center;
 }
 
+.icon-comment {
+    background: url('icons/comment.png') no-repeat center center;
+}
+
 .icon-prev {
     background: url('icons/prev.png') no-repeat center center;
 }
@@ -246,3 +250,6 @@
     background: url('icons/sql.png') no-repeat center center;
 }
 
+.icon-designer {
+    background: url('icons/designer.png') no-repeat center center;
+}

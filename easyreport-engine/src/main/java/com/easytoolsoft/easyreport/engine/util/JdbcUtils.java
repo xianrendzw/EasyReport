@@ -23,7 +23,7 @@ public class JdbcUtils {
     public static DataSource getDataSource(ReportDataSource rptDs) {
         DataSource dataSource = dataSourceMap.get(rptDs.getDbPoolClass());
         if (dataSource == null) {
-            dataSource = DataSourcePoolFactory.create(rptDs.getUid()).wrap(rptDs);
+            dataSource = DataSourcePoolFactory.create(rptDs.getDbPoolClass()).wrap(rptDs);
             dataSourceMap.put(rptDs.getUid(), dataSource);
         }
         return dataSource;

@@ -5,7 +5,7 @@ $(function () {
 var MetaDataDesigner = {
     init: function () {
         DesignerMVC.View.initControl();
-        DesignerMVC.View.initSqlEditorDivHeight();
+        DesignerMVC.View.resizeDesignerElments();
         DesignerMVC.View.initSqlEditor();
         DesignerMVC.View.initHistorySqlEditor();
         DesignerMVC.View.initPreviewSqlEditor();
@@ -24,7 +24,6 @@ var MetaDataDesigner = {
     },
     deleteQueryParam: function (index) {
         DesignerMVC.Controller.deleteQueryParam(index);
-
     }
 }
 
@@ -313,6 +312,7 @@ var DesignerMVC = {
                         }
                         $.getJSON(DesignerMVC.URLs.getMetaColumnScheme.url, function (result) {
                             if (result.success) {
+                                var row = result.data;
                                 row.name = row.name + index;
                                 row.text = row.name;
                                 row.type = 4;
@@ -365,8 +365,8 @@ var DesignerMVC = {
                         var id = "type" + index;
                         var tmpl =
                             '<select id="${id}" name=\"type\">' +
-                            '${@each list as item}' +
-                            '<option value="${item.value}" ${@if ${item.value} == ${currValue} selected ${@/if}>${item.text}</option>' +
+                            '{@each list as item}' +
+                            '<option value="${item.value}" {@if item.value == currValue} selected {@/if}>${item.text}</option>' +
                             '{@/each}' +
                             '</select>';
                         return juicer(tmpl, {
@@ -406,8 +406,8 @@ var DesignerMVC = {
                         var id = "sortType" + index;
                         var tmpl =
                             '<select id="${id}" name=\"sortType\">' +
-                            '${@each list as item}' +
-                            '<option value="${item.value}" ${@if ${item.value} == ${currValue} selected ${@/if}>${item.text}</option>' +
+                            '{@each list as item}' +
+                            '<option value="${item.value}" {@if item.value == currValue} selected {@/if}>${item.text}</option>' +
                             '{@/each}' +
                             '</select>';
                         return juicer(tmpl, {
@@ -607,7 +607,7 @@ var DesignerMVC = {
                 maximizable: true,
                 minimizable: true,
                 maximized: true,
-                iconCls: 'icon-add',
+                iconCls: 'icon-designer',
                 buttons: [{
                     text: '编辑器放大/缩小',
                     iconCls: 'icon-fullscreen',
@@ -624,7 +624,7 @@ var DesignerMVC = {
                     handler: DesignerMVC.Controller.save
                 }],
                 onResize: function (width, height) {
-                    DesignerMVC.Util.resizeSqlEditor();
+                    DesignerMVC.Util.resizeDesignerDlgElments();
                 }
             });
 
@@ -686,8 +686,9 @@ var DesignerMVC = {
                 closed: true,
                 modal: true,
                 maximizable: true,
-                width: window.screen.width - 500,
-                height: window.screen.height - 300,
+                iconCls: 'icon-sql',
+                width: 800,
+                height: 550,
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
@@ -700,10 +701,11 @@ var DesignerMVC = {
             $('#report-column-expression-dlg').dialog({
                 closed: true,
                 modal: true,
+                iconCls: 'icon-formula',
                 top: (screen.height - 500) / 2,
                 left: (screen.width - 300) / 2,
                 width: 500,
-                height: 300,
+                height: 310,
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
@@ -714,7 +716,7 @@ var DesignerMVC = {
                     text: '保存',
                     iconCls: 'icon-save',
                     handler: function () {
-                        MetaDataDesigner.saveMetaColumnOption('expression');
+                        DesignerMVC.Controller.saveMetaColumnOption('expression');
                     }
                 }]
             });
@@ -722,10 +724,11 @@ var DesignerMVC = {
             $('#report-column-comment-dlg').dialog({
                 closed: true,
                 modal: true,
+                iconCls: 'icon-comment',
                 top: (screen.height - 500) / 2,
                 left: (screen.width - 300) / 2,
                 width: 500,
-                height: 300,
+                height: 310,
                 buttons: [{
                     text: '关闭',
                     iconCls: 'icon-no',
@@ -736,23 +739,23 @@ var DesignerMVC = {
                     text: '保存',
                     iconCls: 'icon-save',
                     handler: function () {
-                        MetaDataDesigner.saveMetaColumnOption('comment');
+                        DesignerMVC.Controller.saveMetaColumnOption('comment');
                     }
                 }]
             });
-        },
-        initSqlEditorDivHeight: function () {
-            var paramDivHeight = (window.screen.height - 720);
-            paramDivHeight = paramDivHeight <= 180 ? 180 : paramDivHeight;
-            var sqlhistoryDivHeight = window.screen.height - 420 - 205;
-            sqlhistoryDivHeight = sqlhistoryDivHeight <= 180 ? 180 : sqlhistoryDivHeight;
 
-            $('#report-meta-column-grid-div').css({
-                "height": paramDivHeight
+            $('#report-query-param-formElement').combobox({
+                onSelect: function (rec) {
+                    var value = "sql";
+                    if (rec.value == "text") {
+                        value = 'none';
+                    }
+                    $('#report-query-param-dataSource').combobox('setValue', value);
+                }
             });
-            $('#report-history-sql-grid-div').css({
-                "height": sqlhistoryDivHeight
-            });
+        },
+        resizeDesignerElments: function () {
+            DesignerMVC.Util.resizeDesignerDlgElments();
         },
         initSqlEditor: function () {
             var dom = document.getElementById("report-sqlText");
@@ -888,7 +891,7 @@ var DesignerMVC = {
             var row = $('#report-datagrid').datagrid('getSelected');
             if (row) {
                 var options = DesignerMVC.Util.getOptions();
-                options.iconCls = 'icon-edit1';
+                options.iconCls = 'icon-designer';
                 options.data = row;
                 options.title = '报表设计器--修改[' + options.data.name + ']报表';
                 DesignerMVC.Controller.editOrCopy(options, 'edit');
@@ -900,7 +903,7 @@ var DesignerMVC = {
             var row = $('#report-datagrid').datagrid('getSelected');
             if (row) {
                 var options = DesignerMVC.Util.getOptions();
-                options.iconCls = 'icon-copy';
+                options.iconCls = 'icon-designer';
                 options.data = row;
                 options.title = '报表设计器--复制[' + options.data.name + ']报表';
                 DesignerMVC.Controller.editOrCopy(options, 'copy');
@@ -931,7 +934,7 @@ var DesignerMVC = {
                     data: {
                         id: row.id
                     },
-                    gridId: '##report-datagrid',
+                    gridId: '#report-datagrid',
                     gridUrl: DesignerMVC.URLs.list.url,
                     callback: function (rows) {
                     }
@@ -942,7 +945,6 @@ var DesignerMVC = {
             }
         },
         preview: function (row) {
-
         },
         showDetail: function () {
             var row = $('#report-datagrid').datagrid('getSelected');
@@ -1001,7 +1003,7 @@ var DesignerMVC = {
                 text: '正在生成预览SQL...',
             });
 
-            $.post(DesignerMVC.URLs.previewSqlText, {
+            $.post(DesignerMVC.URLs.previewSqlText.url, {
                 dsId: $('#report-dsId').combobox('getValue'),
                 sqlText: DesignerMVC.View.SqlEditor.getValue(),
                 dataRange: $('#report-dataRange').val(),
@@ -1011,7 +1013,7 @@ var DesignerMVC = {
                 if (result.success) {
                     $('#report-preview-sql-dlg').dialog('open');
                     $('#report-preview-sql-dlg .CodeMirror').css("height", "99%");
-                    return DesignerMVC.PreviewSqlEditor.setValue(result.data);
+                    return DesignerMVC.View.PreviewSqlEditor.setValue(result.data);
                 }
                 return $.messager.alert('错误', result.msg);
             }, 'json');
@@ -1031,7 +1033,7 @@ var DesignerMVC = {
             }
 
             var emptyExprColumns = DesignerMVC.Util.getEmptyExprColumns(metaColumns);
-            if (emptyExprColumns && emptyExprColumns.length > 0) {
+            if (emptyExprColumns && emptyExprColumns.length) {
                 return $.messager.alert('失败', "计算列：[" + emptyExprColumns.join() + "]没有设置表达式！", 'error');
             }
 
@@ -1082,8 +1084,13 @@ var DesignerMVC = {
             $("#report-query-param-grid").datagrid('reload', $("#report-query-param-grid").datagrid('getRows'));
         },
         addOrEditQueryParam: function (act) {
-            if ($("#report-query-param-form").form('')) {
+            if ($("#report-query-param-form").form('validate')) {
                 var row = $('#report-query-param-form').serializeObject()
+                if (row.dataSource != "none" && $.trim(row.content).length == 0) {
+                    $("#report-query-param-content").focus();
+                    return $.messager.alert('提示', "内容不能为空", 'error');
+                }
+
                 row.required = $("#report-query-param-required").prop("checked");
                 row.autoComplete = $("#report-query-param-required").prop("checked");
 
@@ -1152,9 +1159,24 @@ var DesignerMVC = {
             DesignerMVC.View.HistorySqlEditor.setValue('');
             DesignerMVC.View.HistorySqlEditor.refresh();
         },
-        resizeSqlEditor: function () {
-            var width = $('#report-designer-dlg').panel('options').width - 180;
-            $('#report-sqlText-td>.CodeMirror').css({"width": width});
+        resizeDesignerDlgElments: function () {
+            var panelOptions = $('#report-designer-dlg').panel('options');
+            $('#report-sqlText-td>.CodeMirror').css({"width": panelOptions.width - 230});
+
+            var tabHeight = panelOptions.height - 160;
+            var confFormDivHeight = $('#report-basic-conf-form-div').height();
+            var metaColumnDivHeight = (tabHeight - confFormDivHeight);
+            if (metaColumnDivHeight <= 180) metaColumnDivHeight = 180;
+            $('#report-meta-column-div').css({
+                "height": metaColumnDivHeight
+            });
+
+            var queryParamFormDivHeight = $('#report-query-param-form-div').height();
+            var queryParamDivHeight = (tabHeight - queryParamFormDivHeight - 200);
+            if (queryParamDivHeight <= 180) queryParamDivHeight = 180;
+            $('#report-query-param-div').css({
+                "height": queryParamDivHeight
+            });
         },
         fullscreenEdit: function () {
             DesignerMVC.View.SqlEditor.setOption("fullScreen", !DesignerMVC.View.SqlEditor.getOption("fullScreen"));
@@ -1327,6 +1349,26 @@ var DesignerMVC = {
                 }
             }
             return emptyColumns;
+        },
+        getColumnTypeMap: function (rows) {
+            var typeMap = {
+                "layout": 0,
+                "dim": 0,
+                "stat": 0,
+                "computed": 0
+            };
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].type == 1) {
+                    typeMap.layout += 1;
+                } else if (rows[i].type == 2) {
+                    typeMap.dim += 1;
+                } else if (rows[i].type == 3) {
+                    typeMap.stat += 1;
+                } else if (rows[i].type == 4) {
+                    typeMap.computed += 1;
+                }
+            }
+            return typeMap;
         },
         loadQueryParams: function (params) {
             EasyUIUtils.clearDatagrid('#report-query-param-grid');
