@@ -360,6 +360,7 @@
 <!-- 报表列表右键菜单  -->
 <div id="report-datagrid-ctx-menu" class="easyui-menu" style="width: 150px;">
     <div id="rp-preview" data-options="name:'preview',iconCls:'icon-preview'">预览</div>
+    <div id="rp-window" data-options="name:'window',iconCls:'icon-window'">在新窗口预览...</div>
     <div class="menu-sep"></div>
     <div id="rp-add" data-options="name:'add',iconCls:'icon-add'">增加</div>
     <div id="rp-edit" data-options="name:'edit',iconCls:'icon-edit1'">修改</div>

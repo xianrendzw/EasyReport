@@ -25,7 +25,7 @@ var MetaDataDesigner = {
     deleteQueryParam: function (index) {
         DesignerMVC.Controller.deleteQueryParam(index);
     }
-}
+};
 
 var DesignerCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/metadata/report/',
@@ -80,7 +80,7 @@ var DesignerMVC = {
             }
         },
         Report: {
-            url: DesignerCommon.baseReportUrl + '/uid/',
+            url: DesignerCommon.baseReportUrl + 'uid/',
             method: 'GET'
         }
     },
@@ -300,6 +300,9 @@ var DesignerMVC = {
                 onClick: function (item) {
                     if (item.name == "preview") {
                         return DesignerMVC.Controller.preview();
+                    }
+                    if (item.name == "window") {
+                        return DesignerMVC.Controller.previewInNewWindow();
                     }
                     if (item.name == "add") {
                         return DesignerMVC.Controller.add();
@@ -928,46 +931,26 @@ var DesignerMVC = {
             }
         },
         edit: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
+            DesignerMVC.Util.checkSelected(function (row) {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
                 options.title = '报表设计器--修改[' + options.data.name + ']报表';
-                DesignerMVC.Controller.editOrCopy(options, 'edit');
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+                DesignerMVC.Util.editOrCopy(options, 'edit');
+            });
         },
         copy: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
+            DesignerMVC.Util.checkSelected(function (row) {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
                 options.title = '报表设计器--复制[' + options.data.name + ']报表';
-                DesignerMVC.Controller.editOrCopy(options, 'copy');
+                DesignerMVC.Util.editOrCopy(options, 'copy');
                 $('#modal-action').val("add");
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
-        },
-        editOrCopy: function (options, act) {
-            DesignerMVC.Util.clearSqlEditor();
-            EasyUIUtils.openEditDlg(options);
-
-            var row = options.data;
-            if (act === 'copy') {
-                row.name = '';
-            }
-            DesignerMVC.Util.fillReportBasicConfForm(row, $.toJSON(row.options));
-            DesignerMVC.View.SqlEditor.setValue(row.sqlText || "");
-            DesignerMVC.Util.loadMetaColumns($.toJSON(row.metaColumns));
-            DesignerMVC.Util.loadQueryParams($.toJSON(row.queryParams));
+            });
         },
         remove: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
+            DesignerMVC.Util.checkSelected(function (row) {
                 var options = {
                     rows: [row],
                     url: DesignerMVC.URLs.remove.url,
@@ -980,31 +963,30 @@ var DesignerMVC = {
                     }
                 };
                 EasyUIUtils.remove(options);
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+            });
         },
         preview: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
-                window.location.target = "_blank";
-                window.location.href = DesignerMVC.URLs.Report.url + row.uid;
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+            DesignerMVC.Util.checkSelected(function (row) {
+                var url = DesignerMVC.URLs.Report.url + row.uid;
+                parent.HomeIndex.addTab(row.id, row.name, url, "");
+                parent.HomeIndex.selectedTab();
+            });
+        },
+        previewInNewWindow: function () {
+            DesignerMVC.Util.checkSelected(function (row) {
+                var url = DesignerMVC.URLs.Report.url + row.uid;
+                var win = window.open(url, '_blank');
+                win.focus();
+            });
         },
         showDetail: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
+            DesignerMVC.Util.checkSelected(function (row) {
                 $('#report-detail-dlg').dialog('open').dialog('center');
                 DesignerMVC.Util.showReportProps(row);
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+            });
         },
         showHistorySql: function () {
-            var row = $('#report-datagrid').datagrid('getSelected');
-            if (row) {
+            DesignerMVC.Util.checkSelected(function (row) {
                 $('#report-history-sql-dlg').dialog('open').dialog('center');
                 DesignerMVC.View.HistorySqlEditor.setValue('');
                 DesignerMVC.View.HistorySqlEditor.refresh();
@@ -1012,9 +994,7 @@ var DesignerMVC = {
                 EasyUIUtils.loadDataWithCallback('#report-history-sql-grid', url, function () {
                     $('#report-history-sql-grid').datagrid('selectRow', 0);
                 });
-            } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
-            }
+            });
         },
         showHistorySqlDetail: function (row) {
             DesignerMVC.View.HistorySqlEditor.setValue(row.sqlText || "");
@@ -1207,6 +1187,27 @@ var DesignerMVC = {
                 },
                 gridId: null,
             };
+        },
+        checkSelected: function (func) {
+            var row = $('#report-datagrid').datagrid('getSelected');
+            if (row) {
+                func(row);
+            } else {
+                $.messager.alert('警告', '请选中一条记录!', 'info');
+            }
+        },
+        editOrCopy: function (options, act) {
+            DesignerMVC.Util.clearSqlEditor();
+            EasyUIUtils.openEditDlg(options);
+
+            var row = options.data;
+            if (act === 'copy') {
+                row.name = '';
+            }
+            DesignerMVC.Util.fillReportBasicConfForm(row, $.toJSON(row.options));
+            DesignerMVC.View.SqlEditor.setValue(row.sqlText || "");
+            DesignerMVC.Util.loadMetaColumns($.toJSON(row.metaColumns));
+            DesignerMVC.Util.loadQueryParams($.toJSON(row.queryParams));
         },
         clearSqlEditor: function () {
             DesignerMVC.View.SqlEditor.setValue('');

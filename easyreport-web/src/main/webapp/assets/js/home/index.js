@@ -9,8 +9,11 @@ var HomeIndex = {
         HomeIndexMVC.View.bindValidate();
         HomeIndexMVC.View.initMenus();
     },
-    addTab: function (title, url, iconCls, closable) {
-        HomeIndexMVC.Controller.addTab(title, url, iconCls, closable)
+    addTab: function (id, title, url, iconCls, closable) {
+        HomeIndexMVC.Controller.addTab(id, title, url, iconCls, closable == undefined ? true : closable)
+    },
+    selectedTab: function (title) {
+        $('#main-tabs').tabs('select', title ? title : '报表设计');
     },
     showUserInfo: function () {
         HomeIndexMVC.Controller.showMyProfileDlg();
@@ -40,6 +43,10 @@ var HomeIndexMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
+                },
+                onSelect: function (title, index) {
+                    var tab = $('#main-tabs').tabs('getSelected');
+                    return tab.panel('refresh');
                 }
             });
 
@@ -99,16 +106,17 @@ var HomeIndexMVC = {
         initMenus: function () {
             var loginUser = $('#login-user-name').val();
             HomeIndexMVC.Controller.buildMenu(loginUser);
-            HomeIndex.addTab('报表设计', '/views/metadata/designer', 'icon-chart', false);
+            HomeIndex.addTab(0, '报表设计', '/views/metadata/designer', 'icon-chart', false);
         }
     },
     Controller: {
-        addTab: function (title, url, iconCls, closable) {
+        addTab: function (id, title, url, iconCls, closable) {
             if ($('#main-tabs').tabs('exists', title)) {
                 $('#main-tabs').tabs('select', title);
             } else {
                 var content = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:100%;"></iframe>';
                 $('#main-tabs').tabs('add', {
+                    id: id,
                     title: title,
                     content: content,
                     closable: closable,
@@ -154,15 +162,19 @@ var HomeIndexMVC = {
 
                 var menuItems = [];
                 var roots = result.data;
-                var tmpl = "<a href=\"#\" class=\"${buttonCss}\" data-options=\"${subMenu},iconCls:'${iconCls}'\" ${clickEvent}>${name}</a>";
+                var tmpl = "<a href=\"#\" class=\"${buttonCss}\" " +
+                    "data-options=\"${subMenu},iconCls:'${iconCls}'\" ${clickEvent}>${name}</a>";
 
                 //main menu items start
                 menuItems.push('<div style=\"padding: 2px 5px;\">');
                 for (var i = 0; i < roots.length; i++) {
                     var module = roots[i].attributes;
                     var url = module.linkType == 1 ? module.url : EasyReport.ctxPath + '/' + module.url;
-                    var onClick = juicer("onclick=\"HomeIndex.addTab('${name}','${url}','${icon}')\"", {
-                        url: url, name: module.name, icon: module.icon
+                    var onClick = juicer("onclick=\"HomeIndex.addTab('${id}}','${name}','${url}','${icon}')\"", {
+                        id: 'm_' + module.id,
+                        url: url,
+                        name: module.name,
+                        icon: module.icon
                     });
                     var subMenu = module.hasChild > 0 ? "menu:'#mm" + module.id + "'" : "plain:true";
                     var buttonCss = module.hasChild > 0 ? "easyui-menubutton" : "easyui-linkbutton";
@@ -188,13 +200,10 @@ var HomeIndexMVC = {
                 //main menu items end
                 menuItems.push('</div>');
 
-                //
                 //生成动态配置的子菜单项
                 for (var i = 0; i < roots.length; i++) {
                     HomeIndexMVC.Controller.buildChildMenu(roots[i], menuItems);
                 }
-
-                //
                 //生成用户信息子菜单项
                 HomeIndexMVC.Controller.buildUserInfoChildMemu(menuItems);
 
@@ -208,8 +217,10 @@ var HomeIndexMVC = {
             for (var i = 0; i < parent.children.length; i++) {
                 var module = parent.children[i].attributes;
                 var url = module.linkType == 1 ? module.url : EasyReport.ctxPath + '/' + module.url;
-                var tmpl = "<div data-options=\"iconCls:'${iconCls}'\" onclick=\"HomeIndex.addTab('${name}','${url}','${iconCls}',${closable})\">${name}</div>";
+                var tmpl = "<div data-options=\"iconCls:'${iconCls}'\" " +
+                    "onclick=\"HomeIndex.addTab('${id}','${name}','${url}','${iconCls}',${closable})\">${name}</div>";
                 menuItems.push(juicer(tmpl, {
+                    id: 'm_' + module.id,
                     url: url,
                     iconCls: module.icon,
                     name: module.name,
