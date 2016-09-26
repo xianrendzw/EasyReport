@@ -9,7 +9,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ## [Version2.0用户参考][]
 ## [Version1.0用户参考][]
 ## 捐助
-    ![支付宝][]
+![支付宝][]
 
 [Version1.0用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version1_0.md
 [Version2.0用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version2_0.md
