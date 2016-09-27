@@ -6,7 +6,7 @@
     <title>${report.name}</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <script src="${ctxPath}/assets/js/report/main.js?v=${version}"></script>
+    <%@ include file="/WEB-INF/jsp/includes/report.jsp" %>
 </head>
 <body class="easyui-layout">
 <div region="center" style="border-top-width: 0">

@@ -7,7 +7,6 @@
     <title>${name}-报表展示图</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/report.jsp" %>
     <script src="${ctxPath}/assets/vendor/echarts.min.js?v=${version}"></script>
     <script src="${ctxPath}/assets/js/report/themes/default/chart.js?v=${version}"></script>
 </head>

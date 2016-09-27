@@ -86,7 +86,7 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
             htmlText.append("<i></i></label>");
         }
         htmlText.append("<label class=\"checkbox\">全选 ");
-        htmlText.append(String.format("<input type=\"checkbox\" name=\"checkAllStatColumn\" id=\"checkAllStatColumn\" %s /><i></i></label>",
+        htmlText.append(String.format("<input type=\"checkbox\" class=\"checkAllStatColumn\" name=\"checkAllStatColumn\" id=\"checkAllStatColumn\" %s /><i></i></label>",
                 isCheckedAll ? "checked=\"checked\"" : ""));
         return htmlText.toString();
     }

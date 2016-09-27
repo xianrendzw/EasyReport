@@ -1,0 +1,86 @@
+body, span, div, p, table, td, th, tr {
+    padding: 0px;
+    margin: 0px;
+    font-size: 11px;
+    font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td, th {
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 2px;
+    max-width: 400px;
+}
+
+.easyreport {
+    width: 100%;
+}
+
+.easyreport td:hover {
+    overflow: visible;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.easyreport .easyreport-header td, .easyreport .easyreport-header td {
+    height: 24px;
+    background: #308ca5;
+    border-right: 1px solid #ccc;
+    border-top: none;
+    color: #fff;
+    text-align: center;
+}
+
+.easyreport .easyreport-header th {
+    background: #53b125;
+}
+
+.easyreport tr.easyreport-row {
+    background: #e6f1f5
+}
+
+.easyreport th, .easyreport td {
+    padding: 8px 10px;
+    border-right: 1px solid #ccc;
+    color: #36534f;
+}
+
+.easyreport .easyreport-fixed-column {
+    background: #ecfbd2;
+    font-weight: bold;
+    font-size: 11px;
+    text-align: left;
+}
+
+.easyreport .selected {
+    background: #fddc30;
+}
+
+.easyreport th {
+    background: #308ca5;
+    border: 1px solid #ccc;
+    font-size: 11px;
+    color: #fff;
+    text-align: center;
+    padding: 8px 2px 8px 2px;
+}
+
+.easyreport td {
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 11px;
+    height: 18px;
+    text-align: center;
+}
+
+.designer-table td {
+    border: solid 0.1px #e6e6e6
+}

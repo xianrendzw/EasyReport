@@ -12,17 +12,17 @@ var ReportPreviewMain = {
 };
 
 var PreviewCommon = {
-    baseUrl: EasyReport.ctxPath + '/report/'
+    baseUrl: EasyReport.ctxPath + '/report'
 };
 
 var PreviewMainMVC = {
     URLs: {
         table: {
-            url: PreviewCommon.baseUrl + 'table/uid/${uid}?theme=content',
+            url: PreviewCommon.baseUrl + '/table/uid/${uid}?theme=content',
             method: 'GET'
         },
         chart: {
-            url: PreviewCommon.baseUrl + 'chart/uid/${uid}?theme=content',
+            url: PreviewCommon.baseUrl + '/chart/uid/${uid}?theme=content',
             method: 'GET'
         }
     },
@@ -37,17 +37,20 @@ var PreviewMainMVC = {
             var uid = $('#report-main-uid').val();
             var tableUrl = juicer(PreviewMainMVC.URLs.table.url, {uid: uid});
             var chartUrl = juicer(PreviewMainMVC.URLs.chart.url, {uid: uid});
-            PreviewMainMVC.Controller.updateTab('表格', tableUrl);
-            PreviewMainMVC.Controller.updateTab('图表', chartUrl);
+            PreviewMainMVC.Controller.updateTab('表格', tableUrl, TableReport.init);
+            PreviewMainMVC.Controller.updateTab('图表', chartUrl, function () {
+            });
         }
     },
     Controller: {
-        updateTab: function (which, href) {
+        updateTab: function (which, href, onLoad) {
             var tab = $('#report-main-tabs').tabs('getTab', which);
             $('#report-main-tabs').tabs('update', {
                 tab: tab,
                 options: {
-                    href: href
+                    onLoad: function () {
+                        onLoad();
+                    }
                 }
             });
             tab.panel('refresh', href);
