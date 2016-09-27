@@ -367,8 +367,8 @@
     <div id="rp-copy" data-options="name:'copy',iconCls:'icon-copy'">复制</div>
     <div id="rp-remove" data-options="name:'remove',iconCls:'icon-remove'">删除</div>
     <div class="menu-sep"></div>
-    <div id="rp-info" data-options="name:'info',iconCls:'icon-info'">详细信息</div>
     <div id="rp-history" data-options="name:'history',iconCls:'icon-history'">版本</div>
+    <div id="rp-info" data-options="name:'info',iconCls:'icon-info'">详细</div>
     <div id="rp-refresh" data-options="name:'refresh',iconCls:'icon-reload'">刷新</div>
 </div>
 </body>

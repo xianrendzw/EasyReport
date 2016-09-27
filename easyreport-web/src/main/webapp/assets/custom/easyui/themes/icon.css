@@ -257,3 +257,15 @@
 .icon-window {
     background: url('icons/window.png') no-repeat center center;
 }
+
+.icon-home {
+    background: url('icons/home.png') no-repeat center center;
+}
+
+.icon-table {
+    background: url('icons/table.png') no-repeat center center;
+}
+
+.icon-chart4 {
+    background: url('icons/chart4.png') no-repeat center center;
+}

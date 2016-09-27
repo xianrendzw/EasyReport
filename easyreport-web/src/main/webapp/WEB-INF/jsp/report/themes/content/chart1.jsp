@@ -1,36 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>${name}-报表展示图</title>
-    <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
-    <%@ include file="/WEB-INF/jsp/includes/report.jsp" %>
-</head>
-<body>
-<div id="loading"
-     style="position: absolute; z-index: 300; height: 120px; width: 284px; left: 50%; top: 50%; margin-left: -150px; margin-top: -80px; display: none;">
-    <div style="position: absolute; z-index: 300; width: 270px; height: 90px; background-color: #FFFFFF; border: solid #000000 1px; font-size: 14px;">
-        <div style="height: 26px; background: #f1f1f1; line-height: 26px; padding: 0px 3px 0px 3px; font-weight: bolder;">
-            操作提示 <span id="Per"></span><span id="SCount" style="font-weight: normal"></span>
-        </div>
-        <div style="height: 64px; line-height: 150%; padding: 0px 3px 0px 3px;" align="center">
-            <br/>
-            <table>
-                <tr>
-                    <td valign="top"><img alt="loading" border="0"
-                                          src="<%=request.getContextPath()%>/assets/modules/report/icons/loading.gif"/>
-                    </td>
-                    <td valign="middle" style="font-size: 14px;" id="loadingText">图表正在生成中, 请稍等...</td>
-                </tr>
-            </table>
-            <br/>
-        </div>
-    </div>
-    <div style="position: absolute; width: 270px; z-index: 299; left: 4px; top: 5px; background-color: #E8E8E8;"></div>
-</div>
+<%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
+<%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
+<%@ include file="/WEB-INF/jsp/includes/report.jsp" %>
+<script src="${ctxPath}/assets/vendor/echarts.min.js?v=${version}"></script>
+<script src="${ctxPath}/assets/js/report/themes/default/chart.js?v=${version}"></script>
 <div style="margin: 5px;">
     <form id="templateFrom" method="post">
         <table cellpadding="0" class="form-table" cellspacing="0" style="width: 99%;">
@@ -74,5 +48,3 @@
     </form>
 </div>
 <div id="chart1" style="height: 345px; border: 1px solid #ccc;">${message}</div>
-</body>
-</html>

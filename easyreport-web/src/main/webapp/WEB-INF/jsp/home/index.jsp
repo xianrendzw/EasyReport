@@ -11,13 +11,12 @@
 <body>
 <div class="easyui-layout" fit="true">
     <div region="north" class="bg-header">
-        <%--<span class="name">当前用户:[<a id="btn-my-profile" title="点击修改个人信息" href="#">${user.name}</a>]</span>--%>
         <div class=""></div>
-        <div class="menus">${menus}</div>
+        <div class="menus"></div>
     </div>
     <div region="center">
         <div id="main-tabs" border="false" fit="true">
-            <div title="首页">
+            <div title="首页" data-options="iconCls:'icon-home'">
                 <p style="font-size: 20px; padding: 20px">
                     你好,<font color="red">${user.name}</font>
                     <input id="login-user-name" type="hidden" value="${user.name}"/>

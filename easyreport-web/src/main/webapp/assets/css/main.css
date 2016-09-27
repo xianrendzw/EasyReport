@@ -322,6 +322,10 @@ ul.tabs {
     border-left: none
 }
 
+#report-main-tabs .tabs-wrap{
+    overflow: visible;
+}
+
 #body-layout {
     border-top: none
 }
