@@ -21,7 +21,8 @@ public class JdbcUtils {
     private static Map<String, DataSource> dataSourceMap = new ConcurrentHashMap<>(100);
 
     public static DataSource getDataSource(ReportDataSource rptDs) {
-        String key = (rptDs.getUid() + "-" + rptDs.getDbPoolClass()).toLowerCase();
+        //用户数据源用户名,密码,jdbcUrl做为key
+        String key = String.format("%s|%s|%s", rptDs.getUser(), rptDs.getPassword(), rptDs.getJdbcUrl()).toLowerCase();
         DataSource dataSource = dataSourceMap.get(key);
         if (dataSource == null) {
             dataSource = DataSourcePoolFactory.create(rptDs.getDbPoolClass()).wrap(rptDs);
