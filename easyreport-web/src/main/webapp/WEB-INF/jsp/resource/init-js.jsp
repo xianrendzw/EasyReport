@@ -3,7 +3,7 @@ var EasyReport = {
     version: '${version}',
     ctxPath: '${ctxPath}',
     config: {
-        pageSize: 30
+        pageSize: 50
     },
     global: {},
     utils: {
