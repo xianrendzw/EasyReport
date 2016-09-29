@@ -931,7 +931,7 @@ var DesignerMVC = {
             }
         },
         edit: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
@@ -940,7 +940,7 @@ var DesignerMVC = {
             });
         },
         copy: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
@@ -950,7 +950,7 @@ var DesignerMVC = {
             });
         },
         remove: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 var options = {
                     rows: [row],
                     url: DesignerMVC.URLs.remove.url,
@@ -966,27 +966,27 @@ var DesignerMVC = {
             });
         },
         preview: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 var url = DesignerMVC.URLs.Report.url + row.uid;
                 parent.HomeIndex.addTab(row.id, row.name, url, "");
-                parent.HomeIndex.selectedTab();
+                //parent.HomeIndex.selectedTab();
             });
         },
         previewInNewWindow: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 var url = DesignerMVC.URLs.Report.url + row.uid;
                 var win = window.open(url, '_blank');
                 win.focus();
             });
         },
         showDetail: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 $('#report-detail-dlg').dialog('open').dialog('center');
-                DesignerMVC.Util.showReportProps(row);
+                DesignerMVC.Util.fillDetailLabels(row);
             });
         },
         showHistorySql: function () {
-            DesignerMVC.Util.checkSelected(function (row) {
+            DesignerMVC.Util.isRowSelected(function (row) {
                 $('#report-history-sql-dlg').dialog('open').dialog('center');
                 DesignerMVC.View.HistorySqlEditor.setValue('');
                 DesignerMVC.View.HistorySqlEditor.refresh();
@@ -1188,7 +1188,7 @@ var DesignerMVC = {
                 gridId: null,
             };
         },
-        checkSelected: function (func) {
+        isRowSelected: function (func) {
             var row = $('#report-datagrid').datagrid('getSelected');
             if (row) {
                 func(row);
@@ -1247,7 +1247,7 @@ var DesignerMVC = {
             $('#report-category-name').text(row.categoryName);
             $('#report-categoryId').text(row.categoryId);
         },
-        showReportProps: function (data) {
+        fillDetailLabels: function (data) {
             $('#report-detail-dlg label').each(function (i) {
                 $(this).text("");
             });

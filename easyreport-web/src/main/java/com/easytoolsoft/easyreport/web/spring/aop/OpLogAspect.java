@@ -1,13 +1,11 @@
 package com.easytoolsoft.easyreport.web.spring.aop;
 
-import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.data.membership.po.User;
 import com.easytoolsoft.easyreport.data.sys.po.Event;
 import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
 import com.easytoolsoft.easyreport.membership.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -66,8 +64,7 @@ public class OpLogAspect {
                 message = String.format("name:%s;params:%s;desc:%s;detail:%s",
                         MapUtils.getString(methodInfo, "name", ""),
                         MapUtils.getString(methodInfo, "params", ""),
-                        MapUtils.getString(methodInfo, "desc", ""),
-                        message);
+                        MapUtils.getString(methodInfo, "desc", ""), message);
                 Event event = Event.builder()
                         .source(source)
                         .account(user.getAccount())
@@ -99,20 +96,12 @@ public class OpLogAspect {
                 if (methodParameterTypes.length == arguments.length) {
                     methodInfoMap.put("name", method.getAnnotation(OpLog.class).name());
                     methodInfoMap.put("desc", method.getAnnotation(OpLog.class).desc());
-                    methodInfoMap.put("params", this.getMethodParams(arguments));
+                    methodInfoMap.put("params", StringUtils.join(arguments, ","));
                     break;
                 }
             }
         }
-
         return methodInfoMap;
-    }
-
-    private String getMethodParams(Object[] arguments) {
-        if (ArrayUtils.isNotEmpty(arguments)) {
-            return JSON.toJSONString(arguments);
-        }
-        return StringUtils.EMPTY;
     }
 
     private String getExceptionStack(Throwable ex) {

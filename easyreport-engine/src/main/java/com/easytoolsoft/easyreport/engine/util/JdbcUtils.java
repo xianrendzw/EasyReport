@@ -21,10 +21,11 @@ public class JdbcUtils {
     private static Map<String, DataSource> dataSourceMap = new ConcurrentHashMap<>(100);
 
     public static DataSource getDataSource(ReportDataSource rptDs) {
-        DataSource dataSource = dataSourceMap.get(rptDs.getDbPoolClass());
+        String key = (rptDs.getUid() + "-" + rptDs.getDbPoolClass()).toLowerCase();
+        DataSource dataSource = dataSourceMap.get(key);
         if (dataSource == null) {
             dataSource = DataSourcePoolFactory.create(rptDs.getDbPoolClass()).wrap(rptDs);
-            dataSourceMap.put(rptDs.getUid(), dataSource);
+            dataSourceMap.put(key, dataSource);
         }
         return dataSource;
     }

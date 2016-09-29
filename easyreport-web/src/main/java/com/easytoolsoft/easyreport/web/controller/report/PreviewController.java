@@ -82,7 +82,7 @@ public class PreviewController {
         return modelAndView;
     }
 
-    @OpLog(name = "预览报表")
+    @OpLog(name = "获取表格报表JSON格式数据")
     @ResponseBody
     @PostMapping(value = "/table/getData.json")
     //@RequiresPermissions("report.designer:preview")
@@ -101,7 +101,7 @@ public class PreviewController {
         return data;
     }
 
-    @OpLog(name = "预览报表")
+    @OpLog(name = "获取图表报表JSON格式数据")
     @ResponseBody
     @PostMapping(value = "/chart/getData.json")
     //@RequiresPermissions("report.designer:preview")
