@@ -5,7 +5,7 @@
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>
                 <td style="text-align: left;">${formHtmlText}&nbsp;&nbsp;
-                    <a id="bth-chart-generate" href="#" class="easyui-linkbutton"
+                    <a id="btn-chart-generate" href="#" class="easyui-linkbutton"
                        data-options="iconCls:'icon-ok'">生成</a>
                     <input id="chart-report-id" type="hidden" name="id" value="${id}"/>
                     <input id="chart-report-name" type="hidden" name="name" value="${name}"/>
@@ -13,7 +13,7 @@
                 </td>
             </tr>
             <c:if test="${not empty statColumHtmlText}">
-                <tr>
+                <tr id="chart-report-columns">
                     <td colspan="2">${statColumHtmlText}</td>
                 </tr>
             </c:if>

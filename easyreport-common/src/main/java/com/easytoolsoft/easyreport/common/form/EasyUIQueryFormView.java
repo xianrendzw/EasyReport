@@ -61,7 +61,7 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
             htmlText.append(String.format("<input name=\"%s\" type=\"checkbox\" value=\"%s\" data-name=\"%s\" %s/>%s &nbsp;",
                     checkBoxList.getName(), checkBox.getName(), checkBox.getText(), checked, checkBox.getText()));
         }
-        htmlText.append(String.format("<input id=\"checkAllStatColumn\" class=\"checkAllStatColumn\" name=\"checkAllStatColumn\" type=\"checkbox\" %s />全选</span>",
+        htmlText.append(String.format("<input id=\"checkAllStatColumn\" name=\"checkAllStatColumn\" type=\"checkbox\" %s />全选</span>",
                 isCheckedAll ? "checked=\"checked\"" : ""));
         return htmlText.toString();
     }

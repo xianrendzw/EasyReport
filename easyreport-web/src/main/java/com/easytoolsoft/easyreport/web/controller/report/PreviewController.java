@@ -129,7 +129,7 @@ public class PreviewController {
         return data;
     }
 
-    @PostMapping(value = "/exportExcel")
+    @PostMapping(value = "/table/exportExcel")
     @OpLog(name = "导出报表为Excel")
     //@RequiresPermissions("report.designer:export")
     public void exportToExcel(String uid, String name, String htmlText,

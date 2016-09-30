@@ -29,9 +29,9 @@ var TableReportMVC = {
         bindEvent: function () {
             $('#btn-generate').click(TableReportMVC.Controller.generate);
             $('#btn-export-excel').click(TableReportMVC.Controller.exportToExcel);
-            $('#table-report-columns > .checkAllStatColumn').click(function (e) {
-                var checked = $("#table-report-columns > input[name='checkAllStatColumn']").prop("checked");
-                $("#table-report-columns > input[name='statColumns']").prop("checked", checked);
+            $("#table-report-columns input[name='checkAllStatColumn']").click(function (e) {
+                var checked = $("#table-report-columns input[name='checkAllStatColumn']").prop("checked");
+                $("#table-report-columns input[name='statColumns']").prop("checked", checked);
             });
         },
         bindValidate: function () {
@@ -61,7 +61,6 @@ var TableReportMVC = {
                     });
                 },
                 success: function (result) {
-                    $.messager.progress("close");
                     if (result.success) {
                         $('#table-report-htmltext-div').html(result.data.htmlTable);
                         TableReportMVC.Util.render(mode || TableReportMVC.Model.Mode.classic);
@@ -83,7 +82,7 @@ var TableReportMVC = {
             htmlText += (TableReportMVC.Util.filterTable || '');
             htmlText += '<table>' + $('#easyreport').html() + '</table>';
 
-            var bytes = TableReportMVC.getExcelBytes(htmlText);
+            var bytes = TableReportMVC.Util.getExcelBytes(htmlText);
             if (bytes > 2000000) {
                 htmlText = "large";
             }
@@ -111,23 +110,23 @@ var TableReportMVC = {
         // 表格中是否跨行
         hasRowSpan: function () {
             var rowspans = $("#easyreport>tbody>tr>td[rowspan]");
-            return (rowspans && rowspans.length > 0);
+            return (rowspans && rowspans.length);
         },
         render: function (mode) {
             var table = $("#easyreport");
-            return TableReportMVC.Util.renderClassicReport(table);
+            return TableReportMVC.Util.renderClassicTable(table);
 
             /*if (mode == TableReportMVC.Model.Mode.classic) {
-             return TableReportMVC.renderClassicReport(table);
+             return TableReportMVC.renderClassicTable(table);
              }
              // 如果为dt模式但是表格存在跨行
              // 则转为经典表格模式,因为datatables控件不支持跨行
              if (TableReportMVC.hasRowSpan()) {
-             return TableReportMVC.renderClassicReport(table);
+             return TableReportMVC.renderClassicTable(table);
              }
-             return TableReportMVC.renderDatatablesReport(table);*/
+             return TableReportMVC.renderDatatables(table);*/
         },
-        renderClassicReport: function (table) {
+        renderClassicTable: function (table) {
             $("#easyreport>tbody>tr").click(function () {
                 $('#easyreport .selected').removeClass('selected').removeAttr('title');
                 $(this).addClass('selected');
@@ -147,14 +146,14 @@ var TableReportMVC = {
                 table.tablesorter({
                     sortInitialOrder: 'desc'
                 });
-                table.find('>thead>tr').attr({
+                table.find('#easyreport>thead>tr').attr({
                     title: "点击可以排序"
                 }).css({
                     cursor: "pointer"
                 });
             }
         },
-        renderDatatablesReport: function (table) {
+        renderDatatables: function (table) {
             $('#easyreport').removeClass("easyreport");
             $('#easyreport').addClass('table table-striped table-bordered');
             var dt = $('#easyreport').dataTable({

@@ -38,8 +38,7 @@ var PreviewMainMVC = {
             var tableUrl = juicer(PreviewMainMVC.URLs.table.url, {uid: uid});
             var chartUrl = juicer(PreviewMainMVC.URLs.chart.url, {uid: uid});
             PreviewMainMVC.Controller.updateTab('表格', tableUrl, TableReport.init);
-            PreviewMainMVC.Controller.updateTab('图表', chartUrl, function () {
-            });
+            PreviewMainMVC.Controller.updateTab('图表', chartUrl, ChartReport.init);
         }
     },
     Controller: {
