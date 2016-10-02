@@ -38,4 +38,4 @@
         </table>
     </form>
 </div>
-<div id="chart1" style="height: 345px; border: 1px solid #ccc;">${message}</div>
+<div id="legend1" style="height: 345px; border: 1px solid #ccc;">${message}</div>
