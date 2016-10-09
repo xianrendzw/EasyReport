@@ -146,7 +146,7 @@ var TableReportMVC = {
                 table.tablesorter({
                     sortInitialOrder: 'desc'
                 });
-                table.find('#easyreport>thead>tr').attr({
+                table.find('easyreport>thead>tr').attr({
                     title: "点击可以排序"
                 }).css({
                     cursor: "pointer"

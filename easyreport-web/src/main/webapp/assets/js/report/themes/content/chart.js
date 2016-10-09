@@ -51,13 +51,14 @@ var ChartReportMVC = {
                 data: $("#chart-report-form").serializeObject(),
                 dataType: "json",
                 beforeSend: function () {
-                    $.messager.progress({
-                        title: '请稍后...',
-                        text: '报表正在生成中...',
-                    });
+                    if (e) {
+                        $.messager.progress({
+                            title: '请稍后...',
+                            text: '报表正在生成中...',
+                        });
+                    }
                 },
                 success: function (result) {
-                    //$.messager.progress("close");
                     if (result.success) {
                         ChartReportMVC.Model.metaData = result.data;
                         ChartReportMVC.Util.initDimOptions();
@@ -67,7 +68,14 @@ var ChartReportMVC = {
                             ChartReportMVC.Controller.show("legend1");
                         }
                     } else {
-                        $.messager.alert('操作提示', result.data.msg, 'error');
+                        if (e) {
+                            $.messager.alert('操作提示', result.data.msg, 'error');
+                        }
+                    }
+                },
+                complete: function () {
+                    if (e) {
+                        $.messager.progress("close");
                     }
                 }
             });

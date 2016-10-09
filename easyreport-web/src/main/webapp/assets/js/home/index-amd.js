@@ -170,7 +170,7 @@ define(function (require, exports, module) {
                     menuItems.push('<div style=\"padding: 2px 5px;\">');
                     for (var i = 0; i < roots.length; i++) {
                         var module = roots[i].attributes;
-                        var url = module.linkType == 1 ? module.url : EasyReport.ctxPath + '/' + module.url;
+                        var url = module.linkType ? module.url : EasyReport.ctxPath + '/' + module.url;
                         var onClick = juicer("onclick=\"HomeIndex.addTab('${id}}','${name}','${url}','${icon}')\"", {
                             id: 'm_' + module.id,
                             url: url,
@@ -217,7 +217,7 @@ define(function (require, exports, module) {
                 menuItems.push("<div id=\"mm" + parent.id + "\" style=\"width: 150px;\">");
                 for (var i = 0; i < parent.children.length; i++) {
                     var module = parent.children[i].attributes;
-                    var url = module.linkType == 1 ? module.url : EasyReport.ctxPath + '/' + module.url;
+                    var url = module.linkType ? module.url : EasyReport.ctxPath + '/' + module.url;
                     var tmpl = "<div data-options=\"iconCls:'${iconCls}'\" " +
                         "onclick=\"HomeIndex.addTab('${id}','${name}','${url}','${iconCls}',${closable})\">${name}</div>";
                     menuItems.push(juicer(tmpl, {
