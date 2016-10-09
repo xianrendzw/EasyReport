@@ -48,7 +48,7 @@ var ChartReportMVC = {
             $.ajax({
                 type: "POST",
                 url: ChartReportMVC.URLs.getData.url,
-                data: $("#chart-report-form").serializeObject(),
+                data: $("#chart-report-form").serialize(),
                 dataType: "json",
                 beforeSend: function () {
                     if (e) {

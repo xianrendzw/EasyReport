@@ -52,7 +52,7 @@ var TableReportMVC = {
             $.ajax({
                 type: "POST",
                 url: TableReportMVC.URLs.getData.url,
-                data: $("#table-report-form").serializeObject(),
+                data: $("#table-report-form").serialize(),
                 dataType: "json",
                 beforeSend: function () {
                     $.messager.progress({
@@ -88,7 +88,7 @@ var TableReportMVC = {
             }
 
             var url = TableReportMVC.URLs.exportExcel.url;
-            var data = $('#table-report-form').serializeObject();
+            var data = $('#table-report-form').serialize();
             data["htmlText"] = htmlText;
 
             $.messager.progress({
