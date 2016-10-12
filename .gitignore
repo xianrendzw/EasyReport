@@ -29,6 +29,9 @@ nb-configuration.xml
 /easyreport-membership/target/
 /easyreport-membership/.settings/
 /easyreport-membership/.classpath
+/easyreport-queryer/target/
+/easyreport-queryer/.settings/
+/easyreport-queryer/.classpath
 .project
 .classpath
 .settings

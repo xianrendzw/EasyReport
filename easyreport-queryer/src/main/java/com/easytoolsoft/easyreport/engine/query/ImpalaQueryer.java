@@ -12,8 +12,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 
 /**
  *
- * @see http://www.cloudera.com/documentation/enterprise/5-6-x/topics/
- *      impala_jdbc.html
+ * @see http://www.cloudera.com/documentation/enterprise/5-6-x/topics/impala_jdbc.html
  * @author tomdeng
  *
  */
