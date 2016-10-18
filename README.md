@@ -10,7 +10,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 ### what's new?(ver2.1)
 * 改进图表报表图表生成并增加图表生成配置
 * 定时任务功能完成
-* 大数据版考虑支持更多的查询引擎(Hive,Presto,Spark SQL,Drill等）
+* 支持大数据产品查询引擎(Hive,Presto,HBase,Drill,Impala等）
 * 提供REST API服务接口
 * 增加报表权限控制
 
