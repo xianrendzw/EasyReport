@@ -134,7 +134,6 @@ var CategoryMVC = {
                     if (item.name == "paste") {
                         return CategoryMVC.Controller.paste();
                     }
-                    return;
                 }
             });
 

@@ -62,7 +62,6 @@ define(function (require, exports, module) {
                         if (item.name == "all") {
                             return EasyUIUtils.closeAllTab('#main-tabs');
                         }
-                        return;
                     },
                 });
 

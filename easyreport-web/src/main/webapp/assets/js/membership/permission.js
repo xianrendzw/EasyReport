@@ -85,7 +85,6 @@ var PermMVC = {
                     if (item.name == "add") {
                         return PermMVC.Controller.add();
                     }
-                    return;
                 }
             });
 

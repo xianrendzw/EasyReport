@@ -65,7 +65,6 @@ var HomeIndexMVC = {
 					if (item.name == "all") {
 						return EasyUIUtils.closeAllTab('#main-tabs');
 					}
-					return;
 				},
 			});
 

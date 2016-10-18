@@ -98,7 +98,6 @@ var ConfMVC = {
                     if (item.name == "find") {
                         return ConfMVC.Controller.openSearchDlg();
                     }
-                    return;
                 }
             });
 

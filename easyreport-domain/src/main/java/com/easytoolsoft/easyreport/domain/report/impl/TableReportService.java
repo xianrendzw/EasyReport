@@ -282,7 +282,7 @@ public class TableReportService implements ITableReportService {
         String regex = "\\$\\{.*?\\}";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text.toString());
-        Set<String> set = new HashSet<String>(2);
+        Set<String> set = new HashSet<>(2);
         while (matcher.find()) {
             String group = matcher.group(0);
             String name = group.replaceAll("utc|int|Int|[\\$\\{\\}]", "");

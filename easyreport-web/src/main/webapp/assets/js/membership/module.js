@@ -104,7 +104,6 @@ var ModuleMVC = {
                     if (item.name == "remove") {
                         return ModuleMVC.Controller.remove();
                     }
-                    return;
                 }
             });
 

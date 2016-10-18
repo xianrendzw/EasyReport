@@ -325,7 +325,6 @@ var DesignerMVC = {
                     if (item.name == "refresh") {
                         return DesignerMVC.Controller.reload();
                     }
-                    return;
                 }
             });
 
