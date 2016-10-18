@@ -27,7 +27,7 @@ EasyReport(ver2.0) 用户操作手册
 * [idea][] or [eclipsejee][]
 * [lombok][]
 * [tomcat8+][]
-* [MySQL5+][]  
+* [MySQL5+][]
 
 ## 2.安装与部署(Installation & Deployment)
 系统默认登录用户:**admin** 密码:**123456**
