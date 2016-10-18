@@ -69,11 +69,6 @@ var TaskMVC = {
                         TaskMVC.Controller.edit();
                     }
                 }, '-', {
-                    iconCls: 'icon-settings',
-                    handler: function () {
-
-                    }
-                }, '-', {
                     iconCls: 'icon-remove1',
                     handler: function () {
                         TaskMVC.Controller.remove();
@@ -133,9 +128,6 @@ var TaskMVC = {
                         var icons = [{
                             "name": "edit",
                             "title": "编辑"
-                        }, {
-                            "name": "settings",
-                            "title": "配置项"
                         }, {
                             "name": "remove",
                             "title": "删除"

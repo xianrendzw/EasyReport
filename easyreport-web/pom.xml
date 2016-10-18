@@ -226,13 +226,6 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-            <resource>
-                <directory>src/main/webapp</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>WEB-INF/web.xml</include>
-                </includes>
-            </resource>
         </resources>
         <plugins>
             <plugin>
