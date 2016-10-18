@@ -22,12 +22,12 @@ EasyReport(ver2.0) 用户操作手册
 * [常见问题(FAQ)](#user-content-5常见问题faq)
 
 ## 1.开发环境(Development Environment)
-[jdk1.8][]
-[maven3][]
-[idea][] or [eclipsejee][]
-[lombok][]
-[tomcat8+][]
-[MySQL5+][]
+* [jdk1.8][]
+* [maven3][]
+* [idea][] or [eclipsejee][]
+* [lombok][]
+* [tomcat8+][]
+* [MySQL5+][]  
 
 ## 2.安装与部署(Installation & Deployment)
 系统默认登录用户:**admin** 密码:**123456**
