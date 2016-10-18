@@ -24,7 +24,7 @@ EasyReport(ver2.0) 用户操作手册
 ## 1.开发环境(Development Environment)
 [jdk1.8][]
 [maven3][]
-[idea][] or [eclipsejee]
+[idea][] or [eclipsejee][]
 [lombok][]
 [tomcat8+][]
 [MySQL5+][]
