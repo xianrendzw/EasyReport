@@ -34,26 +34,26 @@ EasyReport(ver2.0) 用户操作手册
 
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好[jdk1.8][]与[maven3][]、[MySQL5+][]，并配置好maven仓库，然后按如下步骤操作：
-**step1**:git clone https://github.com/xianrendzw/EasyReport.git
-**step2**:找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
-**step3**:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
-**step4**:mvn clean package -Dskiptest=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
-**step5**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
+* step1:git clone https://github.com/xianrendzw/EasyReport.git
+* step2:找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
+* step3:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
+* step4:mvn clean package -Dskiptest=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
+* step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
 
 ### 2.2 从发布包安装(From Release Packages)
 首先确定安装好[jre1.8][]或[jdk1.8][]与[MySQL5+][]，然后按如下步骤操作：
-**step1**:直接从[release][]下载最新版本war文件
-**step2**:直接从[release][]下载db.zip并解压找到easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
-**step3**:修改war文件里WEB-INF/classes/config/easyreport/spring/spring-datasource.xml中数据库连接字符串的IP、用户与密码
-**step4**:然后把war这个文件部署到tomcat,jboss,jetty等容器中
+* step1:直接从[release][]下载最新版本war文件
+* step2:直接从[release][]下载db.zip并解压找到easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
+* step3:修改war文件里WEB-INF/classes/config/easyreport/spring/spring-datasource.xml中数据库连接字符串的IP、用户与密码
+* step4:然后把war这个文件部署到tomcat,jboss,jetty等容器中
 
 ### 2.3 定时任务程序部署(Scheduled Task Deamon)
 有时需要把报表定时（每天、每月，每季度等）以邮件形式发布给相关的人员，因此需要定时任务调度程序，常用的调度程序也很多（linux:at,crontab;windows:计划任务）,本工具实现一个简单的调度程序。
 **说明：**该程序是可选的，如果不需要定时把报表以邮件方式发布，则可不部署该程序。  具体安装与部署步骤如下:
-**step1**:cd yourgitrepository/EasyReport/easyreport-scheduler
-**step2**:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
-**step3**:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
-**step4**:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:
+* step1:cd yourgitrepository/EasyReport/easyreport-scheduler
+* step2:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
+* step3:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
+* step4:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:
 ```shell
 nohup java -jar easyreport-scheduler.jar >easyreport2.log 2>&1 &
 ```
