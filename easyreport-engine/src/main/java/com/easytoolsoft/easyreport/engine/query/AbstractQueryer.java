@@ -161,6 +161,7 @@ public abstract class AbstractQueryer {
      */
     protected Connection getJdbcConnection() {
         try {
+            Class.forName(this.dataSource.getDriverClass());
             return JdbcUtils.getDataSource(this.dataSource).getConnection();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
