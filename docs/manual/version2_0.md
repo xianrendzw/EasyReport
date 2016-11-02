@@ -37,7 +37,7 @@ EasyReport(ver2.0) 用户操作手册
 * step1:git clone https://github.com/xianrendzw/EasyReport.git
 * step2:找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
 * step3:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
-* step4:mvn clean package -Dskiptest=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
+* step4:mvn clean package -Dmaven.test.skip=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
 * step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
 
 ### 2.2 从发布包安装(From Release Packages)
@@ -52,7 +52,7 @@ EasyReport(ver2.0) 用户操作手册
 **说明：**该程序是可选的，如果不需要定时把报表以邮件方式发布，则可不部署该程序。  具体安装与部署步骤如下:
 * step1:cd yourgitrepository/EasyReport/easyreport-scheduler
 * step2:修改 src\main\resources\${env}\resource.properties 数据库连接，用户与密码
-* step3:mvn clean package -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
+* step3:mvn clean package -Dmaven.test.skip=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
 * step4:经过step3之后会在target目录生成easyreport-scheduler.jar文件。然后在linux中执行如下shell命令:
 ```shell
 nohup java -jar easyreport-scheduler.jar >easyreport2.log 2>&1 &
