@@ -300,7 +300,10 @@ var DsMVC = {
             }, 'json');
         },
         testConnection: function () {
+            var key = $("#dbType").combobox('getValue');
+            var item = DsMVC.Model.dbTypes[key].value;
             var data = {
+                driverClass: item.driverClass,
                 url: $("#jdbcUrl").val(),
                 pass: $("#password").val(),
                 user: $("#user").val()

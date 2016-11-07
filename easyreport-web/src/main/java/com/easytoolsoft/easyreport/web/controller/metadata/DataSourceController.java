@@ -86,9 +86,9 @@ public class DataSourceController
     @PostMapping(value = "/testConnection")
     @OpLog(name = "测试数据源")
     @RequiresPermissions("report.ds:view")
-    public JsonResult testConnection(String url, String pass, String user) {
+    public JsonResult testConnection(String driverClass, String url, String pass, String user) {
         JsonResult<String> result = new JsonResult<>();
-        result.setSuccess(this.service.testConnection(url, user, pass));
+        result.setSuccess(this.service.testConnection(driverClass, url, user, pass));
         return result;
     }
 
@@ -99,6 +99,7 @@ public class DataSourceController
         JsonResult<String> result = new JsonResult<>();
         DataSource dsPo = this.service.getById(id);
         result.setSuccess(this.service.testConnection(
+                dsPo.getDriverClass(),
                 dsPo.getJdbcUrl(),
                 dsPo.getUser(), dsPo.getPassword()));
         return result;

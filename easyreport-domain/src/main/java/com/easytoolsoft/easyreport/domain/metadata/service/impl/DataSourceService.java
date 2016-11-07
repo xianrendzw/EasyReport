@@ -26,14 +26,16 @@ public class DataSourceService
     }
 
     /**
+     * @param driverClass
      * @param url
      * @param user
      * @param password
      * @return
      */
-    public boolean testConnection(String url, String user, String password) {
+    public boolean testConnection(String driverClass, String url, String user, String password) {
         Connection conn = null;
         try {
+            Class.forName(driverClass);
             conn = DriverManager.getConnection(url, user, password);
             return true;
         } catch (Exception e) {

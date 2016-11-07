@@ -30,11 +30,11 @@
                 <div id="login-right-main">
                     <p>
                         <span>用户名:</span><input type="text" id="account" name="account" class="txtinput"
-                                                maxlength="100"/>
+                                                maxlength="100" value="admin"/>
                     </p>
                     <p>
                         <span>密 码:</span><input type="password" id="password" name="password" class="txtinput"
-                                                maxlength="64"/>
+                                                maxlength="64" value="123456"/>
                     </p>
                     <!-- <p>
 							<span>验证码:</span><input type="text" id="validCode" name="validCode" class="txtinput" />
