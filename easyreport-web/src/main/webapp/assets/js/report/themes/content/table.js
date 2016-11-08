@@ -88,7 +88,7 @@ var TableReportMVC = {
             }
 
             var url = TableReportMVC.URLs.exportExcel.url;
-            var data = $('#table-report-form').serialize();
+            var data = $('#table-report-form').serializeObject();
             data["htmlText"] = htmlText;
 
             $.messager.progress({
