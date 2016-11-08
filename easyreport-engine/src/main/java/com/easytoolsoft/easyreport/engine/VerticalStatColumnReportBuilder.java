@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.engine;
 import com.easytoolsoft.easyreport.engine.data.ColumnTree;
 import com.easytoolsoft.easyreport.engine.data.ColumnTreeNode;
 import com.easytoolsoft.easyreport.engine.data.ReportDataRow;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class VerticalStatColumnReportBuilder extends AbstractReportBuilder imple
      * @param reportDataSet   报表数据集
      * @param reportParameter 报表参数
      */
-    public VerticalStatColumnReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
+    public VerticalStatColumnReportBuilder(AbstractReportDataSet reportDataSet, ReportParameter reportParameter) {
         super(reportDataSet, reportParameter);
     }
 

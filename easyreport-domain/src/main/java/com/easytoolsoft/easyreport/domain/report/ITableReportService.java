@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.domain.report;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBoxList;
 import com.easytoolsoft.easyreport.common.form.control.HtmlDateBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlFormElement;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
@@ -32,7 +32,7 @@ public interface ITableReportService {
 
     ReportTable getReportTable(ReportMetaDataSet metaDataSet, ReportParameter reportParameter);
 
-    ReportDataSet getReportDataSet(Report report, Map<String, Object> parameters);
+    AbstractReportDataSet getReportDataSet(Report report, Map<String, Object> parameters);
 
     Map<String, Object> getBuildInParameters(Map<?, ?> httpReqParamMap, int dataRange);
 

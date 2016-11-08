@@ -10,7 +10,7 @@ import com.easytoolsoft.easyreport.domain.metadata.exception.QueryParamsExceptio
 import com.easytoolsoft.easyreport.domain.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.ChartReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.TableReportService;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
@@ -113,7 +113,7 @@ public class PreviewController {
                 ReportOptions options = reportService.parseOptions(po.getOptions());
                 Map<String, Object> formParameters = tableReportService.getFormParameters(request.getParameterMap(),
                         options.getDataRange());
-                ReportDataSet reportData = tableReportService.getReportDataSet(po, formParameters);
+                AbstractReportDataSet reportData = tableReportService.getReportDataSet(po, formParameters);
                 data.put("dimColumnMap", chartReportService.getDimColumnMap(reportData));
                 data.put("dimColumns", chartReportService.getDimColumns(reportData));
                 data.put("statColumns", chartReportService.getStatColumns(reportData));

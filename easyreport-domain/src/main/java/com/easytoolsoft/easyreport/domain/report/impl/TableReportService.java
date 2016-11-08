@@ -10,7 +10,7 @@ import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
 import com.easytoolsoft.easyreport.common.util.DateUtils;
 import com.easytoolsoft.easyreport.engine.ReportGenerator;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
@@ -84,7 +84,7 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public ReportDataSet getReportDataSet(Report report, Map<String, Object> parameters) {
+    public AbstractReportDataSet getReportDataSet(Report report, Map<String, Object> parameters) {
         ReportDataSource reportDs = this.reportService.getReportDataSource(report.getDsId());
         return ReportGenerator.getDataSet(reportDs, this.createReportParameter(report, parameters));
     }

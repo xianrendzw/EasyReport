@@ -3,7 +3,7 @@ package com.easytoolsoft.easyreport.engine;
 import com.easytoolsoft.easyreport.engine.data.ColumnTree;
 import com.easytoolsoft.easyreport.engine.data.ColumnTreeNode;
 import com.easytoolsoft.easyreport.engine.data.ReportDataColumn;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import org.apache.commons.lang3.StringUtils;
@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractReportBuilder {
-    protected final ReportDataSet reportDataSet;
+    protected final AbstractReportDataSet reportDataSet;
     protected final ReportParameter reportParameter;
     protected final StringBuilder tableRows = new StringBuilder();
 
-    protected AbstractReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
+    protected AbstractReportBuilder(AbstractReportDataSet reportDataSet, ReportParameter reportParameter) {
         this.reportDataSet = reportDataSet;
         this.reportParameter = reportParameter;
     }

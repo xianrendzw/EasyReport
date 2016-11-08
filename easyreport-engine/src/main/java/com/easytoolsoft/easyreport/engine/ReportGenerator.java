@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.engine;
 
 import com.easytoolsoft.easyreport.engine.data.LayoutType;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
@@ -45,7 +45,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static ReportDataSet getDataSet(ReportDataSource ds, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(ReportDataSource ds, ReportParameter parameter) {
         return new DataExecutor(ds, parameter).execute();
     }
 
@@ -54,7 +54,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static ReportDataSet getDataSet(Queryer queryer, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(Queryer queryer, ReportParameter parameter) {
         return new DataExecutor(queryer, parameter).execute();
     }
 
@@ -63,7 +63,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static ReportDataSet getDataSet(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
         return new DataExecutor(parameter).execute(metaDataSet);
     }
 
@@ -72,14 +72,14 @@ public class ReportGenerator {
      * @param parameter
      * @return ReportTable
      */
-    public static ReportTable generate(ReportDataSet dataSet, ReportParameter parameter) {
+    public static ReportTable generate(AbstractReportDataSet dataSet, ReportParameter parameter) {
         ReportBuilder builder = createBuilder(dataSet, parameter);
         ReportDirector director = new ReportDirector(builder);
         director.build();
         return builder.getTable();
     }
 
-    private static ReportBuilder createBuilder(ReportDataSet reportDataSet, ReportParameter parameter) {
+    private static ReportBuilder createBuilder(AbstractReportDataSet reportDataSet, ReportParameter parameter) {
         if (parameter.getStatColumnLayout() == LayoutType.HORIZONTAL) {
             return new HorizontalStatColumnReportBuilder(reportDataSet, parameter);
         }
