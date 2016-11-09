@@ -15,6 +15,7 @@ import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnExceptio
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
+import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -80,6 +81,29 @@ public class PreviewController {
             log.error("报表系统出错", ex);
         }
         return modelAndView;
+    }
+
+    @OpLog(name = "获取报表DataSet JSON格式数据")
+    @ResponseBody
+    @RequestMapping(value = "/getDataSet.json")
+    //@RequiresPermissions("report.designer:preview")
+    public JsonResult getDataSet(String uid, HttpServletRequest request) {
+        JsonResult<AbstractReportDataSet> result = new JsonResult<>();
+        try {
+            Report po = reportService.getByUid(uid);
+            ReportOptions options = reportService.parseOptions(po.getOptions());
+            Map<String, Object> formParameters = tableReportService.getFormParameters(request.getParameterMap(), options.getDataRange());
+            result.setData(tableReportService.getReportDataSet(po, formParameters));
+        } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
+            log.error("报表生成失败", ex);
+            result.setSuccess(false);
+            result.setMsg(ex.getMessage());
+        } catch (Exception ex) {
+            log.error("报表系统出错", ex);
+            result.setSuccess(false);
+            result.setMsg(ex.getMessage());
+        }
+        return result;
     }
 
     @OpLog(name = "获取表格报表JSON格式数据")
