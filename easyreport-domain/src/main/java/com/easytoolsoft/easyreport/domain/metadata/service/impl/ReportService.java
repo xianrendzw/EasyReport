@@ -36,8 +36,6 @@ public class ReportService
     private IDataSourceService dsService;
     @Resource
     private IConfService confService;
-    @Resource
-    private ICategoryService categoryService;
 
     @Override
     protected ReportExample getPageExample(String fieldName, String keyword) {

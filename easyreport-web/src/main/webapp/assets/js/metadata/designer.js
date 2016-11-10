@@ -1347,12 +1347,6 @@ var DesignerMVC = {
                     newColumns[i] = oldRowMap[name];
                 }
             }
-
-            $.each(oldColumns, function (i, column) {
-                if (column.type == 4) {
-                    newColumns.push(column);
-                }
-            });
             return $("#report-meta-column-grid").datagrid('loadData', newColumns);
         },
         getMetaColumns: function (columns) {
