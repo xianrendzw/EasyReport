@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.membership.service;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.membership.example.PermissionExample;
-import com.easytoolsoft.easyreport.data.membership.po.Permission;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.membership.example.PermissionExample;
+import com.easytoolsoft.easyreport.membership.po.Permission;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.domain.schedule.service;
 
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.schedule.example.TaskExample;
-import com.easytoolsoft.easyreport.data.schedule.po.Task;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.domain.schedule.example.TaskExample;
+import com.easytoolsoft.easyreport.domain.schedule.po.Task;
 
 /**
  * 报表调度任务服务类

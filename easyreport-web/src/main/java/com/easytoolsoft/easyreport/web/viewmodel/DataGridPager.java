@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.viewmodel;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

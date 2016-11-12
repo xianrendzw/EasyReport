@@ -157,6 +157,16 @@
                 <version>3.8.11.2</version>
             </dependency>
             <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc5</artifactId>
+                <version>11.2.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>sqljdbc4</artifactId>
+                <version>4.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>3.4.0</version>

@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.IDataSourceDao;
-import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IDataSourceDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.DataSourceExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.domain.metadata.service.IDataSourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

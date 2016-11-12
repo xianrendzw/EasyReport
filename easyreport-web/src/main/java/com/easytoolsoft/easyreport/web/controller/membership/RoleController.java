@@ -2,12 +2,12 @@ package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.membership.example.RoleExample;
-import com.easytoolsoft.easyreport.data.membership.po.Module;
-import com.easytoolsoft.easyreport.data.membership.po.Permission;
-import com.easytoolsoft.easyreport.data.membership.po.Role;
-import com.easytoolsoft.easyreport.data.membership.po.User;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.membership.example.RoleExample;
+import com.easytoolsoft.easyreport.membership.po.Module;
+import com.easytoolsoft.easyreport.membership.po.Permission;
+import com.easytoolsoft.easyreport.membership.po.Role;
+import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import com.easytoolsoft.easyreport.membership.service.IPermissionService;

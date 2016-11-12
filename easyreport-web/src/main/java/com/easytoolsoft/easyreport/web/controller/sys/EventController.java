@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.sys;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.sys.example.EventExample;
-import com.easytoolsoft.easyreport.data.sys.po.Event;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.domain.sys.example.EventExample;
+import com.easytoolsoft.easyreport.domain.sys.po.Event;
 import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;

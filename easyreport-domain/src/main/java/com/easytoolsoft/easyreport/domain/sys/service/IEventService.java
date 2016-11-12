@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.domain.sys.service;
 
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.sys.example.EventExample;
-import com.easytoolsoft.easyreport.data.sys.po.Event;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.domain.sys.example.EventExample;
+import com.easytoolsoft.easyreport.domain.sys.po.Event;
 
 /**
  * 系统事件或日志服务类

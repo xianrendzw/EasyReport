@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.membership.service;
 
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.membership.example.UserExample;
-import com.easytoolsoft.easyreport.data.membership.po.User;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.membership.example.UserExample;
+import com.easytoolsoft.easyreport.membership.po.User;
 
 /**
  * 系统用户服务类

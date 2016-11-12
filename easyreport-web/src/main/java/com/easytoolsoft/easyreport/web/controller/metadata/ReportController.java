@@ -2,11 +2,11 @@ package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.membership.po.User;
-import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;

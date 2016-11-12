@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.domain.metadata.example.DataSourceExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.domain.metadata.service.IDataSourceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;

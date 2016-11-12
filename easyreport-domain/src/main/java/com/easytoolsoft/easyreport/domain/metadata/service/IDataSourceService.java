@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.domain.metadata.service;
 
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.domain.metadata.example.DataSourceExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
 
 /**
  * 报表数据源服务类

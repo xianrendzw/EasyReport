@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.web.spring.aop;
 
-import com.easytoolsoft.easyreport.data.membership.po.User;
-import com.easytoolsoft.easyreport.data.sys.po.Event;
+import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.domain.sys.po.Event;
 import com.easytoolsoft.easyreport.domain.sys.service.IEventService;
 import com.easytoolsoft.easyreport.membership.common.Constants;
 import lombok.extern.slf4j.Slf4j;

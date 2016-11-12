@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
-import com.easytoolsoft.easyreport.data.membership.po.User;
+import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
 import com.easytoolsoft.easyreport.domain.sys.service.IEventService;

@@ -9,7 +9,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 
 import java.util.List;
 import java.util.Map;

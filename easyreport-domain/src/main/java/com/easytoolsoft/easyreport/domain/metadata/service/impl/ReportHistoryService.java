@@ -1,10 +1,10 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.IReportHistoryDao;
-import com.easytoolsoft.easyreport.data.metadata.example.ReportHistoryExample;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportHistory;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IReportHistoryDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.ReportHistoryExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

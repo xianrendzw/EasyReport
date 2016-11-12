@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.domain.metadata.service;
 
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Category;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.domain.metadata.example.CategoryExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.Category;
 
 import java.util.List;
 

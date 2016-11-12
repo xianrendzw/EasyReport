@@ -1,14 +1,13 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.IReportDao;
-import com.easytoolsoft.easyreport.data.metadata.example.ReportExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
-import com.easytoolsoft.easyreport.domain.metadata.service.ICategoryService;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IReportDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IDataSourceService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
@@ -19,14 +18,12 @@ import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.query.QueryerFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service("EzrptMetaReportService")
 public class ReportService

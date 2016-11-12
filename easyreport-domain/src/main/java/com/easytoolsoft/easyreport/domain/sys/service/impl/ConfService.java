@@ -1,10 +1,10 @@
 package com.easytoolsoft.easyreport.domain.sys.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.sys.dao.IConfDao;
-import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
-import com.easytoolsoft.easyreport.data.sys.po.Conf;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.sys.dao.IConfDao;
+import com.easytoolsoft.easyreport.domain.sys.example.ConfExample;
+import com.easytoolsoft.easyreport.domain.sys.po.Conf;
 import com.easytoolsoft.easyreport.domain.sys.service.IConfService;
 import org.springframework.stereotype.Service;
 

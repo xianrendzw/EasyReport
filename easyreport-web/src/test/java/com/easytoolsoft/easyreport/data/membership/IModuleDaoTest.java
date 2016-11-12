@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.data.membership;
 
 import com.easytoolsoft.easyreport.data.BaseDaoTest;
-import com.easytoolsoft.easyreport.data.membership.dao.IModuleDao;
-import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
-import com.easytoolsoft.easyreport.data.membership.po.Module;
+import com.easytoolsoft.easyreport.membership.dao.IModuleDao;
+import com.easytoolsoft.easyreport.membership.example.ModuleExample;
+import com.easytoolsoft.easyreport.membership.po.Module;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;

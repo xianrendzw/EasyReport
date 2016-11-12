@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.membership.example.ModuleExample;
-import com.easytoolsoft.easyreport.data.membership.po.Module;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.membership.example.ModuleExample;
+import com.easytoolsoft.easyreport.membership.po.Module;
 import com.easytoolsoft.easyreport.membership.service.IModuleService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
