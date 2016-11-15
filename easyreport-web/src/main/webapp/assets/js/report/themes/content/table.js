@@ -88,16 +88,16 @@ var TableReportMVC = {
             }
 
             var url = TableReportMVC.URLs.exportExcel.url;
-            var data = $('#table-report-form').serialize();
+            var data = $('#table-report-form').serializeObject();
             data["htmlText"] = htmlText;
 
-            $.messager.progress({
-                title: '请稍后...',
-                text: '报表正在生成中...',
-            });
+//            $.messager.progress({
+//                title: '请稍后...',
+//                text: '报表正在生成中...',
+//            });
             $.fileDownload(url, {
                 httpMethod: "POST",
-                data: data
+                data: dataz
             }).done(function () {
                 $.messager.progress("close");
             }).fail(function () {
