@@ -97,7 +97,7 @@ var TableReportMVC = {
 //            });
             $.fileDownload(url, {
                 httpMethod: "POST",
-                data: dataz
+                data: data
             }).done(function () {
                 $.messager.progress("close");
             }).fail(function () {

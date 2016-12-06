@@ -32,6 +32,8 @@ nb-configuration.xml
 /easyreport-queryer/target/
 /easyreport-queryer/.settings/
 /easyreport-queryer/.classpath
+/easyreport-web/src/main/filters
+/easyreport-scheduler/src/main/filters
 .project
 .classpath
 .settings
