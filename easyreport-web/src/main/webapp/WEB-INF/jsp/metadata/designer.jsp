@@ -306,6 +306,26 @@
         </tr>
     </table>
 </div>
+
+<div id="report-describe-dlg" title="说明">
+    <table class="designer-table detail">
+        <tr>
+            <td>名称:</td>
+            <td><label id="report-desc-detail-name"/></td>
+            <td>ID:</td>
+            <td><label id="report-desc-detail-id"/></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>说明:</td>
+            <td colspan="5">
+                <textarea id="report-desc-detail-description" rows="10" cols="100"></textarea>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <!-- 查看报表sql历史记录 -->
 <div id="report-history-sql-dlg" title="报表版本历史">
     <div style="height: 200px">
@@ -369,6 +389,7 @@
     <div class="menu-sep"></div>
     <div id="rp-history" data-options="name:'history',iconCls:'icon-history'">版本</div>
     <div id="rp-info" data-options="name:'info',iconCls:'icon-info'">详细</div>
+    <div id="rp-desc" data-options="name:'desc',iconCls:'icon-desc'">说明</div>
     <div id="rp-refresh" data-options="name:'refresh',iconCls:'icon-reload'">刷新</div>
 </div>
 </body>

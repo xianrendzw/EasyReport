@@ -70,6 +70,10 @@
     background: url('icons/info.png') no-repeat center center;
 }
 
+.icon-desc {
+    background: url('icons/desc.png') no-repeat center center;
+}
+
 .icon-comment {
     background: url('icons/comment.png') no-repeat center center;
 }
@@ -268,4 +272,8 @@
 
 .icon-chart4 {
     background: url('icons/chart4.png') no-repeat center center;
+}
+
+.icon-save {
+    background: url('icons/filesave.png') no-repeat center center;
 }

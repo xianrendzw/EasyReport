@@ -57,6 +57,10 @@ var DesignerMVC = {
             url: DesignerCommon.baseUrl + 'remove',
             method: 'POST'
         },
+        describe: {
+            url: DesignerCommon.baseUrl + 'describe',
+            method: 'POST'
+        },
         historyList: {
             url: DesignerCommon.baseHistoryUrl + 'list',
             method: 'GET'
@@ -193,6 +197,12 @@ var DesignerMVC = {
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: DesignerMVC.Controller.remove
+                }, '-',{
+                    text: '说明',
+                    iconCls: 'icon-desc',
+                    handler: function () {
+                        DesignerMVC.Controller.describe();
+                    }
                 }],
                 loadFilter: function (src) {
                     if (src.success) {
@@ -247,7 +257,7 @@ var DesignerMVC = {
                 }, {
                     field: 'options',
                     title: '操作',
-                    width: 100,
+                    width: 115,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "info",
@@ -267,6 +277,9 @@ var DesignerMVC = {
                         }, {
                             "name": "remove",
                             "title": "删除"
+                        },{
+                            "name": "desc",
+                            "title": "说明"
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -318,6 +331,9 @@ var DesignerMVC = {
                     }
                     if (item.name == "info") {
                         return DesignerMVC.Controller.showDetail();
+                    }
+                    if (item.name == "desc") {
+                        return DesignerMVC.Controller.describe();
                     }
                     if (item.name == "history") {
                         return DesignerMVC.Controller.showHistorySql();
@@ -661,10 +677,6 @@ var DesignerMVC = {
                     handler: function () {
                         $("#report-designer-dlg").dialog('close');
                     }
-                }, {
-                    text: '保存',
-                    iconCls: 'icon-save',
-                    handler: DesignerMVC.Controller.save
                 }],
                 onResize: function (width, height) {
                     DesignerMVC.Util.resizeDesignerDlgElments();
@@ -720,6 +732,46 @@ var DesignerMVC = {
                     handler: function () {
                         $("#report-detail-dlg").dialog('close');
                     }
+                }]
+            });
+            
+            $('#report-describe-dlg').dialog({
+                closed: true,
+                modal: true,
+                width: window.screen.width - 350,
+                height: window.screen.height - 350,
+                maximizable: true,
+                iconCls: 'icon-desc',
+                buttons: [{
+                    text: '上一条',
+                    iconCls: 'icon-prev',
+                    handler: function () {
+                        EasyUIUtils.cursor('#report-datagrid',
+                            '#current-row-index',
+                            'prev', function (row) {
+                                DesignerMVC.Controller.describe(row);
+                            });
+                    }
+                }, {
+                    text: '下一条',
+                    iconCls: 'icon-next',
+                    handler: function () {
+                        EasyUIUtils.cursor('#report-datagrid',
+                            '#current-row-index',
+                            'next', function (row) {
+                                DesignerMVC.Controller.describe(row);
+                            });
+                    }
+                }, {
+                    text: '关闭',
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        $("#report-describe-dlg").dialog('close');
+                    }
+                }, {
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: DesignerMVC.Controller.descsave
                 }]
             });
 
@@ -886,6 +938,9 @@ var DesignerMVC = {
             if (name == "info") {
                 return DesignerMVC.Controller.showDetail();
             }
+            if (name == "desc") {
+                return DesignerMVC.Controller.describe();
+            }
             if (name == "edit") {
                 return DesignerMVC.Controller.edit();
             }
@@ -964,6 +1019,24 @@ var DesignerMVC = {
                 EasyUIUtils.remove(options);
             });
         },
+        descsave: function(){
+            //TODO modify descsave
+            DesignerMVC.Util.isRowSelected(function (row) {
+                var desc = $('#report-desc-detail-description').val();
+                var data = {
+                        id: row.id,
+                        desc: desc
+                };
+                $.post(DesignerMVC.URLs.describe.url, data, function (result) {
+                    if (result.success) {
+                        $.messager.alert('操作提示', '操作成功', 'sucess');
+                    }else{
+                        $.messager.alert('操作提示', '操作失败:'+result.msg, 'error');
+                    }
+                    
+                }, 'json');
+            });
+        },
         preview: function () {
             DesignerMVC.Util.isRowSelected(function (row) {
                 var url = DesignerMVC.URLs.Report.url + row.uid;
@@ -984,6 +1057,12 @@ var DesignerMVC = {
                 DesignerMVC.Util.fillDetailLabels(row);
             });
         },
+        describe: function() {
+            DesignerMVC.Util.isRowSelected(function (row) {
+                $('#report-describe-dlg').dialog('open').dialog('center');
+                DesignerMVC.Util.fillDescDetailLabels(row);
+            });
+        },
         showHistorySql: function () {
             DesignerMVC.Util.isRowSelected(function (row) {
                 $('#report-history-sql-dlg').dialog('open').dialog('center');
@@ -1002,7 +1081,7 @@ var DesignerMVC = {
         },
         find: function () {
             var keyword = $("#report-search-keyword").val();
-            var url = DesignerMVC.URLs.find.url + '?fieldName=name&keyword=' + keyword;
+            var url = DesignerMVC.URLs.find.url + '?fieldName=name&fieldName1=comment&keyword=' + keyword;
             EasyUIUtils.loadToDatagrid('#report-datagrid', url)
         },
         executeSql: function () {
@@ -1261,6 +1340,17 @@ var DesignerMVC = {
             for (var name in options) {
                 var id = "#report-detail-" + name;
                 var value = DesignerMVC.Util.getPropertyValue(name, options);
+                $(id).text(value);
+            }
+        },
+        fillDescDetailLabels: function (data) {
+            $('#report-describe-dlg label').each(function (i) {
+                $(this).text("");
+            });
+
+            for (var name in data) {
+                var id = "#report-desc-detail-" + name;
+                var value = DesignerMVC.Util.getPropertyValue(name, data);
                 $(id).text(value);
             }
         },

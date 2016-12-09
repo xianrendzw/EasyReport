@@ -68,9 +68,9 @@ public class ReportController
     @GetMapping(value = "/find")
     @OpLog(name = "分页查询报表")
     @RequiresPermissions("report.designer:view")
-    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
+    public Map<String, Object> find(DataGridPager pager, String fieldName,String fieldName1, String keyword) {
         PageInfo pageInfo = this.getPageInfo(pager);
-        List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName, "%" + keyword + "%");
+        List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName+","+"t1." + fieldName1, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -107,6 +107,18 @@ public class ReportController
         return result;
     }
 
+    @PostMapping(value = "/describe")
+    @OpLog(name = "修改报表")
+    @RequiresPermissions("report.designer:edit")
+    public JsonResult describe(@CurrentUser User loginUser, Integer id, String desc) {
+        JsonResult<String> result = new JsonResult<>();
+        Report po = this.service.getById(id);
+        po.setComment(desc);
+        this.service.editById(po);
+        this.reportHistoryService.add(this.getReportHistory(loginUser, po));
+        return result;
+    }
+    
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
     @RequiresPermissions("report.designer:edit")

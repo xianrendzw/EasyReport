@@ -40,16 +40,24 @@ public class ReportService
     private ICategoryService categoryService;
 
     @Override
-    protected ReportExample getPageExample(String fieldName, String keyword) {
+    protected ReportExample getPageExample(String fieldNames, String keyword) {
         ReportExample example = new ReportExample();
-        example.createCriteria().andFieldLike(fieldName, keyword);
+        if(fieldNames.contains(",")){
+            for(String fieldName: fieldNames.split(",")){
+                example.or().andFieldLike(fieldName, keyword);
+            }
+        }else{
+            example.createCriteria().andFieldLike(fieldNames, keyword);
+        }
         return example;
     }
 
     @Override
     public List<Report> getByPage(PageInfo page, String fieldName, Integer categoryId) {
         ReportExample example = new ReportExample();
-        example.or().andOperand(fieldName, "=", categoryId);
+        if(categoryId!=-1){
+            example.or().andOperand(fieldName, "=", categoryId);
+        }
         return this.getByPage(page, example);
     }
 

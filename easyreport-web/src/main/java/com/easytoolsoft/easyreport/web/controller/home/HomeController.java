@@ -27,7 +27,11 @@ public class HomeController {
     public String index(@CurrentUser User loginUser, Model model) {
         model.addAttribute("roleNames", this.membershipFacade.getRoleNames(loginUser.getRoles()));
         model.addAttribute("user", loginUser);
-        return "home/index";
+        if(!this.membershipFacade.getPermissionSet(loginUser.getRoles()).contains("report.designer:update")){
+            return "home/index-ro";
+        }else{
+            return "home/index";
+        }
     }
 
     @ResponseBody
