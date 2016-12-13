@@ -13,6 +13,11 @@ public class Constants {
      * 系统统一版本名称境配置项
      */
     public final static String VERSION = "version";
+    
+    /**
+     * AES KEY for AESHelper
+     */
+    public final static String AESKEY = "aeskey";
 
     /**
      * 系统统一版本名称境配置项默认值

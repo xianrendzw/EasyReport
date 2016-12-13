@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.web.filter;
 
+import com.easytoolsoft.easyreport.common.util.AESHelper;
 import com.easytoolsoft.easyreport.web.common.Constants;
 
 import javax.servlet.Filter;
@@ -9,6 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 
 /**
@@ -22,13 +26,15 @@ public class ContextInitDataFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         this.version = filterConfig.getInitParameter(Constants.VERSION);
         this.env = filterConfig.getInitParameter(Constants.ENV);
+        if(!StringUtils.isBlank(filterConfig.getInitParameter(Constants.AESKEY))){
+            AESHelper.setKey(filterConfig.getInitParameter(Constants.AESKEY));
+        }
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-
         if (request.getAttribute(Constants.CONTEXT_PATH) == null) {
             request.setAttribute(Constants.CONTEXT_PATH, req.getContextPath());
         }

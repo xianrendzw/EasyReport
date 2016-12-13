@@ -11,7 +11,11 @@
     <packaging>jar</packaging>
     <name>easyreport-engine</name>
     <description>Reporting generate engine module,it's core module</description>
-    <dependencies>
+        <dependencies>
+            <dependency>
+            <groupId>com.easytoolsoft</groupId>
+            <artifactId>easyreport-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

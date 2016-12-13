@@ -3,6 +3,8 @@ package com.easytoolsoft.easyreport.engine.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.easytoolsoft.easyreport.common.util.AESHelper;
+
 /**
  * 报表数据源类
  */
@@ -59,7 +61,7 @@ public class ReportDataSource {
      * @return 数据源连接字符串(JDBC)
      */
     public String getJdbcUrl() {
-        return this.jdbcUrl;
+        return (AESHelper.decrypt(this.jdbcUrl));
     }
 
     /**
@@ -68,7 +70,7 @@ public class ReportDataSource {
      * @return 数据源登录用户名
      */
     public String getUser() {
-        return this.user;
+        return (AESHelper.decrypt(this.user));
     }
 
     /**
@@ -77,7 +79,7 @@ public class ReportDataSource {
      * @return 数据源登录密码
      */
     public String getPassword() {
-        return this.password;
+        return (AESHelper.decrypt(this.password));
     }
 
     /**

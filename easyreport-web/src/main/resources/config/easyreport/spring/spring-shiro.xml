@@ -50,7 +50,7 @@
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="rememberMe"/>
         <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="2592000"/>
+        <property name="maxAge" value="-1"/>
     </bean>
 
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
@@ -69,7 +69,7 @@
     </bean>
 
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="globalSessionTimeout" value="-1"/>
         <property name="deleteInvalidSessions" value="true"/>
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
