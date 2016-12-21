@@ -11,6 +11,7 @@
     <modules>
         <module>easyreport-common</module>
         <module>easyreport-data</module>
+        <module>easyreport-database</module>
         <module>easyreport-domain</module>
         <module>easyreport-engine</module>
         <module>easyreport-queryer</module>
