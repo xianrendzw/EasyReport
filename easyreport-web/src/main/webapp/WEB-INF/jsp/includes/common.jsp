@@ -7,4 +7,7 @@
 <script src="${ctxPath}/assets/vendor/juicer/juicer-min.js?v=${version}"></script>
 <script src="${ctxPath}/assets/vendor/moment.min.js?v=${version}"></script>
 <script src="${ctxPath}/dynamic/js/init.js?v=${version}"></script>
+<script src="${ctxPath}/assets/vendor/angular-1.0.1.min.js?v=${version}"></script>  
+<script src="${ctxPath}/assets/vendor/jquery.i18n.properties.min.js?v=${version}"></script> 
+<script src="${ctxPath}/assets/js/locale/i18n.js?v=${version}"></script>
 

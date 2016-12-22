@@ -242,7 +242,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.10.M0</version>
+				<version>9.4.0.v20161208</version>
 				<configuration>
 					<war>${basedir}/target/mycustom.war</war>
 					<webAppConfig>
