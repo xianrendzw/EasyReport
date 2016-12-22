@@ -38,12 +38,12 @@ public class DataBase {
 
             db.start();
 
-            String dbName = "easyreport2"; // or just "test"
-            if (!dbName.equals("test")) {
-                // mysqld out-of-the-box already has a DB named "test"
-                // in case we need another DB, here's how to create it first
-                db.createDB(dbName);
-            }
+//            String dbName = "easyreport2"; // or just "test"
+//            if (!dbName.equals("test")) {
+//                // mysqld out-of-the-box already has a DB named "test"
+//                // in case we need another DB, here's how to create it first
+//                db.createDB(dbName);
+//            }
              
             System.out.println(System.getProperty("user.dir") );
             
