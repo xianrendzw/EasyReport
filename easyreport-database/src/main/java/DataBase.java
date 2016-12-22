@@ -66,6 +66,7 @@ public class DataBase {
             System.out.println(System.getProperty("user.dir") );
             
             if(init){
+            	db.run("insert into mysql.user (host,user,password) values ('%','data',password('data123'));flush privileges;",null,null,"mysql");
             	System.out.println("start import data, that will cost a lot time, please wait...");
             	System.out.println("table easyResport2 start");
             	db.run("source "+System.getProperty("user.dir").replaceAll("\\\\","/")+"/src/main/resources/db/easyreport2.sql;");
@@ -73,7 +74,9 @@ public class DataBase {
             	System.out.println("table china_weather_air_mysql start");
             	db.run("source "+System.getProperty("user.dir").replaceAll("\\\\","/")+"/src/main/resources/db/china_weather_air_mysql.sql;");
             	System.out.println("table china_weather_air_mysql end");
-            	db.run("create user data identified by 'data123';");
+//            	db.run("grant all privileges on *.* to data@localhost identified by 'data123';",null,null,null);
+//            	db.run("CREATE USER 'data' IDENTIFIED BY 'data123';",null,null,null);
+            	
             }
             System.out.println("end init");
 
