@@ -1,4 +1,4 @@
-package com.easytoolsoft.easyreport.common.util;
+package com.easytoolsoft.easyreport.data.common.helper;
 
 //import java.io.InputStream;
 //import java.io.OutputStream;
@@ -99,6 +99,7 @@ public class AESHelper {
      * @return a Hex string of the byte array
      */
     public static String encrypt(String plaintext) {
+    	setKey("kfsjdfoas");
         if(ecipher==null){
             return plaintext;
         }
@@ -137,6 +138,7 @@ public class AESHelper {
      * @return a string decrypted in plain text
      */
     public static String decrypt(String hexCipherText) {
+    	setKey("kfsjdfoas");
         if(dcipher==null){
             return hexCipherText;
         }

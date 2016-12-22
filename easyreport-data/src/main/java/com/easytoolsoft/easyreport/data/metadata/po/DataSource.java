@@ -1,13 +1,9 @@
 package com.easytoolsoft.easyreport.data.metadata.po;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import com.easytoolsoft.easyreport.data.common.helper.AESHelper;
 
 /**
  * 报表数据源(ezrpt_meta_datasource表)持久化类
@@ -15,10 +11,6 @@ import java.util.Date;
  * @author Tom Deng
  */
 @SuppressWarnings("serial")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DataSource implements Serializable {
     /**
      * 数据源ID
@@ -78,4 +70,109 @@ public class DataSource implements Serializable {
      * 记录修改时间
      */
     private Date gmtModified;
+    
+    
+    public String getJdbcUrl(){
+    	return AESHelper.decrypt(jdbcUrl);
+    }
+    
+    public void setJdbcUrl(String jdbcUrl){
+    	this.jdbcUrl=AESHelper.encrypt(jdbcUrl);
+    }
+    
+    public String getUser(){
+    	return AESHelper.decrypt(user);
+    }
+    
+    public void setUser(String user){
+    	this.user=AESHelper.encrypt(user);
+    }
+    
+    public String getPassword(){
+    	return AESHelper.decrypt(password);
+    }
+    
+    public void setPassword(String password){
+    	this.password=AESHelper.encrypt(password);
+    }
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDriverClass() {
+		return driverClass;
+	}
+
+	public void setDriverClass(String driverClass) {
+		this.driverClass = driverClass;
+	}
+
+	public String getQueryerClass() {
+		return queryerClass;
+	}
+
+	public void setQueryerClass(String queryerClass) {
+		this.queryerClass = queryerClass;
+	}
+
+	public String getPoolClass() {
+		return poolClass;
+	}
+
+	public void setPoolClass(String poolClass) {
+		this.poolClass = poolClass;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Date getGmtCreated() {
+		return gmtCreated;
+	}
+
+	public void setGmtCreated(Date gmtCreated) {
+		this.gmtCreated = gmtCreated;
+	}
+
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
+	}
 }

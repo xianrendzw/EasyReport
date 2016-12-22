@@ -1,6 +1,5 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
-import com.easytoolsoft.easyreport.common.util.AESHelper;
 import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
 import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
 import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
@@ -22,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * 报表数据源控制器
@@ -36,21 +34,8 @@ public class DataSourceController
     @OpLog(name = "获取所有数据源")
     @RequiresPermissions("report.ds:view")
     public List<DataSource> listAll() {
-        List<DataSource> list = this.service.getAll().stream()
-                .map(x -> DataSource.builder()
-                        .id(x.getId())
-                        .uid(x.getUid())
-                        .name(x.getName())
-                        .build())
-                .collect(Collectors.toList());
-        List<DataSource> newlist = new ArrayList<DataSource>();
-        for(DataSource ds : list){
-            ds.setJdbcUrl(ds.getJdbcUrl()==null?null:AESHelper.decrypt(ds.getJdbcUrl()));
-            ds.setUser(ds.getUser()==null?null:AESHelper.decrypt(ds.getUser()));
-            ds.setPassword(ds.getPassword()==null?null:"");
-            newlist.add(ds);
-        }
-        return newlist;
+        List<DataSource> list = this.service.getAll();
+        return list;
     }
 
     @GetMapping(value = "/list")
@@ -59,16 +44,9 @@ public class DataSourceController
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
-        List<DataSource> newlist = new ArrayList<DataSource>();
-        for(DataSource ds : list){
-            ds.setJdbcUrl(ds.getJdbcUrl()==null?null:AESHelper.decrypt(ds.getJdbcUrl()));
-            ds.setUser(ds.getUser()==null?null:AESHelper.decrypt(ds.getUser()));
-            ds.setPassword(ds.getPassword()==null?null:"");
-            newlist.add(ds);
-        }
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
-        modelMap.put("rows", newlist);
+        modelMap.put("rows", list);
         return modelMap;
     }
 
@@ -79,9 +57,9 @@ public class DataSourceController
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
         po.setUid(UUID.randomUUID().toString());
-        po.setJdbcUrl(AESHelper.encrypt(po.getJdbcUrl()));
-        po.setUser(AESHelper.encrypt(po.getUser()));
-        po.setPassword(AESHelper.encrypt(po.getPassword()));
+        po.setJdbcUrl(po.getJdbcUrl());
+        po.setUser(po.getUser());
+        po.setPassword(po.getPassword());
         this.service.add(po);
         return result;
     }
@@ -91,9 +69,6 @@ public class DataSourceController
     @RequiresPermissions("report.ds:edit")
     public JsonResult edit(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
-        po.setJdbcUrl(AESHelper.encrypt(po.getJdbcUrl()));
-        po.setUser(AESHelper.encrypt(po.getUser()));
-        po.setPassword(AESHelper.encrypt(po.getPassword()));
         this.service.editById(po);
         return result;
     }
@@ -122,9 +97,6 @@ public class DataSourceController
     public JsonResult testConnection(Integer id) {
         JsonResult<String> result = new JsonResult<>();
         DataSource dsPo = this.service.getById(id);
-        dsPo.setJdbcUrl(AESHelper.decrypt(dsPo.getJdbcUrl()));
-        dsPo.setUser(AESHelper.decrypt(dsPo.getUser()));
-        dsPo.setPassword(AESHelper.decrypt(dsPo.getPassword()));
         result.setSuccess(this.service.testConnection(
                 dsPo.getJdbcUrl(),
                 dsPo.getUser(), dsPo.getPassword()));

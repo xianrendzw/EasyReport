@@ -135,7 +135,6 @@ public class PreviewController {
     public void exportToExcel(String uid, String name, String htmlText,
                               HttpServletRequest request, HttpServletResponse response) {
         try {
-            System.out.println(uid+"_"+name+"_"+htmlText+"_"+request.toString());
             ReportHelper.exportToExcel(uid, name, htmlText, request, response);
         } catch (Exception ex) {
             log.error("导出Excel失败", ex);

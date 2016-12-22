@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.filter;
 
-import com.easytoolsoft.easyreport.common.util.AESHelper;
+import com.easytoolsoft.easyreport.data.common.helper.AESHelper;
 import com.easytoolsoft.easyreport.web.common.Constants;
 
 import javax.servlet.Filter;
@@ -26,9 +26,6 @@ public class ContextInitDataFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         this.version = filterConfig.getInitParameter(Constants.VERSION);
         this.env = filterConfig.getInitParameter(Constants.ENV);
-        if(!StringUtils.isBlank(filterConfig.getInitParameter(Constants.AESKEY))){
-            AESHelper.setKey(filterConfig.getInitParameter(Constants.AESKEY));
-        }
     }
 
     @Override
