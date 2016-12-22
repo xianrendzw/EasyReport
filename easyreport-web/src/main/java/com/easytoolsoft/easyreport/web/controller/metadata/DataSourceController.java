@@ -45,9 +45,9 @@ public class DataSourceController
                 .collect(Collectors.toList());
         List<DataSource> newlist = new ArrayList<DataSource>();
         for(DataSource ds : list){
-            ds.setJdbcUrl(AESHelper.decrypt(ds.getJdbcUrl()));
-            ds.setUser(AESHelper.decrypt(ds.getUser()));
-            ds.setPassword("");
+            ds.setJdbcUrl(ds.getJdbcUrl()==null?null:AESHelper.decrypt(ds.getJdbcUrl()));
+            ds.setUser(ds.getUser()==null?null:AESHelper.decrypt(ds.getUser()));
+            ds.setPassword(ds.getPassword()==null?null:"");
             newlist.add(ds);
         }
         return newlist;
@@ -61,9 +61,9 @@ public class DataSourceController
         List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
         List<DataSource> newlist = new ArrayList<DataSource>();
         for(DataSource ds : list){
-            ds.setJdbcUrl(AESHelper.decrypt(ds.getJdbcUrl()));
-            ds.setUser(AESHelper.decrypt(ds.getUser()));
-            ds.setPassword("");
+            ds.setJdbcUrl(ds.getJdbcUrl()==null?null:AESHelper.decrypt(ds.getJdbcUrl()));
+            ds.setUser(ds.getUser()==null?null:AESHelper.decrypt(ds.getUser()));
+            ds.setPassword(ds.getPassword()==null?null:"");
             newlist.add(ds);
         }
         Map<String, Object> modelMap = new HashMap<>(2);
