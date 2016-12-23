@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractReportBuilder {
+public abstract class AbstractReportBuilder implements ReportBuilder {
     protected final AbstractReportDataSet reportDataSet;
     protected final ReportParameter reportParameter;
     protected final StringBuilder tableRows = new StringBuilder();
