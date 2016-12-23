@@ -244,7 +244,6 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.4.0.v20161208</version>
 				<configuration>
-					<war>${basedir}/target/mycustom.war</war>
 					<webAppConfig>
 					<contextPath>/</contextPath>						
 						<descriptor>${basedir}/src/webapp/WEB-INF/web.xml</descriptor>
