@@ -8,7 +8,7 @@
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
     <script src="${ctxPath}/assets/js/home/index.js?v=${version}"></script>
 </head>
-<body>
+<body ng-app="i18n" ng-controller="translate">
 <div class="easyui-layout" fit="true">
     <div region="north" class="bg-header">
         <div class=""></div>
@@ -16,9 +16,9 @@
     </div>
     <div region="center">
         <div id="main-tabs" border="false" fit="true">
-            <div title="首页" data-options="iconCls:'icon-home'">
+            <div title="{{info.index_page}}" data-options="iconCls:'icon-home'">
                 <p style="font-size: 20px; padding: 20px">
-                    你好,<font color="red">${user.name}</font>
+                    {{info.index_hello}}<font color="red">${user.name}</font>
                     <input id="login-user-name" type="hidden" value="${user.name}"/>
                 </p>
             </div>
@@ -31,61 +31,61 @@
         <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com inc.</div>
     </div>
 </div>
-<!-- tabs右键菜单  -->
+<!-- tabs right click menu  -->
 <div id="main-tab-ctx-menu" class="easyui-menu" style="width: 120px;">
-    <div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">关闭当前页</div>
-    <div id="m-others" data-options="name:'others',iconCls:''">关闭其他页</div>
-    <div id="m-all" data-options="name:'all',iconCls:''">关闭所有页</div>
+    <div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">{{info.index_rkey_shutdown_curPage}}</div>
+    <div id="m-others" data-options="name:'others',iconCls:''">{{info.index_rkey_shutdown_otherPage}}</div>
+    <div id="m-all" data-options="name:'all',iconCls:''">{{info.index_rkey_shutdown_allPage}}</div>
 </div>
-<div id="my-profile-dlg" class="easyui-dialog" title="个人信息修改">
+<div id="my-profile-dlg" class="easyui-dialog" title="{{info.index_change_personalInfo}}">
     <table cellpadding="5" style="margin: 30px auto" class="form-table">
         <tr>
-            <td>用户信息:</td>
+            <td>{{info.index_userInfo}}</td>
             <td colspan="3"><span class="name">${user.account}(${user.name})</span></td>
         </tr>
         <tr>
-            <td>角色:</td>
+            <td>{{info.index_role}}</td>
             <td colspan="3"><span class="name">${roleNames}</span></td>
         </tr>
         <tr>
-            <td>电子邮箱:</td>
+            <td>{{info.index_email}}</td>
             <td colspan="3"><span class="name">${user.email}</span></td>
         </tr>
         <tr>
-            <td>联系电话:</td>
+            <td>{{info.index_phoneNum}}</td>
             <td colspan="3"><span class="name">${user.telephone}</span></td>
         </tr>
         <tr>
-            <td>说明:</td>
+            <td>{{info.index_description}}</td>
             <td colspan="3"><span class="name">${user.comment}</span></td>
         </tr>
     </table>
 </div>
-<div id="change-my-pwd-dlg" class="easyui-dialog" title="修改密码">
+<div id="change-my-pwd-dlg" class="easyui-dialog" title="{{info.index_change_password}}">
     <form id="change-my-pwd-form" name="my-profile-form" method="post">
         <table cellpadding="5" style="margin: 30px auto" class="form-table">
             <tr>
-                <td>用户信息:<input id="user-id" type="hidden" name="user-id" value="${user.id}"/></td>
+                <td>{{info.index_userInfo}}<input id="user-id" type="hidden" name="user-id" value="${user.id}"/></td>
                 <td colspan="3"><span class="name">${user.account}(${user.name})</span></td>
             </tr>
             <tr>
-                <td>角色:</td>
+                <td>{{info.index_role}}</td>
                 <td colspan="3"><span class="name">${roleNames}</span></td>
             </tr>
             <tr>
-                <td>原密码:</td>
+                <td>{{info.index_originPass}}</td>
                 <td colspan="3"><input class="easyui-textbox" type="password" name="oldPassword" id="oldPassword"
                                        data-options="required:true"
                                        style="width: 280px"/></td>
             </tr>
             <tr>
-                <td>新密码:</td>
+                <td>{{info.index_newPass}}</td>
                 <td colspan="3"><input class="easyui-textbox" type="password" name="password" id="password"
                                        data-options="required:true,validType:{length:[6,20]}"
                                        style="width: 280px"/></td>
             </tr>
             <tr>
-                <td>新密码确认:</td>
+                <td>{{info.index_newPassConfirm}}</td>
                 <td colspan="3"><input class="easyui-textbox" type="password" name="passwordRepeat"
                                        id="passwordRepeat"
                                        data-options="required:true,validType:{

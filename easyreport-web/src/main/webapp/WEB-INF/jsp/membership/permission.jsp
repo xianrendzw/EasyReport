@@ -3,19 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>权限管理</title>
+    <title>Permission</title>
     <%@ include file="/WEB-INF/jsp/includes/common.jsp" %>
     <%@ include file="/WEB-INF/jsp/includes/header.jsp" %>
     <script src="${ctxPath}/assets/js/membership/permission.js?v=${version}"></script>
 </head>
-<body class="easyui-layout" id="body-layout">
-<!-- 左边tree -->
-<div id="west" data-options="region:'west',split:true" title="系统模块" style="width: 220px;">
+<body class="easyui-layout" id="body-layout" ng-app="i18n" ng-controller="translate">
+<!-- left tree -->
+<div id="west" data-options="region:'west',split:true" title="{{info.permission_system}}" style="width: 220px;">
     <div class="easyui-panel" style="padding: 5px; border: none">
         <ul id="module-tree"></ul>
     </div>
 </div>
-<!-- 右边 -->
+<!-- right -->
 <div region="center" data-options="region:'center'">
     <div style="width: 100%; height: 99%">
         <div id="perm-datagrid"></div>
@@ -28,25 +28,25 @@
         <center>
             <table cellpadding="5" style="margin: 30px auto" class="form-table">
                 <tr>
-                    <td>名称:</td>
+                    <td>{{info.permission_name}}</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="name" id="name"
                                            data-options="required:true"
                                            style="width: 280px"/></td>
                 </tr>
                 <tr>
-                    <td>编号:</td>
+                    <td>{{info.permission_code}}</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="code" id="code"
                                            data-options="required:true"
                                            style="width: 280px"/></td>
                 </tr>
                 <tr>
-                    <td>顺序:</td>
+                    <td>{{info.permission_sequence}}</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="sequence" id="sequence" value="10"
                                            data-options="required:true,validType:'digit'"
                                            style="width: 280px"/></td>
                 </tr>
                 <tr>
-                    <td>说明:</td>
+                    <td>{{info.permission_description}}</td>
                     <td colspan="3"><input class="easyui-textbox" type="text" name="comment" id="comment"
                                            style="width: 280px"/>
                         <input id="moduleId" type="hidden" name="moduleId"/>
@@ -57,9 +57,9 @@
         </center>
     </form>
 </div>
-<!-- tree右键菜单  -->
+<!-- tree rkey menu  -->
 <div id="tree_ctx_menu" class="easyui-menu" style="width: 120px;">
-    <div id="m-add" data-options="name:'add',iconCls:'icon-add'">增加</div>
+    <div id="m-add" data-options="name:'add',iconCls:'icon-add'">{{info.permission_rkey_add}}</div>
 </div>
 </body>
 </html>

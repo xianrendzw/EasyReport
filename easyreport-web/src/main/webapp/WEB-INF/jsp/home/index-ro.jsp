@@ -18,7 +18,7 @@
         <div id="main-tabs" border="false" fit="true">
             <div title="{{info.index_page}}" data-options="iconCls:'icon-home'">
                 <p style="font-size: 20px; padding: 20px">
-                    你好,<font color="red">${user.name}</font>
+                    {{info.index_hello}}<font color="red">${user.name}</font>
                     <input id="login-user-name" type="hidden" value="${user.name}"/>
                 </p>
             </div>
@@ -31,11 +31,11 @@
         <div id="footer-right">Copyright © 2014-2016 easytoolsoft.com inc.</div>
     </div>
 </div>
-<!-- tabs右键菜单  -->
+<!-- tabs right click menu  -->
 <div id="main-tab-ctx-menu" class="easyui-menu" style="width: 120px;">
-    <div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">{{info.index_shutdown_curPage}}</div>
-    <div id="m-others" data-options="name:'others',iconCls:''">{{info.index_shutdown_otherPage}}</div>
-    <div id="m-all" data-options="name:'all',iconCls:''">{{info.index_shutdown_allPage}}</div>
+    <div id="m-current" data-options="name:'current',iconCls:'icon-cancel'">{{info.index_rkey_shutdown_curPage}}</div>
+    <div id="m-others" data-options="name:'others',iconCls:''">{{info.index_rkey_shutdown_otherPage}}</div>
+    <div id="m-all" data-options="name:'all',iconCls:''">{{info.index_rkey_shutdown_allPage}}</div>
 </div>
 <div id="my-profile-dlg" class="easyui-dialog" title="{{info.index_change_personalInfo}}">
     <table cellpadding="5" style="margin: 30px auto" class="form-table">
@@ -61,7 +61,7 @@
         </tr>
     </table>
 </div>
-<div id="change-my-pwd-dlg" class="easyui-dialog" title="{{info.index_page}}修改密码">
+<div id="change-my-pwd-dlg" class="easyui-dialog" title="{{info.index_change_password}}">
     <form id="change-my-pwd-form" name="my-profile-form" method="post">
         <table cellpadding="5" style="margin: 30px auto" class="form-table">
             <tr>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<div id="table-report-div" style="margin: 5px;">
+<div  ng-app="i18n" ng-controller="translate" id="table-report-div" style="margin: 5px;">
     <form id="table-report-form">
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>
@@ -8,11 +8,11 @@
             </tr>
             <tr>
                 <td style="text-align: left;">${formHtmlText}
-                    <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" checked="checked"/>合并左边相同维度行
-                    <a id="btn-generate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">生成</a>
+                    <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" checked="checked"/>{{info.table_mergerow}}
+                    <a id="btn-generate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">{{info.table_generate}}</a>
                 </td>
                 <td style="text-align: right;">
-                    <img id="btn-export-excel" title="导出到Excel" style="cursor: pointer;padding-right: 5px;"
+                    <img id="btn-export-excel" title="{{info.table_export_excel}}" style="cursor: pointer;padding-right: 5px;"
                          src="${ctxPath}/assets/custom/easyui/themes/icons/excel_24.png"/>
                     <input id="table-report-id" type="hidden" name="id" value="${id}"/>
                     <input id="table-report-name" type="hidden" name="name" value="${name}"/>
