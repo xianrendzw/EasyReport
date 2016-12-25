@@ -158,7 +158,7 @@ public class RoleController
                 .map(module -> new EasyUITreeNode<>(
                         String.valueOf(-module.getId()),
                         String.valueOf(-module.getParentId()),
-                        module.getName(), "open", "", false,
+                        module.getCode(), "open", "", false,
                         String.valueOf(module.getId())
                 )).collect(Collectors.toList()));
 

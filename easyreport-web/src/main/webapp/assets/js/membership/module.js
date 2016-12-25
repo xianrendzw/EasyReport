@@ -90,7 +90,10 @@ var ModuleMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
-                }
+                },
+                formatter:function(node){
+            		return jQuery.i18n.prop(node.text);
+            	}
             });
 
             $('#tree_ctx_menu').menu({
@@ -161,6 +164,9 @@ var ModuleMVC = {
                     title: jQuery.i18n.prop('module.name'),
                     width: 50,
                     sortable: true,
+                    formatter: function (value, row, index) {
+                        return jQuery.i18n.prop(row.code);
+                    }
                 }, {
                     field: 'code',
                     title: jQuery.i18n.prop('module.code'),

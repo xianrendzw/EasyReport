@@ -91,15 +91,15 @@ var DesignerMVC = {
     Model: {
         MetaColumnOptions: [{
             name: "optional",
-            text: jQuery.i18n.prop('design.optional'),
+            text: 'design.optional',
             type: 1
         }, {
             name: "percent",
-            text: jQuery.i18n.prop('design.percent'),
+            text: 'design.percent',
             type: 1
         }, {
             name: "displayInMail",
-            text: jQuery.i18n.prop('design.displayinmail'),
+            text: 'design.displayinmail',
             type: 1
         }, /*{
          name : "footings",
@@ -111,11 +111,11 @@ var DesignerMVC = {
          type : 3
          },*/ {
             name: "expression",
-            text: jQuery.i18n.prop('design.expression'),
+            text: 'design.expression',
             type: 4
         }, {
             name: "comment",
-            text: jQuery.i18n.prop('design.comment'),
+            text: 'design.comment',
             type: 2
         }
             /*, {
@@ -124,32 +124,32 @@ var DesignerMVC = {
              type: 2
              }*/],
         MetaColumnTypes: [{
-            text: jQuery.i18n.prop('design.col.layout'),
+            text: 'design.col.layout',
             value: 1
         }, {
-            text: jQuery.i18n.prop('design.col.dimenssion'),
+            text: 'design.col.dimenssion',
             value: 2
         }, {
-            text: jQuery.i18n.prop('design.col.statistic'),
+            text: 'design.col.statistic',
             value: 3
         }, {
-            text: jQuery.i18n.prop('design.col.caculate'),
+            text: 'design.col.caculate',
             value: 4
         }],
         MetaColumnSortTypes: [{
-            text: jQuery.i18n.prop('design.default'),
+            text: 'design.default',
             value: 0
         }, {
-            text: jQuery.i18n.prop('design.num.asc'),
+            text: 'design.num.asc',
             value: 1
         }, {
-            text: jQuery.i18n.prop('design.num.desc'),
+            text: 'design.num.desc',
             value: 2
         }, {
-            text: jQuery.i18n.prop('design.char.asc'),
+            text: 'design.char.asc',
             value: 3
         }, {
-            text: jQuery.i18n.prop('design.char.desc'),
+            text: 'design.char.desc',
             value: 4
         }],
         DataSourceList: []
@@ -423,6 +423,12 @@ var DesignerMVC = {
                     title: jQuery.i18n.prop('design.col.type'),
                     width: 75,
                     formatter: function (value, row, index) {
+                    	var list=new Array();;
+                    	for(i=0; i<DesignerMVC.Model.MetaColumnTypes.length; i++){
+                    		var item=jQuery.extend(true, {}, DesignerMVC.Model.MetaColumnTypes[i]);
+                    		item.text=jQuery.i18n.prop(item.text);
+                    		list.push(item);
+                    	}
                         var id = "type" + index;
                         var tmpl =
                             '<select id="${id}" name=\"type\">' +
@@ -433,7 +439,7 @@ var DesignerMVC = {
                         return juicer(tmpl, {
                             id: id,
                             currValue: value,
-                            list: DesignerMVC.Model.MetaColumnTypes
+                            list: list
                         });
                     }
                 }, {
@@ -464,6 +470,12 @@ var DesignerMVC = {
                     title: jQuery.i18n.prop('design.col.sorttype'),
                     width: 100,
                     formatter: function (value, row, index) {
+                    	var list=new Array();;
+                    	for(i=0; i<DesignerMVC.Model.MetaColumnSortTypes.length; i++){
+                    		var item=jQuery.extend(true, {}, DesignerMVC.Model.MetaColumnSortTypes[i]);
+                    		item.text=jQuery.i18n.prop(item.text);
+                    		list.push(item);
+                    	}
                         var id = "sortType" + index;
                         var tmpl =
                             '<select id="${id}" name=\"sortType\">' +
@@ -474,7 +486,7 @@ var DesignerMVC = {
                         return juicer(tmpl, {
                             id: id,
                             currValue: value,
-                            list: DesignerMVC.Model.MetaColumnSortTypes
+                            list: list
                         });
                     }
                 }, {
@@ -504,7 +516,7 @@ var DesignerMVC = {
                             var data = {
                                 id: name + index,
                                 name: name,
-                                text: subOptions[i].text,
+                                text: jQuery.i18n.prop(subOptions[i].text),
                                 checked: row[name] ? " checked=\"checked\"" : "",
                                 imgSrc: "",
                                 onClick: ""

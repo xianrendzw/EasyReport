@@ -77,7 +77,7 @@ var LoginMVC = {
                 };
                 $.post(LoginMVC.URLs.login.url, data, function (result) {
                     if (!result.success) {
-                        LoginMVC.Controller.showTips('error', result.msg);
+                        LoginMVC.Controller.showTips('error', jQuery.i18n.prop(result.msg));
                     } else {
                         LoginMVC.Controller.showTips('success', jQuery.i18n.prop('login.redirect'));
                         window.location = LoginMVC.URLs.success.url;

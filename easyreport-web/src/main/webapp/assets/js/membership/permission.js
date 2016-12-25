@@ -77,7 +77,10 @@ var PermMVC = {
                         return src.data;
                     }
                     return $.messager.alert(jQuery.i18n.prop('permission.failed'), src.msg, 'error');
-                }
+                },
+                formatter:function(node){
+            		return jQuery.i18n.prop(node.text);
+            	}
             });
 
             $('#tree_ctx_menu').menu({
@@ -126,7 +129,10 @@ var PermMVC = {
                     field: 'name',
                     title: jQuery.i18n.prop('permission.name'),
                     width: 80,
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return jQuery.i18n.prop(row.code);
+                    }
                 }, {
                     field: 'code',
                     title: jQuery.i18n.prop('permission.code'),

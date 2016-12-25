@@ -113,7 +113,7 @@ public class ModuleService
         Module module = this.dao.selectById(sourceId);
         int count = this.count(targetId, module.getName());
         if (count > 0) {
-            module.setName(String.format("%s_复件%s", module.getName(), count));
+            module.setName(String.format("%s_copy%s", module.getName(), count));
         }
         module.setParentId(targetId);
         this.dao.insert(module);
@@ -184,7 +184,7 @@ public class ModuleService
                                    Predicate<Module> predicate) {
         String cateId = Integer.toString(module.getId());
         String pid = Integer.toString(module.getParentId());
-        String text = module.getName();
+        String text = module.getCode();
         String state = module.getHasChild() > 0 ? "closed" : "open";
         EasyUITreeNode<Module> parentNode = new EasyUITreeNode<>(cateId, pid, text, state, module.getIcon(), false, module);
         this.addChildModuleTreeNodes(modules, parentNode, predicate);
