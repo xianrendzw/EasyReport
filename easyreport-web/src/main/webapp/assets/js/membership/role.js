@@ -87,73 +87,73 @@ var RoleMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('role.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '角色ID',
+                    title: jQuery.i18n.prop('role.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('role.name'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'code',
-                    title: '代号',
+                    title: jQuery.i18n.prop('role.code'),
                     width: 80,
                     sortable: true,
                 }, {
                     field: 'isSystem',
-                    title: '系统角色',
+                    title: jQuery.i18n.prop('role.issystem'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "是" : "否";
+                        return value == 1 ? jQuery.i18n.prop('role.issystem.yes') : jQuery.i18n.prop('role.issystem.no');
                     }
                 }, {
                     field: 'status',
-                    title: '状态',
+                    title: jQuery.i18n.prop('role.status'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        return value == 1 ? jQuery.i18n.prop('role.status.enable') : jQuery.i18n.prop('role.status.disable');
                     }
                 }, {
                     field: 'comment',
-                    title: '说明',
+                    title: jQuery.i18n.prop('role.comment'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'createUser',
-                    title: '创建者',
+                    title: jQuery.i18n.prop('role.createuser'),
                     width: 80,
                     sortable: true
                 }, {
                     field: 'sequence',
-                    title: '顺序',
+                    title: jQuery.i18n.prop('role.sequence'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('role.gmtcreate'),
                     width: 60,
                     sortable: true
                 }, {
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('role.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": "编辑"
+                            "title": jQuery.i18n.prop('role.edit')
                         }, {
                             "name": "perm",
-                            "title": "授权"
+                            "title": jQuery.i18n.prop('role.grant')
                         }, {
                             "name": "remove",
-                            "title": "删除"
+                            "title": jQuery.i18n.prop('role.remove')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -184,13 +184,13 @@ var RoleMVC = {
                 height: 300,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('role.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#role-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('role.save'),
                     iconCls: 'icon-save',
                     handler: RoleMVC.Controller.save
                 }]
@@ -203,13 +203,13 @@ var RoleMVC = {
                 height: 460,
                 iconCls: 'icon-perm',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('role.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#perm-tree-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('role.save'),
                     iconCls: 'icon-save',
                     handler: RoleMVC.Controller.save
                 }]
@@ -226,8 +226,11 @@ var RoleMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
-                }
+                    return $.messager.alert(jQuery.i18n.prop('role.failed'), src.msg, 'error');
+                },
+                formatter:function(node){
+            		return jQuery.i18n.prop(node.text);
+            	}
             });
         },
         bindEvent: function () {
@@ -251,7 +254,7 @@ var RoleMVC = {
         },
         add: function () {
             var options = RoleMVC.Util.getOptions();
-            options.title = '新增角色';
+            options.title = jQuery.i18n.prop('role.add.role');
             EasyUIUtils.openAddDlg(options);
             $('#sequence').textbox('setValue', "10");
             $('#status').combobox('setValue', "1");
@@ -263,10 +266,10 @@ var RoleMVC = {
                 var options = RoleMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']角色';
+                options.title = jQuery.i18n.prop('role.modify',options.data.name);
                 EasyUIUtils.openEditDlg(options);
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('role.warn'), jQuery.i18n.prop('role.warn.please.select.record'), 'info');
             }
         },
         authorize: function () {
@@ -282,7 +285,7 @@ var RoleMVC = {
                 $('#perm-tree').tree('options').url = RoleMVC.URLs.listPermissionTree.url + '?roleId=' + row.id;
                 $("#perm-tree").tree('reload');
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('role.warn'), jQuery.i18n.prop('role.warn.please.select.record'), 'info');
             }
         },
         find: function () {

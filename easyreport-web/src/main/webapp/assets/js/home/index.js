@@ -10,10 +10,11 @@ var HomeIndex = {
 		HomeIndexMVC.View.initMenus();
 	},
 	addTab : function(id, title, url, iconCls, closable) {
-		HomeIndexMVC.Controller.addTab(id, title, url, iconCls, closable == undefined ? true : closable)
+		HomeIndexMVC.Controller.addTab(id, title, url, iconCls,
+				closable == undefined ? true : closable)
 	},
 	selectedTab : function(title) {
-		$('#main-tabs').tabs('select', title ? title : '报表设计');
+		$('#main-tabs').tabs('select', title ? title : jQuery.i18n.prop('index.report.design'));
 	},
 	showUserInfo : function() {
 		HomeIndexMVC.Controller.showMyProfileDlg();
@@ -75,7 +76,7 @@ var HomeIndexMVC = {
 				height : 320,
 				iconCls : 'icon-avatar',
 				buttons : [ {
-					text : '关闭',
+					text : jQuery.i18n.prop('index.close'),
 					iconCls : 'icon-no',
 					handler : function() {
 						$("#my-profile-dlg").dialog('close');
@@ -90,13 +91,13 @@ var HomeIndexMVC = {
 				height : 320,
 				iconCls : 'icon-pwd',
 				buttons : [ {
-					text : '关闭',
+					text : jQuery.i18n.prop('index.close'),
 					iconCls : 'icon-no',
 					handler : function() {
 						$("#change-my-pwd-dlg").dialog('close');
 					}
 				}, {
-					text : '确定',
+					text : jQuery.i18n.prop('index.ok'),
 					iconCls : 'icon-save',
 					handler : HomeIndexMVC.Controller.changeMyPwd
 				} ]
@@ -109,7 +110,8 @@ var HomeIndexMVC = {
 		initMenus : function() {
 			var loginUser = $('#login-user-name').val();
 			HomeIndexMVC.Controller.buildMenu(loginUser);
-			HomeIndex.addTab(0, '报表设计', HomeIndexMVC.URLs.designer.url, 'icon-chart', false);
+			HomeIndex.addTab(0, jQuery.i18n.prop('index.report.design'), HomeIndexMVC.URLs.designer.url,
+					'icon-chart', false);
 		}
 	},
 	Controller : {
@@ -117,8 +119,8 @@ var HomeIndexMVC = {
 			if ($('#main-tabs').tabs('exists', title)) {
 				$('#main-tabs').tabs('select', title);
 			} else {
-				var content = '<iframe scrolling="auto" frameborder="0"  src="' + url
-						+ '" style="width:100%;height:100%;"></iframe>';
+				var content = '<iframe scrolling="auto" frameborder="0"  src="'
+						+ url + '" style="width:100%;height:100%;"></iframe>';
 				$('#main-tabs').tabs('add', {
 					id : id,
 					title : title,
@@ -146,90 +148,106 @@ var HomeIndexMVC = {
 					success : function(data) {
 						var result = $.toJSON(data);
 						if (result.success) {
-							EasyUIUtils.showMsg("密码修改成功");
+							EasyUIUtils.showMsg(jQuery.i18n.prop('index.change.password.success'));
 							$("#my-profile-dlg").dialog('close');
 						} else {
-							$.messager.alert('错误', result.msg, 'error');
+							$.messager.alert(jQuery.i18n.prop('index.change.password.error'), result.msg, 'error');
 						}
 					}
 				});
 			} else {
-				$.messager.alert('错误', '两次输入的密码不一致!', 'error');
+				$.messager.alert(jQuery.i18n.prop('index.change.password.error'),jQuery.i18n.prop('index.change.password.error.password.different'), 'error');
 				$('#password').focus();
 			}
 		},
 		buildMenu : function(loginUser) {
-			$.getJSON(HomeIndexMVC.URLs.getMenus.url, function(result) {
-				if (!result.success) {
-					console.info(result.msg);
-				}
+			$
+					.getJSON(
+							HomeIndexMVC.URLs.getMenus.url,
+							function(result) {
+								if (!result.success) {
+									console.info(result.msg);
+								}
 
-				var menuItems = [];
-				var roots = result.data;
-				var tmpl = "<a href=\"#\" class=\"${buttonCss}\" "
-						+ "data-options=\"${subMenu},iconCls:'${iconCls}'\" ${clickEvent}>${name}</a>";
+								var menuItems = [];
+								var roots = result.data;
+								var tmpl = "<a href=\"#\" class=\"${buttonCss}\" "
+										+ "data-options=\"${subMenu},iconCls:'${iconCls}'\" ${clickEvent}>${name}</a>";
 
-				// main menu items start
-				menuItems.push('<div style=\"padding: 2px 5px;\">');
-				for (var i = 0; i < roots.length; i++) {
-					var module = roots[i].attributes;
-					var url = module.linkType ? module.url : EasyReport.ctxPath + '/' + module.url;
-					var onClick = juicer("onclick=\"HomeIndex.addTab('${id}}','${name}','${url}','${icon}')\"", {
-						id : 'm_' + module.id,
-						url : url,
-						name : module.name,
-						icon : module.icon
-					});
-					var subMenu = module.hasChild > 0 ? "menu:'#mm" + module.id + "'" : "plain:true";
-					var buttonCss = module.hasChild > 0 ? "easyui-menubutton" : "easyui-linkbutton";
-					var clickEvent = module.hasChild > 0 ? "" : onClick;
-					menuItems.push(juicer(tmpl, {
-						buttonCss : buttonCss,
-						subMenu : subMenu,
-						clickEvent : clickEvent,
-						iconCls : module.icon,
-						name : module.name
-					}));
-				}
+								// main menu items start
+								menuItems
+										.push('<div style=\"padding: 2px 5px;\">');
+								for (var i = 0; i < roots.length; i++) {
+									var module = roots[i].attributes;
+									var url = module.linkType ? module.url
+											: EasyReport.ctxPath + '/'
+													+ module.url;
+									var onClick = juicer(
+											"onclick=\"HomeIndex.addTab('${id}}','${name}','${url}','${icon}')\"",
+											{
+												id : 'm_' + module.id,
+												url : url,
+												name : jQuery.i18n.prop(module.code),
+												icon : module.icon
+											});
+									var subMenu = module.hasChild > 0 ? "menu:'#mm"
+											+ module.id + "'"
+											: "plain:true";
+									var buttonCss = module.hasChild > 0 ? "easyui-menubutton"
+											: "easyui-linkbutton";
+									var clickEvent = module.hasChild > 0 ? ""
+											: onClick;
+									menuItems.push(juicer(tmpl, {
+										buttonCss : buttonCss,
+										subMenu : subMenu,
+										clickEvent : clickEvent,
+										iconCls : module.icon,
+										name : jQuery.i18n.prop(module.code)
+									}));
+								}
 
-				// 生成用户信息菜单项
-				menuItems.push(juicer(tmpl, {
-					buttonCss : "easyui-menubutton",
-					subMenu : "menu:'#mm0'",
-					clickEvent : "",
-					iconCls : "",
-					name : '欢迎,' + loginUser
-				}));
+								// 生成用户信息菜单项
+								menuItems.push(juicer(tmpl, {
+									buttonCss : "easyui-menubutton",
+									subMenu : "menu:'#mm0'",
+									clickEvent : "",
+									iconCls : "",
+									name : jQuery.i18n.prop('index.welcome') + loginUser
+								}));
 
-				// main menu items end
-				menuItems.push('</div>');
+								// main menu items end
+								menuItems.push('</div>');
 
-				// 生成动态配置的子菜单项
-				for (var i = 0; i < roots.length; i++) {
-					HomeIndexMVC.Controller.buildChildMenu(roots[i], menuItems);
-				}
-				// 生成用户信息子菜单项
-				HomeIndexMVC.Controller.buildUserInfoChildMemu(menuItems);
+								// 生成动态配置的子菜单项
+								for (var i = 0; i < roots.length; i++) {
+									HomeIndexMVC.Controller.buildChildMenu(
+											roots[i], menuItems);
+								}
+								// 生成用户信息子菜单项
+								HomeIndexMVC.Controller
+										.buildUserInfoChildMemu(menuItems);
 
-				$(".menus").html(menuItems.join(''));
-				$.parser.parse('.menus');
-			});
+								$(".menus").html(menuItems.join(''));
+								$.parser.parse('.menus');
+							});
 		},
 		buildChildMenu : function(parent, menuItems) {
 			if (!parent.children || !parent.children.length)
 				return;
-			menuItems.push("<div id=\"mm" + parent.id + "\" style=\"width: 150px;\">");
+			menuItems.push("<div id=\"mm" + parent.id
+					+ "\" style=\"width: 150px;\">");
 			for (var i = 0; i < parent.children.length; i++) {
 				var module = parent.children[i].attributes;
-				var url = module.linkType ? module.url : EasyReport.ctxPath + '/' + module.url;
+				var url = module.linkType ? module.url : EasyReport.ctxPath
+						+ '/' + module.url;
 				var tmpl = "<div data-options=\"iconCls:'${iconCls}'\" "
 						+ "onclick=\"HomeIndex.addTab('${id}','${name}','${url}','${iconCls}',${closable})\">${name}</div>";
 				menuItems.push(juicer(tmpl, {
 					id : 'm_' + module.id,
 					url : url,
 					iconCls : module.icon,
-					name : module.name,
-					closable : module.name != "报表设计"
+					name : jQuery.i18n.prop(module.code),
+					closable : module.code != "report.designer"
 				}));
 				HomeIndexMVC.Controller.buildChildMenu(module, menuItems);
 			}
@@ -239,17 +257,17 @@ var HomeIndexMVC = {
 			var items = [ {
 				url : '#',
 				iconCls : 'icon-avatar',
-				name : '用户信息',
+				name : jQuery.i18n.prop('index.user.info'),
 				clickEvent : 'onclick=HomeIndex.showUserInfo()'
 			}, {
 				url : '#',
 				iconCls : 'icon-pwd',
-				name : '修改密码',
+				name : jQuery.i18n.prop('index.change.password'),
 				clickEvent : 'onclick=HomeIndex.showChangeMyPwd()'
 			}, {
 				url : EasyReport.ctxPath + '/membership/logout',
 				iconCls : 'icon-cancel',
-				name : '退出',
+				name : jQuery.i18n.prop('index.exit'),
 				clickEvent : ''
 			} ];
 			var tmpl = "<div href=\"${url}\" data-options=\"iconCls:'${iconCls}'\" ${clickEvent}>${name}</div>";

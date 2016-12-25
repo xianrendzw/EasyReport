@@ -37,8 +37,8 @@ var PreviewMainMVC = {
             var uid = $('#report-main-uid').val();
             var tableUrl = juicer(PreviewMainMVC.URLs.table.url, {uid: uid});
             var chartUrl = juicer(PreviewMainMVC.URLs.chart.url, {uid: uid});
-            PreviewMainMVC.Controller.updateTab('表格', tableUrl, TableReport.init);
-            PreviewMainMVC.Controller.updateTab('图表', chartUrl, ChartReport.init);
+            PreviewMainMVC.Controller.updateTab( jQuery.i18n.prop('main.table'), tableUrl, TableReport.init);
+            PreviewMainMVC.Controller.updateTab( jQuery.i18n.prop('main.chart'), chartUrl, ChartReport.init);
         }
     },
     Controller: {

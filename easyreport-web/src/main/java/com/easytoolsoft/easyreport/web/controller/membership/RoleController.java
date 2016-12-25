@@ -168,7 +168,7 @@ public class RoleController
                 .map(perm -> new EasyUITreeNode<>(
                         String.valueOf(perm.getId()),
                         String.valueOf(-perm.getModuleId()),
-                        perm.getName(), "open", "",
+                        perm.getCode(), "open", "",
                         ArrayUtils.contains(operationSplit, perm.getId().toString()),
                         String.valueOf(perm.getId())
                 )).collect(Collectors.toList()));

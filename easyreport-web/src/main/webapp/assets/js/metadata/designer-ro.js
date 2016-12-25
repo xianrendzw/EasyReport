@@ -87,15 +87,15 @@ var DesignerMVC = {
     Model: {
         MetaColumnOptions: [{
             name: "optional",
-            text: "可选",
+            text: jQuery.i18n.prop('design.optional'),
             type: 1
         }, {
             name: "percent",
-            text: "百分比",
+            text: jQuery.i18n.prop('design.percent'),
             type: 1
         }, {
             name: "displayInMail",
-            text: "邮件显示",
+            text: jQuery.i18n.prop('design.displayinmail'),
             type: 1
         }, /*{
          name : "footings",
@@ -107,11 +107,11 @@ var DesignerMVC = {
          type : 3
          },*/ {
             name: "expression",
-            text: "表达式",
+            text: jQuery.i18n.prop('design.expression'),
             type: 4
         }, {
             name: "comment",
-            text: "备注",
+            text: jQuery.i18n.prop('design.comment'),
             type: 2
         }
             /*, {
@@ -120,32 +120,32 @@ var DesignerMVC = {
              type: 2
              }*/],
         MetaColumnTypes: [{
-            text: "布局列",
+            text: jQuery.i18n.prop('design.col.layout'),
             value: 1
         }, {
-            text: "维度列",
+            text: jQuery.i18n.prop('design.col.dimenssion'),
             value: 2
         }, {
-            text: "统计列",
+            text: jQuery.i18n.prop('design.col.statistic'),
             value: 3
         }, {
-            text: "计算列",
+            text: jQuery.i18n.prop('design.col.caculate'),
             value: 4
         }],
         MetaColumnSortTypes: [{
-            text: "默认",
+            text: jQuery.i18n.prop('design.default'),
             value: 0
         }, {
-            text: "数字优先升序",
+            text: jQuery.i18n.prop('design.num.asc'),
             value: 1
         }, {
-            text: "数字优先降序",
+            text: jQuery.i18n.prop('design.num.desc'),
             value: 2
         }, {
-            text: "字符优先升序",
+            text: jQuery.i18n.prop('design.char.asc'),
             value: 3
         }, {
-            text: "字符优先降序",
+            text: jQuery.i18n.prop('design.char.desc'),
             value: 4
         }],
         DataSourceList: []
@@ -164,7 +164,7 @@ var DesignerMVC = {
                 fitColumns: true,
                 singleSelect: true,
                 toolbar: [ {
-                    text: '预览',
+                    text: jQuery.i18n.prop('design.preview'),
                     iconCls: 'icon-preview',
                     handler: DesignerMVC.Controller.preview
                 }],
@@ -172,22 +172,22 @@ var DesignerMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    $.messager.alert('失败', src.msg, 'error');
+                    $.messager.alert(jQuery.i18n.prop('design.failed'), src.msg, 'error');
                     return EasyUIUtils.getEmptyDatagridRows();
                 },
                 columns: [[{
                     field: 'id',
-                    title: 'ID',
+                    title: jQuery.i18n.prop('design.id'),
                     width: 50,
                     sortable: true
                 },{
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('design.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [ {
                             "name": "preview",
-                            "title": "预览"
+                            "title": jQuery.i18n.prop('design.preview')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -206,20 +206,20 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('design.name'),
                     width: 150,
                     sortable: true
                 }, {
                     field: 'status',
-                    title: '状态',
+                    title: jQuery.i18n.prop('design.status'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        return value == 1 ? jQuery.i18n.prop('design.status.enable') : jQuery.i18n.prop('design.status.disable');
                     }
                 },  {
                     field: 'comment',
-                    title: '说明',
+                    title: jQuery.i18n.prop('design.comment'),
                     width: 100,
                     sortable: true
                 }]],
@@ -295,7 +295,7 @@ var DesignerMVC = {
                 }],
                 columns: [[{
                     field: 'name',
-                    title: '列名',
+                    title: jQuery.i18n.prop('design.col.name'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var id = "name" + index;
@@ -307,7 +307,7 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'text',
-                    title: '标题',
+                    title: jQuery.i18n.prop('design.col.title'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var id = "text" + index;
@@ -319,7 +319,7 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'type',
-                    title: '类型',
+                    title: jQuery.i18n.prop('design.col.type'),
                     width: 75,
                     formatter: function (value, row, index) {
                         var id = "type" + index;
@@ -337,15 +337,15 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'dataType',
-                    title: '数据类型',
+                    title: jQuery.i18n.prop('design.col.datatype'),
                     width: 75
                 }, {
                     field: 'width',
-                    title: '宽度',
+                    title: jQuery.i18n.prop('design.col.width'),
                     width: 40
                 }, {
                     field: 'decimals',
-                    title: '精度',
+                    title: jQuery.i18n.prop('design.col.decimals'),
                     width: 50,
                     formatter: function (value, row, index) {
                         var id = "decimals" + index;
@@ -360,7 +360,7 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'sortType',
-                    title: '排序类型',
+                    title: jQuery.i18n.prop('design.col.sorttype'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var id = "sortType" + index;
@@ -378,7 +378,7 @@ var DesignerMVC = {
                     }
                 }, {
                     field: 'options',
-                    title: '配置',
+                    title: jQuery.i18n.prop('design.col.options'),
                     width: 300,
                     formatter: function (value, row, index) {
                         var subOptions = [];
@@ -441,62 +441,62 @@ var DesignerMVC = {
                 }],
                 columns: [[{
                     field: 'name',
-                    title: '参数名',
+                    title: jQuery.i18n.prop('design.para.name'),
                     width: 100
                 }, {
                     field: 'text',
-                    title: '标题',
+                    title: jQuery.i18n.prop('design.para.title'),
                     width: 100
                 }, {
                     field: 'defaultValue',
-                    title: '默认值',
+                    title: jQuery.i18n.prop('design.para.defaultvalue'),
                     width: 100
                 }, {
                     field: 'defaultText',
-                    title: '默认标题',
+                    title: jQuery.i18n.prop('design.para.defaulttext'),
                     width: 100
                 }, {
                     field: 'formElement',
-                    title: '表单控件',
+                    title: jQuery.i18n.prop('design.para.formelement'),
                     width: 100
                 }, {
                     field: 'dataSource',
-                    title: '来源类型',
+                    title: jQuery.i18n.prop('design.para.datasource'),
                     width: 100,
                     formatter: function (value, row, index) {
                         if (value == "sql") {
-                            return "SQL语句";
+                            return jQuery.i18n.prop('design.para.sql');
                         }
                         if (value == "text") {
-                            return "文本字符串";
+                            return jQuery.i18n.prop('design.para.text');
                         }
-                        return "无内容";
+                        return jQuery.i18n.prop('design.para.null');
                     }
                 }, {
                     field: 'dataType',
-                    title: '数据类型',
+                    title: jQuery.i18n.prop('design.para.datatype'),
                     width: 100
                 }, {
                     field: 'width',
-                    title: '数据长度',
+                    title: jQuery.i18n.prop('design.para.width'),
                     width: 100
                 }, {
                     field: 'required',
-                    title: '是否必选',
+                    title: jQuery.i18n.prop('design.para.required'),
                     width: 80
                 }, {
                     field: 'autoComplete',
-                    title: '是否自动提示',
+                    title: jQuery.i18n.prop('design.para.autocomplete'),
                     width: 80
                 }, {
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('design.para.operation'),
                     width: 50,
                     formatter: function (value, row, index) {
                         var imgPath = DesignerCommon.baseIconUrl + 'remove.png';
-                        var tmpl = '<a href="#" title ="删除" ' +
-                            'onclick="MetaDataDesigner.deleteQueryParam(\'${index}\')"><img src="${imgPath}" ' +
-                            'alt="删除"/"></a>';
+                        var tmpl = '<a href="#" title ="'+jQuery.i18n.prop('design.save')  +
+                            '" onclick="MetaDataDesigner.deleteQueryParam(\'${index}\')"><img src="${imgPath}" ' +
+                            'alt="'+jQuery.i18n.prop('design.remove')+'"/></a>';
                         return juicer(tmpl, {
                             index: index,
                             imgPath: imgPath
@@ -527,18 +527,18 @@ var DesignerMVC = {
                 },
                 columns: [[{
                     field: 'gmtCreated',
-                    title: '日期',
+                    title: jQuery.i18n.prop('design.history.gmtcreate'),
                     width: 100
                 }, {
                     field: 'author',
-                    title: '作者',
+                    title: jQuery.i18n.prop('design.history.author'),
                     width: 100
                 }]],
                 loadFilter: function (src) {
                     if (src.success) {
                         return src.data;
                     }
-                    $.messager.alert('失败', src.msg, 'error');
+                    $.messager.alert(jQuery.i18n.prop('design.failed'), src.msg, 'error');
                     return EasyUIUtils.getEmptyDatagridRows();
                 },
                 onClickRow: function (index, row) {
@@ -552,8 +552,8 @@ var DesignerMVC = {
             $('#report-history-sql-pgrid').propertygrid({
                 scrollbarSize: 0,
                 columns: [[
-                    {field: 'name', title: '属性项', width: 80, sortable: true},
-                    {field: 'value', title: '属性值', width: 300, resizable: false}
+                    {field: 'name', title: jQuery.i18n.prop('design.history.keyname'), width: 80, sortable: true},
+                    {field: 'value', title: jQuery.i18n.prop('design.history.keyvalue'), width: 300, resizable: false}
                 ]]
             });
 
@@ -567,17 +567,17 @@ var DesignerMVC = {
                 maximized: true,
                 iconCls: 'icon-designer',
                 buttons: [{
-                    text: '编辑器放大/缩小',
+                    text: jQuery.i18n.prop('design.designer.fullscreen'),
                     iconCls: 'icon-fullscreen',
                     handler: DesignerMVC.Util.fullscreenEdit
                 }, {
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-designer-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('design.save'),
                     iconCls: 'icon-save',
                     handler: DesignerMVC.Controller.save
                 }],
@@ -594,7 +594,7 @@ var DesignerMVC = {
                 maximizable: true,
                 iconCls: 'icon-history',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-history-sql-dlg").dialog('close');
@@ -610,7 +610,7 @@ var DesignerMVC = {
                 maximizable: true,
                 iconCls: 'icon-info',
                 buttons: [{
-                    text: '上一条',
+                    text: jQuery.i18n.prop('design.prev'),
                     iconCls: 'icon-prev',
                     handler: function () {
                         EasyUIUtils.cursor('#report-datagrid',
@@ -620,7 +620,7 @@ var DesignerMVC = {
                             });
                     }
                 }, {
-                    text: '下一条',
+                    text: jQuery.i18n.prop('design.next'),
                     iconCls: 'icon-next',
                     handler: function () {
                         EasyUIUtils.cursor('#report-datagrid',
@@ -630,7 +630,7 @@ var DesignerMVC = {
                             });
                     }
                 }, {
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-detail-dlg").dialog('close');
@@ -646,7 +646,7 @@ var DesignerMVC = {
                 width: window.screen.width - 350,
                 height: window.screen.height - 350,
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-preview-sql-dlg").dialog('close');
@@ -663,13 +663,13 @@ var DesignerMVC = {
                 width: 500,
                 height: 310,
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-column-expression-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('design.save'),
                     iconCls: 'icon-save',
                     handler: function () {
                         DesignerMVC.Controller.saveMetaColumnOption('expression');
@@ -686,13 +686,13 @@ var DesignerMVC = {
                 width: 500,
                 height: 310,
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#report-column-comment-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('design.save'),
                     iconCls: 'icon-save',
                     handler: function () {
                         DesignerMVC.Controller.saveMetaColumnOption('comment');
@@ -825,7 +825,7 @@ var DesignerMVC = {
                 var dsId = $('#report-dsId').combobox('getValue');
                 var category = node.attributes;
                 var options = DesignerMVC.Util.getOptions();
-                options.title = '报表设计器--新增报表';
+                options.title = jQuery.i18n.prop('design.designer.add.report');
                 EasyUIUtils.openAddDlg(options);
                 DesignerMVC.Util.clearSqlEditor();
                 EasyUIUtils.clearDatagrid('#report-meta-column-grid');
@@ -843,7 +843,7 @@ var DesignerMVC = {
                 };
                 DesignerMVC.Util.fillReportBasicConfForm(row, row.options);
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('design.warn'), jQuery.i18n.prop('design.please.select.category'), 'info');
             }
         },
         edit: function () {
@@ -851,7 +851,7 @@ var DesignerMVC = {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
-                options.title = '报表设计器--修改[' + options.data.name + ']报表';
+                options.title = jQuery.i18n.prop('design.designer.edit.report',options.data.name) ;
                 DesignerMVC.Util.editOrCopy(options, 'edit');
             });
         },
@@ -860,7 +860,7 @@ var DesignerMVC = {
                 var options = DesignerMVC.Util.getOptions();
                 options.iconCls = 'icon-designer';
                 options.data = row;
-                options.title = '报表设计器--复制[' + options.data.name + ']报表';
+                options.title = jQuery.i18n.prop('design.designer.copy.report',options.data.name);
                 DesignerMVC.Util.editOrCopy(options, 'copy');
                 $('#modal-action').val("add");
             });
@@ -926,8 +926,8 @@ var DesignerMVC = {
             if (!DesignerMVC.Util.checkBasicConfParam()) return;
 
             $.messager.progress({
-                title: '请稍后...',
-                text: '正在执行中...'
+                title: jQuery.i18n.prop('design.wait'),
+                text: jQuery.i18n.prop('design.processing')
             });
 
             $.post(DesignerMVC.URLs.execSqlText.url, {
@@ -942,15 +942,15 @@ var DesignerMVC = {
                     var columns = DesignerMVC.Util.eachMetaColumns(result.data);
                     return DesignerMVC.Util.loadMetaColumns(columns);
                 }
-                return $.messager.alert('错误', result.msg);
+                return $.messager.alert(jQuery.i18n.prop('design.error'), result.msg);
             }, 'json');
         },
         previewSql: function () {
             if (!DesignerMVC.Util.checkBasicConfParam()) return;
 
             $.messager.progress({
-                title: '请稍后...',
-                text: '正在生成预览SQL...',
+                title: jQuery.i18n.prop('design.wait'),
+                text: jQuery.i18n.prop('design.previewing'),
             });
 
             $.post(DesignerMVC.URLs.previewSqlText.url, {
@@ -965,7 +965,7 @@ var DesignerMVC = {
                     $('#report-preview-sql-dlg .CodeMirror').css("height", "99%");
                     return DesignerMVC.View.PreviewSqlEditor.setValue(result.data);
                 }
-                return $.messager.alert('错误', result.msg);
+                return $.messager.alert(jQuery.i18n.prop('design.error'), result.msg);
             }, 'json');
         },
         save: function () {
@@ -973,23 +973,23 @@ var DesignerMVC = {
 
             var rows = $("#report-meta-column-grid").datagrid('getRows');
             if (rows == null || rows.length == 0) {
-                return $.messager.alert('失败', "没有任何报表SQL配置列选项！", 'error');
+                return $.messager.alert(jQuery.i18n.prop('design.failed'), jQuery.i18n.prop('design.no.report.sql.conf'), 'error');
             }
 
             var metaColumns = DesignerMVC.Util.getMetaColumns(rows);
             var columnTypeMap = DesignerMVC.Util.getColumnTypeMap(metaColumns);
             if (columnTypeMap.layout == 0 || columnTypeMap.stat == 0) {
-                return $.messager.alert('失败', "您没有设置布局列或者统计列", 'error');
+                return $.messager.alert(jQuery.i18n.prop('design.failed'), jQuery.i18n.prop('design.no.layout.statistic.col'), 'error');
             }
 
             var emptyExprColumns = DesignerMVC.Util.getEmptyExprColumns(metaColumns);
             if (emptyExprColumns && emptyExprColumns.length) {
-                return $.messager.alert('失败', "计算列：[" + emptyExprColumns.join() + "]没有设置表达式！", 'error');
+                return $.messager.alert(jQuery.i18n.prop('design.failed'), jQuery.i18n.prop('design.caculate.col.no.expr',emptyExprColumns.join()), 'error');
             }
 
             $.messager.progress({
-                title: '请稍后...',
-                text: '正在处理中...',
+                title: jQuery.i18n.prop('design.wait'),
+                text: jQuery.i18n.prop('design.processing'),
             });
 
             $('#report-queryParams').val(DesignerMVC.Util.getQueryParams());
@@ -1011,12 +1011,12 @@ var DesignerMVC = {
                 if (result.success) {
                     $('#report-sqlTextIsChange').val('0');
                     var id = $("#report-categoryId").val();
-                    return $.messager.alert('操作提示', "操作成功", 'info', function () {
+                    return $.messager.alert(jQuery.i18n.prop('design.operation.hint'), jQuery.i18n.prop('design.operation.success'), 'info', function () {
                         $('#report-designer-dlg').dialog('close');
-                        DesignerMVC.Controller.listReports(-1);
+                        DesignerMVC.Controller.listReports(id);
                     });
                 }
-                $.messager.alert('操作提示', result.msg, 'error');
+                $.messager.alert(jQuery.i18n.prop('design.operation.hint'), result.msg, 'error');
             }, 'json');
         },
         reload: function () {
@@ -1027,7 +1027,7 @@ var DesignerMVC = {
             if (!isChanged) {
                 return handler(data);
             }
-            $.messager.confirm('确认', '是否保存修改的数据?', function (r) {
+            $.messager.confirm(jQuery.i18n.prop('design.confirm'), jQuery.i18n.prop('design.confirm.save'), function (r) {
                 if (r) {
                     //MetaDataDesigner.save();
                 }
@@ -1043,7 +1043,7 @@ var DesignerMVC = {
                 var row = $('#report-query-param-form').serializeObject()
                 if (row.dataSource != "none" && $.trim(row.content).length == 0) {
                     $("#report-query-param-content").focus();
-                    return $.messager.alert('提示', "内容不能为空", 'error');
+                    return $.messager.alert(jQuery.i18n.prop('design.operation.hint'), jQuery.i18n.prop('design.content.empty'), 'error');
                 }
 
                 row.required = $("#report-query-param-required").prop("checked");
@@ -1109,7 +1109,7 @@ var DesignerMVC = {
             if (row) {
                 func(row);
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('design.warn'), jQuery.i18n.prop('design.please.select.record'), 'info');
             }
         },
         editOrCopy: function (options, act) {
@@ -1188,18 +1188,18 @@ var DesignerMVC = {
                 return DesignerMVC.Util.getLayoutName(value);
             }
             if (name == "status") {
-                return value == 1 ? "启用" : "禁用";
+                return value == 1 ? jQuery.i18n.prop('design.status.enable') : jQuery.i18n.prop('design.status.enable');
             }
             return value;
         },
         getLayoutName: function (layout) {
             if (layout == 1) {
-                return "横向布局";
+                return jQuery.i18n.prop('design.layout.horizental');
             }
             if (layout == 2) {
-                return "纵向布局";
+                return jQuery.i18n.prop('design.layout.virtical');
             }
-            return "无";
+            return jQuery.i18n.prop('design.layout.null');
         },
         getColumnTypeValue: function (name) {
             if (name == "LAYOUT") {
@@ -1236,7 +1236,7 @@ var DesignerMVC = {
         },
         checkBasicConfParam: function () {
             if (DesignerMVC.View.SqlEditor.getValue() == "") {
-                $.messager.alert('失败', "未发现操作的SQL语句！", 'error');
+                $.messager.alert(jQuery.i18n.prop('design.failed'), jQuery.i18n.prop('design.no.sql'), 'error');
                 return false;
             }
             return $('#report-basic-conf-form').form('validate');

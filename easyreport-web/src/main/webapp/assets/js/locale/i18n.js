@@ -1,9 +1,14 @@
 var app = angular.module("i18n", []);
 app.controller('translate',function($scope) {
+	var userLang = navigator.language || navigator.userLanguage;
+	var lang='en_US';
+	if(userLang.indexOf('zh')>=0){
+		lang='zh_CN';
+	}
 	$scope.info = null;
 	jQuery.i18n.properties({
 		name : 'messageResources', 
-		language : 'en_US', 
+		language : lang, 
 		path : EasyReport.ctxPath +'/assets/js/locale/', 
 		mode : 'map', 
 		callback : function() {

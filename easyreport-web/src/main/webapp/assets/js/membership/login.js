@@ -79,7 +79,7 @@ var LoginMVC = {
                     if (!result.success) {
                         LoginMVC.Controller.showTips('error', result.msg);
                     } else {
-                        LoginMVC.Controller.showTips('success', '登录成功，正在跳转...');
+                        LoginMVC.Controller.showTips('success', jQuery.i18n.prop('login.redirect'));
                         window.location = LoginMVC.URLs.success.url;
                     }
                 }, 'json');
