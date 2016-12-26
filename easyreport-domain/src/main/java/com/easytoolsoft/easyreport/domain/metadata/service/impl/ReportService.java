@@ -145,6 +145,7 @@ public class ReportService
     @Override
     public ReportDataSource getReportDataSource(int dsId) {
         DataSource ds = this.dsService.getById(dsId);
+        ds.decrypt();
         Map<String, Object> options = new HashMap<>(3);
         if (StringUtils.isNotEmpty(ds.getOptions())) {
             options = JSON.parseObject(ds.getOptions());

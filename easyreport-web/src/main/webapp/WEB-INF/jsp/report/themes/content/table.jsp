@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<div  ng-app="i18n" ng-controller="translate" id="table-report-div" style="margin: 5px;">
+<div id="table-report-div" style="margin: 5px;">
     <form id="table-report-form">
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>

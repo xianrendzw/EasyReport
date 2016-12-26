@@ -71,31 +71,36 @@ public class DataSource implements Serializable {
      */
     private Date gmtModified;
     
-    
-    public String getJdbcUrl(){
-    	return AESHelper.decrypt(jdbcUrl);
+    public void encrypt(){
+    	if(getJdbcUrl()!=null && !getJdbcUrl().startsWith("AES_")){
+    		this.setJdbcUrl("AES_"+AESHelper.encrypt(getJdbcUrl()));
+    	}
+    	if(getUser()!=null && !getUser().startsWith("AES_")){
+    		this.setUser("AES_"+AESHelper.encrypt(getUser()));
+    	}
+    	if(getPassword()!=null && !getPassword().startsWith("AES_")){
+    		this.setPassword("AES_"+AESHelper.encrypt(getPassword()));
+    	}
+    	System.out.println("##encrypt##jdbc"+jdbcUrl);
+    	System.out.println("##encrypt##User"+user);
+    	System.out.println("##encrypt##Password"+password);
     }
     
-    public void setJdbcUrl(String jdbcUrl){
-    	this.jdbcUrl=AESHelper.encrypt(jdbcUrl);
+    public void decrypt(){
+    	if(getJdbcUrl()!=null && getJdbcUrl().startsWith("AES_")){
+    		setJdbcUrl(AESHelper.decrypt(getJdbcUrl().substring(4)));
+    	}
+    	if(getUser()!=null && getUser().startsWith("AES_")){
+    		setUser(AESHelper.decrypt(getUser().substring(4)));
+    	}
+    	if(getPassword()!=null && getPassword().startsWith("AES_")){
+    		setPassword(AESHelper.decrypt(getPassword().substring(4)));
+    	}
+    	System.out.println("##decrypt##jdbc"+jdbcUrl);
+    	System.out.println("##decrypt##User"+user);
+    	System.out.println("##decrypt##Password"+password);
     }
     
-    public String getUser(){
-    	return AESHelper.decrypt(user);
-    }
-    
-    public void setUser(String user){
-    	this.user=AESHelper.encrypt(user);
-    }
-    
-    public String getPassword(){
-    	return AESHelper.decrypt(password);
-    }
-    
-    public void setPassword(String password){
-    	this.password=AESHelper.encrypt(password);
-    }
-
 	public Integer getId() {
 		return id;
 	}
@@ -174,5 +179,29 @@ public class DataSource implements Serializable {
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
+	}
+
+	public String getJdbcUrl() {
+		return jdbcUrl;
+	}
+
+	public void setJdbcUrl(String jdbcUrl) {
+		this.jdbcUrl = jdbcUrl;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

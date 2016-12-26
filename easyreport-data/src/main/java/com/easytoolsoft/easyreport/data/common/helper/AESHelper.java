@@ -20,6 +20,9 @@ public class AESHelper {
     
     private static Cipher dcipher;
     
+    static {
+    	setKey("kfsjdfoas");
+    }
     /**
      * Input a string that will be md5 hashed to create the key.
      * 
@@ -99,7 +102,6 @@ public class AESHelper {
      * @return a Hex string of the byte array
      */
     public static String encrypt(String plaintext) {
-    	setKey("kfsjdfoas");
         if(ecipher==null){
             return plaintext;
         }
@@ -138,7 +140,6 @@ public class AESHelper {
      * @return a string decrypted in plain text
      */
     public static String decrypt(String hexCipherText) {
-    	setKey("kfsjdfoas");
         if(dcipher==null){
             return hexCipherText;
         }

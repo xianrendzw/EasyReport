@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<div ng-app="i18n" ng-controller="translate" id="chart-report-div" style="margin: 5px;">
+<div id="chart-report-div" style="margin: 5px;">
     <form id="chart-report-form" method="post">
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>
                 <td style="text-align: left;">${formHtmlText}&nbsp;&nbsp;
                     <a id="btn-chart-generate" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-ok'">{{info.chart_generate}}生成</a>
+                       data-options="iconCls:'icon-ok'">{{info.chart_generate}}</a>
                     <input id="chart-report-id" type="hidden" name="id" value="${id}"/>
                     <input id="chart-report-name" type="hidden" name="name" value="${name}"/>
                     <input id="chart-report-uid" type="hidden" name="uid" value="${uid}"/>

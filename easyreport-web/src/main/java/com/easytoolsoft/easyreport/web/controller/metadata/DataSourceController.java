@@ -35,6 +35,9 @@ public class DataSourceController
     @RequiresPermissions("report.ds:view")
     public List<DataSource> listAll() {
         List<DataSource> list = this.service.getAll();
+        for(DataSource ds : list){
+        	ds.decrypt();
+        }
         return list;
     }
 
@@ -44,6 +47,9 @@ public class DataSourceController
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
+        for(DataSource ds : list){
+        	ds.decrypt();
+        }
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -60,6 +66,7 @@ public class DataSourceController
         po.setJdbcUrl(po.getJdbcUrl());
         po.setUser(po.getUser());
         po.setPassword(po.getPassword());
+        po.encrypt();
         this.service.add(po);
         return result;
     }
@@ -69,6 +76,7 @@ public class DataSourceController
     @RequiresPermissions("report.ds:edit")
     public JsonResult edit(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
+        po.encrypt();
         this.service.editById(po);
         return result;
     }
@@ -97,6 +105,7 @@ public class DataSourceController
     public JsonResult testConnection(Integer id) {
         JsonResult<String> result = new JsonResult<>();
         DataSource dsPo = this.service.getById(id);
+        dsPo.decrypt();
         result.setSuccess(this.service.testConnection(
                 dsPo.getJdbcUrl(),
                 dsPo.getUser(), dsPo.getPassword()));
