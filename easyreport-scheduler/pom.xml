@@ -71,6 +71,11 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.3.1.Final</version>
         </dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>1.4.0.RELEASE</version>
+          </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
