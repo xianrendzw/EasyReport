@@ -5,6 +5,7 @@ import com.easytoolsoft.easyreport.data.schedule.po.MailTaskOptions;
 import com.easytoolsoft.easyreport.data.schedule.po.SMSTaskOptions;
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
 import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
+import com.easytoolsoft.easyreport.domain.schedule.service.QuartzManager;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
@@ -12,9 +13,11 @@ import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -24,7 +27,9 @@ import java.util.Map;
 @RequestMapping(value = "/rest/schedule/task")
 public class TaskController
         extends BaseController<ITaskService, Task, TaskExample> {
-
+	@Autowired
+	private QuartzManager quartz;
+	
     @GetMapping(value = "/list")
     @OpLog(name = "获取任务列表")
     @RequiresPermissions("schedule.task:view")
@@ -68,5 +73,19 @@ public class TaskController
             result.setData("{}");
         }
         return result;
+    }
+    
+    @GetMapping(value = "/schedule")
+    @OpLog(name = "init schedule")
+    @RequiresPermissions("schedule.task:view")
+    public JsonResult schedule() {
+    	quartz.reScheduleJob();
+    	return new JsonResult("{}");
+    }
+    
+    @RequestMapping("/task")
+    public JsonResult task(@RequestParam(value="taskid", defaultValue="0") Integer taskid) {
+    	quartz.triggerTask(taskid);
+        return new JsonResult("{}");
     }
 }

@@ -1,4 +1,4 @@
-package com.easytoolsoft.easyreport.scheduler;
+package com.easytoolsoft.easyreport.domain.schedule.service;
 
 import java.util.Date;
 
@@ -7,7 +7,6 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
-import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
 
 public class ReportJob implements org.quartz.Job{
     @Autowired

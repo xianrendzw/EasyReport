@@ -1,4 +1,4 @@
-package com.easytoolsoft.easyreport.scheduler;
+package com.easytoolsoft.easyreport.domain.schedule.service;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.easytoolsoft.easyreport.data.schedule.po.Task;
-import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
 import com.easytoolsoft.easyreport.domain.schedule.service.impl.TaskService;
 
 @Component
@@ -35,6 +34,7 @@ public class QuartzManager {
                 configQuatrz(task);
             }
         }
+        System.out.println("reschedule jobs end");
     }
     
     public void triggerTask(int taskid){
