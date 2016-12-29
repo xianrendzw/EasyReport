@@ -5,6 +5,13 @@
  * Copyright (c) 2010-2013 Shawn Chin.
  * Dual licensed under the MIT or GPL Version 2 licenses.
  *
+ * Modified By Felix Ruponen to use Quartz Cron Format
+ *
+ * GitHub: https://github.com/felixruponen/jquery-cron 
+ *
+ * More at: http://www.quartz-scheduler.org
+ *
+ *
  * Requires:
  * - jQuery
  *
@@ -28,19 +35,23 @@
  *
  * Notes:
  * At this stage, we only support a subset of possible cron options.
- * For example, each cron entry can only be digits or "*", no commas
- * to denote multiple entries. We also limit the allowed combinations:
- * - Every minute : * * * * *
- * - Every hour   : ? * * * *
- * - Every day    : ? ? * * *
- * - Every week   : ? ? * * ?
- * - Every month  : ? ? ? * *
- * - Every year   : ? ? ? ? *
+ * For example, each cron entry can only of the following form
+ * ( - indicates where numbers should be replaced):
+ * - Every minute : 0 0/1 * * * ?
+ * - Every hour   : 0 - 0/1 * * ?
+ * - Every day    : 0 - - * * ?
+ * - Every week   : 0 - - ? * -
+ * - Every month  : 0 - - - * ?
+ * - Every year   : 0 - - - - ? *
+ *
+ * Ex.
+ *    0 5 0/1 * * ?    => Every hour, five minutes past the hour
+ *
  */
 (function($) {
 
     var defaults = {
-        initial : "* * * * *",
+        initial : "0 0/1 * * * ?",
         minuteOpts : {
             minWidth  : 100, // only applies if columns and itemWidth not set
             itemWidth : 30,
@@ -136,7 +147,7 @@
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday"];
     for (var i = 0; i < days.length; i++) {
-        str_opt_dow += "<option value='"+i+"'>" + days[i] + "</option>\n";
+        str_opt_dow += "<option value='" + (i + 1) +"'>" + days[i] + "</option>\n";
     }
 
     // options for period
@@ -157,12 +168,14 @@
     };
 
     var combinations = {
-        "minute" : /^(\*\s){4}\*$/,                    // "* * * * *"
-        "hour"   : /^\d{1,2}\s(\*\s){3}\*$/,           // "? * * * *"
-        "day"    : /^(\d{1,2}\s){2}(\*\s){2}\*$/,      // "? ? * * *"
-        "week"   : /^(\d{1,2}\s){2}(\*\s){2}\d{1,2}$/, // "? ? * * ?"
-        "month"  : /^(\d{1,2}\s){3}\*\s\*$/,           // "? ? ? * *"
-        "year"   : /^(\d{1,2}\s){4}\*$/                // "? ? ? ? *"
+        // Quartz Regex Expressions below                  // "-" indicates digit of one or two numbers that should be replaced with the desired time
+
+        "minute" : /^0\s(0\/1)\s(\*\s){3}\?$/,             // "0 0/1 * * * ?"
+        "hour"   : /^0\s\d{1,2}\s(0\/1)\s(\*\s){2}\?$/,    // "0 - 0/1 * * ?"
+        "day"    : /^0\s(\d{1,2}\s){2}(\*\s){2}\?$/,       // "0 - - * * ?"
+        "week"   : /^0\s(\d{1,2}\s){2}\?\s(\*\s)\d{1,2}$/, // "0 - - ? * -"
+        "month"  : /^0\s(\d{1,2}\s){3}\*\s\?$/,            // "0 - - - * ?"
+        "year"   : /^0\s(\d{1,2}\s){4}\?\s\*$/             // "0 - - - - ? *"
     };
 
     // ------------------ internal functions ---------------
@@ -184,7 +197,7 @@
         }
 
         // check format of initial cron value
-        var valid_cron = /^((\d{1,2}|\*)\s){4}(\d{1,2}|\*)$/
+        var valid_cron = /^0\s(0\/1|\d{1,2})\s(0\/1|\d{1,2}|\*)\s(\d{1,2}|\*|\?)\s(\d{1,2}|\*)\s(\d{1,2}|\?)(\s\*)?$/
         if (typeof cron_str != "string" || !valid_cron.test(cron_str)) {
             $.error("cron: invalid initial value");
             return undefined;
@@ -192,11 +205,17 @@
 
         // check actual cron values
         var d = cron_str.split(" ");
+
+        d = d.splice(1, d.length - 1);      // remove first 0
+
         //            mm, hh, DD, MM, DOW
-        var minval = [ 0,  0,  1,  1,  0];
-        var maxval = [59, 23, 31, 12,  6];
+        var minval = [ 0,  0,  1,  1,  1];
+        var maxval = [59, 23, 31, 12,  7];
         for (var i = 0; i < d.length; i++) {
             if (d[i] == "*") continue;
+            if (/^0\/1$/.test(d[i])) continue;
+            if (d[i] == "?") continue;
+
             var v = parseInt(d[i]);
             if (defined(v) && v <= maxval[i] && v >= minval[i]) continue;
 
@@ -206,7 +225,9 @@
 
         // determine combination
         for (var t in combinations) {
-            if (combinations[t].test(cron_str)) { return t; }
+            if (combinations[t].test(cron_str)) {
+                return t;
+            }
         }
 
         // unknown combination
@@ -238,27 +259,32 @@
         var selectedPeriod = b["period"].find("select").val();
         switch (selectedPeriod) {
             case "minute":
+                return ["0", "0/1", "*", "*", "*", "?"].join(" ");
                 break;
 
             case "hour":
                 min = b["mins"].find("select").val();
+                return ["0", min, "0/1", "*", "*", "?"].join(" ");
                 break;
 
             case "day":
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
+                return ["0", min, hour, "*", "*", "?"].join(" ");
                 break;
 
             case "week":
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
                 dow  =  b["dow"].find("select").val();
+                return ["0", min, hour, "?", "*", dow].join(" ");
                 break;
 
             case "month":
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
                 day  = b["dom"].find("select").val();
+                return ["0", min, hour, day, "*", "?"].join(" ");
                 break;
 
             case "year":
@@ -266,13 +292,14 @@
                 hour = b["time"].find("select.cron-time-hour").val();
                 day  = b["dom"].find("select").val();
                 month = b["month"].find("select").val();
+                return ["0", min, hour, day, month, "?", "*"].join(" ");
                 break;
 
             default:
                 // we assume this only happens when customValues is set
                 return selectedPeriod;
         }
-        return [min, hour, day, month, dow].join(" ");
+
     }
 
     // -------------------  PUBLIC METHODS -----------------
@@ -389,13 +416,21 @@
             var block = this.data("block");
             var useGentleSelect = o.useGentleSelect;
             var t = getCronType(cron_str, o);
-            
+
             if (!defined(t)) { return false; }
-            
+
             if (defined(o.customValues) && o.customValues.hasOwnProperty(t)) {
                 t = o.customValues[t];
             } else {
                 var d = cron_str.split(" ");
+
+                d = d.splice(1, d.length - 1);  // Remove first 0
+
+                for (var i = 0; i < d.length; i++) {                // Remove non digits
+                    if(/^0\/1$/.test(d[i])) { d[i] = undefined; }
+                    if(d[i] === '?') { d[i] = undefined; }
+                }
+
                 var v = {
                     "mins"  : d[0],
                     "hour"  : d[1],
@@ -420,7 +455,7 @@
                     }
                 }
             }
-            
+
             // trigger change event
             var bp = block["period"].find("select").val(t);
             if (useGentleSelect) bp.gentleSelect("update");

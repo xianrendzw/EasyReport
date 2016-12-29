@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-version>4.3.1.RELEASE</spring-version>
+        <spring-version>4.3.5.RELEASE</spring-version>
         <logback-version>1.1.6</logback-version>
         <jackson-version>1.9.13</jackson-version>
         <junit-version>4.12</junit-version>
@@ -314,6 +314,11 @@
                 <artifactId>quartz-jobs</artifactId>
                 <version>2.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz-jobs</artifactId>
+                <version>2.2.1</version>
+            </dependency>
             <!-- web container -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -326,6 +331,12 @@
                 <artifactId>jstl</artifactId>
                 <version>1.2</version>
             </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+
             <!-- Test -->
             <dependency>
                 <groupId>org.springframework</groupId>

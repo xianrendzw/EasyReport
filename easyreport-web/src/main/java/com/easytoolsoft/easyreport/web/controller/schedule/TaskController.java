@@ -43,21 +43,27 @@ public class TaskController
     public JsonResult add(Task po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
-        return super.add(po);
+        JsonResult result =  super.add(po);
+        quartz.reScheduleJob();
+        return result;
     }
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
     @RequiresPermissions("schedule.task:edit")
     public JsonResult edit(Task po) {
-        return super.edit(po);
+        JsonResult result =  super.edit(po);
+        quartz.reScheduleJob();
+        return result;
     }
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
     @RequiresPermissions("schedule.task:remove")
     public JsonResult remove(int id) {
-        return super.remove(id);
+        JsonResult result =  super.remove(id);
+        quartz.reScheduleJob();
+        return result;
     }
 
     @GetMapping(value = "/getJsonOptions")

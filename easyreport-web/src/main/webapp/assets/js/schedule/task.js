@@ -180,7 +180,7 @@ var TaskMVC = {
             });
 
             $('#cronExprDiv').cron({
-                initial: "42 3 1 * *",
+                initial: "0 0/1 * * * ?",
                 onChange: function () {
                     $('#cronExpr').textbox('setValue', $(this).cron("value"));
                 },
@@ -211,7 +211,7 @@ var TaskMVC = {
             options.title = jQuery.i18n.prop('task.add.task');
             EasyUIUtils.openAddDlg(options);
             $('#type').combobox('setValue', "1");
-            $('#cronExpr').textbox('setValue', '42 3 1 * *');
+            $('#cronExpr').textbox('setValue', '0 0/1 * * * ?');
             TaskMVC.Util.fillReportCombox("add", []);
         },
         edit: function () {
