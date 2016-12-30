@@ -689,6 +689,10 @@ var DesignerMVC = {
                     handler: function () {
                         $("#report-designer-dlg").dialog('close');
                     }
+                }, {
+                    text: jQuery.i18n.prop('design.save'),
+                    iconCls: 'icon-save',
+                    handler: DesignerMVC.Controller.save
                 }],
                 onResize: function (width, height) {
                     DesignerMVC.Util.resizeDesignerDlgElments();
