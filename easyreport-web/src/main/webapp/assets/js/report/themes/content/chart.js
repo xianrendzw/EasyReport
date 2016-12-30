@@ -3,6 +3,7 @@ var ChartReport = {
         ChartReportMVC.View.initControl();
         ChartReportMVC.View.bindEvent();
         ChartReportMVC.View.bindValidate();
+        angular.bootstrap(document,['i18n']);
         ChartReportMVC.View.initData();
     }
 };

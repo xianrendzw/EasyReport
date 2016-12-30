@@ -57,15 +57,10 @@ public class ReportJob implements org.quartz.Job {
             paraMap.put("statColumns", metaColumns);
             paraMap.put("checkAllStatColumn", "on");
 
-            report_html=report_html.replaceAll("\\$\\{table" + index + "\\}", generate(po.getUid(), paraMap).getHtmlText());
+            report_html=report_html.replaceAll("\\$\\{table" + index + "\\}", generate(po.getUid(), paraMap).getHtmlText().replaceAll("><", ">\n<"));
             index++;
         }
-        try {
-            report_html=formatHtml(report_html);
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+        
 
         String json = task.getOptions();
         ScheduleOption options = JSON.parseObject(json, ScheduleOption.class);

@@ -3,6 +3,7 @@ var TableReport = {
         TableReportMVC.View.initControl();
         TableReportMVC.View.bindEvent();
         TableReportMVC.View.bindValidate();
+        angular.bootstrap(document,['i18n']);
         TableReportMVC.View.initData();
     }
 };
