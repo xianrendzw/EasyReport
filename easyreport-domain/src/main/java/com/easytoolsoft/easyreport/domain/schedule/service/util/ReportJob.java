@@ -46,13 +46,13 @@ public class ReportJob implements org.quartz.Job {
         String[] reportids = task.getReportIds().split(",");
         String template_html_start = "<html><head><head><style type='text/css'> "+"\n"
         		+"body,table{font-size:12px;}"+ "\n"
-        		+"table{ table-layout:fixed;empty-cells:show; border-collapse: collapse; margin:0 auto; }"+"\n"
-        		+"td{height:30px; }"+"\n"
-        		+"h1,h2,h3{ font-size:12px;margin:0; padding:0; }"+"\n"
-        		+".table{ border:1px solid #cad9ea; color:#666; }"+"\n" 
-        		+".table th {background-repeat:repeat-x; height:30px;}" +"\n"
-        		+".table td,.table th{border:1px solid #cad9ea;padding:0 1em 0;}"+"\n"
-        		+".table tr.alter{background-color:#f5fafe; }" +"\n"
+        		+"table {color: #333;font-family: Helvetica, Arial, sans-serif;width: 640px;border-collapse:collapse; border-spacing: 0;}"+"\n"
+        		+"td, th {border: 1px solid transparent; height: 30px;transition: all 0.3s; }"+"\n"
+        		+"th {background: #DFDFDF; font-weight: bold;}"+"\n"
+        		+"td {background: #FAFAFA;text-align: center;}"+"\n" 
+        		+"tr:nth-child(even) td { background: #F1F1F1; }" +"\n"
+        		+"tr:nth-child(odd) td { background: #FEFEFE; }"+"\n"
+        		+"tr td:hover { background: #666; color: #FFF; }" +"\n"
         		+"</style></head><body>";
         String report_html = template_html_start+task.getTemplate()+"</body></html>";
         int index = 1;
