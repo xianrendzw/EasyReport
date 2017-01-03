@@ -10,7 +10,7 @@
           href="${ctxPath}/assets/vendor/jquery-cron/gentleSelect/jquery-gentleSelect.css?v=${version}"/>
     <link rel="stylesheet" href="${ctxPath}/assets/vendor/jquery-cron/cron/jquery-cron.css?v=${version}"/>
     <script src="${ctxPath}/assets/vendor/jquery-cron/gentleSelect/jquery-gentleSelect-min.js?v=${version}"></script>
-    <script src="${ctxPath}/assets/vendor/jquery-cron/cron/jquery-cron-min.js?v=${version}"></script>
+    <script src="${ctxPath}/assets/vendor/jquery-cron/cron/jquery-cron.js?v=${version}"></script>
     <script src="${ctxPath}/assets/js/schedule/task.js?v=${version}"></script>
 </head>
 <body  ng-app="i18n" ng-controller="translate" class="easyui-layout">

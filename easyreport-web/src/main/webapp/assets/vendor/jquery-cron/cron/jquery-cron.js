@@ -264,12 +264,15 @@
 
             case "hour":
                 min = b["mins"].find("select").val();
+                min=min==null?"0":min;
                 return ["0", min, "0/1", "*", "*", "?"].join(" ");
                 break;
 
             case "day":
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
+                min=min==null?"0":min;
+                hour=hour==null?"0":hour;
                 return ["0", min, hour, "*", "*", "?"].join(" ");
                 break;
 
@@ -277,6 +280,9 @@
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
                 dow  =  b["dow"].find("select").val();
+                min=min==null?"0":min;
+                hour=hour==null?"0":hour;
+                dow=dow==null?"0":dow;
                 return ["0", min, hour, "?", "*", dow].join(" ");
                 break;
 
@@ -284,6 +290,9 @@
                 min  = b["time"].find("select.cron-time-min").val();
                 hour = b["time"].find("select.cron-time-hour").val();
                 day  = b["dom"].find("select").val();
+                min=min==null?"0":min;
+                hour=hour==null?"0":hour;
+                day=day==null?"0":day;
                 return ["0", min, hour, day, "*", "?"].join(" ");
                 break;
 
@@ -292,6 +301,10 @@
                 hour = b["time"].find("select.cron-time-hour").val();
                 day  = b["dom"].find("select").val();
                 month = b["month"].find("select").val();
+                min=min==null?"0":min;
+                hour=hour==null?"0":hour;
+                day=day==null?"0":day;
+                month=month==null?"0":month;
                 return ["0", min, hour, day, month, "?", "*"].join(" ");
                 break;
 
