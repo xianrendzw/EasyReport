@@ -20,6 +20,7 @@ nb-configuration.xml
 /easyreport-web/target/
 /easyreport-web/.settings/
 /easyreport-web/.classpath
+/easyreport-web/mail/
 /easyreport-data/target/
 /easyreport-data/.settings/
 /easyreport-data/.classpath
