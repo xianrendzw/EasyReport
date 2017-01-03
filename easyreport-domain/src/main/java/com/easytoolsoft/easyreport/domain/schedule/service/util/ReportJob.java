@@ -44,7 +44,17 @@ public class ReportJob implements org.quartz.Job {
     public void execute(int taskid) {
         Task task = taskService.getById(taskid);
         String[] reportids = task.getReportIds().split(",");
-        String report_html = task.getTemplate();
+        String template_html_start = "<html><head><head><style type='text/css'> "+"\n"
+        		+"body,table{font-size:12px;}"+ "\n"
+        		+"table{ table-layout:fixed;empty-cells:show; border-collapse: collapse; margin:0 auto; }"+"\n"
+        		+"td{height:30px; }"+"\n"
+        		+"h1,h2,h3{ font-size:12px;margin:0; padding:0; }"+"\n"
+        		+".table{ border:1px solid #cad9ea; color:#666; }"+"\n" 
+        		+".table th {background-repeat:repeat-x; height:30px;}" +"\n"
+        		+".table td,.table th{border:1px solid #cad9ea;padding:0 1em 0;}"+"\n"
+        		+".table tr.alter{background-color:#f5fafe; }" +"\n"
+        		+"</style></head><body>";
+        String report_html = template_html_start+task.getTemplate()+"</body></html>";
         int index = 1;
         for (String report_id : reportids) {
             Report po = reportService.getById(Integer.parseInt(report_id));

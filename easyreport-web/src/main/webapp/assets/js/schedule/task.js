@@ -175,7 +175,9 @@ var TaskMVC = {
 
             $('#type').combobox({
                 onChange: function (newValue, oldValue) {
-                    TaskMVC.Util.getJsonOptions(newValue);
+                	if(oldValue!=""){
+                		TaskMVC.Util.getJsonOptions(newValue);
+                	}
                 }
             });
 
@@ -213,6 +215,10 @@ var TaskMVC = {
             $('#type').combobox('setValue', "1");
             $('#cronExpr').textbox('setValue', '0 0/1 * * * ?');
             TaskMVC.Util.fillReportCombox("add", []);
+            TaskMVC.Util.getJsonOptions("1");
+            
+            var template_html_end = "</body></html>";
+            $('#template').textbox('setValue', result.data);
         },
         edit: function () {
             var row = $('#task-datagrid').datagrid('getSelected');
@@ -222,7 +228,7 @@ var TaskMVC = {
                 options.data = row;
                 options.title = jQuery.i18n.prop('task.edit.task',options.data.name);
                 EasyUIUtils.openEditDlg(options);
-                TaskMVC.Util.fillReportCombox("edit", roleIds.split(','));
+                TaskMVC.Util.fillReportCombox("edit", row.reportIds.split(','));
             } else {
                 $.messager.alert(jQuery.i18n.prop('task.warn'), jQuery.i18n.prop('task.please.select.record'), 'info');
             }
