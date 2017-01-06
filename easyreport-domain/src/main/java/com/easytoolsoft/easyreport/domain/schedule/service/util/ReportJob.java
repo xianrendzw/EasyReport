@@ -47,7 +47,7 @@ public class ReportJob implements org.quartz.Job {
         String template_html_start = "<html><head><head><style type='text/css'> "+"\n"
         		+"body,table{font-size:12px;}"+ "\n"
         		+"table {color: #333;font-family: Helvetica, Arial, sans-serif;width: 640px;border-collapse:collapse; border-spacing: 0;}"+"\n"
-        		+"td, th {border: 1px solid transparent; height: 30px;transition: all 0.3s; }"+"\n"
+        		+"td, th {border: 1px solid blue; height: 30px;transition: all 0.3s; }"+"\n"
         		+"th {background: #DFDFDF; font-weight: bold;}"+"\n"
         		+"td {background: #FAFAFA;text-align: center;}"+"\n" 
         		+"tr:nth-child(even) td { background: #F1F1F1; }" +"\n"
