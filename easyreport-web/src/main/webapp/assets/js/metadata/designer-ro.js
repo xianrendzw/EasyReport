@@ -5,16 +5,16 @@ $(function () {
 var MetaDataDesigner = {
     init: function () {
         DesignerMVC.View.initControl();
-        DesignerMVC.View.resizeDesignerElments();
-        DesignerMVC.View.initSqlEditor();
-        DesignerMVC.View.initHistorySqlEditor();
-        DesignerMVC.View.initPreviewSqlEditor();
+//        DesignerMVC.View.resizeDesignerElments();
+//        DesignerMVC.View.initSqlEditor();
+//        DesignerMVC.View.initHistorySqlEditor();
+//        DesignerMVC.View.initPreviewSqlEditor();
         DesignerMVC.View.bindEvent();
         DesignerMVC.View.bindValidate();
         DesignerMVC.View.initData();
     },
     listReports: function (category) {
-        DesignerMVC.Controller.listReports(-1);
+        DesignerMVC.Controller.listReports(category.id);
     },
     addReport: function () {
         DesignerMVC.Controller.add();
@@ -87,15 +87,15 @@ var DesignerMVC = {
     Model: {
         MetaColumnOptions: [{
             name: "optional",
-            text: jQuery.i18n.prop('design.optional'),
+            text: 'design.optional',
             type: 1
         }, {
             name: "percent",
-            text: jQuery.i18n.prop('design.percent'),
+            text: 'design.percent',
             type: 1
         }, {
             name: "displayInMail",
-            text: jQuery.i18n.prop('design.displayinmail'),
+            text: 'design.displayinmail',
             type: 1
         }, /*{
          name : "footings",
@@ -107,11 +107,11 @@ var DesignerMVC = {
          type : 3
          },*/ {
             name: "expression",
-            text: jQuery.i18n.prop('design.expression'),
+            text: 'design.expression',
             type: 4
         }, {
             name: "comment",
-            text: jQuery.i18n.prop('design.comment'),
+            text: 'design.comment',
             type: 2
         }
             /*, {
@@ -120,32 +120,32 @@ var DesignerMVC = {
              type: 2
              }*/],
         MetaColumnTypes: [{
-            text: jQuery.i18n.prop('design.col.layout'),
+            text: 'design.col.layout',
             value: 1
         }, {
-            text: jQuery.i18n.prop('design.col.dimenssion'),
+            text: 'design.col.dimenssion',
             value: 2
         }, {
-            text: jQuery.i18n.prop('design.col.statistic'),
+            text: 'design.col.statistic',
             value: 3
         }, {
-            text: jQuery.i18n.prop('design.col.caculate'),
+            text: 'design.col.caculate',
             value: 4
         }],
         MetaColumnSortTypes: [{
-            text: jQuery.i18n.prop('design.default'),
+            text: 'design.default',
             value: 0
         }, {
-            text: jQuery.i18n.prop('design.num.asc'),
+            text: 'design.num.asc',
             value: 1
         }, {
-            text: jQuery.i18n.prop('design.num.desc'),
+            text: 'design.num.desc',
             value: 2
         }, {
-            text: jQuery.i18n.prop('design.char.asc'),
+            text: 'design.char.asc',
             value: 3
         }, {
-            text: jQuery.i18n.prop('design.char.desc'),
+            text: 'design.char.desc',
             value: 4
         }],
         DataSourceList: []
@@ -710,7 +710,6 @@ var DesignerMVC = {
                 }
             });
             
-            DesignerMVC.Controller.listReports(-1);
         },
         resizeDesignerElments: function () {
             DesignerMVC.Util.resizeDesignerDlgElments();

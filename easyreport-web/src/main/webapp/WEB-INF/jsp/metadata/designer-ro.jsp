@@ -19,11 +19,19 @@
     <script src="${ctxPath}/assets/js/metadata/designer-ro.js?v=${version}"></script>
 </head>
 <body class="easyui-layout" id="body-layout" ng-app="i18n" ng-controller="translate">
-
+<!-- left report class tree -->
+<div id="west" data-options="region:'west',split:true" title="{{info.report_category}}" style="width: 220px;">
+    <div class="easyui-panel" style="padding: 5px; border: none">
+        <ul id="category-tree"></ul>
+        <input type="hidden" id="copyNodeId" name="copyNodeId" value="0"/>
+        <input id="modal-action" type="hidden" name="action" value=""/>
+        <input type="hidden" id="current-row-index" name="current-row-index" value="0"/>
+    </div>
+</div>
 <!-- right report list-->
 <div region="center" data-options="region:'center'">
     <div id="toolbar1" class="toolbar">
-        名称:<input class="easyui-textbox" type="text" id="report-search-keyword" name="keyword" style="width:250px"/>
+        {{info.report_name}}<input class="easyui-textbox" type="text" id="report-search-keyword" name="keyword" style="width:250px"/>
         <a id="btn-report-search" href="#" class="easyui-linkbutton" iconCls="icon-search">{{info.report_search_act}}</a>
     </div>
     <div style="width: 100%; height: 94%;padding-top: 1px">
