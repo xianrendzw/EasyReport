@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.IDataSourceDao;
-import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IDataSourceDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.DataSourceExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.domain.metadata.service.IDataSourceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,14 +26,16 @@ public class DataSourceService
     }
 
     /**
+     * @param driverClass
      * @param url
      * @param user
      * @param password
      * @return
      */
-    public boolean testConnection(String url, String user, String password) {
+    public boolean testConnection(String driverClass, String url, String user, String password) {
         Connection conn = null;
         try {
+            Class.forName(driverClass);
             conn = DriverManager.getConnection(url, user, password);
             return true;
         } catch (Exception e) {

@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.membership.example.UserExample;
-import com.easytoolsoft.easyreport.data.membership.po.User;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.membership.example.UserExample;
+import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.security.PasswordService;
 import com.easytoolsoft.easyreport.membership.service.IUserService;

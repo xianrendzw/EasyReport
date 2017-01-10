@@ -5,7 +5,7 @@ import com.easytoolsoft.easyreport.engine.data.ColumnTreeNode;
 import com.easytoolsoft.easyreport.engine.data.ReportDataCell;
 import com.easytoolsoft.easyreport.engine.data.ReportDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportDataRow;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder imp
      * @param reportDataSet   报表数据集
      * @param reportParameter 报表参数
      */
-    public HorizontalStatColumnReportBuilder(ReportDataSet reportDataSet, ReportParameter reportParameter) {
+    public HorizontalStatColumnReportBuilder(AbstractReportDataSet reportDataSet, ReportParameter reportParameter) {
         super(reportDataSet, reportParameter);
     }
 

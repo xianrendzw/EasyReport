@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.home;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.membership.po.Module;
-import com.easytoolsoft.easyreport.data.membership.po.User;
+import com.easytoolsoft.easyreport.membership.po.Module;
+import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.membership.common.CurrentUser;
 import com.easytoolsoft.easyreport.membership.service.MembershipFacade;
 import org.springframework.stereotype.Controller;

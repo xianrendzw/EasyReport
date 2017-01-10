@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.domain.metadata;
 
-import com.easytoolsoft.easyreport.data.metadata.dao.ICategoryDao;
-import com.easytoolsoft.easyreport.data.metadata.po.Category;
+import com.easytoolsoft.easyreport.domain.metadata.dao.ICategoryDao;
+import com.easytoolsoft.easyreport.domain.metadata.po.Category;
 import com.easytoolsoft.easyreport.domain.BaseDomainTest;
 import com.easytoolsoft.easyreport.domain.metadata.service.impl.CategoryService;
 import lombok.extern.slf4j.Slf4j;

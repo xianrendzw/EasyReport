@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
 import com.easytoolsoft.easyreport.common.tree.EasyUITreeNode;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.metadata.example.ConfExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Conf;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.domain.metadata.example.ConfExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.Conf;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;

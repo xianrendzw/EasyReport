@@ -10,7 +10,7 @@ import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
 import com.easytoolsoft.easyreport.common.util.DateUtils;
 import com.easytoolsoft.easyreport.engine.ReportGenerator;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
@@ -20,8 +20,8 @@ import com.easytoolsoft.easyreport.engine.data.ReportSqlTemplate;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
 import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.domain.report.ITableReportService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
 import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
@@ -84,7 +84,7 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public ReportDataSet getReportDataSet(Report report, Map<String, Object> parameters) {
+    public AbstractReportDataSet getReportDataSet(Report report, Map<String, Object> parameters) {
         ReportDataSource reportDs = this.reportService.getReportDataSource(report.getDsId());
         return ReportGenerator.getDataSet(reportDs, this.createReportParameter(report, parameters));
     }

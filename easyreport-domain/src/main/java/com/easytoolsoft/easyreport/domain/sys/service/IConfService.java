@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.domain.sys.service;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.ICrudService;
-import com.easytoolsoft.easyreport.data.sys.example.ConfExample;
-import com.easytoolsoft.easyreport.data.sys.po.Conf;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.ICrudService;
+import com.easytoolsoft.easyreport.domain.sys.example.ConfExample;
+import com.easytoolsoft.easyreport.domain.sys.po.Conf;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.IConfDao;
-import com.easytoolsoft.easyreport.data.metadata.example.ConfExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Conf;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IConfDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.ConfExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.Conf;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;

@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.membership;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.membership.example.PermissionExample;
-import com.easytoolsoft.easyreport.data.membership.po.Permission;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.membership.example.PermissionExample;
+import com.easytoolsoft.easyreport.membership.po.Permission;
 import com.easytoolsoft.easyreport.membership.service.IPermissionService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;

@@ -65,7 +65,6 @@ public abstract class AbstractQueryer {
         return columns;
     }
 
-
     public List<ReportQueryParamItem> parseQueryParamItems(String sqlText) {
         Connection conn = null;
         Statement stmt = null;

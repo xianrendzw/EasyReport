@@ -1,9 +1,9 @@
 package com.easytoolsoft.easyreport.domain.metadata.service.impl;
 
-import com.easytoolsoft.easyreport.data.common.service.AbstractCrudService;
-import com.easytoolsoft.easyreport.data.metadata.dao.ICategoryDao;
-import com.easytoolsoft.easyreport.data.metadata.example.CategoryExample;
-import com.easytoolsoft.easyreport.data.metadata.po.Category;
+import com.easytoolsoft.easyreport.data.service.AbstractCrudService;
+import com.easytoolsoft.easyreport.domain.metadata.dao.ICategoryDao;
+import com.easytoolsoft.easyreport.domain.metadata.example.CategoryExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.Category;
 import com.easytoolsoft.easyreport.domain.metadata.service.ICategoryService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;

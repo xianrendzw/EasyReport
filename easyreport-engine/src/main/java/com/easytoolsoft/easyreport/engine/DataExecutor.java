@@ -2,7 +2,7 @@ package com.easytoolsoft.easyreport.engine;
 
 import com.easytoolsoft.easyreport.engine.data.HorizontalStatColumnDataSet;
 import com.easytoolsoft.easyreport.engine.data.LayoutType;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataRow;
@@ -62,7 +62,7 @@ public class DataExecutor {
      *
      * @return ReportDataSet报表数据集对象
      */
-    public ReportDataSet execute() {
+    public AbstractReportDataSet execute() {
         Queryer queryer = this.getQueryer();
         if (queryer == null) {
             throw new RuntimeException("未指定报表查询器对象!");
@@ -81,7 +81,7 @@ public class DataExecutor {
      * @param metaDataSet
      * @return ReportDataSet报表数据集对象
      */
-    public ReportDataSet execute(ReportMetaDataSet metaDataSet) {
+    public AbstractReportDataSet execute(ReportMetaDataSet metaDataSet) {
         if (metaDataSet == null) {
             throw new RuntimeException("报表元数据集不能为null!");
         }

@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * 横向展示报表统计列的报表数据集类。
  */
-public class HorizontalStatColumnDataSet extends ReportDataSet {
+public class HorizontalStatColumnDataSet
+        extends AbstractReportDataSet implements ReportDataSet {
     /**
      * @param metaDataSet
      * @param layout

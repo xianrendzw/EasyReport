@@ -7,7 +7,7 @@ import com.easytoolsoft.easyreport.domain.report.IChartReportService;
 import com.easytoolsoft.easyreport.engine.data.ReportDataCell;
 import com.easytoolsoft.easyreport.engine.data.ReportDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportDataRow;
-import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class ChartReportService implements IChartReportService {
     @Override
-    public Map<String, List<TextValuePair>> getDimColumnMap(ReportDataSet reportDataSet) {
+    public Map<String, List<TextValuePair>> getDimColumnMap(AbstractReportDataSet reportDataSet) {
         Map<String, List<String>> map = reportDataSet.getUnduplicatedNonStatColumnDataMap();
         if (map.size() < 1) {
             return new HashMap<>(0);
@@ -39,12 +39,12 @@ public class ChartReportService implements IChartReportService {
     }
 
     @Override
-    public JSONArray getStatColumns(ReportDataSet reportDataSet) {
+    public JSONArray getStatColumns(AbstractReportDataSet reportDataSet) {
         return this.getJsonArray(reportDataSet.getStatColumns());
     }
 
     @Override
-    public JSONArray getDimColumns(ReportDataSet reportDataSet) {
+    public JSONArray getDimColumns(AbstractReportDataSet reportDataSet) {
         return this.getJsonArray(reportDataSet.getNonStatColumns());
     }
 
@@ -60,7 +60,7 @@ public class ChartReportService implements IChartReportService {
     }
 
     @Override
-    public Map<String, JSONObject> getDataRows(ReportDataSet reportDataSet) {
+    public Map<String, JSONObject> getDataRows(AbstractReportDataSet reportDataSet) {
         Map<String, ReportDataRow> dataRows = reportDataSet.getRowMap();
         List<ReportDataColumn> statColumns = reportDataSet.getStatColumns();
         Map<String, JSONObject> rowMap = new HashMap<>(dataRows.size());

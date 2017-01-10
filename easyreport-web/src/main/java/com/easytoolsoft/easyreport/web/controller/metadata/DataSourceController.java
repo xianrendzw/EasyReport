@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.metadata;
 
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.metadata.example.DataSourceExample;
-import com.easytoolsoft.easyreport.data.metadata.po.DataSource;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
+import com.easytoolsoft.easyreport.domain.metadata.example.DataSourceExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.DataSource;
 import com.easytoolsoft.easyreport.domain.metadata.service.IDataSourceService;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
@@ -93,9 +93,9 @@ public class DataSourceController
     @PostMapping(value = "/testConnection")
     @OpLog(name = "测试数据源")
     @RequiresPermissions("report.ds:view")
-    public JsonResult testConnection(String url, String pass, String user) {
+    public JsonResult testConnection(String driverClass, String url, String pass, String user) {
         JsonResult<String> result = new JsonResult<>();
-        result.setSuccess(this.service.testConnection(url, user, pass));
+        result.setSuccess(this.service.testConnection(driverClass, url, user, pass));
         return result;
     }
 
@@ -107,6 +107,7 @@ public class DataSourceController
         DataSource dsPo = this.service.getById(id);
         dsPo.decrypt();
         result.setSuccess(this.service.testConnection(
+                dsPo.getDriverClass(),
                 dsPo.getJdbcUrl(),
                 dsPo.getUser(), dsPo.getPassword()));
         return result;

@@ -1,8 +1,8 @@
 package com.easytoolsoft.easyreport.data;
 
 import com.easytoolsoft.easyreport.BaseTest;
-import com.easytoolsoft.easyreport.data.common.dao.ICrudDao;
-import com.easytoolsoft.easyreport.data.common.helper.PageInfo;
+import com.easytoolsoft.easyreport.data.dao.ICrudDao;
+import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.core.IsEqual;
 import org.junit.Assert;
