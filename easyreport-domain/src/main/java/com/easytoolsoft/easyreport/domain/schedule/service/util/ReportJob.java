@@ -20,8 +20,8 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.easytoolsoft.easyreport.data.metadata.po.Report;
-import com.easytoolsoft.easyreport.data.schedule.po.Task;
+import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.schedule.po.Task;
 import com.easytoolsoft.easyreport.domain.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.TableReportService;
 import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;

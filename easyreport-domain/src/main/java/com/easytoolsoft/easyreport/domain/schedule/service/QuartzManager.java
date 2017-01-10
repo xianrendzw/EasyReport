@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.easytoolsoft.easyreport.data.schedule.po.Task;
+import com.easytoolsoft.easyreport.domain.schedule.po.Task;
 import com.easytoolsoft.easyreport.domain.schedule.service.impl.TaskService;
 import com.easytoolsoft.easyreport.domain.schedule.service.util.ReportJob;
 import com.easytoolsoft.easyreport.domain.schedule.service.util.SpringJobFactory;
