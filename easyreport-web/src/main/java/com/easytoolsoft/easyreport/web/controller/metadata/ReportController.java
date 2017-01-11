@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.domain.metadata.dao.GlobalParamDao;
 import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;
@@ -19,6 +20,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
