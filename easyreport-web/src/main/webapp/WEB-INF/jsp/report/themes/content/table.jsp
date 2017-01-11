@@ -8,7 +8,7 @@
             </tr>
             <tr>
                 <td style="text-align: left;">${formHtmlText}
-                    <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" checked="checked"/>{{info.table_mergerow}}
+                    <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" />{{info.table_mergerow}}
                     <a id="btn-generate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">{{info.table_generate}}</a>
                 </td>
                 <td style="text-align: right;">

@@ -94,6 +94,7 @@ public class PreviewController {
         JSONObject data = new JSONObject();
         try {
             ReportHelper.generate(uid, data, request);
+            data.getString("htmlTable");
         } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
             data.put("htmlTable", ex.getMessage());
             log.error("报表生成失败", ex);
@@ -139,9 +140,27 @@ public class PreviewController {
     public void exportToExcel(String uid, String name, String htmlText,
                               HttpServletRequest request, HttpServletResponse response) {
         try {
-            ReportHelper.exportToExcel(uid, name, htmlText, request, response);
+            ReportHelper.exportToExcel(uid, name, htmlText,request, response);
         } catch (Exception ex) {
             log.error("导出Excel失败", ex);
         }
+    }
+    
+    @PostMapping(value = "/table/exportLargeExcel")
+    //@OpLog(name = "导出报表为Excel")
+    //@RequiresPermissions("report.designer:export")
+    public void exportToLargeExcel(String uid, HttpServletRequest request, HttpServletResponse response) {
+        JSONObject data = new JSONObject();
+        try {
+            ReportHelper.generate(uid, data, request);
+        } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
+            data.put("htmlTable", ex.getMessage());
+            log.error("报表生成失败", ex);
+        } catch (Exception ex) {
+            data.put("htmlTable", "报表系统错误:" + ex.getMessage());
+            log.error("报表系统出错", ex);
+        }
+        System.out.println(data.getString("htmlTable"));
+        ReportHelper.exportToExcel(uid, "LargeTable", data.getString("htmlTable"),request, response);
     }
 }

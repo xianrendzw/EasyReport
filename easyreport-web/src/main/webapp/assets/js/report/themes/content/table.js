@@ -21,6 +21,10 @@ var TableReportMVC = {
         exportExcel: {
             url: TableReportCommon.baseUrl + '/table/exportExcel',
             method: 'POST'
+        },
+        exportLargeExcel: {
+            url: TableReportCommon.baseUrl + '/table/exportLargeExcel',
+            method: 'POST'
         }
     },
     View: {
@@ -82,16 +86,16 @@ var TableReportMVC = {
             var htmlText = '';
             htmlText += (TableReportMVC.Util.filterTable || '');
             htmlText += '<table>' + $('#easyreport').html() + '</table>';
-
-            var bytes = TableReportMVC.Util.getExcelBytes(htmlText);
-            if (bytes > 2000000) {
-                htmlText = "large";
-            }
-
             var url = TableReportMVC.URLs.exportExcel.url;
             var data = $('#table-report-form').serializeObject();
-            data["htmlText"] = htmlText;
-
+            var bytes = TableReportMVC.Util.getExcelBytes(htmlText);
+            if (bytes > 200000) {
+                htmlText = "large";
+                url = TableReportMVC.URLs.exportLargeExcel.url;
+                data = $('#table-report-form').serialize();
+            }else{
+                data["htmlText"] = htmlText;
+            }
 //            $.messager.progress({
 //                title: '请稍后...',
 //                text: '报表正在生成中...',
