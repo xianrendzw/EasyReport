@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.po.User;
-import com.easytoolsoft.easyreport.domain.metadata.dao.GlobalParamDao;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IGlobalParamDao;
 import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;

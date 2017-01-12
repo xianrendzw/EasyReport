@@ -25,8 +25,8 @@ import java.util.Map;
 /**
  * 报表配置控制器
  */
-@RestController("MetaDataConfController")
-@RequestMapping(value = "/rest/metadata/conf")
+@RestController("MetaDataGlobalParamController")
+@RequestMapping(value = "/rest/metadata/globalparm")
 public class GlobalParamController
         extends BaseController<IGlobalParamService, GlobalParam, GlobalParamExample> {
 
