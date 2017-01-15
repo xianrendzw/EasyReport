@@ -28,6 +28,7 @@ import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
 import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -392,11 +393,12 @@ public class TableReportService implements ITableReportService {
         htmlFormElement.setDefaultValue(queryParam.getRealDefaultValue());
         htmlFormElement.setComment(queryParam.getComment());
     }
-
+    
+    
     private List<ReportQueryParamItem> getOptions(QueryParameter queryParam, int dsId,
                                                   Map<String, Object> buildinParams) {
         if (queryParam.getDataSource().equals("sql")) {
-            return this.reportService.executeQueryParamSqlText(dsId, queryParam.getContent());
+        	getOptionsFromDB(queryParam,dsId);
         }
 
         List<ReportQueryParamItem> options = new ArrayList<>();
@@ -415,6 +417,12 @@ public class TableReportService implements ITableReportService {
         }
         return options;
     }
+    
+    @Cacheable(value="globalparamCache",key="'globalparamKey'+#queryParam.name+'_'+#dsId")  
+    private List<ReportQueryParamItem> getOptionsFromDB(QueryParameter queryParam, int dsId) {
+    	return this.reportService.executeQueryParamSqlText(dsId, queryParam.getContent());
+    }
+    
 
     @Override
     public HtmlCheckBoxList getStatColumnFormElements(String uid, int minDisplayedStatColumn) {
