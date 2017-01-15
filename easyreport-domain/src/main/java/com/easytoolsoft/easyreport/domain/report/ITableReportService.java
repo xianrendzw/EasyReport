@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 
 import java.util.List;
@@ -40,25 +41,25 @@ public interface ITableReportService {
 
     Map<String, Object> getFormParameters(Map<?, ?> httpReqParamMap, int dataRange);
 
-    Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,
+    Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                    int minDisplayedStatColumn);
 
-    Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,
+    Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                    int minDisplayedStatColumn);
 
-    Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,
+    Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                    int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,
+    List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,
+    List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,
+    List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams);
+    List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList);
 
     List<HtmlDateBox> getDateFormElements(String uid, Map<String, Object> buildinParams);
 
@@ -66,13 +67,13 @@ public interface ITableReportService {
 
     List<HtmlDateBox> getDateFormElements(Report report, Map<String, Object> buildinParams);
 
-    List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,
+    List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                     int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,
+    List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                     int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams);
+    List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList);
 
     HtmlCheckBoxList getStatColumnFormElements(String uid, int minDisplayedStatColumn);
 

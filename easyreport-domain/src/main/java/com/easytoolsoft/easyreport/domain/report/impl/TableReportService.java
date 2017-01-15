@@ -20,6 +20,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportSqlTemplate;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
 import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.domain.report.ITableReportService;
@@ -204,23 +205,23 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,
+    public Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                           int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
-        return this.getFormElementMap(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElementMap(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,
+    public Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                           int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
-        return this.getFormElementMap(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElementMap(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,
+    public Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                           int minDisplayedStatColumn) {
-        List<HtmlFormElement> formElements = this.getFormElements(report, buildinParams, minDisplayedStatColumn);
+        List<HtmlFormElement> formElements = this.getFormElements(report, buildinParams, globalParamList,minDisplayedStatColumn);
         Map<String, HtmlFormElement> formElementMap = new HashMap<>(formElements.size());
         for (HtmlFormElement element : formElements) {
             formElementMap.put(element.getName(), element);
@@ -229,35 +230,35 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,
+    public List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                  int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
-        return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElements(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,
+    public List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                  int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
-        return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElements(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,
+    public List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                  int minDisplayedStatColumn) {
         List<HtmlFormElement> formElements = new ArrayList<>(15);
         formElements.addAll(this.getDateFormElements(report, buildinParams));
-        formElements.addAll(this.getQueryParamFormElements(report, buildinParams));
+        formElements.addAll(this.getQueryParamFormElements(report, buildinParams,globalParamList));
         formElements.add(this.getStatColumnFormElements(this.reportService.parseMetaColumns(report.getMetaColumns()),
                 minDisplayedStatColumn));
         return formElements;
     }
 
     @Override
-    public List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams) {
+    public List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList) {
         List<HtmlFormElement> formElements = new ArrayList<>(15);
         formElements.addAll(this.getDateFormElements(report, buildinParams));
-        formElements.addAll(this.getQueryParamFormElements(report, buildinParams));
+        formElements.addAll(this.getQueryParamFormElements(report, buildinParams,globalParamList));
         return formElements;
     }
 
@@ -305,22 +306,30 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,
+    public List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                            int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
-        return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElements(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,
+    public List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
                                                            int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
-        return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
+        return this.getFormElements(report, buildinParams,globalParamList, minDisplayedStatColumn);
     }
 
     @Override
-    public List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams) {
-        List<QueryParameter> queryParams = this.reportService.parseQueryParams(report.getQueryParams());
+    public List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList) {
+        List<QueryParameter> queryParams = new ArrayList<QueryParameter>();
+        
+        List<String> globalQueryParamlist = new ArrayList<String>();
+        for(GlobalParam param : globalParamList){
+        	globalQueryParamlist.add(param.getQuery_params());
+        }
+        String globalParams = "["+StringUtils.join(globalQueryParamlist,',')+"]";
+        queryParams.addAll(this.reportService.parseQueryParams(globalParams));
+        queryParams.addAll(this.reportService.parseQueryParams(report.getQueryParams()));
         List<HtmlFormElement> formElements = new ArrayList<>(3);
 
         for (QueryParameter queryParam : queryParams) {
@@ -330,6 +339,7 @@ public class TableReportService implements ITableReportService {
             queryParam.setContent(VelocityUtils.parse(queryParam.getContent(), buildinParams));
             String formElement = queryParam.getFormElement().toLowerCase();
             if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
+            	int dsid = queryParam.getDs_id()>0? queryParam.getDs_id() : report.getDsId();
                 htmlFormElement = this.getComboBoxFormElements(queryParam, report.getDsId(), buildinParams);
             } else if (formElement.equals("checkbox")) {
                 htmlFormElement = new HtmlCheckBox(queryParam.getName(),queryParam.getText(),

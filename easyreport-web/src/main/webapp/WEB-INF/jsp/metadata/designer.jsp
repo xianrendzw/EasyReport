@@ -196,7 +196,7 @@
                             <td><input class="easyui-textbox" type="text" id="report-query-param-width" name="width"
                                        value="100" data-options="validType:'digit'" style="width:150px"/></td>
                             <td>{{info.report_disign_conf_parameter_required}}</td>
-                            <td><input class="easyui-textbox" type="checkbox" id="report-query-param-required"
+                            <td><input type="checkbox" id="report-query-param-required"
                                        name="required"/></td>
                             <td>{{info.report_disign_conf_parameter_autocomplete}}</td>
                             <td><input type="checkbox" id="report-query-param-autoComplete" name="autoComplete"/></td>

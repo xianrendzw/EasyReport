@@ -14,6 +14,7 @@ var MetaDataGlobalParam = {
 var GlobalParamCommon = {
     baseUrl: EasyReport.ctxPath + '/rest/metadata/GlobalParam/',
     baseConfUrl: EasyReport.ctxPath + '/rest/metadata/conf/',
+    baseDsUrl:  EasyReport.ctxPath + '/rest/metadata/ds/',
     baseIconUrl: EasyReport.ctxPath + '/assets/custom/easyui/themes/icons/',
 };
 
@@ -35,9 +36,11 @@ var GlobalParamMVC = {
             url: GlobalParamCommon.baseUrl + 'remove',
             method: 'POST'
         },
-        getConfItems: {
-            url: GlobalParamCommon.baseConfUrl + 'getConfItems',
-            method: 'GET'
+        DataSource: {
+            listAll: {
+                url: GlobalParamCommon.baseDsUrl + 'listAll',
+                method: 'GET'
+            }
         }
     },
     View: {
@@ -76,52 +79,44 @@ var GlobalParamMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert(jQuery.i18n.prop('ds.failed'), src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('globalparam.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: jQuery.i18n.prop('ds.id'),
+                    title: jQuery.i18n.prop('globalparam.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: jQuery.i18n.prop('ds.name'),
+                    title: jQuery.i18n.prop('globalparam.name'),
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'driverClass',
-                    title: jQuery.i18n.prop('ds.driver'),
+                    field: 'ds_id',
+                    title: jQuery.i18n.prop('globalparam.dsid'),
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'queryerClass',
-                    title: jQuery.i18n.prop('ds.queryer'),
+                    field: 'query_params',
+                    title: jQuery.i18n.prop('globalparam.json'),
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'poolClass',
-                    title: jQuery.i18n.prop('ds.dbpool'),
-                    width: 100,
-                    sortable: true
-                }, {
-                    field: 'gmtCreated',
-                    title: jQuery.i18n.prop('ds.gmtcreate'),
+                    field: 'gmt_created',
+                    title: jQuery.i18n.prop('globalparam.gmtcreate'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'options',
-                    title: jQuery.i18n.prop('ds.operation'),
+                    title: jQuery.i18n.prop('globalparam.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": jQuery.i18n.prop('ds.edit')
-                        }, {
-                            "name": "connect",
-                            "title": jQuery.i18n.prop('ds.connect')
+                            "title": jQuery.i18n.prop('globalparam.edit')
                         }, {
                             "name": "remove",
-                            "title": jQuery.i18n.prop('ds.remove')
+                            "title": jQuery.i18n.prop('globalparam.remove')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -132,7 +127,7 @@ var GlobalParamMVC = {
                                 title: icons[i].title,
                                 name: icons[i].name,
                                 index: index,
-                                imgSrc: DsCommon.baseIconUrl + icons[i].name + ".png"
+                                imgSrc: GlobalParamCommon.baseIconUrl + icons[i].name + ".png"
                             };
                             buttons.push(juicer(tmpl, data));
                         }
@@ -143,6 +138,29 @@ var GlobalParamMVC = {
                     return GlobalParamMVC.Controller.edit();
                 }
             });
+            
+            $('#report-query-param-dlg').dialog({
+                closed: true,
+                modal: true,
+                width: window.screen.width - 350,
+                height: window.screen.height - 350,
+                maximizable: true,
+                iconCls: 'icon-info',
+                buttons: [{
+                    text: jQuery.i18n.prop('globalparam.close'),
+                    iconCls: 'icon-no',
+                    handler: function () {
+                        $("#report-query-param-dlg").dialog('close');
+                    }
+                }, {
+                    text: jQuery.i18n.prop('globalparam.save'),
+                    iconCls: 'icon-save',
+                    handler: function () {
+                    	GlobalParamMVC.Controller.save();
+                        $("#report-query-param-dlg").dialog('close');
+                    }
+                }]
+            });
         },
         bindEvent: function () {
             $('#btn-search').bind('click', GlobalParamMVC.Controller.find);
@@ -150,7 +168,8 @@ var GlobalParamMVC = {
         bindValidate: function () {
         },
         initData: function () {
-            GlobalParamMVC.Util.loadConfigItems();
+        	GlobalParamMVC.Util.loadDataSourceList();
+//            GlobalParamMVC.Util.loadConfigItems();
         }
     },
     Controller: {
@@ -162,40 +181,28 @@ var GlobalParamMVC = {
             if (name == "remove") {
                 return GlobalParamMVC.Controller.remove();
             }
-            if (name == "connect") {
-                return GlobalParamMVC.Controller.testConnectionById(index);
-            }
         },
         add: function () {
             var options = GlobalParamMVC.Util.getOptions();
-            options.title = jQuery.i18n.prop('ds.add.ds');
+            options.title = jQuery.i18n.prop('globalparam.add.param');
             EasyUIUtils.openAddDlg(options);
-            GlobalParamMVC.Util.fillCombox("#dbType", "add", GlobalParamMVC.Model.dbTypes, "driverClass", "");
-            GlobalParamMVC.Util.fillCombox("#dbPoolType", "add", GlobalParamMVC.Model.dbPoolTypes, "poolClass", "");
+            $('#modal-action').val("add");
+            
         },
         edit: function () {
             var row = $('#globalparam-datagrid').datagrid('getSelected');
             if (row) {
                 var options = GlobalParamMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
-                options.data = row;
-                options.title = jQuery.i18n.prop('ds.edit.ds',options.data.name);
+                options.data = $.toJSON(row['query_params']);
+                options.title = jQuery.i18n.prop('globalparam.edit.param',options.data.name);
                 EasyUIUtils.openEditDlg(options);
-                GlobalParamMVC.Util.fillCombox("#dbType", "edit", GlobalParamMVC.Model.dbTypes, "driverClass", row.driverClass);
-                GlobalParamMVC.Util.fillCombox("#dbPoolType", "edit", GlobalParamMVC.Model.dbPoolTypes, "poolClass", row.poolClass);
-                $('#jdbcUrl').textbox('setValue', row.jdbcUrl);
-                $('#options').val(row.options || "{}");
-                EasyReport.utils.debug(row.options);
-                $('#ds-options-pg').propertygrid('loadData', EasyUIUtils.toPropertygridRows($.toJSON(row.options)));
+                $("#report-query-param-required").prop('checked', options.data.required);
+                $("#report-query-param-autoComplete").prop('checked', options.data.autoComplete);
+                $("#report-query-param-id").val(row.id);
             } else {
-                $.messager.alert(jQuery.i18n.prop('ds.warn'), jQuery.i18n.prop('ds.please.select.record'), 'info');
+                $.messager.alert(jQuery.i18n.prop('globalparam.warn'), jQuery.i18n.prop('globalparam.please.select.record'), 'info');
             }
-        },
-        find: function () {
-            var fieldName = $("#field-name").combobox('getValue');
-            var keyword = $("#keyword").val();
-            var url = GlobalParamMVC.URLs.list.url + '?fieldName=' + fieldName + '&keyword=' + keyword;
-            EasyUIUtils.loadToDatagrid('#globalparam-datagrid', url)
         },
         remove: function () {
             var row = $('#globalparam-datagrid').datagrid('getSelected');
@@ -215,33 +222,38 @@ var GlobalParamMVC = {
             }
         },
         save: function () {
-            var rows = $('#ds-options-pg').propertygrid('getRows');
-            $('#options').val(JSON.stringify(EasyUIUtils.toPropertygridMap(rows)));
-            EasyReport.utils.debug($('#options').val());
-
-            var action = $('#modal-action').val();
-            var options = {
-                gridId: null,
-                gridUrl: GlobalParamMVC.URLs.list.url,
-                dlgId: "#ds-dlg",
-                formId: "#ds-form",
-                url: null,
-                callback: function () {
-                }
-            };
-
-            options.url = (action === "edit" ? GlobalParamMVC.URLs.edit.url : GlobalParamMVC.URLs.add.url);
-            options.gridId = '#globalparam-datagrid';
-            return EasyUIUtils.save(options);
+        	if ($("#report-query-param-form").form('validate')) {
+	        	var row = $('#report-query-param-form').serializeObject();
+                row.required = $("#report-query-param-required").prop('checked');
+                row.autoComplete = $("#report-query-param-autoComplete").prop('checked');
+	            $('#report-query-param-json').val(JSON.stringify(row));
+	            EasyReport.utils.debug($('#report-query-param-json').val());
+	
+	            var action = $('#modal-action').val();
+	            
+	            var options = {
+	                gridId: null,
+	                gridUrl: GlobalParamMVC.URLs.list.url,
+	                dlgId: "#report-query-param-dlg",
+	                formId: "#report-query-param-form",
+	                url: null,
+	                callback: function () {
+	                }
+	            };
+	
+	            options.url = (action === "edit" ? GlobalParamMVC.URLs.edit.url : GlobalParamMVC.URLs.add.url);
+	            options.gridId = '#globalparam-datagrid';
+	            return EasyUIUtils.save(options);
+        	}
         }
     },
     Util: {
-        getOptions: function () {
+    	getOptions: function () {
             return {
-                dlgId: '#ds-dlg',
-                formId: '#ds-form',
+                dlgId: '#report-query-param-dlg',
+                formId: '#report-query-param-form',
                 actId: '#modal-action',
-                rowId: '#dsId',
+                rowId: '#globalparamId',
                 title: '',
                 iconCls: 'icon-add',
                 data: {},
@@ -269,30 +281,14 @@ var GlobalParamMVC = {
                 $(id).combobox('setValues', key);
             }
         },
-        loadConfigItems: function () {
-            $.getJSON(GlobalParamMVC.URLs.getConfItems.url + "?key=" + DsCommon.keys.dbType, function (result) {
-                GlobalParamMVC.Util.toMap(GlobalParamMVC.Model.dbTypes, result.data);
-            });
-            $.getJSON(GlobalParamMVC.URLs.getConfItems.url + "?key=" + DsCommon.keys.dbPoolType, function (result) {
-                GlobalParamMVC.Util.toMap(GlobalParamMVC.Model.dbPoolTypes, result.data);
-            });
-        },
-        toMap: function (srcMap, data) {
-            if (!data || data.length == 0) return {};
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                item.value = $.toJSON(item.value);
-                srcMap[item.key] = item;
-            }
-            return srcMap;
-        },
-        findKey: function (map, fieldName, value) {
-            for (var key in map) {
-                if (value === map[key].value[fieldName]) {
-                    return key;
+        loadDataSourceList: function () {
+            $.getJSON(GlobalParamMVC.URLs.DataSource.listAll.url, function (result) {
+                if (!result.success) {
+                    console.info(result.msg);
                 }
-            }
-            return "";
+//                GlobalParamMVC.Model.DataSourceList = result.data;
+                EasyUIUtils.fillCombox("#report-dsId", "add", result.data, "");
+            });
         }
     }
 };

@@ -6,11 +6,14 @@ import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.po.User;
 import com.easytoolsoft.easyreport.domain.metadata.dao.IGlobalParamDao;
 import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
+import com.easytoolsoft.easyreport.domain.metadata.service.IGlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
+import com.easytoolsoft.easyreport.domain.metadata.service.impl.GlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
 import com.easytoolsoft.easyreport.domain.report.ITableReportService;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
@@ -52,9 +55,11 @@ public class ReportController
     @Resource
     private ITableReportService tableReportService;
     @Resource
-    private IReportService dsService;
+    private IReportService reportService;
     @Resource
     private IConfService confService;
+    @Resource
+    private IGlobalParamService globalParamService;
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取报表列表")
@@ -193,7 +198,18 @@ public class ReportController
         Map<String, Object> formParameters =
                 tableReportService.getBuildInParameters(request.getParameterMap(), dataRange);
         if (StringUtils.isNotBlank(queryParams)) {
-            List<QueryParameter> queryParameters = JSON.parseArray(queryParams, QueryParameter.class);
+        	List<QueryParameter> queryParameters = new ArrayList<QueryParameter>();
+        	List<GlobalParam> globalParamList = globalParamService.getAll();
+        	System.out.println("Global params objs:"+globalParamList);
+            List<String> globalQueryParamlist = new ArrayList<String>();
+            for(GlobalParam param : globalParamList){
+            	globalQueryParamlist.add(param.getQuery_params());
+            }
+            String globalParams = "["+StringUtils.join(globalQueryParamlist,',')+"]";
+            System.out.println("Global params:"+globalParams);
+            queryParameters.addAll(this.reportService.parseQueryParams(globalParams));
+            queryParameters.addAll(JSON.parseArray(queryParams, QueryParameter.class));
+            System.out.println("queryParameters:"+queryParameters);
             queryParameters.stream()
                     .filter(parameter -> !formParameters.containsKey(parameter.getName()))
                     .forEach(parameter -> formParameters.put(parameter.getName(), parameter.getRealDefaultValue()));

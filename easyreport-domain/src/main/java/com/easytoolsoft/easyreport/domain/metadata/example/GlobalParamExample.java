@@ -587,6 +587,12 @@ public class GlobalParamExample {
         protected Criteria() {
             super();
         }
+        
+        
+        public Criteria andFieldLike(String fieldName, String keyword) {
+            addCriterion(fieldName + " like ", keyword, fieldName);
+            return this;
+        }
     }
 
     /**

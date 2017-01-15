@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.easytoolsoft.easyreport.common.form.QueryParamFormView;
 import com.easytoolsoft.easyreport.common.form.control.HtmlFormElement;
 import com.easytoolsoft.easyreport.common.util.DateUtils;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.domain.metadata.service.impl.GlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.TableReportService;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
@@ -33,11 +35,12 @@ import java.util.Map.Entry;
 public class ReportHelper {
     private static ReportService reportService;
     private static TableReportService tableReportService;
-
+    private static GlobalParamService globalParamService;
     @Autowired
-    public ReportHelper(ReportService reportService, TableReportService tableReportService) {
+    public ReportHelper(ReportService reportService, TableReportService tableReportService,GlobalParamService globalParamService) {
         ReportHelper.reportService = reportService;
         ReportHelper.tableReportService = tableReportService;
+        ReportHelper.globalParamService=globalParamService;
     }
 
     public static Report getReportMetaData(String uid) {
@@ -68,7 +71,8 @@ public class ReportHelper {
         Report report = reportService.getByUid(uid);
         ReportOptions options = reportService.parseOptions(report.getOptions());
         Map<String, Object> buildInParams = tableReportService.getBuildInParameters(request.getParameterMap(), options.getDataRange());
-        Map<String, HtmlFormElement> formMap = tableReportService.getFormElementMap(report, buildInParams, 1);
+        List<GlobalParam> globalParamList = globalParamService.getAll();
+        Map<String, HtmlFormElement> formMap = tableReportService.getFormElementMap(report, buildInParams,globalParamList, 1);
         modelAndView.addObject("formMap", formMap);
         modelAndView.addObject("uid", uid);
         modelAndView.addObject("id", report.getId());
@@ -81,7 +85,8 @@ public class ReportHelper {
         ReportOptions options = reportService.parseOptions(report.getOptions());
         List<ReportMetaDataColumn> metaDataColumns = reportService.parseMetaColumns(report.getMetaColumns());
         Map<String, Object> buildInParams = tableReportService.getBuildInParameters(request.getParameterMap(), options.getDataRange());
-        List<HtmlFormElement> dateAndQueryElements = tableReportService.getDateAndQueryParamFormElements(report, buildInParams);
+        List<GlobalParam> globalParamList = globalParamService.getAll();
+        List<HtmlFormElement> dateAndQueryElements = tableReportService.getDateAndQueryParamFormElements(report, buildInParams,globalParamList);
         HtmlFormElement statColumnFormElements = tableReportService.getStatColumnFormElements(metaDataColumns, 0);
         List<HtmlFormElement> nonStatColumnFormElements = tableReportService.getNonStatColumnFormElements(metaDataColumns);
         modelAndView.addObject("uid", uid);
