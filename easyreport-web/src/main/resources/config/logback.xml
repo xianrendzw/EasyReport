@@ -63,6 +63,7 @@
     <logger name="org.quartz" additivity="false" level="DEBUG">
         <appender-ref ref="QUARTZ"/>
     </logger>
+    <logger name="net.sf.ehcache" level="ALL"/>
     
 
     <root level="${easyreport.log.level.root}">

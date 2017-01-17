@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +49,6 @@ public class PreviewController {
     private TableReportService tableReportService;
     @Resource
     private ChartReportService chartReportService;
-
     @OpLog(name = "预览报表")
     @GetMapping(value = {"/uid/{uid}"})
     //@RequiresPermissions("report.designer:preview")

@@ -92,17 +92,17 @@ var GlobalParamMVC = {
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'ds_id',
+                    field: 'dsId',
                     title: jQuery.i18n.prop('globalparam.dsid'),
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'query_params',
+                    field: 'queryParams',
                     title: jQuery.i18n.prop('globalparam.json'),
                     width: 100,
                     sortable: true
                 }, {
-                    field: 'gmt_created',
+                    field: 'gmtCreated',
                     title: jQuery.i18n.prop('globalparam.gmtcreate'),
                     width: 50,
                     sortable: true
@@ -194,7 +194,7 @@ var GlobalParamMVC = {
             if (row) {
                 var options = GlobalParamMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
-                options.data = $.toJSON(row['query_params']);
+                options.data = $.toJSON(row['queryParams']);
                 options.title = jQuery.i18n.prop('globalparam.edit.param',options.data.name);
                 EasyUIUtils.openEditDlg(options);
                 $("#report-query-param-required").prop('checked', options.data.required);
@@ -227,7 +227,6 @@ var GlobalParamMVC = {
                 row.required = $("#report-query-param-required").prop('checked');
                 row.autoComplete = $("#report-query-param-autoComplete").prop('checked');
 	            $('#report-query-param-json').val(JSON.stringify(row));
-	            EasyReport.utils.debug($('#report-query-param-json').val());
 	
 	            var action = $('#modal-action').val();
 	            

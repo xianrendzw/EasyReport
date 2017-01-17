@@ -45,9 +45,9 @@ public class GlobalParamController
     @RequiresPermissions("report.conf:add")
     public JsonResult add(@CurrentUser User loginUser,GlobalParam po) {
         JsonResult<String> result = new JsonResult<>();
-        po.setCreate_user(loginUser.getAccount());
-        po.setGmt_created(new Date());
-        po.setGmt_modified(new Date());
+        po.setCreateUser(loginUser.getAccount());
+        po.setGmtCreated(new Date());
+        po.setGmtModified(new Date());
         this.service.add(po);
         return result;
     }

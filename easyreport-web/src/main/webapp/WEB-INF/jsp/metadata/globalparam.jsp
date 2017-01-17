@@ -20,7 +20,7 @@
             <table class="designer-table">
                 <tr>
                     <td>{{info.report_disign_conf_datasource}}</td>
-                    <td><select class="easyui-combobox" id="report-dsId" name="ds_id"
+                    <td><select class="easyui-combobox" id="report-dsId" name="dsId"
                               data-options="required:true,valueField:'id',textField:'name'"
                               style="width:150px">
                          </select>
@@ -82,7 +82,7 @@
                     <textarea id="report-query-param-content" name="content" style="width: 95%; height: 100px;"
                               placeholder="(select col1 as name,col2 as text from table ...) or (name1,text1|name2,text2|...) or (name1|name2|...)"></textarea>
                         <input type="hidden" id="report-query-param-id" name="id" />
-                        <input type="hidden" id="report-query-param-json" name="query_params"/>
+                        <input type="hidden" id="report-query-param-json" name="queryParams"/>
                 </tr>
             </table>
         </form>

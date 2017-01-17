@@ -7,13 +7,17 @@ import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
+import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
 import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
 
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * 表格报表生成服务类,包括报表生成,转换,报表数据集处理等
@@ -41,25 +45,25 @@ public interface ITableReportService {
 
     Map<String, Object> getFormParameters(Map<?, ?> httpReqParamMap, int dataRange);
 
-    Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,
                                                    int minDisplayedStatColumn);
 
-    Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,
                                                    int minDisplayedStatColumn);
 
-    Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,
                                                    int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,
                                           int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList);
+    List<HtmlFormElement> getDateAndQueryParamFormElements(Report report, Map<String, Object> buildinParams);
 
     List<HtmlDateBox> getDateFormElements(String uid, Map<String, Object> buildinParams);
 
@@ -67,13 +71,13 @@ public interface ITableReportService {
 
     List<HtmlDateBox> getDateFormElements(Report report, Map<String, Object> buildinParams);
 
-    List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,
                                                     int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,List<GlobalParam> globalParamList,
+    List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,
                                                     int minDisplayedStatColumn);
 
-    List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams,List<GlobalParam> globalParamList);
+    List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams);
 
     HtmlCheckBoxList getStatColumnFormElements(String uid, int minDisplayedStatColumn);
 
