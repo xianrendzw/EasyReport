@@ -42,7 +42,7 @@ var TableReportMVC = {
         bindValidate: function () {
         },
         initData: function () {
-            TableReportMVC.Controller.generate(TableReportMVC.Model.Mode.classic, null);
+//            TableReportMVC.Controller.generate(TableReportMVC.Model.Mode.classic, null);
         }
     },
     Model: {

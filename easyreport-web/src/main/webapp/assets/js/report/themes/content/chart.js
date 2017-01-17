@@ -38,7 +38,7 @@ var ChartReportMVC = {
         bindValidate: function () {
         },
         initData: function () {
-            ChartReportMVC.Controller.generate();
+//            ChartReportMVC.Controller.generate();
         }
     },
     Model: {
