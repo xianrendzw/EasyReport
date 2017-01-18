@@ -403,6 +403,9 @@ public class TableReportService implements ITableReportService {
         HtmlComboBox htmlComboBox = new HtmlComboBox(queryParam.getName(), queryParam.getText(), htmlSelectOptions);
         htmlComboBox.setMultipled(queryParam.getFormElement().equals("selectMul"));
         htmlComboBox.setAutoComplete(queryParam.isAutoComplete());
+        if(queryParam.getWidth()<100){
+        	htmlComboBox.setWidth(queryParam.getWidth());
+        }
         return htmlComboBox;
     }
 

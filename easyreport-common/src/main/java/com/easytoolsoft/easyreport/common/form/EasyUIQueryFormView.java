@@ -20,8 +20,8 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
 
     @Override
     protected String getTexBoxText(HtmlTextBox textBox) {
-        String template = "<input id=\"%s\" name=\"%s\" type=\"text\" value=\"%s\" />";
-        String easyuiText = String.format(template, textBox.getName(), textBox.getName(), textBox.getValue());
+        String template = "<input id=\"%s\" name=\"%s\" type=\"text\" value=\"%s\" size=\"%spx\" />";
+        String easyuiText = String.format(template, textBox.getName(), textBox.getName(), textBox.getValue(),textBox.getWidth());
         return String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>%s</span>", textBox.getText(), easyuiText);
     }
 
@@ -37,8 +37,8 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
         String multiple = comboBox.isMultipled() ? "data-options=\"multiple:true\"" : "";
         StringBuilder htmlText = new StringBuilder("");
         htmlText.append(String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>", comboBox.getText()));
-        htmlText.append(String.format("<select id=\"%s\" name=\"%s\" class=\"easyui-combobox\" style=\"width: 200px;\" %s>",
-                comboBox.getName(), comboBox.getName(), multiple));
+        htmlText.append(String.format("<select id=\"%s\" name=\"%s\" class=\"easyui-combobox\" style=\"width: %spx;\" %s>",
+        		comboBox.getName(), comboBox.getName(),comboBox.getWidth(), multiple));
         for (HtmlSelectOption option : comboBox.getValue()) {
             String selected = option.isSelected() ? "selected=\"selected\"" : "";
             htmlText.append(String.format("<option value=\"%s\" %s>%s</option>", option.getValue(), selected, option.getText()));
