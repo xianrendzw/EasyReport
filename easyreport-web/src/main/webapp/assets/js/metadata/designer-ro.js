@@ -208,7 +208,10 @@ var DesignerMVC = {
                     field: 'name',
                     title: jQuery.i18n.prop('design.name'),
                     width: 150,
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return '<span title="'+row['comment']+'"  class="easyui-tooltip">'+value+'</span>';
+                    }
                 }, {
                     field: 'status',
                     title: jQuery.i18n.prop('design.status'),
@@ -232,7 +235,16 @@ var DesignerMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
-                }
+                },
+                onLoadSuccess: function(){
+                    $(".easyui-tooltip").tooltip({
+                        onShow: function () {
+                            $(this).tooltip('tip').css({
+                                borderColor: '#000'
+                            });
+                        }
+                    });
+                 }
             });
 
             $('#report-datagrid-ctx-menu').menu({

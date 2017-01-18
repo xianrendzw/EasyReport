@@ -220,7 +220,10 @@ var DesignerMVC = {
                     field: 'name',
                     title: jQuery.i18n.prop('design.name'),
                     width: 150,
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return '<span title="'+row['comment']+'"  class="easyui-tooltip">'+value+'</span>';
+                    }
                 }, {
                     field: 'dsName',
                     title: jQuery.i18n.prop('design.dsname'),
@@ -306,7 +309,16 @@ var DesignerMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
-                }
+                },
+                onLoadSuccess: function(){
+                    $(".easyui-tooltip").tooltip({
+                        onShow: function () {
+                            $(this).tooltip('tip').css({
+                                borderColor: '#000'
+                            });
+                        }
+                    });
+                 }
             });
 
             $('#report-datagrid-ctx-menu').menu({
@@ -759,26 +771,6 @@ var DesignerMVC = {
                 maximizable: true,
                 iconCls: 'icon-desc',
                 buttons: [{
-                    text: jQuery.i18n.prop('design.prev'),
-                    iconCls: 'icon-prev',
-                    handler: function () {
-                        EasyUIUtils.cursor('#report-datagrid',
-                            '#current-row-index',
-                            'prev', function (row) {
-                                DesignerMVC.Controller.describe(row);
-                            });
-                    }
-                }, {
-                    text: jQuery.i18n.prop('design.next'),
-                    iconCls: 'icon-next',
-                    handler: function () {
-                        EasyUIUtils.cursor('#report-datagrid',
-                            '#current-row-index',
-                            'next', function (row) {
-                                DesignerMVC.Controller.describe(row);
-                            });
-                    }
-                }, {
                     text: jQuery.i18n.prop('design.close'),
                     iconCls: 'icon-no',
                     handler: function () {

@@ -320,7 +320,7 @@
         <tr>
             <td>{{info.report_disign_desc_description}}</td>
             <td colspan="5">
-                <textarea id="report-desc-detail-description" rows="10" cols="100"></textarea>
+                <textarea id="report-desc-detail-comment" rows="10" cols="100"></textarea>
             </td>
         </tr>
     </table>
