@@ -4,9 +4,6 @@
     <form id="table-report-form">
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>
-                <td id="table-report-title" colspan="2" style="font-size: 24px;">${name}</td>
-            </tr>
-            <tr>
                 <td style="text-align: left;">${formHtmlText}
                     <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" />{{info.table_mergerow}}
                     <a id="btn-generate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">{{info.table_generate}}</a>

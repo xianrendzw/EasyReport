@@ -10,9 +10,9 @@
 </head>
 <body ng-app="i18n" ng-controller="translate" class="easyui-layout">
 <div region="center" style="border-top-width: 0">
-    <div id="report-main-tabs" class="easyui-tabs" border="false" fit="true">
-        <div title="{{info.main_table}}" data-options="iconCls:'icon-table'"></div>
-        <div title="{{info.main_chart}}" data-options="iconCls:'icon-chart4'"></div>
+    <div id="report-main-tabs" class="easyui-tabs" border="false" fit="true" >
+        <div title="{{info.main_table}}" data-options="iconCls:'icon-table'" ></div>
+        <div title="{{info.main_chart}}" data-options="iconCls:'icon-chart4'" ></div>
         <input id="report-main-uid" type="hidden" name="uid" value="${report.uid}"/>
     </div>
 </div>
