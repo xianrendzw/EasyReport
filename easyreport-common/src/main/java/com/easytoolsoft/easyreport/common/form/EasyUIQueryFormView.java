@@ -1,5 +1,7 @@
 package com.easytoolsoft.easyreport.common.form;
 
+import java.util.Random;
+
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBoxList;
 import com.easytoolsoft.easyreport.common.form.control.HtmlComboBox;
@@ -11,17 +13,22 @@ import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
  * JQueryEasyUI控件报表查询参数表单视图
  */
 public class EasyUIQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
+    
+    private int getRandom(){
+        return (new Random()).nextInt(100)+(int) (System.currentTimeMillis()%100);
+    }
+    
     @Override
     protected String getDateBoxText(HtmlDateBox dateBox) {
         String template = "<input id=\"%s\" name=\"%s\" type=\"text\" class=\"easyui-datebox\" required=\"true\" value=\"%s\" />";
-        String easyuiText = String.format(template, dateBox.getName(), dateBox.getName(), dateBox.getValue());
+        String easyuiText = String.format(template, dateBox.getName()+"_"+getRandom(), dateBox.getName(), dateBox.getValue());
         return String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>%s</span>", dateBox.getText(), easyuiText);
     }
 
     @Override
     protected String getTexBoxText(HtmlTextBox textBox) {
         String template = "<input id=\"%s\" name=\"%s\" type=\"text\" value=\"%s\" size=\"%spx\" />";
-        String easyuiText = String.format(template, textBox.getName(), textBox.getName(), textBox.getValue(),textBox.getWidth());
+        String easyuiText = String.format(template, textBox.getName()+"_"+getRandom(), textBox.getName(), textBox.getValue(),textBox.getWidth());
         return String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>%s</span>", textBox.getText(), easyuiText);
     }
 
@@ -29,7 +36,7 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
     protected String getCheckBoxText(HtmlCheckBox checkBox) {
         String checked = checkBox.isChecked() ? "" : "checked=\"checked\"";
         return String.format("<input id=\"%s\" name=\"%s\" type=\"checkbox\" value=\"%s\" %s />%s",
-                checkBox.getName(), checkBox.getName(), checkBox.getValue(), checked, checkBox.getText());
+                checkBox.getName()+"_"+getRandom(), checkBox.getName(), checkBox.getValue(), checked, checkBox.getText());
     }
 
     @Override
@@ -38,7 +45,7 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
         StringBuilder htmlText = new StringBuilder("");
         htmlText.append(String.format("<span class=\"j-item\"><label style=\"width: 120px;\">%s:</label>", comboBox.getText()));
         htmlText.append(String.format("<select id=\"%s\" name=\"%s\" class=\"easyui-combobox\" style=\"width: %spx;\" %s>",
-        		comboBox.getName(), comboBox.getName(),comboBox.getWidth(), multiple));
+        		comboBox.getName()+"_"+getRandom(), comboBox.getName(),comboBox.getWidth(), multiple));
         for (HtmlSelectOption option : comboBox.getValue()) {
             String selected = option.isSelected() ? "selected=\"selected\"" : "";
             htmlText.append(String.format("<option value=\"%s\" %s>%s</option>", option.getValue(), selected, option.getText()));
@@ -59,7 +66,7 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
                 isCheckedAll = false;
             String checked = checkBox.isChecked() ? "checked=\"checked\"" : "";
             htmlText.append(String.format("<input name=\"%s\" type=\"checkbox\" value=\"%s\" data-name=\"%s\" %s/>%s &nbsp;",
-                    checkBoxList.getName(), checkBox.getName(), checkBox.getText(), checked, checkBox.getText()));
+                    checkBoxList.getName()+"_"+getRandom(), checkBox.getName(), checkBox.getText(), checked, checkBox.getText()));
         }
         htmlText.append(String.format("<input id=\"checkAllStatColumn\" name=\"checkAllStatColumn\" type=\"checkbox\" %s />全选</span>",
                 isCheckedAll ? "checked=\"checked\"" : ""));
