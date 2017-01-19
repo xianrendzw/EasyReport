@@ -1030,7 +1030,7 @@ var DesignerMVC = {
         descsave: function(){
             //TODO modify descsave
             DesignerMVC.Util.isRowSelected(function (row) {
-                var desc = $('#report-desc-detail-description').val();
+                var desc = $('#report-desc-detail-comment').val();
                 var data = {
                         id: row.id,
                         desc: desc
