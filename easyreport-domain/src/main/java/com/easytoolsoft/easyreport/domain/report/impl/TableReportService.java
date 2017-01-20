@@ -362,7 +362,7 @@ public class TableReportService implements ITableReportService {
             queryParam.setContent(VelocityUtils.parse(queryParam.getContent(), buildinParams));
             String formElement = queryParam.getFormElement().toLowerCase();
             if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
-                int dsid = queryParam.getDs_id() > 0 ? queryParam.getDs_id() : report.getDsId();
+                int dsid = queryParam.getDsId() > 0 ? queryParam.getDsId() : report.getDsId();
                 System.out.println("queryParam:" + JSON.toJSONString(queryParam));
                 htmlFormElement = this.getComboBoxFormElements(queryParam, dsid, buildinParams);
             } else if (formElement.equals("checkbox")) {
