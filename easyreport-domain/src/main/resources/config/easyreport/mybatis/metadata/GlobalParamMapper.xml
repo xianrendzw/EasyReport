@@ -313,16 +313,16 @@
         ds_id = #{dsId,jdbcType=INTEGER},
       </if>
       <if test="createUser != null">
-        create_user = #{create_user,jdbcType=VARCHAR},
+        create_user = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreated != null">
-        gmt_created = #{gmt_created,jdbcType=TIMESTAMP},
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       </if>
       <if test="gmtModified != null">
-        gmt_modified = #{gmt_modified,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="queryParams != null">
-        query_params = #{query_params,jdbcType=LONGVARCHAR},
+        query_params = #{queryParams,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
