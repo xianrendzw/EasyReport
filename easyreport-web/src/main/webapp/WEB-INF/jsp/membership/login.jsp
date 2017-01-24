@@ -14,7 +14,7 @@
             top.location.href = location.href;
     </script>
 </head>
-<body>
+<body ng-app="i18n" ng-controller="translate">
 <form id="login-form" name="login-form">
     <div id="login-container">
         <img class="login-bg-image" src="${ctxPath}/assets/images/login_bg_left.gif"/>
@@ -29,25 +29,25 @@
             <div id="login-right">
                 <div id="login-right-main">
                     <p>
-                        <span>用户名:</span><input type="text" id="account" name="account" class="txtinput"
-                                                maxlength="100" value="admin"/>
+                        <span>{{info.login_username}}</span><input type="text" id="account" name="account" class="txtinput"
+                                                maxlength="100"/>
                     </p>
                     <p>
-                        <span>密 码:</span><input type="password" id="password" name="password" class="txtinput"
-                                                maxlength="64" value="123456"/>
+                        <span>{{info.login_password}}</span><input type="password" id="password" name="password" class="txtinput"
+                                                maxlength="64"/>
                     </p>
                     <!-- <p>
-							<span>验证码:</span><input type="text" id="validCode" name="validCode" class="txtinput" />
+							<span>{{info.login_verificationcode}}</span><input type="text" id="validCode" name="validCode" class="txtinput" />
 						</p>
 						<p class="login-form-validatecode">
-							<img id="imgValidCode" style="border-width: 0px;" onclick="recodeimg();" alt="看不清?点一下"
-								src="${ctxPath}/assets/images/GetValidateCode.jpg"><a href="javascript:recodeimg();">看不清?点一下</a>
+							<img id="imgValidCode" style="border-width: 0px;" onclick="recodeimg();" alt="{{info.login_clearer}}"
+								src="${ctxPath}/assets/images/GetValidateCode.jpg"><a href="javascript:recodeimg();">{{info.login_clearer}}</a>
 						</p> -->
                     <p>
-                        <span></span><input type="checkbox" id="rememberMe" name="rememberMe"/><label>记住密码</label>
+                        <span></span><input type="checkbox" id="rememberMe" name="rememberMe"/><label>{{info.login_remeber_password}}</label>
                     </p>
                     <p>
-                        <input type="button" id="btnLogin" name="btnLogin" class="login-submit" value="登录">
+                        <input type="button" id="btnLogin" name="btnLogin" class="login-submit" value="{{info.login_login}}">
                     </p>
                 </div>
                 <div id="login-message-tips"></div>

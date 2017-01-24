@@ -78,7 +78,7 @@ var ModuleMVC = {
                             sourcePath: source.attributes.path
                         }, function (data) {
                             if (!data.success) {
-                                $.messager.alert('失败', data.msg, 'error');
+                                $.messager.alert(jQuery.i18n.prop('module.failed'), data.msg, 'error');
                             }
                         }, 'json');
                     }
@@ -90,7 +90,10 @@ var ModuleMVC = {
                         left: e.pageX,
                         top: e.pageY
                     });
-                }
+                },
+                formatter:function(node){
+            		return jQuery.i18n.prop(node.text);
+            	}
             });
 
             $('#tree_ctx_menu').menu({
@@ -144,63 +147,66 @@ var ModuleMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('module.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: 'ID',
+                    title: jQuery.i18n.prop('module.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'parentId',
-                    title: '父ID',
+                    title: jQuery.i18n.prop('module.parentId'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('module.name'),
                     width: 50,
                     sortable: true,
+                    formatter: function (value, row, index) {
+                        return jQuery.i18n.prop(row.code);
+                    }
                 }, {
                     field: 'code',
-                    title: '编号',
+                    title: jQuery.i18n.prop('module.code'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'icon',
-                    title: '图标',
+                    title: jQuery.i18n.prop('module.icon'),
                     width: 20,
                     formatter: function (value, row, index) {
                         var fileName = value.replace("icon-", "");
                         var imgSrc = ModuleCommon.baseIconUrl + fileName;
-                        return '<img src="' + imgSrc + '.png" alt="图标"/">'
+                        return '<img src="' + imgSrc + '.png" alt="'+jQuery.i18n.prop('module.icon')+'"/>'
                     }
                 }, {
                     field: 'url',
-                    title: 'URL',
+                    title: jQuery.i18n.prop('module.url'),
                     width: 80,
                     sortable: true
                 }, {
                     field: 'status',
-                    title: '状态',
+                    title: jQuery.i18n.prop('module.status'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        return value == 1 ? jQuery.i18n.prop('module.status.enable') : jQuery.i18n.prop('module.status.disable');
                     }
                 }, {
                     field: 'sequence',
-                    title: '顺序',
+                    title: jQuery.i18n.prop('module.sequence'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'comment',
-                    title: '说明',
+                    title: jQuery.i18n.prop('module.comment'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('module.gmtcreate'),
                     width: 50,
                     sortable: true
                 }]],
@@ -217,13 +223,13 @@ var ModuleMVC = {
                 height: 480,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('module.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#module-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('module.save'),
                     iconCls: 'icon-save',
                     handler: ModuleMVC.Controller.save
                 }]
@@ -236,7 +242,7 @@ var ModuleMVC = {
     },
     Controller: {
         addRoot: function () {
-            var name = "根模块";
+            var name = jQuery.i18n.prop('module.rootmodule');
             var id = "0";
             ModuleMVC.Util.initAdd(id, name);
         },
@@ -247,7 +253,7 @@ var ModuleMVC = {
                 var id = node.id;
                 ModuleMVC.Util.initAdd(id, name);
             } else {
-                $.messager.alert('警告', '请选中一个父模块!', 'info');
+                $.messager.alert(jQuery.i18n.prop('module.warn'), jQuery.i18n.prop('module.please.select.parent'), 'info');
             }
         },
         editNode: function () {
@@ -323,7 +329,7 @@ var ModuleMVC = {
     Util: {
         initAdd: function (id, name) {
             var options = ModuleMVC.Util.getOptions();
-            options.title = '新增[' + name + ']的子模块';
+            options.title = jQuery.i18n.prop('module.add.submodule',name);
             EasyUIUtils.openAddDlg(options);
 
             $('#tr-parent-module-name').show();
@@ -339,7 +345,7 @@ var ModuleMVC = {
             var options = ModuleMVC.Util.getOptions();
             options.iconCls = 'icon-edit1';
             options.data = data;
-            options.title = '修改[' + options.data.name + ']模块';
+            options.title = jQuery.i18n.prop('module.change.module',name);
             EasyUIUtils.openEditDlg(options);
         },
         getOptions: function () {

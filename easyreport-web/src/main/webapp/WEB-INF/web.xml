@@ -43,6 +43,10 @@
             <param-name>env</param-name>
             <param-value>${easyreport.app.env}</param-value>
         </init-param>
+        <init-param>
+            <param-name>aeskey</param-name>
+            <param-value>${easyreport.common.aeskey}</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>contextInitDataFilter</filter-name>

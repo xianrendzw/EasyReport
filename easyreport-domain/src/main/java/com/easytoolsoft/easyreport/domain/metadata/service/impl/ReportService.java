@@ -35,16 +35,24 @@ public class ReportService
     private IConfService confService;
 
     @Override
-    protected ReportExample getPageExample(String fieldName, String keyword) {
+    protected ReportExample getPageExample(String fieldNames, String keyword) {
         ReportExample example = new ReportExample();
-        example.createCriteria().andFieldLike(fieldName, keyword);
+        if(fieldNames.contains(",")){
+            for(String fieldName: fieldNames.split(",")){
+                example.or().andFieldLike(fieldName, keyword);
+            }
+        }else{
+            example.createCriteria().andFieldLike(fieldNames, keyword);
+        }
         return example;
     }
 
     @Override
     public List<Report> getByPage(PageInfo page, String fieldName, Integer categoryId) {
         ReportExample example = new ReportExample();
-        example.or().andOperand(fieldName, "=", categoryId);
+        if(categoryId!=-1){
+            example.or().andOperand(fieldName, "=", categoryId);
+        }
         return this.getByPage(page, example);
     }
 
@@ -132,6 +140,7 @@ public class ReportService
     @Override
     public ReportDataSource getReportDataSource(int dsId) {
         DataSource ds = this.dsService.getById(dsId);
+        ds.decrypt();
         Map<String, Object> options = new HashMap<>(3);
         if (StringUtils.isNotEmpty(ds.getOptions())) {
             options = JSON.parseObject(ds.getOptions());

@@ -53,21 +53,21 @@ public class MemberController {
     @ResponseBody
     @PostMapping(value = "/authenticate")
     public JsonResult authenticate(String account, String password, boolean rememberMe, HttpServletRequest req) {
-        JsonResult result = new JsonResult<>(false, "用户名/密码错误!");
+        JsonResult result = new JsonResult<>(false, "member.user.passwd.error");
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(account, password);
             token.setRememberMe(rememberMe);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             result.setSuccess(true);
-            result.setMsg("登录成功!");
+            result.setMsg("member.login.success");
         } catch (IncorrectCredentialsException | UnknownAccountException ex) {
-            result.setMsg("用户名/密码错误!");
+            result.setMsg("member.user.passwd.error");
         } catch (Exception ex) {
             if (ex.getClass().getSimpleName().equals("LockedAccountException")) {
-                result.setMsg("您的账号已经被锁定!");
+                result.setMsg("member.account.locked");
             } else if (ex.getClass().getSimpleName().equals("ExcessiveAttemptsException")) {
-                result.setMsg("您重试密码超过10次,账号已被锁定!");
+                result.setMsg("member.account.locked.retry");
             }
         }
         this.eventService.add("authenticate", account, result.getMsg(), "INFO", req.getRequestURL().toString());

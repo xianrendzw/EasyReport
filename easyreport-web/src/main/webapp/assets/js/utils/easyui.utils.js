@@ -38,7 +38,7 @@ var EasyUIUtils = {
             $(options.formId).form('load', options.data);
             options.callback(options.data);
         } else {
-            EasyUIUtils.showMsg("请您先选择一个选项!");
+            EasyUIUtils.showMsg(jQuery.i18n.prop('util.please.select.record'));
         }
     },
     /**
@@ -56,7 +56,7 @@ var EasyUIUtils = {
      */
     remove: function (options) {
         if (!options || !options.rows || options.rows.length == 0) {
-            return $.messager.alert('警告', '请选中至少一条记录!', 'info');
+            return $.messager.alert(jQuery.i18n.prop('util.warn'), jQuery.i18n.prop('util.please.select.one.record'), 'info');
         }
 
         if (options.gridId && options.gridUrl) {
@@ -65,15 +65,15 @@ var EasyUIUtils = {
             };
         }
 
-        return $.messager.confirm('删除', '您确定要删除记录吗?', function (r) {
+        return $.messager.confirm(jQuery.i18n.prop('util.remove'), jQuery.i18n.prop('util.confirm.remove'), function (r) {
             if (r) {
                 $.post(options.url, options.data, function (result) {
                     if (result.success) {
-                        EasyUIUtils.showMsg(result.msg || "操作成功");
+                        EasyUIUtils.showMsg(result.msg || jQuery.i18n.prop('util.operate.success'));
                         options.callback(options.rows);
                     } else {
                         $.messager.show({
-                            title: '错误',
+                            title: jQuery.i18n.prop('util.error'),
                             msg: result.msg
                         });
                     }
@@ -107,7 +107,7 @@ var EasyUIUtils = {
      */
     save: function (options) {
         if (!options) {
-            return $.messager.alert('警告', '参数不正确!', 'info');
+            return $.messager.alert(jQuery.i18n.prop('util.warn'), jQuery.i18n.prop('util.parameter.error'), 'info');
         }
 
         if (options.gridId && options.gridUrl) {
@@ -123,12 +123,12 @@ var EasyUIUtils = {
             success: function (data) {
                 var result = $.toJSON(data);
                 if (result.success) {
-                    EasyUIUtils.showMsg(result.msg || "操作成功");
+                    EasyUIUtils.showMsg(result.msg || jQuery.i18n.prop('util.operate.success'));
                     options.callback(result.data);
                     $(options.dlgId).dialog('close');
                 } else {
                     $.messager.show({
-                        title: '错误',
+                        title: jQuery.i18n.prop('util.error'),
                         msg: result.msg
                     });
                 }
@@ -180,7 +180,7 @@ var EasyUIUtils = {
     },
     showMsg: function (msg) {
         $.messager.show({
-            title: '提示',
+            title: jQuery.i18n.prop('util.hint'),
             msg: msg,
             timeout: 3000,
             showType: 'slide'
@@ -188,7 +188,7 @@ var EasyUIUtils = {
     },
     showMsgByTime: function (msg, time) {
         $.messager.show({
-            title: '提示',
+            title: jQuery.i18n.prop('util.hint'),
             msg: msg,
             timeout: time,
             showType: 'slide'
@@ -230,10 +230,10 @@ var EasyUIUtils = {
 
         if (type === 'next') {
             $(gridId).datagrid('selectRow', index - 1);
-            return $.messager.alert('失败', '当前已到最后一条记录', 'error');
+            return $.messager.alert(jQuery.i18n.prop('util.failed'), jQuery.i18n.prop('util.last.record'), 'error');
         }
         $(gridId).datagrid('selectRow', index + 1);
-        return $.messager.alert('失败', '当前已到第一条记录!', 'error');
+        return $.messager.alert(jQuery.i18n.prop('util.failed'), jQuery.i18n.prop('util.first.record'), 'error');
     },
     //
     //datagrid行重排序
@@ -319,8 +319,8 @@ var EasyUIUtils = {
     },
     loading: function () {
         $.messager.progress({
-            title: '请稍后...',
-            text: '数据正在加载中...',
+            title: jQuery.i18n.prop('util.wait'),
+            text: jQuery.i18n.prop('util.data.loading'),
             closable: true
         });
     },

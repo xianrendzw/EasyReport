@@ -80,7 +80,7 @@ var ConfMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('conf.failed'), src.msg, 'error');
                 }
             });
 
@@ -112,19 +112,19 @@ var ConfMVC = {
                 fitColumns: true,
                 singleSelect: true,
                 toolbar: [{
-                    text: '增加',
+                    text: jQuery.i18n.prop('conf.add'),
                     iconCls: 'icon-add',
                     handler: ConfMVC.Controller.add
                 }, '-', {
-                    text: '修改',
+                    text: jQuery.i18n.prop('conf.edit'),
                     iconCls: 'icon-edit1',
                     handler: ConfMVC.Controller.edit
                 }, '-', {
-                    text: '复制',
+                    text: jQuery.i18n.prop('conf.copy'),
                     iconCls: 'icon-copy',
                     handler: ConfMVC.Controller.copy
                 }, '-', {
-                    text: '删除',
+                    text: jQuery.i18n.prop('conf.remove'),
                     iconCls: 'icon-remove',
                     handler: ConfMVC.Controller.remove
                 }],
@@ -132,40 +132,40 @@ var ConfMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('conf.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '标识',
+                    title: jQuery.i18n.prop('conf.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('conf.name'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'key',
-                    title: '键',
+                    title: jQuery.i18n.prop('conf.key'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'value',
-                    title: '值',
+                    title: jQuery.i18n.prop('conf.value'),
                     width: 100
                 }, {
                     field: 'sequence',
-                    title: '顺序',
+                    title: jQuery.i18n.prop('conf.sequence'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('conf.gmtcreate'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'gmtModified',
-                    title: '更新时间',
+                    title: jQuery.i18n.prop('conf.gmtmodified'),
                     width: 100,
                     sortable: true
                 }]],
@@ -193,23 +193,23 @@ var ConfMVC = {
                 },
                 columns: [[{
                     field: 'id',
-                    title: '标识',
+                    title: jQuery.i18n.prop('conf.id'),
                     width: 50
                 }, {
                     field: 'parentId',
-                    title: '父标识',
+                    title: jQuery.i18n.prop('conf.parentid'),
                     hidden: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('conf.name'),
                     width: 150
                 }, {
                     field: 'key',
-                    title: '对应键',
+                    title: jQuery.i18n.prop('conf.key'),
                     width: 100
                 }, {
                     field: 'value',
-                    title: '对应值',
+                    title: jQuery.i18n.prop('conf.value'),
                     width: 100
                 }]],
                 onDblClickRow: function (index, row) {
@@ -223,13 +223,13 @@ var ConfMVC = {
                 height: 450,
                 iconCls: 'icon-save',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('conf.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#dict-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('conf.save'),
                     iconCls: 'icon-save',
                     handler: ConfMVC.Controller.save
                 }]
@@ -243,7 +243,7 @@ var ConfMVC = {
                 maximizable: true,
                 iconCls: 'icon-search',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('conf.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#search-node-dlg").dialog('close');
@@ -259,7 +259,7 @@ var ConfMVC = {
     },
     Controller: {
         addRoot: function () {
-            var name = "根配置项";
+            var name = jQuery.i18n.prop('conf.root.conf');
             var id = "0";
             ConfMVC.Util.initAdd(id, name);
         },
@@ -270,7 +270,7 @@ var ConfMVC = {
                 var id = node.id;
                 ConfMVC.Util.initAdd(id, name);
             } else {
-                $.messager.alert('警告', '请选中一个父配置项!', 'info');
+                $.messager.alert(jQuery.i18n.prop('conf.warn'), jQuery.i18n.prop('conf.please.select.parent.conf'), 'info');
             }
         },
         editNode: function () {
@@ -290,7 +290,7 @@ var ConfMVC = {
                 var options = ConfMVC.Util.getOptions();
                 options.iconCls = 'icon-copy';
                 options.data = row;
-                options.title = '复制[' + options.data.name + ']配置项';
+                options.title = jQuery.i18n.prop('conf.copy.conf',options.data.name);
                 EasyUIUtils.openEditDlg(options);
                 $('#modal-action').val("add");
             }
@@ -359,7 +359,7 @@ var ConfMVC = {
     Util: {
         initAdd: function (id, name) {
             var options = ConfMVC.Util.getOptions();
-            options.title = '新增[' + name + ']的子配置项';
+            options.title = jQuery.i18n.prop('conf.add.conf',name);
             EasyUIUtils.openAddDlg(options);
 
             $("#confPid").val(id);
@@ -372,7 +372,7 @@ var ConfMVC = {
             var options = ConfMVC.Util.getOptions();
             options.iconCls = 'icon-edit1';
             options.data = data;
-            options.title = '修改[' + options.data.name + ']配置项';
+            options.title = jQuery.i18n.prop('conf.edit.conf',options.data.name);
             EasyUIUtils.openEditDlg(options);
         },
         getOptions: function () {

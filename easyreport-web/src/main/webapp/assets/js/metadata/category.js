@@ -87,7 +87,7 @@ var CategoryMVC = {
                             sourcePath: source.attributes.path
                         }, function (data) {
                             if (!data.success) {
-                                $.messager.alert('错误', data.msg, 'error');
+                                $.messager.alert(jQuery.i18n.prop('category.error'), data.msg, 'error');
                             }
                         }, 'json');
                     }
@@ -100,7 +100,7 @@ var CategoryMVC = {
                         top: e.pageY
                     });
                     var copyNodeId = $('#copyNodeId').val();
-                    var item = $('#category-tree-ctx-menu').menu('findItem', '粘贴');
+                    var item = $('#category-tree-ctx-menu').menu('findItem', jQuery.i18n.prop('category.paste'));
                     $('#category-tree-ctx-menu').menu(copyNodeId == 0 ? 'disableItem' : 'enableItem', item.target);
                 }
             });
@@ -145,13 +145,13 @@ var CategoryMVC = {
                 height: 280,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('category.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#category-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('category.save'),
                     iconCls: 'icon-save',
                     handler: CategoryMVC.Controller.save
                 }]
@@ -165,7 +165,7 @@ var CategoryMVC = {
                 maximizable: true,
                 iconCls: 'icon-search',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('category.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#category-search-dlg").dialog('close');
@@ -189,19 +189,19 @@ var CategoryMVC = {
                 },
                 columns: [[{
                     field: 'id',
-                    title: '标识',
+                    title: jQuery.i18n.prop('category.id'),
                     width: 50
                 }, {
                     field: 'parentId',
-                    title: '父标识',
+                    title: jQuery.i18n.prop('category.parentid'),
                     hidden: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('category.name'),
                     width: 150
                 }, {
                     field: 'path',
-                    title: '路径',
+                    title: jQuery.i18n.prop('category.path'),
                     width: 150
                 }]],
                 onDblClickRow: function (index, row) {
@@ -222,7 +222,7 @@ var CategoryMVC = {
     },
     Controller: {
         addRoot: function () {
-            var name = "无父级类别";
+            var name = jQuery.i18n.prop('category.no.parent.category');
             var id = "0";
             CategoryMVC.Util.initAdd(id, name);
         },
@@ -242,10 +242,10 @@ var CategoryMVC = {
                 var options = CategoryMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = node.attributes;
-                options.title = '修改[' + options.data.name + ']分类';
+                options.title = jQuery.i18n.prop('category.change.category',options.data.name);
                 EasyUIUtils.openEditDlg(options);
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('category.warn'), jQuery.i18n.prop('category.please.select.category'), 'info');
             }
         },
         view: function () {
@@ -257,7 +257,7 @@ var CategoryMVC = {
                     $('#view-' + key).text(meta[key]);
                 }
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('category.warn'), jQuery.i18n.prop('category.please.select.category'), 'info');
             }
         },
         remove: function () {
@@ -276,7 +276,7 @@ var CategoryMVC = {
                 };
                 EasyUIUtils.remove(options);
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('category.warn'), jQuery.i18n.prop('category.please.select.category'), 'info');
             }
         },
         openSearchDlg: function () {
@@ -309,7 +309,7 @@ var CategoryMVC = {
             if (node) {
                 $('#copyNodeId').val(node.id);
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('category.warn'), jQuery.i18n.prop('category.please.select.category'), 'info');
             }
         },
         paste: function () {
@@ -322,7 +322,7 @@ var CategoryMVC = {
                     $('#copyNodeId').val(0);
 
                     if (!result.success || !result.data.length) {
-                        return $.messager.alert('错误', result.msg, 'error');
+                        return $.messager.alert(jQuery.i18n.prop('category.warn'), result.msg, 'error');
                     }
 
                     var nodeData = result.data;
@@ -347,14 +347,14 @@ var CategoryMVC = {
                     });
                 }, 'json');
             } else {
-                $.messager.alert('警告', '请选中一个报表分类!', 'info');
+                $.messager.alert(jQuery.i18n.prop('category.warn'), jQuery.i18n.prop('category.please.select.category'), 'info');
             }
         }
     },
     Util: {
         initAdd: function (id, name) {
             var options = CategoryMVC.Util.getOptions();
-            options.title = '新增[' + name + ']的分类';
+            options.title = jQuery.i18n.prop('category.add.category',name);
             EasyUIUtils.openAddDlg(options);
 
             $('#category-parentId').val(id);

@@ -24,6 +24,7 @@ public class QueryParameter implements Serializable {
     private int height = 25;
     private boolean isRequired;
     private boolean isAutoComplete;
+    private int dsId;
 
     /**
      * 获取报表查询参数名称
@@ -303,5 +304,13 @@ public class QueryParameter implements Serializable {
     @JsonIgnore
     public String getRealDefaultValue() {
         return this.hasDefaultValue() ? this.getDefaultValue() : "";
+    }
+
+    public int getDsId() {
+        return dsId;
+    }
+
+    public void setDsId(int dsId) {
+        this.dsId = dsId;
     }
 }

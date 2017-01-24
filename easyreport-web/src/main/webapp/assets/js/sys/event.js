@@ -67,37 +67,37 @@ var EventMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('event.failed'), src.msg, 'error');
                 },
                 columns: [
                     [{
                         field: 'id',
-                        title: '记录ID',
+                        title: jQuery.i18n.prop('event.id'),
                         width: 50,
                         sortable: true
                     }, {
                         field: 'source',
-                        title: '来源',
+                        title: jQuery.i18n.prop('event.source'),
                         width: 200,
                         sortable: true
                     }, {
                         field: 'account',
-                        title: '操作用户',
+                        title: jQuery.i18n.prop('event.account'),
                         width: 50,
                         sortable: true,
                     }, {
                         field: 'level',
-                        title: '级别',
+                        title: jQuery.i18n.prop('event.level'),
                         width: 50,
                         sortable: true
                     }, {
                         field: 'gmtCreated',
-                        title: '发生时间',
+                        title: jQuery.i18n.prop('event.gmtcreated'),
                         width: 50,
                         sortable: true
                     }, {
                         field: 'options',
-                        title: '操作',
+                        title: jQuery.i18n.prop('event.operation'),
                         width: 100,
                         formatter: function (value, row, index) {
                             var tmpl = '<a href="#" title ="${title}" ' +
@@ -105,10 +105,10 @@ var EventMVC = {
                                 '<img src="${imgSrc}" alt="${title}"/"></a>';
                             var icons = [{
                                 "name": "info",
-                                "title": "详细"
+                                "title": jQuery.i18n.prop('event.detail')
                             }, {
                                 "name": "remove",
-                                "title": "删除"
+                                "title": jQuery.i18n.prop('event.remove')
                             }];
                             var buttons = [];
                             for (var i = 0; i < icons.length; i++) {
@@ -138,19 +138,19 @@ var EventMVC = {
                 height: 450,
                 iconCls: 'icon-info',
                 buttons: [{
-                    text: '上一条',
+                    text: jQuery.i18n.prop('event.prev.page'),
                     iconCls: 'icon-prev',
                     handler: function () {
                         EventMVC.Controller.prev();
                     }
                 }, {
-                    text: '下一条',
+                    text: jQuery.i18n.prop('event.next.page'),
                     iconCls: 'icon-next',
                     handler: function () {
                         EventMVC.Controller.next();
                     }
                 }, {
-                    text: '关闭',
+                    text: jQuery.i18n.prop('event.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#detail-info-dlg").dialog('close');
@@ -177,15 +177,15 @@ var EventMVC = {
             }
         },
         clear: function () {
-            return $.messager.confirm('删除', '您确定要清空所有日志吗?', function (r) {
+            return $.messager.confirm(jQuery.i18n.prop('event.remove'), jQuery.i18n.prop('event.confirm.clear'), function (r) {
                 if (r) {
                     $.getJSON(EventMVC.URLs.clear.url, function (result) {
                         if (result.success) {
                             EasyUIUtils.reloadDatagrid('#event-datagrid');
-                            EasyUIUtils.showMsg(result.msg || "操作成功");
+                            EasyUIUtils.showMsg(result.msg || jQuery.i18n.prop('event.operate.success'));
                         } else {
                             $.messager.show({
-                                title: '错误',
+                                title: jQuery.i18n.prop('event.error'),
                                 msg: result.msg
                             });
                         }
@@ -199,7 +199,7 @@ var EventMVC = {
                 var index = $('#event-datagrid').datagrid('getRowIndex', row);
                 return EventMVC.Controller.open(index, row);
             }
-            return $.messager.alert('警告', '请选中一条记录!', 'info');
+            return $.messager.alert(jQuery.i18n.prop('event.warn'), jQuery.i18n.prop('event.please.select.record'), 'info');
         },
         find: function () {
             var fieldName = $("#field-name").combobox('getValue');

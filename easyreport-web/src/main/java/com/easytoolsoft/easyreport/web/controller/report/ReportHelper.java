@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.easytoolsoft.easyreport.common.form.QueryParamFormView;
 import com.easytoolsoft.easyreport.common.form.control.HtmlFormElement;
 import com.easytoolsoft.easyreport.common.util.DateUtils;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
+import com.easytoolsoft.easyreport.domain.metadata.service.impl.GlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.TableReportService;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
@@ -14,16 +16,24 @@ import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
+
+import net.sf.ehcache.Element;
+
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +43,14 @@ import java.util.Map.Entry;
 public class ReportHelper {
     private static ReportService reportService;
     private static TableReportService tableReportService;
-
+    private static GlobalParamService globalParamService;
+    private static EhCacheCacheManager cacheManager;
     @Autowired
-    public ReportHelper(ReportService reportService, TableReportService tableReportService) {
+    public ReportHelper(ReportService reportService, TableReportService tableReportService,GlobalParamService globalParamService,EhCacheCacheManager cacheManager) {
         ReportHelper.reportService = reportService;
         ReportHelper.tableReportService = tableReportService;
+        ReportHelper.globalParamService=globalParamService;
+        ReportHelper.cacheManager = cacheManager;
     }
 
     public static Report getReportMetaData(String uid) {
@@ -75,22 +88,46 @@ public class ReportHelper {
         modelAndView.addObject("name", report.getName());
     }
 
+    @SuppressWarnings("unchecked")
+    public static Map<String,Object> getReportFromEhcache(String uid, HttpServletRequest request,String key){
+        Map<String,Object> reportMap =  null;
+        Element ele =
+                cacheManager.getCacheManager().getCache("reportTemplateCache").get(key);
+        if(ele==null){
+            reportMap = new HashMap<String,Object>();
+            Report report = reportService.getByUid(uid);
+            ReportOptions options = reportService.parseOptions(report.getOptions());
+            List<ReportMetaDataColumn> metaDataColumns = reportService.parseMetaColumns(report.getMetaColumns());
+            Map<String, Object> buildInParams = tableReportService.getBuildInParameters(request.getParameterMap(), options.getDataRange());
+            List<HtmlFormElement> dateAndQueryElements = tableReportService.getDateAndQueryParamFormElements(report, buildInParams);
+            HtmlFormElement statColumnFormElements =tableReportService.getStatColumnFormElements(metaDataColumns, 0);
+            List<HtmlFormElement> nonStatColumnFormElements =tableReportService.getNonStatColumnFormElements(metaDataColumns);
+            reportMap.put("report", report);
+            reportMap.put("metaDataColumns", metaDataColumns);
+            reportMap.put("buildInParams", buildInParams);
+            reportMap.put("dateAndQueryElements", dateAndQueryElements);
+            reportMap.put("statColumnFormElements", statColumnFormElements);
+            reportMap.put("nonStatColumnFormElements", nonStatColumnFormElements);
+            ele = new Element(key,reportMap);
+            cacheManager.getCacheManager().getCache("reportTemplateCache").put(ele);
+        }else{
+            reportMap= (Map<String, Object>) ele.getObjectValue();
+        }
+        return reportMap;
+    }
+    
+    @SuppressWarnings("unchecked")
     public static void renderByTemplate(String uid, ModelAndView modelAndView, QueryParamFormView formView,
                                         HttpServletRequest request) {
-        Report report = reportService.getByUid(uid);
-        ReportOptions options = reportService.parseOptions(report.getOptions());
-        List<ReportMetaDataColumn> metaDataColumns = reportService.parseMetaColumns(report.getMetaColumns());
-        Map<String, Object> buildInParams = tableReportService.getBuildInParameters(request.getParameterMap(), options.getDataRange());
-        List<HtmlFormElement> dateAndQueryElements = tableReportService.getDateAndQueryParamFormElements(report, buildInParams);
-        HtmlFormElement statColumnFormElements = tableReportService.getStatColumnFormElements(metaDataColumns, 0);
-        List<HtmlFormElement> nonStatColumnFormElements = tableReportService.getNonStatColumnFormElements(metaDataColumns);
+        String eleKey = uid+"_"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
+        Map<String, Object> reportMap = getReportFromEhcache(uid,request,eleKey);
         modelAndView.addObject("uid", uid);
-        modelAndView.addObject("id", report.getId());
-        modelAndView.addObject("name", report.getName());
-        modelAndView.addObject("comment", report.getComment().trim());
-        modelAndView.addObject("formHtmlText", formView.getFormHtmlText(dateAndQueryElements));
-        modelAndView.addObject("statColumHtmlText", formView.getFormHtmlText(statColumnFormElements));
-        modelAndView.addObject("nonStatColumHtmlText", formView.getFormHtmlText(nonStatColumnFormElements));
+        modelAndView.addObject("id", ((Report)reportMap.get("report")).getId());
+        modelAndView.addObject("name", ((Report)reportMap.get("report")).getName());
+        modelAndView.addObject("comment", ((Report)reportMap.get("report")).getComment().trim());
+        modelAndView.addObject("formHtmlText", formView.getFormHtmlText((List<HtmlFormElement>) reportMap.get("dateAndQueryElements")));
+        modelAndView.addObject("statColumHtmlText", formView.getFormHtmlText((HtmlFormElement) reportMap.get("statColumnFormElements")));
+        modelAndView.addObject("nonStatColumHtmlText", formView.getFormHtmlText((List<HtmlFormElement>) reportMap.get("nonStatColumnFormElements")));
     }
 
     public static void generate(String uid, JSONObject data, HttpServletRequest request) {
@@ -168,3 +205,4 @@ public class ReportHelper {
         }
     }
 }
+

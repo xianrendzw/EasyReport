@@ -42,10 +42,29 @@
             <charset>${easyreport.log.charset.console}</charset>
         </encoder>
     </appender>
+    
+     <appender name="QUARTZ" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/quartz.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>
+                logs/quartz.log.%d{yyyy-MM-dd}.gz
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <logger name="com.easytoolsoft" level="${easyreport.log.level.easyreport}"/>
     <logger name="com.easytoolsoft.easyreport.dao" level="${easyreport.log.level.db}"/>
     <logger name="org.mybatis" level="${easyreport.log.level.db}"/>
+    <logger name="org.quartz" additivity="false" level="DEBUG">
+        <appender-ref ref="QUARTZ"/>
+    </logger>
+    <logger name="net.sf.ehcache" level="ALL"/>
+    
 
     <root level="${easyreport.log.level.root}">
         <appender-ref ref="FILE_ALL"/>

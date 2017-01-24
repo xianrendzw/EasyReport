@@ -21,7 +21,7 @@ ReportChart.generate = function(e) {
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
-			$('#loadingText').html("图表正在生成中, 请稍等...");
+			$('#loadingText').html(jQuery.i18n.prop('chart.generating'));
 			$('#loading').show();
 		},
 		success : function(metaData) {
@@ -112,7 +112,7 @@ ReportChart.checkStatColumn = function() {
 ReportChart.checkStatColumnCount = function() {
 	var checkedStatColumnCount = ReportChart.getCheckedStatColumnCount();
 	if (checkedStatColumnCount < 1) {
-		$.messager.alert('失败', "您没有选择统计列!", 'error');
+		$.messager.alert( jQuery.i18n.prop('chart.failed'), jQuery.i18n.prop('chart.please.select.statistic.column'), 'error');
 		return false;
 	}
 	return true;
@@ -121,7 +121,7 @@ ReportChart.checkStatColumnCount = function() {
 ReportChart.checkCanSelectAllDimCount = function() {
 	var count = ReportChart.getCanSelectAllDimCount();
 	if (ReportChart.isSelectMutiAll()) {
-		$.messager.alert('失败', "只能选择" + count + "个维度的[全部]项!", 'error');
+		$.messager.alert(jQuery.i18n.prop('chart.failed'),jQuery.i18n.prop('chart.Only.select.dimission',count), 'error');
 		return false;
 	}
 	return true;

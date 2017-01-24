@@ -36,9 +36,9 @@ var PreviewMainMVC = {
         initData: function () {
             var uid = $('#report-main-uid').val();
             var tableUrl = juicer(PreviewMainMVC.URLs.table.url, {uid: uid});
-            var chartUrl = juicer(PreviewMainMVC.URLs.chart.url, {uid: uid});
-            PreviewMainMVC.Controller.updateTab('表格', tableUrl, TableReport.init);
-            PreviewMainMVC.Controller.updateTab('图表', chartUrl, ChartReport.init);
+            
+            PreviewMainMVC.Controller.updateTab( 0, tableUrl, TableReport.init);
+            
         }
     },
     Controller: {
@@ -53,6 +53,15 @@ var PreviewMainMVC = {
                 }
             });
             tab.panel('refresh', href);
+            $('#report-main-tabs').tabs({
+                onSelect:function(title,index){
+                    if(index==1){
+                        var uid = $('#report-main-uid').val();
+                        var chartUrl = juicer(PreviewMainMVC.URLs.chart.url, {uid: uid});
+                        PreviewMainMVC.Controller.updateTab( 1, chartUrl, ChartReport.init);
+                    }
+                }
+            });
         }
     }
 };

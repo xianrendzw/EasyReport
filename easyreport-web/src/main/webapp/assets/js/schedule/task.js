@@ -83,54 +83,54 @@ var TaskMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('task.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '任务ID',
+                    title: jQuery.i18n.prop('task.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'reportIds',
-                    title: '报表ids',
+                    title: jQuery.i18n.prop('task.reportids'),
                     width: 200,
                     sortable: true
                 }, {
                     field: 'cronExpr',
-                    title: 'Cron表达式',
+                    title: jQuery.i18n.prop('task.cronexpr'),
                     width: 150,
                     sortable: true,
                 }, {
                     field: 'type',
-                    title: '类型',
+                    title: jQuery.i18n.prop('task.type'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        if (value === 1) return "电子邮件";
-                        if (value === 2) return "手机短信";
-                        return "其他";
+                        if (value === 1) return jQuery.i18n.prop('task.email');
+                        if (value === 2) return jQuery.i18n.prop('task.sms');
+                        return jQuery.i18n.prop('task.other');
                     }
                 }, {
                     field: 'comment',
-                    title: '说明',
+                    title: jQuery.i18n.prop('task.comment'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('task.gmtcreated'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('task.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": "编辑"
+                            "title": jQuery.i18n.prop('task.edit')
                         }, {
                             "name": "remove",
-                            "title": "删除"
+                            "title": jQuery.i18n.prop('task.remove')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -161,13 +161,13 @@ var TaskMVC = {
                 height: 500,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('task.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#task-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('task.save'),
                     iconCls: 'icon-save',
                     handler: TaskMVC.Controller.save
                 }]
@@ -175,12 +175,14 @@ var TaskMVC = {
 
             $('#type').combobox({
                 onChange: function (newValue, oldValue) {
-                    TaskMVC.Util.getJsonOptions(newValue);
+                	if(oldValue!=""){
+                		TaskMVC.Util.getJsonOptions(newValue);
+                	}
                 }
             });
 
             $('#cronExprDiv').cron({
-                initial: "42 3 1 * *",
+                initial: "0 0/1 * * * ?",
                 onChange: function () {
                     $('#cronExpr').textbox('setValue', $(this).cron("value"));
                 },
@@ -208,11 +210,15 @@ var TaskMVC = {
         },
         add: function () {
             var options = TaskMVC.Util.getOptions();
-            options.title = '新增任务';
+            options.title = jQuery.i18n.prop('task.add.task');
             EasyUIUtils.openAddDlg(options);
             $('#type').combobox('setValue', "1");
-            $('#cronExpr').textbox('setValue', '42 3 1 * *');
+            $('#cronExpr').textbox('setValue', '0 0/1 * * * ?');
             TaskMVC.Util.fillReportCombox("add", []);
+            TaskMVC.Util.getJsonOptions("1");
+            
+            var template_html_end = "</body></html>";
+            $('#template').textbox('setValue', result.data);
         },
         edit: function () {
             var row = $('#task-datagrid').datagrid('getSelected');
@@ -220,11 +226,11 @@ var TaskMVC = {
                 var options = TaskMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']任务';
+                options.title = jQuery.i18n.prop('task.edit.task',options.data.name);
                 EasyUIUtils.openEditDlg(options);
-                TaskMVC.Util.fillReportCombox("edit", roleIds.split(','));
+                TaskMVC.Util.fillReportCombox("edit", row.reportIds.split(','));
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('task.warn'), jQuery.i18n.prop('task.please.select.record'), 'info');
             }
         },
         find: function () {

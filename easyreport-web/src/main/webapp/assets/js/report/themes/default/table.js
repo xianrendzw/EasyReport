@@ -32,7 +32,7 @@ ReportTemplate.generate = function(mode, callback) {
 		data : $("#templateFrom").serialize(),
 		dataType : "json",
 		beforeSend : function() {
-			$('#loadingText').html("报表正在生成中, 请稍等...");
+			$('#loadingText').html(jQuery.i18n.prop('table.generating.wait'));
 			$('#loading').show();
 		},
 		success : function(result) {
@@ -91,7 +91,7 @@ ReportTemplate.renderClassicReport = function(table) {
 			sortInitialOrder : 'desc'
 		});
 		table.find('>thead>tr').attr({
-			title : "点击可以排序"
+			title : jQuery.i18n.prop('table.click.sort')
 		}).css({
 			cursor : "pointer"
 		});
@@ -109,26 +109,26 @@ ReportTemplate.renderDatatablesReport = function(table) {
 		"pageLength": 100,
 		"lengthMenu": [ 50, 100, 200, 500, 1000 ],
 		"language" : {
-			processing : "数据正在加载中...",
-			search : "查询:",
-			lengthMenu : "每页显示 _MENU_ 条记录",
-			info : "从 _START_ 到 _END_ /共 _TOTAL_ 条记录",
-			infoEmpty : "从 0 到  0  共 0  条记录",
-			infoFiltered : "(从 _MAX_ 条数据中检索)",
+			processing : jQuery.i18n.prop('table.data.loading'),
+			search : jQuery.i18n.prop('table.search'),
+			lengthMenu : jQuery.i18n.prop('table.length.menu'),
+			info : jQuery.i18n.prop('table.info'),
+			infoEmpty : jQuery.i18n.prop('table.info.empty'),
+			infoFiltered : jQuery.i18n.prop('table.info.filtered'),
 			infoPostFix : "",
 			thousands : ",",
-			loadingRecords : "数据加载中...",
-			zeroRecords : "没有检索到数据",
-			emptyTable : "没有数据",
+			loadingRecords : jQuery.i18n.prop('table.data.loading'),
+			zeroRecords : jQuery.i18n.prop('table.zero.record'),
+			emptyTable : jQuery.i18n.prop('table.empty'),
 			paginate : {
-				first : "首页",
-				previous : "前一页",
-				next : "后一页",
-				last : "尾页"
+				first : jQuery.i18n.prop('table.first.page'),
+				previous : jQuery.i18n.prop('table.previous.page'),
+				next : jQuery.i18n.prop('table.next.page'),
+				last : jQuery.i18n.prop('table.last.page')
 			},
 			aria : {
-				sortAscending : ": 升序",
-				sortDescending : ": 降序"
+				sortAscending : jQuery.i18n.prop('table.asc'),
+				sortDescending : jQuery.i18n.prop('table.desc')
 			}
 		}
 	});
@@ -147,14 +147,14 @@ ReportTemplate.renderDatatablesReport = function(table) {
 ReportTemplate.renderFilterTable = function(result) {
 	var html = '<table>';
 	html += '<tr><td align="center" colspan="'+result.metaDataColumnCount+'"><h3>' + $('#rpTitle').text() + '</h3></td></tr>';
-	html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><h3>导出时间:' + currentTime()+ '</h3></td></tr>';
+	html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><h3>'+jQuery.i18n.prop('table.export.time') + currentTime()+ '</h3></td></tr>';
 	$('#templateFrom .j-item').each(function() {
 		var type = $(this).attr('data-type');
 		if (type === 'date-range') {
 			var input = $(this).find('.combo-text');
-			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>时间范围:</strong>' + input.eq(0).val() + '~' + input.eq(1).val() + '</td></tr>';
+			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>'+jQuery.i18n.prop('table.time.range')+'</strong>' + input.eq(0).val() + '~' + input.eq(1).val() + '</td></tr>';
 		} else if (type === 'checkbox') {
-			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>筛选统计列:</strong>';
+			html += '<tr><td align="right" colspan="'+result.metaDataColumnCount+'"><strong>'+jQuery.i18n.prop('table.statistic.column.filter')+'</strong>';
 			var rowChoose = [];
 			$(this).find('input[type="checkbox"]:checked').each(function() {
 				rowChoose.push($(this).attr('data-name'));
@@ -195,7 +195,7 @@ ReportTemplate.exportToExcel = function(e) {
 	var postData = $('#templateFrom').serializeObject();
 	postData["htmlText"] = htmlText;
 
-	$('#loadingText').html("正在导出Excel中, 请稍等...");
+	$('#loadingText').html(jQuery.i18n.prop('table.export.excel'));
 	$('#loading').show();
 	$.fileDownload(postUrl, {
 		httpMethod : "POST",
@@ -240,7 +240,7 @@ ReportTemplate.fullScreen = function() {
 };
 
 ReportTemplate.showChart = function(e) {
-	var title = $('#rpName').val() + "(图表)";
+	var title = $('#rpName').val() + jQuery.i18n.prop('table.chart');
 	var id = $('#rpId').val();
 	var uid = $('#rpUid').val();
 	parent.showChart(title, id, uid);

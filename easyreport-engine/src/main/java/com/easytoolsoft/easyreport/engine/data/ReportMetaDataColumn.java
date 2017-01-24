@@ -13,7 +13,7 @@ public class ReportMetaDataColumn {
     private String comment;
     private int width;
     private int decimals;
-    private ColumnType type = ColumnType.DIMENSION;
+    private ColumnType type = ColumnType.STATISTICAL;
     private ColumnSortType sortType = ColumnSortType.DEFAULT;
     private boolean isExtensions;
     private boolean isFootings;

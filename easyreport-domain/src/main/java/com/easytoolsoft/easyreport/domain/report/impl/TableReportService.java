@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.domain.report.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBox;
 import com.easytoolsoft.easyreport.common.form.control.HtmlCheckBoxList;
 import com.easytoolsoft.easyreport.common.form.control.HtmlComboBox;
@@ -20,17 +21,26 @@ import com.easytoolsoft.easyreport.engine.data.ReportSqlTemplate;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
 import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportOptions;
 import com.easytoolsoft.easyreport.domain.report.ITableReportService;
+import com.easytoolsoft.easyreport.domain.metadata.service.IGlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
 import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
+
+import net.sf.ehcache.Element;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +57,10 @@ import java.util.stream.Collectors;
 public class TableReportService implements ITableReportService {
     @Resource
     private IReportService reportService;
+    @Resource
+    private IGlobalParamService globalParamService;
+    @Resource
+    EhCacheCacheManager cacheManager;
 
     @Override
     public ReportParameter getReportParameter(Report report, Map<?, ?> parameters) {
@@ -94,9 +108,9 @@ public class TableReportService implements ITableReportService {
         Set<String> enabledStatColumn = this.getEnabledStatColumns(formParams);
         ReportOptions options = this.reportService.parseOptions(report.getOptions());
         List<ReportMetaDataColumn> metaColumns = this.reportService.parseMetaColumns(report.getMetaColumns());
-        return new ReportParameter(report.getId().toString(), report.getName(),
-                options.getLayout(), options.getStatColumnLayout(), metaColumns,
-                enabledStatColumn, Boolean.valueOf(formParams.get("isRowSpan").toString()), sqlText);
+        return new ReportParameter(report.getId().toString(), report.getName(), options.getLayout(),
+                options.getStatColumnLayout(), metaColumns, enabledStatColumn, Boolean.valueOf(formParams.get(
+                        "isRowSpan").toString()), sqlText);
     }
 
     private Set<String> getEnabledStatColumns(Map<String, Object> formParams) {
@@ -182,7 +196,10 @@ public class TableReportService implements ITableReportService {
 
         String uid = values[0].trim();
         Report report = this.reportService.getByUid(uid);
-        List<QueryParameter> queryParams = this.reportService.parseQueryParams(report.getQueryParams());
+        List<QueryParameter> queryParams = new ArrayList<QueryParameter>();
+        // this.
+        queryParams.addAll(getGlobalQueryParams());
+        queryParams.addAll(this.reportService.parseQueryParams(report.getQueryParams()));
         for (QueryParameter queryParam : queryParams) {
             String value = "";
             values = (String[]) httpReqParamMap.get(queryParam.getName());
@@ -205,21 +222,21 @@ public class TableReportService implements ITableReportService {
 
     @Override
     public Map<String, HtmlFormElement> getFormElementMap(String uid, Map<String, Object> buildinParams,
-                                                          int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
         return this.getFormElementMap(report, buildinParams, minDisplayedStatColumn);
     }
 
     @Override
     public Map<String, HtmlFormElement> getFormElementMap(int id, Map<String, Object> buildinParams,
-                                                          int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
         return this.getFormElementMap(report, buildinParams, minDisplayedStatColumn);
     }
 
     @Override
     public Map<String, HtmlFormElement> getFormElementMap(Report report, Map<String, Object> buildinParams,
-                                                          int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         List<HtmlFormElement> formElements = this.getFormElements(report, buildinParams, minDisplayedStatColumn);
         Map<String, HtmlFormElement> formElementMap = new HashMap<>(formElements.size());
         for (HtmlFormElement element : formElements) {
@@ -230,21 +247,20 @@ public class TableReportService implements ITableReportService {
 
     @Override
     public List<HtmlFormElement> getFormElements(String uid, Map<String, Object> buildinParams,
-                                                 int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
         return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
     }
 
     @Override
-    public List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams,
-                                                 int minDisplayedStatColumn) {
+    public List<HtmlFormElement> getFormElements(int id, Map<String, Object> buildinParams, int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
         return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
     }
 
     @Override
     public List<HtmlFormElement> getFormElements(Report report, Map<String, Object> buildinParams,
-                                                 int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         List<HtmlFormElement> formElements = new ArrayList<>(15);
         formElements.addAll(this.getDateFormElements(report, buildinParams));
         formElements.addAll(this.getQueryParamFormElements(report, buildinParams));
@@ -306,40 +322,58 @@ public class TableReportService implements ITableReportService {
 
     @Override
     public List<HtmlFormElement> getQueryParamFormElements(String uid, Map<String, Object> buildinParams,
-                                                           int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
         return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
     }
 
     @Override
     public List<HtmlFormElement> getQueryParamFormElements(int id, Map<String, Object> buildinParams,
-                                                           int minDisplayedStatColumn) {
+            int minDisplayedStatColumn) {
         Report report = this.reportService.getById(id);
         return this.getFormElements(report, buildinParams, minDisplayedStatColumn);
     }
 
+    private List<QueryParameter> getGlobalQueryParams() {
+        List<GlobalParam> globalParamList = globalParamService.getAll();
+        List<String> globalQueryParamlist = new ArrayList<String>();
+        for (GlobalParam param : globalParamList) {
+            globalQueryParamlist.add(param.getQueryParams());
+        }
+        String globalParams = "[" + StringUtils.join(globalQueryParamlist, ',') + "]";
+        return this.reportService.parseQueryParams(globalParams);
+    }
+
     @Override
     public List<HtmlFormElement> getQueryParamFormElements(Report report, Map<String, Object> buildinParams) {
-        List<QueryParameter> queryParams = this.reportService.parseQueryParams(report.getQueryParams());
+        List<QueryParameter> queryParams = new ArrayList<QueryParameter>();
+
+        queryParams.addAll(getGlobalQueryParams());
+        queryParams.addAll(this.reportService.parseQueryParams(report.getQueryParams()));
         List<HtmlFormElement> formElements = new ArrayList<>(3);
 
         for (QueryParameter queryParam : queryParams) {
+            if (!report.getSqlText().contains("${" + queryParam.getName() + "}")) {
+                continue;
+            }
             HtmlFormElement htmlFormElement = null;
             queryParam.setDefaultText(VelocityUtils.parse(queryParam.getDefaultText(), buildinParams));
             queryParam.setDefaultValue(VelocityUtils.parse(queryParam.getDefaultValue(), buildinParams));
             queryParam.setContent(VelocityUtils.parse(queryParam.getContent(), buildinParams));
             String formElement = queryParam.getFormElement().toLowerCase();
             if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
-                htmlFormElement = this.getComboBoxFormElements(queryParam, report.getDsId(), buildinParams);
+                int dsid = queryParam.getDsId() > 0 ? queryParam.getDsId() : report.getDsId();
+                System.out.println("queryParam:" + JSON.toJSONString(queryParam));
+                htmlFormElement = this.getComboBoxFormElements(queryParam, dsid, buildinParams);
             } else if (formElement.equals("checkbox")) {
-                htmlFormElement = new HtmlCheckBox(queryParam.getName(),queryParam.getText(),
-                        queryParam.getRealDefaultValue());
+                htmlFormElement =
+                        new HtmlCheckBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
             } else if (formElement.equals("text")) {
-                htmlFormElement = new HtmlTextBox(queryParam.getName(),queryParam.getText(),
-                        queryParam.getRealDefaultValue());
+                htmlFormElement =
+                        new HtmlTextBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
             } else if (formElement.equals("date")) {
-                htmlFormElement = new HtmlDateBox(queryParam.getName(),queryParam.getText(),
-                        queryParam.getRealDefaultValue());
+                htmlFormElement =
+                        new HtmlDateBox(queryParam.getName(), queryParam.getText(), queryParam.getRealDefaultValue());
             }
             if (htmlFormElement != null) {
                 this.setElementCommonProperities(queryParam, htmlFormElement);
@@ -349,27 +383,29 @@ public class TableReportService implements ITableReportService {
         return formElements;
     }
 
-    private HtmlComboBox getComboBoxFormElements(QueryParameter queryParam, int dsId,
-                                                 Map<String, Object> buildinParams) {
+    private HtmlComboBox
+            getComboBoxFormElements(QueryParameter queryParam, int dsId, Map<String, Object> buildinParams) {
         List<ReportQueryParamItem> options = this.getOptions(queryParam, dsId, buildinParams);
         List<HtmlSelectOption> htmlSelectOptions = new ArrayList<>(options.size());
 
         if (queryParam.hasDefaultValue()) {
-            htmlSelectOptions.add(new HtmlSelectOption(
-                    queryParam.getDefaultText(),
-                    queryParam.getDefaultValue(), true));
+            htmlSelectOptions
+                    .add(new HtmlSelectOption(queryParam.getDefaultText(), queryParam.getDefaultValue(), true));
         }
         for (int i = 0; i < options.size(); i++) {
             ReportQueryParamItem option = options.get(i);
             if (!option.getName().equals(queryParam.getDefaultValue())) {
-                htmlSelectOptions.add(new HtmlSelectOption(option.getText(),
-                        option.getName(), (!queryParam.hasDefaultValue() && i == 0)));
+                htmlSelectOptions.add(new HtmlSelectOption(option.getText(), option.getName(), (!queryParam
+                        .hasDefaultValue() && i == 0)));
             }
         }
 
         HtmlComboBox htmlComboBox = new HtmlComboBox(queryParam.getName(), queryParam.getText(), htmlSelectOptions);
         htmlComboBox.setMultipled(queryParam.getFormElement().equals("selectMul"));
         htmlComboBox.setAutoComplete(queryParam.isAutoComplete());
+        if(queryParam.getWidth()<100){
+        	htmlComboBox.setWidth(queryParam.getWidth());
+        }
         return htmlComboBox;
     }
 
@@ -383,10 +419,12 @@ public class TableReportService implements ITableReportService {
         htmlFormElement.setComment(queryParam.getComment());
     }
 
-    private List<ReportQueryParamItem> getOptions(QueryParameter queryParam, int dsId,
-                                                  Map<String, Object> buildinParams) {
+    private List<ReportQueryParamItem>
+            getOptions(QueryParameter queryParam, int dsId, Map<String, Object> buildinParams) {
         if (queryParam.getDataSource().equals("sql")) {
-            return this.reportService.executeQueryParamSqlText(dsId, queryParam.getContent());
+            List<ReportQueryParamItem> result = getOptionsFromDB(queryParam, dsId);
+            System.out.println("getOptions Result:" + result.hashCode());
+            return result;
         }
 
         List<ReportQueryParamItem> options = new ArrayList<>();
@@ -406,6 +444,24 @@ public class TableReportService implements ITableReportService {
         return options;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<ReportQueryParamItem> getOptionsFromDB(QueryParameter queryParam, int dsId) {
+        String eleKey = queryParam.getName() + "_" + dsId+"_"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
+        Element ele =
+                cacheManager.getCacheManager().getCache("queryparamCache").get(eleKey);
+        List<ReportQueryParamItem> result = null;
+        if (ele == null) {
+            result= this.reportService.executeQueryParamSqlText(dsId, queryParam.getContent());
+            Element element = new Element(eleKey, result); 
+            cacheManager.getCacheManager().getCache("queryparamCache").put(element);
+            System.out.println("getOptionsFromDB Result:" + result.hashCode());
+        }else{
+            result=((List<ReportQueryParamItem>) ele.getObjectValue());
+        }
+        
+        return result;
+    }
+
     @Override
     public HtmlCheckBoxList getStatColumnFormElements(String uid, int minDisplayedStatColumn) {
         Report report = this.reportService.getByUid(uid);
@@ -421,12 +477,11 @@ public class TableReportService implements ITableReportService {
     }
 
     @Override
-    public HtmlCheckBoxList getStatColumnFormElements(List<ReportMetaDataColumn> columns,
-                                                      int minDisplayedStatColumn) {
-        List<ReportMetaDataColumn> statColumns = columns.stream()
-                .filter(column -> column.getType() == ColumnType.STATISTICAL ||
-                        column.getType() == ColumnType.COMPUTED)
-                .collect(Collectors.toList());
+    public HtmlCheckBoxList getStatColumnFormElements(List<ReportMetaDataColumn> columns, int minDisplayedStatColumn) {
+        List<ReportMetaDataColumn> statColumns =
+                columns.stream()
+                        .filter(column -> column.getType() == ColumnType.STATISTICAL
+                                || column.getType() == ColumnType.COMPUTED).collect(Collectors.toList());
         if (statColumns.size() <= minDisplayedStatColumn) {
             return null;
         }
@@ -444,14 +499,14 @@ public class TableReportService implements ITableReportService {
     public List<HtmlFormElement> getNonStatColumnFormElements(List<ReportMetaDataColumn> columns) {
         List<HtmlFormElement> formElements = new ArrayList<>(10);
         columns.stream()
-                .filter(column -> column.getType() == ColumnType.LAYOUT ||
-                        column.getType() == ColumnType.DIMENSION)
-                .forEach(column -> {
-                    HtmlComboBox htmlComboBox = new HtmlComboBox("dim_" + column.getName(),
-                            column.getText(), new ArrayList<>(0));
-                    htmlComboBox.setAutoComplete(true);
-                    formElements.add(htmlComboBox);
-                });
+                .filter(column -> column.getType() == ColumnType.LAYOUT || column.getType() == ColumnType.DIMENSION)
+                .forEach(
+                        column -> {
+                            HtmlComboBox htmlComboBox =
+                                    new HtmlComboBox("dim_" + column.getName(), column.getText(), new ArrayList<>(0));
+                            htmlComboBox.setAutoComplete(true);
+                            formElements.add(htmlComboBox);
+                        });
         return formElements;
     }
 }

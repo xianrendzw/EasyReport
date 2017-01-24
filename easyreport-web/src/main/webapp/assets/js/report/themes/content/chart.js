@@ -3,6 +3,7 @@ var ChartReport = {
         ChartReportMVC.View.initControl();
         ChartReportMVC.View.bindEvent();
         ChartReportMVC.View.bindValidate();
+        angular.bootstrap(document,['i18n']);
         ChartReportMVC.View.initData();
     }
 };
@@ -37,7 +38,7 @@ var ChartReportMVC = {
         bindValidate: function () {
         },
         initData: function () {
-            ChartReportMVC.Controller.generate();
+//            ChartReportMVC.Controller.generate();
         }
     },
     Model: {
@@ -53,8 +54,8 @@ var ChartReportMVC = {
                 beforeSend: function () {
                     if (e) {
                         $.messager.progress({
-                            title: '请稍后...',
-                            text: '报表正在生成中...',
+                            title: jQuery.i18n.prop('chart.wait'),
+                            text: jQuery.i18n.prop('chart.generating'),
                         });
                     }
                 },
@@ -69,7 +70,7 @@ var ChartReportMVC = {
                         }
                     } else {
                         if (e) {
-                            $.messager.alert('操作提示', result.data.msg, 'error');
+                            $.messager.alert(jQuery.i18n.prop('chart.operation.hint'), result.data.msg, 'error');
                         }
                     }
                 },
@@ -190,7 +191,7 @@ var ChartReportMVC = {
         checkStatColumnCount: function () {
             var checkedStatColumnCount = ChartReportMVC.Util.getCheckedStatColumnCount();
             if (checkedStatColumnCount < 1) {
-                $.messager.alert('失败', "您没有选择统计列!", 'error');
+                $.messager.alert(jQuery.i18n.prop('chart.failed'), jQuery.i18n.prop('chart.please.select.statistic.column'), 'error');
                 return false;
             }
             return true;
@@ -198,7 +199,7 @@ var ChartReportMVC = {
         checkCanSelectAllDimCount: function () {
             var count = ChartReportMVC.Util.getCanSelectAllDimCount();
             if (ChartReportMVC.Util.isSelectMutiAll()) {
-                $.messager.alert('失败', "只能选择" + count + "个维度的[全部]项!", 'error');
+                $.messager.alert(jQuery.i18n.prop('chart.failed'),jQuery.i18n.prop('chart.Only.select.dimission',count), 'error');
                 return false;
             }
             return true;

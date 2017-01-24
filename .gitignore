@@ -20,6 +20,7 @@ nb-configuration.xml
 /easyreport-web/target/
 /easyreport-web/.settings/
 /easyreport-web/.classpath
+/easyreport-web/mail/
 /easyreport-data/target/
 /easyreport-data/.settings/
 /easyreport-data/.classpath
@@ -32,6 +33,8 @@ nb-configuration.xml
 /easyreport-queryer/target/
 /easyreport-queryer/.settings/
 /easyreport-queryer/.classpath
+/easyreport-web/src/main/filters/
+/easyreport-scheduler/src/main/filters/
 .project
 .classpath
 .settings

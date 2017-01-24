@@ -98,7 +98,7 @@ public class ModuleController
         for (Module po : modules) {
             String mid = Integer.toString(po.getId());
             String pid = Integer.toString(po.getParentId());
-            String text = po.getName();
+            String text = po.getCode();
             EasyUITreeNode<Module> node = new EasyUITreeNode<>(mid, pid, text, "closed", po.getIcon(), false, po);
             treeNodes.add(node);
         }
@@ -130,3 +130,4 @@ public class ModuleController
         return result;
     }
 }
+

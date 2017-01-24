@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.easytoolsoft</groupId>
     <artifactId>easyreport</artifactId>
@@ -11,10 +12,10 @@
     <modules>
         <module>easyreport-common</module>
         <module>easyreport-data</module>
+        <module>easyreport-database</module>
         <module>easyreport-domain</module>
         <module>easyreport-engine</module>
         <module>easyreport-queryer</module>
-        <module>easyreport-scheduler</module>
         <module>easyreport-membership</module>
         <module>easyreport-web</module>
     </modules>
@@ -22,13 +23,13 @@
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-version>4.3.1.RELEASE</spring-version>
+        <spring-version>4.3.5.RELEASE</spring-version>
         <logback-version>1.1.6</logback-version>
         <jackson-version>1.9.13</jackson-version>
         <junit-version>4.12</junit-version>
         <fasterxml-jackson-version>2.7.4</fasterxml-jackson-version>
         <slf4j-version>1.7.21</slf4j-version>
-        <shiro-version>1.2.5</shiro-version>
+        <shiro-version>1.4.0-RC2</shiro-version>
         <powermock-version>1.6.5</powermock-version>
         <c3p0-version>0.9.5.2</c3p0-version>
         <dbcp2-version>2.1.1</dbcp2-version>
@@ -195,7 +196,7 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <!-- Text & JSON-->
+            <!-- Text & JSON -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -247,6 +248,11 @@
                 <artifactId>shiro-quartz</artifactId>
                 <version>${shiro-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
             <!-- JSR 303 with Hibernate Validator -->
             <dependency>
                 <groupId>javax.validation</groupId>
@@ -273,6 +279,22 @@
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>2.2.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.mchange</groupId>
+                        <artifactId>c3p0</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.googlecode.ehcache-spring-annotations</groupId>
+                <artifactId>ehcache-spring-annotations</artifactId>
+                <version>1.2.0</version>
             </dependency>
             <!-- web container -->
             <dependency>

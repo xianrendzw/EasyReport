@@ -12,6 +12,7 @@ var conf = {
         'jquery-fixtableheader': 'vendor/jquery.fixtableheader',
         'jquery-number': 'vendor/jquery.number.min',
         'jquery-tablesorter': 'vendor/tablesorter/jquery.tablesorter.min',
+        'jquery-i18n': 'vendor/locale/i18n',
         'select2': 'vendor/select2/select2.min',
         'select2-zhcn': 'vendor/select2/js/i18n/zh-CN',
         'echarts': 'vendor/echarts.min',

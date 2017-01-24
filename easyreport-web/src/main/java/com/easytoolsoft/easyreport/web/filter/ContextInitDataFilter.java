@@ -1,6 +1,6 @@
 package com.easytoolsoft.easyreport.web.filter;
 
-import com.easytoolsoft.easyreport.web.common.Constants;
+import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,7 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+
+import com.easytoolsoft.easyreport.web.common.Constants;
 
 /**
  * ServletContext 初始化数据 Filter
@@ -28,7 +29,6 @@ public class ContextInitDataFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-
         if (request.getAttribute(Constants.CONTEXT_PATH) == null) {
             request.setAttribute(Constants.CONTEXT_PATH, req.getContextPath());
         }

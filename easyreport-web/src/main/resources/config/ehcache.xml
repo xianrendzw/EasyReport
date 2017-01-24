@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+   
+    <diskStore path="java.io.tmpdir/ehcache"/>
+    
+    <!-- 默认缓存 -->
+    <defaultCache
+		   maxElementsInMemory="1000"
+		   eternal="false"
+		   timeToIdleSeconds="86400"
+		   timeToLiveSeconds="86400"
+		   overflowToDisk="false"/>
+		   
+	<!-- 参数缓存 -->	   
+    <cache name="queryparamCache" 
+           maxElementsInMemory="1000" 
+           eternal="false"
+		   timeToIdleSeconds="86400"
+		   timeToLiveSeconds="86400"
+		   overflowToDisk="false" 
+		   memoryStoreEvictionPolicy="LRU"/>
+    <cache name="reportTemplateCache" 
+           maxElementsInMemory="1000" 
+           eternal="false"
+           timeToIdleSeconds="86400"
+           timeToLiveSeconds="86400"
+           overflowToDisk="false" 
+           memoryStoreEvictionPolicy="LRU"/>
+    
+</ehcache>

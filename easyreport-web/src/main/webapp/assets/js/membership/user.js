@@ -88,60 +88,60 @@ var UserMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('user.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '用户ID',
+                    title: jQuery.i18n.prop('user.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'account',
-                    title: '账号',
+                    title: jQuery.i18n.prop('user.account'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '姓名',
+                    title: jQuery.i18n.prop('user.name'),
                     width: 80,
                     sortable: true,
                 }, {
                     field: 'telephone',
-                    title: '电话',
+                    title: jQuery.i18n.prop('user.phonenum'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'email',
-                    title: '邮箱',
+                    title: jQuery.i18n.prop('user.email'),
                     width: 80,
                     sortable: true
                 }, {
                     field: 'status',
-                    title: '状态',
+                    title: jQuery.i18n.prop('user.status'),
                     width: 50,
                     sortable: true,
                     formatter: function (value, row, index) {
-                        return value == 1 ? "启用" : "禁用";
+                        return value == 1 ? jQuery.i18n.prop('user.status.enable') : jQuery.i18n.prop('user.status.disable');
                     }
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('user.gmtcreate'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('user.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": "编辑"
+                            "title": jQuery.i18n.prop('user.edit')
                         }, {
                             "name": "pwd",
-                            "title": "修改密码"
+                            "title": jQuery.i18n.prop('user.change.password')
                         }, {
                             "name": "remove",
-                            "title": "删除"
+                            "title": jQuery.i18n.prop('user.remove')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -172,13 +172,13 @@ var UserMVC = {
                 height: 500,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('user.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#user-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('user.save'),
                     iconCls: 'icon-save',
                     handler: UserMVC.Controller.save
                 }]
@@ -191,13 +191,13 @@ var UserMVC = {
                 height: 250,
                 iconCls: 'icon-pwd',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('user.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#reset-pwd-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('user.save'),
                     iconCls: 'icon-save',
                     handler: UserMVC.Controller.save
                 }]
@@ -227,7 +227,7 @@ var UserMVC = {
         },
         add: function () {
             var options = UserMVC.Util.getOptions();
-            options.title = '新增用户';
+            options.title = jQuery.i18n.prop('user.add.user');
             EasyUIUtils.openAddDlg(options);
             UserMVC.Util.fillRoleCombox("add", []);
             $('#status').combobox('setValue', "1");
@@ -239,14 +239,14 @@ var UserMVC = {
                 var options = UserMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']用户';
+                options.title = jQuery.i18n.prop('user.modify.user',options.data.name);
                 EasyUIUtils.openEditDlg(options);
                 $('#password').textbox('setValue', '');
                 $('#account').textbox('readonly', true);
                 var roleIds = row.roles || "";
                 UserMVC.Util.fillRoleCombox("edit", roleIds.split(','));
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('user.warn'), jQuery.i18n.prop('user.please.select.record'), 'info');
             }
         },
         resetPwd: function () {
@@ -258,7 +258,7 @@ var UserMVC = {
                 $("#reset-userId").val(row.userId);
                 $("#reset-account").text(row.account);
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('user.warn'), jQuery.i18n.prop('user.please.select.record'), 'info');
             }
         },
         find: function () {

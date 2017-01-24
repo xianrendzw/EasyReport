@@ -92,57 +92,57 @@ var DsMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('ds.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '标识',
+                    title: jQuery.i18n.prop('ds.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('ds.name'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'jdbcUrl',
-                    title: 'JdbcUrl',
+                    title: jQuery.i18n.prop('ds.jdbcurl'),
                     width: 200,
                     sortable: true
                 }, {
                     field: 'driverClass',
-                    title: '驱动类',
+                    title: jQuery.i18n.prop('ds.driver'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'queryerClass',
-                    title: '查询器类',
+                    title: jQuery.i18n.prop('ds.queryer'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'poolClass',
-                    title: '连接池类',
+                    title: jQuery.i18n.prop('ds.dbpool'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('ds.gmtcreate'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'options',
-                    title: '操作',
+                    title: jQuery.i18n.prop('ds.operation'),
                     width: 100,
                     formatter: function (value, row, index) {
                         var icons = [{
                             "name": "edit",
-                            "title": "编辑"
+                            "title": jQuery.i18n.prop('ds.edit')
                         }, {
                             "name": "connect",
-                            "title": "测试连接"
+                            "title": jQuery.i18n.prop('ds.connect')
                         }, {
                             "name": "remove",
-                            "title": "删除"
+                            "title": jQuery.i18n.prop('ds.remove')
                         }];
                         var buttons = [];
                         for (var i = 0; i < icons.length; i++) {
@@ -173,17 +173,17 @@ var DsMVC = {
                 height: 450,
                 iconCls: 'icon-add',
                 buttons: [{
-                    text: '测试连接',
+                    text: jQuery.i18n.prop('ds.connection.test'),
                     iconCls: 'icon-connect',
                     handler: DsMVC.Controller.testConnection
                 }, {
-                    text: '关闭',
+                    text: jQuery.i18n.prop('ds.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#ds-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('ds.save'),
                     iconCls: 'icon-save',
                     handler: DsMVC.Controller.save
                 }]
@@ -211,8 +211,8 @@ var DsMVC = {
                 scrollbarSize: 0,
                 height: 200,
                 columns: [[
-                    {field: 'name', title: '配置项', width: 200, sortable: true},
-                    {field: 'value', title: '配置值', width: 100, resizable: false}
+                    {field: 'name', title: jQuery.i18n.prop('ds.conf.name'), width: 200, sortable: true},
+                    {field: 'value', title: jQuery.i18n.prop('ds.conf.value'), width: 100, resizable: false}
                 ]]
             });
         },
@@ -240,7 +240,7 @@ var DsMVC = {
         },
         add: function () {
             var options = DsMVC.Util.getOptions();
-            options.title = '新增数据源';
+            options.title = jQuery.i18n.prop('ds.add.ds');
             EasyUIUtils.openAddDlg(options);
             DsMVC.Util.fillCombox("#dbType", "add", DsMVC.Model.dbTypes, "driverClass", "");
             DsMVC.Util.fillCombox("#dbPoolType", "add", DsMVC.Model.dbPoolTypes, "poolClass", "");
@@ -251,7 +251,7 @@ var DsMVC = {
                 var options = DsMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']数据源';
+                options.title = jQuery.i18n.prop('ds.edit.ds',options.data.name);
                 EasyUIUtils.openEditDlg(options);
                 DsMVC.Util.fillCombox("#dbType", "edit", DsMVC.Model.dbTypes, "driverClass", row.driverClass);
                 DsMVC.Util.fillCombox("#dbPoolType", "edit", DsMVC.Model.dbPoolTypes, "poolClass", row.poolClass);
@@ -260,7 +260,7 @@ var DsMVC = {
                 EasyReport.utils.debug(row.options);
                 $('#ds-options-pg').propertygrid('loadData', EasyUIUtils.toPropertygridRows($.toJSON(row.options)));
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('ds.warn'), jQuery.i18n.prop('ds.please.select.record'), 'info');
             }
         },
         find: function () {
@@ -293,9 +293,9 @@ var DsMVC = {
                 id: row.id
             }, function callback(data) {
                 if (data.success) {
-                    $.messager.alert('成功', "测试成功", 'success');
+                    $.messager.alert(jQuery.i18n.prop('ds.success'), jQuery.i18n.prop('ds.connection.success'), 'success');
                 } else {
-                    $.messager.alert('失败', "测试失败", 'error');
+                    $.messager.alert(jQuery.i18n.prop('ds.failed'), jQuery.i18n.prop('ds.connection.failed'), 'error');
                 }
             }, 'json');
         },
@@ -312,9 +312,9 @@ var DsMVC = {
 
             $.post(DsMVC.URLs.testConnection.url, data, function callback(data) {
                 if (data.success) {
-                    $.messager.alert('成功', "测试成功", 'success');
+                    $.messager.alert(jQuery.i18n.prop('ds.success'), jQuery.i18n.prop('ds.connection.success'), 'success');
                 } else {
-                    $.messager.alert('失败', "测试失败", 'error');
+                    $.messager.alert(jQuery.i18n.prop('ds.failed'), jQuery.i18n.prop('ds.connection.failed'), 'error');
                 }
             }, 'json');
         },

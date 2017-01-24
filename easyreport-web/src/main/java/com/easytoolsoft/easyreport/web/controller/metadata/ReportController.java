@@ -4,12 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.easytoolsoft.easyreport.common.pair.IdNamePair;
 import com.easytoolsoft.easyreport.data.helper.PageInfo;
 import com.easytoolsoft.easyreport.membership.po.User;
+import com.easytoolsoft.easyreport.domain.metadata.dao.IGlobalParamDao;
 import com.easytoolsoft.easyreport.domain.metadata.example.ReportExample;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
 import com.easytoolsoft.easyreport.domain.metadata.po.ReportHistory;
 import com.easytoolsoft.easyreport.domain.metadata.service.IConfService;
+import com.easytoolsoft.easyreport.domain.metadata.service.IGlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportHistoryService;
 import com.easytoolsoft.easyreport.domain.metadata.service.IReportService;
+import com.easytoolsoft.easyreport.domain.metadata.service.impl.GlobalParamService;
 import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
 import com.easytoolsoft.easyreport.domain.report.ITableReportService;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
@@ -19,9 +23,11 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,9 +57,13 @@ public class ReportController
     @Resource
     private ITableReportService tableReportService;
     @Resource
-    private IReportService dsService;
+    private IReportService reportService;
     @Resource
     private IConfService confService;
+    @Resource
+    private IGlobalParamService globalParamService;
+    @Resource
+    private EhCacheCacheManager cacheManager;
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取报表列表")
@@ -68,9 +80,9 @@ public class ReportController
     @GetMapping(value = "/find")
     @OpLog(name = "分页查询报表")
     @RequiresPermissions("report.designer:view")
-    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
+    public Map<String, Object> find(DataGridPager pager, String fieldName,String fieldName1, String keyword) {
         PageInfo pageInfo = this.getPageInfo(pager);
-        List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName, "%" + keyword + "%");
+        List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName+","+"t1." + fieldName1, "%" + keyword + "%");
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -107,6 +119,18 @@ public class ReportController
         return result;
     }
 
+    @PostMapping(value = "/describe")
+    @OpLog(name = "修改报表")
+    @RequiresPermissions("report.designer:edit")
+    public JsonResult describe(@CurrentUser User loginUser, Integer id, String desc) {
+        JsonResult<String> result = new JsonResult<>();
+        Report po = this.service.getById(id);
+        po.setComment(desc);
+        this.service.editById(po);
+        this.reportHistoryService.add(this.getReportHistory(loginUser, po));
+        return result;
+    }
+    
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
     @RequiresPermissions("report.designer:edit")
@@ -114,6 +138,8 @@ public class ReportController
         JsonResult<String> result = new JsonResult<>();
         this.service.editById(po);
         this.reportHistoryService.add(this.getReportHistory(loginUser, po));
+        String eleKey = po.getUid()+"_"+(new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
+        cacheManager.getCacheManager().getCache("reportTemplateCache").remove(eleKey);
         return result;
     }
 
@@ -173,12 +199,26 @@ public class ReportController
         return column;
     }
 
+    private List<QueryParameter> getGlobalQueryParams(){
+        List<GlobalParam> globalParamList = globalParamService.getAll();
+        List<String> globalQueryParamlist = new ArrayList<String>();
+        for(GlobalParam param : globalParamList){
+            globalQueryParamlist.add(param.getQueryParams());
+        }
+        String globalParams = "["+StringUtils.join(globalQueryParamlist,',')+"]";
+        return this.reportService.parseQueryParams(globalParams);
+    }
+    
     private String getSqlText(String sqlText, Integer dataRange, String queryParams,
                               HttpServletRequest request) {
         Map<String, Object> formParameters =
                 tableReportService.getBuildInParameters(request.getParameterMap(), dataRange);
         if (StringUtils.isNotBlank(queryParams)) {
-            List<QueryParameter> queryParameters = JSON.parseArray(queryParams, QueryParameter.class);
+        	List<QueryParameter> queryParameters = new ArrayList<QueryParameter>();
+
+            queryParameters.addAll(getGlobalQueryParams());
+            queryParameters.addAll(JSON.parseArray(queryParams, QueryParameter.class));
+            System.out.println("queryParameters:"+JSON.toJSONString(queryParameters));
             queryParameters.stream()
                     .filter(parameter -> !formParameters.containsKey(parameter.getName()))
                     .forEach(parameter -> formParameters.put(parameter.getName(), parameter.getRealDefaultValue()));

@@ -8,18 +8,19 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
 import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
 import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * 报表数据源控制器
@@ -33,13 +34,11 @@ public class DataSourceController
     @OpLog(name = "获取所有数据源")
     @RequiresPermissions("report.ds:view")
     public List<DataSource> listAll() {
-        return this.service.getAll().stream()
-                .map(x -> DataSource.builder()
-                        .id(x.getId())
-                        .uid(x.getUid())
-                        .name(x.getName())
-                        .build())
-                .collect(Collectors.toList());
+        List<DataSource> list = this.service.getAll();
+        for(DataSource ds : list){
+        	ds.decrypt();
+        }
+        return list;
     }
 
     @GetMapping(value = "/list")
@@ -48,6 +47,9 @@ public class DataSourceController
     public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
         PageInfo pageInfo = pager.toPageInfo();
         List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
+        for(DataSource ds : list){
+        	ds.decrypt();
+        }
         Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
@@ -61,6 +63,10 @@ public class DataSourceController
         JsonResult<String> result = new JsonResult<>();
         po.setGmtCreated(new Date());
         po.setUid(UUID.randomUUID().toString());
+        po.setJdbcUrl(po.getJdbcUrl());
+        po.setUser(po.getUser());
+        po.setPassword(po.getPassword());
+        po.encrypt();
         this.service.add(po);
         return result;
     }
@@ -70,6 +76,7 @@ public class DataSourceController
     @RequiresPermissions("report.ds:edit")
     public JsonResult edit(DataSource po) {
         JsonResult<String> result = new JsonResult<>();
+        po.encrypt();
         this.service.editById(po);
         return result;
     }
@@ -98,6 +105,7 @@ public class DataSourceController
     public JsonResult testConnection(Integer id) {
         JsonResult<String> result = new JsonResult<>();
         DataSource dsPo = this.service.getById(id);
+        dsPo.decrypt();
         result.setSuccess(this.service.testConnection(
                 dsPo.getDriverClass(),
                 dsPo.getJdbcUrl(),

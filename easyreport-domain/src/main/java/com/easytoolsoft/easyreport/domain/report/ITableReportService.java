@@ -7,12 +7,17 @@ import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
+import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.data.ReportTable;
 import com.easytoolsoft.easyreport.engine.query.Queryer;
+import com.easytoolsoft.easyreport.domain.metadata.po.GlobalParam;
 import com.easytoolsoft.easyreport.domain.metadata.po.Report;
+import com.easytoolsoft.easyreport.domain.metadata.vo.QueryParameter;
 
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * 表格报表生成服务类,包括报表生成,转换,报表数据集处理等

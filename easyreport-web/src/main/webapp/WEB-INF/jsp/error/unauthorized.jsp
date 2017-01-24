@@ -7,10 +7,10 @@
 <link rel="stylesheet" href="${ctxPath}/assets/css/error.css?v=${version}" />
 </head>
 <body>
-	<section class="center">
+	<section ng-app="i18n" ng-controller="translate" class="center">
 		<article>
-			<h1 class="header">访问拒绝</h1>
-			<p class="error">对不起，您没有权限，不能访问！</p>
+			<h1 class="header">{{info.error_authorized_reject}}</h1>
+			<p class="error">{{info.error_authorized_unaccessable}}</p>
 			</article>
 		</article> 
 	</section>

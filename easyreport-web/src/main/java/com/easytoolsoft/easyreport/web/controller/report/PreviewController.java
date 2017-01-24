@@ -11,14 +11,17 @@ import com.easytoolsoft.easyreport.domain.metadata.service.impl.ReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.ChartReportService;
 import com.easytoolsoft.easyreport.domain.report.impl.TableReportService;
 import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.ReportDataSet;
 import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.exception.TemplatePraseException;
 import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
-import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Map;
 
 /**
@@ -45,7 +49,6 @@ public class PreviewController {
     private TableReportService tableReportService;
     @Resource
     private ChartReportService chartReportService;
-
     @OpLog(name = "预览报表")
     @GetMapping(value = {"/uid/{uid}"})
     //@RequiresPermissions("report.designer:preview")
@@ -83,29 +86,6 @@ public class PreviewController {
         return modelAndView;
     }
 
-    @OpLog(name = "获取报表DataSet JSON格式数据")
-    @ResponseBody
-    @RequestMapping(value = "/getDataSet.json")
-    //@RequiresPermissions("report.designer:preview")
-    public JsonResult getDataSet(String uid, HttpServletRequest request) {
-        JsonResult<AbstractReportDataSet> result = new JsonResult<>();
-        try {
-            Report po = reportService.getByUid(uid);
-            ReportOptions options = reportService.parseOptions(po.getOptions());
-            Map<String, Object> formParameters = tableReportService.getFormParameters(request.getParameterMap(), options.getDataRange());
-            result.setData(tableReportService.getReportDataSet(po, formParameters));
-        } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
-            log.error("报表生成失败", ex);
-            result.setSuccess(false);
-            result.setMsg(ex.getMessage());
-        } catch (Exception ex) {
-            log.error("报表系统出错", ex);
-            result.setSuccess(false);
-            result.setMsg(ex.getMessage());
-        }
-        return result;
-    }
-
     @OpLog(name = "获取表格报表JSON格式数据")
     @ResponseBody
     @PostMapping(value = "/table/getData.json")
@@ -114,6 +94,7 @@ public class PreviewController {
         JSONObject data = new JSONObject();
         try {
             ReportHelper.generate(uid, data, request);
+            data.getString("htmlTable");
         } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
             data.put("htmlTable", ex.getMessage());
             log.error("报表生成失败", ex);
@@ -137,7 +118,7 @@ public class PreviewController {
                 ReportOptions options = reportService.parseOptions(po.getOptions());
                 Map<String, Object> formParameters = tableReportService.getFormParameters(request.getParameterMap(),
                         options.getDataRange());
-                AbstractReportDataSet reportData = tableReportService.getReportDataSet(po, formParameters);
+                AbstractReportDataSet reportData = (AbstractReportDataSet) tableReportService.getReportDataSet(po, formParameters);
                 data.put("dimColumnMap", chartReportService.getDimColumnMap(reportData));
                 data.put("dimColumns", chartReportService.getDimColumns(reportData));
                 data.put("statColumns", chartReportService.getStatColumns(reportData));
@@ -154,14 +135,32 @@ public class PreviewController {
     }
 
     @PostMapping(value = "/table/exportExcel")
-    @OpLog(name = "导出报表为Excel")
+    //@OpLog(name = "导出报表为Excel")
     //@RequiresPermissions("report.designer:export")
     public void exportToExcel(String uid, String name, String htmlText,
                               HttpServletRequest request, HttpServletResponse response) {
         try {
-            ReportHelper.exportToExcel(uid, name, htmlText, request, response);
+            ReportHelper.exportToExcel(uid, name, htmlText,request, response);
         } catch (Exception ex) {
             log.error("导出Excel失败", ex);
         }
+    }
+    
+    @PostMapping(value = "/table/exportLargeExcel")
+    //@OpLog(name = "导出报表为Excel")
+    //@RequiresPermissions("report.designer:export")
+    public void exportToLargeExcel(String uid, HttpServletRequest request, HttpServletResponse response) {
+        JSONObject data = new JSONObject();
+        try {
+            ReportHelper.generate(uid, data, request);
+        } catch (QueryParamsException | NotFoundLayoutColumnException | SQLQueryException | TemplatePraseException ex) {
+            data.put("htmlTable", ex.getMessage());
+            log.error("报表生成失败", ex);
+        } catch (Exception ex) {
+            data.put("htmlTable", "报表系统错误:" + ex.getMessage());
+            log.error("报表系统出错", ex);
+        }
+        System.out.println(data.getString("htmlTable"));
+        ReportHelper.exportToExcel(uid, "LargeTable", data.getString("htmlTable"),request, response);
     }
 }

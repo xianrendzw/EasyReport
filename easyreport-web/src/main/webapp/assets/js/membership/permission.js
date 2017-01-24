@@ -76,8 +76,11 @@ var PermMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
-                }
+                    return $.messager.alert(jQuery.i18n.prop('permission.failed'), src.msg, 'error');
+                },
+                formatter:function(node){
+            		return jQuery.i18n.prop(node.text);
+            	}
             });
 
             $('#tree_ctx_menu').menu({
@@ -99,15 +102,15 @@ var PermMVC = {
                 fitColumns: true,
                 singleSelect: true,
                 toolbar: [{
-                    text: '增加',
+                    text: jQuery.i18n.prop('permission.add'),
                     iconCls: 'icon-add',
                     handler: PermMVC.Controller.add
                 }, '-', {
-                    text: '修改',
+                    text: jQuery.i18n.prop('permission.modify'),
                     iconCls: 'icon-edit1',
                     handler: PermMVC.Controller.edit
                 }, '-', {
-                    text: '删除',
+                    text: jQuery.i18n.prop('permission.del'),
                     iconCls: 'icon-remove',
                     handler: PermMVC.Controller.remove
                 }],
@@ -115,40 +118,43 @@ var PermMVC = {
                     if (src.success) {
                         return src.data;
                     }
-                    return $.messager.alert('失败', src.msg, 'error');
+                    return $.messager.alert(jQuery.i18n.prop('module.failed'), src.msg, 'error');
                 },
                 columns: [[{
                     field: 'id',
-                    title: '标识',
+                    title: jQuery.i18n.prop('permission.id'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'name',
-                    title: '名称',
+                    title: jQuery.i18n.prop('permission.name'),
                     width: 80,
-                    sortable: true
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        return jQuery.i18n.prop(row.code);
+                    }
                 }, {
                     field: 'code',
-                    title: '代号',
+                    title: jQuery.i18n.prop('permission.code'),
                     width: 120,
                     sortable: true,
                 }, {
                     field: 'sequence',
-                    title: '顺序',
+                    title: jQuery.i18n.prop('permission.sequence'),
                     width: 50,
                     sortable: true
                 }, {
                     field: 'comment',
-                    title: '说明',
+                    title: jQuery.i18n.prop('permission.comment'),
                     width: 100
                 }, {
                     field: 'gmtCreated',
-                    title: '创建时间',
+                    title: jQuery.i18n.prop('permission.gmtCreate'),
                     width: 100,
                     sortable: true
                 }, {
                     field: 'gmtModified',
-                    title: '更新时间',
+                    title: jQuery.i18n.prop('permission.gmtmodify'),
                     width: 100,
                     sortable: true
                 }]],
@@ -164,13 +170,13 @@ var PermMVC = {
                 height: 300,
                 iconCls: 'icon-save',
                 buttons: [{
-                    text: '关闭',
+                    text: jQuery.i18n.prop('permission.close'),
                     iconCls: 'icon-no',
                     handler: function () {
                         $("#perm-dlg").dialog('close');
                     }
                 }, {
-                    text: '保存',
+                    text: jQuery.i18n.prop('permission.save'),
                     iconCls: 'icon-save',
                     handler: PermMVC.Controller.save
                 }]
@@ -187,13 +193,13 @@ var PermMVC = {
             var node = $('#module-tree').tree('getSelected');
             if (node) {
                 var options = PermMVC.Util.getOptions();
-                options.title = '新增[' + node.text + ']模块的权限';
+                options.title = jQuery.i18n.prop('permission.add.module.permission',node.text);
                 EasyUIUtils.openAddDlg(options);
                 $('#moduleId').val(node.id);
                 $('#code').textbox('setValue', node.attributes.code + ":");
                 $('#sequence').textbox('setValue', 10);
             } else {
-                $.messager.alert('警告', '请选中指定的模块!', 'info');
+                $.messager.alert(jQuery.i18n.prop('permission.warn'), jQuery.i18n.prop('permission.pealse.select.module'), 'info');
             }
         },
         edit: function () {
@@ -202,10 +208,10 @@ var PermMVC = {
                 var options = PermMVC.Util.getOptions();
                 options.iconCls = 'icon-edit1';
                 options.data = row;
-                options.title = '修改[' + options.data.name + ']权限';
+                options.title = jQuery.i18n.prop('permission.change.permission',options.data.name);
                 EasyUIUtils.openEditDlg(options);
             } else {
-                $.messager.alert('警告', '请选中一条记录!', 'info');
+                $.messager.alert(jQuery.i18n.prop('permission.warn'), jQuery.i18n.prop('permission.please.select.record'), 'info');
             }
         },
         remove: function () {

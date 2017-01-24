@@ -6,7 +6,7 @@
             <tr>
                 <td style="text-align: left;">${formHtmlText}&nbsp;&nbsp;
                     <a id="btn-chart-generate" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-ok'">生成</a>
+                       data-options="iconCls:'icon-ok'">{{info.chart_generate}}</a>
                     <input id="chart-report-id" type="hidden" name="id" value="${id}"/>
                     <input id="chart-report-name" type="hidden" name="name" value="${name}"/>
                     <input id="chart-report-uid" type="hidden" name="uid" value="${uid}"/>
@@ -19,20 +19,20 @@
             </c:if>
             <tr>
                 <td colspan="2">
-                    <label style="width: 120px;">选择维度:</label>${nonStatColumHtmlText}&nbsp;
-                    横轴维度：<select id="xAxisDim"></select>&nbsp;
-                    顺序：<select id="sortType">
-                    <option value="asc">升序</option>
-                    <option value="desc">降序</option>
+                    <label style="width: 120px;">{{info.chart_dimension_sel}}</label>${nonStatColumHtmlText}&nbsp;
+                    {{info.chart_x_dimission}}<select id="xAxisDim"></select>&nbsp;
+                  {{info.chart_dimension_sequence}}<select id="sortType">
+                    <option value="asc">{{info.chart_dimension_sequence_asc}}</option>
+                    <option value="desc">{{info.chart_dimension_sequence_desc}}</option>
                 </select>&nbsp;
                     <a id="btnViewChart" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-preview'">查看</a>&nbsp;
+                       data-options="iconCls:'icon-preview'">{{info.chart_preview}}</a>&nbsp;
                     <a id="btnAddChart" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-add'">对比</a>&nbsp;
+                       data-options="iconCls:'icon-add'">{{info.chart_compare}}</a>&nbsp;
                     <a id="btnToggleChart" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-toggle'">转换</a>&nbsp;
+                       data-options="iconCls:'icon-toggle'">{{info.chart_dimension_toggle}}</a>&nbsp;
                     <a id="btnResetChart" href="#" class="easyui-linkbutton"
-                       data-options="iconCls:'icon-reload'">重置</a>
+                       data-options="iconCls:'icon-reload'">{{info.chart_reset}}</a>
                 </td>
             </tr>
         </table>
