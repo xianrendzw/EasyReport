@@ -38,7 +38,7 @@ CREATE TABLE `ezrpt_member_module` (
   `sequence` int(11) NOT NULL COMMENT '系统模块在当前父模块下的排序顺序',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '系统模块的状态,1表示启用,0表示禁用,默认为1,其他保留',
   `comment` varchar(50) NOT NULL COMMENT '系统模块备注',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '系统模块记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '系统模块记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统模块记录更新时间戳',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_module_code` (`code`),
@@ -75,7 +75,7 @@ CREATE TABLE `ezrpt_member_permission` (
   `code` varchar(50) NOT NULL COMMENT '系统操作唯一代号',
   `sequence` int(11) NOT NULL COMMENT '系统操作的排序顺序',
   `comment` varchar(50) NOT NULL COMMENT '系统操作备注',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '系统操作记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '系统操作记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统操作记录更新时间戳',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_permisson_code` (`code`)
@@ -135,7 +135,7 @@ CREATE TABLE `ezrpt_member_role` (
   `sequence` int(11) NOT NULL COMMENT '系统角色的排序顺序',
   `comment` varchar(50) NOT NULL COMMENT '系统角色备注',
   `create_user` varchar(64) NOT NULL COMMENT '创建用户',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '系统角色记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '系统角色记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统角色记录更新时间戳',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_role_code` (`code`),
@@ -164,7 +164,7 @@ CREATE TABLE `ezrpt_member_user` (
   `telephone` varchar(36) NOT NULL COMMENT '系统用户用户电话号码,多个用英文逗号分开',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '系统用户的状态,1表示启用,0表示禁用,默认为1,其他保留',
   `comment` varchar(50) NOT NULL COMMENT '系统用户备注',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '系统用户记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '系统用户记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '系统用户记录更新时间戳',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_user_account` (`account`),
@@ -190,7 +190,7 @@ CREATE TABLE `ezrpt_meta_category` (
   `status` int(11) NOT NULL COMMENT '状态（1表示启用，0表示禁用，默认为0)',
   `sequence` int(11) NOT NULL COMMENT '节点在其父节点中的顺序',
   `comment` varchar(500) NOT NULL COMMENT '说明备注',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_parent_id_name` (`parent_id`,`name`),
@@ -215,7 +215,7 @@ CREATE TABLE `ezrpt_meta_conf` (
   `value` varchar(1000) NOT NULL COMMENT '配置值',
   `sequence` int(11) NOT NULL COMMENT '显示顺序',
   `comment` varchar(50) NOT NULL COMMENT '配置说明',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ezrpt_meta_conf_uk_pid_key` (`parent_id`,`key`)
@@ -280,7 +280,7 @@ CREATE TABLE `ezrpt_meta_datasource` (
   `pool_class` varchar(100) NOT NULL COMMENT '报表引擎查询器使用的数据源连接池类名',
   `options` varchar(1000) NOT NULL COMMENT '数据源配置选项(JSON格式）',
   `comment` varchar(100) NOT NULL COMMENT '说明备注',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录修改时间',
   PRIMARY KEY (`id`),
   KEY `AK_uk_uid` (`uid`)
@@ -310,7 +310,7 @@ CREATE TABLE `ezrpt_meta_report` (
   `sequence` int(11) NOT NULL COMMENT '报表节点在其父节点中的顺序',
   `comment` varchar(500) NOT NULL COMMENT '说明备注',
   `create_user` varchar(50) NOT NULL COMMENT '创建用户',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_category_id_name` (`category_id`,`name`),
@@ -348,7 +348,7 @@ CREATE TABLE `ezrpt_meta_report_history` (
   `sequence` int(11) NOT NULL COMMENT '报表节点在其父节点中的顺序',
   `comment` varchar(500) NOT NULL COMMENT '说明备注',
   `author` varchar(50) NOT NULL COMMENT '创建用户',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='报表信息表';
@@ -369,7 +369,7 @@ CREATE TABLE `ezrpt_schedule_task` (
   `options` text NOT NULL COMMENT '配置选项(JSON格式)',
   `template` text NOT NULL COMMENT '任务内容模板',
   `comment` varchar(100) NOT NULL COMMENT '报表任务说明',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '报表任务记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '报表任务记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '报表任务记录修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='报表任务信息表';
@@ -390,7 +390,7 @@ CREATE TABLE `ezrpt_sys_conf` (
   `value` varchar(1000) NOT NULL COMMENT '配置值',
   `sequence` int(11) NOT NULL COMMENT '显示顺序',
   `comment` varchar(50) NOT NULL COMMENT '配置说明',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录创建时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '记录创建时间',
   `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ezrpt_sys_conf_uk_key` (`key`)
@@ -412,7 +412,7 @@ CREATE TABLE `ezrpt_sys_event` (
   `level` varchar(10) NOT NULL COMMENT '日志级别',
   `message` text NOT NULL COMMENT '日志信息',
   `url` varchar(255) NOT NULL COMMENT 'url',
-  `gmt_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '日志发生的时间',
+  `gmt_created` timestamp NOT NULL DEFAULT '2014-01-01 01:01:01' COMMENT '日志发生的时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
