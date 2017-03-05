@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.engine.data;
 
+/**
+ * @author tomdeng
+ */
 public class ReportMetaDataCell {
     private final ReportMetaDataColumn column;
     private final String name;

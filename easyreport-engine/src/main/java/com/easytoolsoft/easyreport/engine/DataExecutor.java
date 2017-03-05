@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * 数据执行器类，负责选择正确的报表查询器并获取数据，最终转化为成报表的数据集
+ * @author tomdeng
  */
 public class DataExecutor {
     private final ReportParameter parameter;

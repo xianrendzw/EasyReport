@@ -7,6 +7,7 @@ import java.util.Map;
 
 /**
  * 报表列树型结构类
+ * @author tomdeng
  */
 public class ColumnTree {
     private final List<ColumnTreeNode> roots;
@@ -48,8 +49,9 @@ public class ColumnTree {
     }
 
     public List<ColumnTreeNode> getNodesByLevel(int level) {
-        if (this.levelNodesMap == null)
+        if (this.levelNodesMap == null) {
             this.getLevelNodesMap();
+        }
         if (this.levelNodesMap.containsKey(level)) {
             return this.levelNodesMap.get(level);
         }

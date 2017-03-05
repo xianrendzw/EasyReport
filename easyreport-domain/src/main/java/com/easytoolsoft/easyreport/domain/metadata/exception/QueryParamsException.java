@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.domain.metadata.exception;
 
 /**
  * 报表查询参数异常
+ * @author tomdeng
  */
 public class QueryParamsException extends RuntimeException {
     private static final long serialVersionUID = -8464685300165030321L;

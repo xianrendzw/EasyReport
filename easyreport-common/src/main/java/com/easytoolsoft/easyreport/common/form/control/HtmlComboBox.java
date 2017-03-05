@@ -2,6 +2,9 @@ package com.easytoolsoft.easyreport.common.form.control;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public class HtmlComboBox extends HtmlFormElement {
     private final List<HtmlSelectOption> value;
     private boolean multipled;

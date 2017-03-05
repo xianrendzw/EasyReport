@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表布局类型
+ * @author tomdeng
  */
 public enum LayoutType {
     /**
@@ -21,10 +22,12 @@ public enum LayoutType {
     }
 
     public static LayoutType valueOf(int arg) {
-        if (arg == 1)
+        if (arg == 1) {
             return HORIZONTAL;
-        if (arg == 2)
+        }
+        if (arg == 2) {
             return VERTICAL;
+        }
         return HORIZONTAL;
     }
 

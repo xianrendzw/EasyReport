@@ -43,7 +43,7 @@ public class AjaxFormAuthenticationFilter extends FormAuthenticationFilter {
 
             // 如果是ajax请求响应头会有，x-requested-with 在响应头设置session状态
             if (req.getHeader("x-requested-with") != null
-                    && req.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
+                    && "XMLHttpRequest".equalsIgnoreCase(req.getHeader("x-requested-with"))) {
                 res.setHeader("sessionstatus", "timeout");
             } else {
                 saveRequestAndRedirectToLogin(request, response);

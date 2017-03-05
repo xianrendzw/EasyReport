@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.util;
 
+/**
+ * @author tomdeng
+ */
 public class CheckUtils {
     public static int validateNull(Integer orginal, int defaultValue) {
         return (orginal == null) ? defaultValue : orginal;

@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
 
 /**
  * JQueryEasyUI控件报表查询参数表单视图
+ * @author tomdeng
  */
 public class EasyUIQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
     @Override
@@ -55,8 +56,9 @@ public class EasyUIQueryFormView extends AbstractQueryParamFormView implements Q
         htmlText.append(String.format("<span class=\"j-item\" data-type=\"checkbox\"><label style=\"width: 120px;\">%s:</label>",
                 checkBoxList.getText()));
         for (HtmlCheckBox checkBox : checkBoxList.getValue()) {
-            if (!checkBox.isChecked())
+            if (!checkBox.isChecked()) {
                 isCheckedAll = false;
+            }
             String checked = checkBox.isChecked() ? "checked=\"checked\"" : "";
             htmlText.append(String.format("<input name=\"%s\" type=\"checkbox\" value=\"%s\" data-name=\"%s\" %s/>%s &nbsp;",
                     checkBoxList.getName(), checkBox.getName(), checkBox.getText(), checked, checkBox.getText()));

@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表数据列
+ * @author tomdeng
  */
 public class ReportDataColumn {
     private final ReportMetaDataColumn metaDataColumn;

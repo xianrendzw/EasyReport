@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/sys/event")
 public class EventController
@@ -34,6 +37,7 @@ public class EventController
         return modelMap;
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除系统日志")
     @RequiresPermissions("sys.event:remove")

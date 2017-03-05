@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * @author tomdeng
  * @param <T> Po
  * @param <U> Example
  */

@@ -6,6 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * @author tomdeng
+ */
 public class DateUtils {
     /**
      * 获取当前时间的yyyy-MM-dd格式字符串

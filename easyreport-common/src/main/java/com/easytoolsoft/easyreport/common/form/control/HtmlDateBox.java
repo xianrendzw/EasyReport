@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.form.control;
 
+/**
+ * @author tomdeng
+ */
 public class HtmlDateBox extends HtmlFormElement {
     private final String value;
 

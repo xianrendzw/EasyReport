@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * 报表类别控制器
+ * @author tomdeng
  */
 @RestController
 @RequestMapping(value = "/rest/metadata/category")
@@ -76,6 +77,7 @@ public class CategoryController
         return modelMap;
     }
 
+    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "增加报表分类")
     @RequiresPermissions("report.designer:add")
@@ -90,6 +92,7 @@ public class CategoryController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑报表分类")
     @RequiresPermissions("report.designer:edit")

@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * @author tomdeng
+ */
 public class PropertiesUtils {
     private static Properties props = new Properties();
 

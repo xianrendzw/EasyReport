@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * dhtmxTree(http://dhtmlx.com/docs/products/dhtmlxTree/)控件的树结点数据模型类
  * http://docs.dhtmlx.com/tree__syntax_templates.html#jsonformattemplate
+ * @author tomdeng
  */
 public class DhtmlXTreeNode {
     private String id;

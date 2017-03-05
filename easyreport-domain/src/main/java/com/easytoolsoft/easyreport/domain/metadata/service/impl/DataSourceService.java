@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * @author tomdeng
+ */
 @Slf4j
 @Service("EzrptMetaSourceService")
 public class DataSourceService
@@ -32,6 +35,7 @@ public class DataSourceService
      * @param password
      * @return
      */
+    @Override
     public boolean testConnection(String driverClass, String url, String user, String password) {
         Connection conn = null;
         try {

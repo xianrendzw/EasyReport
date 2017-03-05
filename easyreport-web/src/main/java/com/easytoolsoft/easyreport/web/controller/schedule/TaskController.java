@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/schedule/task")
 public class TaskController
@@ -32,6 +35,7 @@ public class TaskController
         return super.find(pager, fieldName, keyword);
     }
 
+    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "增加任务")
     @RequiresPermissions("schedule.task:add")
@@ -41,6 +45,7 @@ public class TaskController
         return super.add(po);
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
     @RequiresPermissions("schedule.task:edit")
@@ -48,6 +53,7 @@ public class TaskController
         return super.edit(po);
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
     @RequiresPermissions("schedule.task:remove")

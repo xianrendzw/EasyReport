@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.web.common;
 
 /**
  * 系统公共常量
+ * @author tomdeng
  */
 public class Constants {
     /**

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptSysEventService")
 public class EventService
         extends AbstractCrudService<IEventDao, Event, EventExample>

@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.engine.util;
 
+/**
+ * @author tomdeng
+ */
 public class ComparatorUtils {
 
     /**
@@ -25,22 +28,27 @@ public class ComparatorUtils {
                     s2.append(yChars[j]);
                     j++;
                 }
-                if (Integer.parseInt(s1.toString()) > Integer.parseInt(s2.toString()))
+                if (Integer.parseInt(s1.toString()) > Integer.parseInt(s2.toString())) {
                     return 1;
-                if (Integer.parseInt(s1.toString()) < Integer.parseInt(s2.toString()))
+                }
+                if (Integer.parseInt(s1.toString()) < Integer.parseInt(s2.toString())) {
                     return -1;
+                }
             } else {
-                if (xChars[i] > yChars[j])
+                if (xChars[i] > yChars[j]) {
                     return 1;
-                if (xChars[i] < yChars[j])
+                }
+                if (xChars[i] < yChars[j]) {
                     return -1;
+                }
                 i++;
                 j++;
             }
         }
 
-        if (xChars.length == yChars.length)
+        if (xChars.length == yChars.length) {
             return 0;
+        }
         return xChars.length > yChars.length ? 1 : -1;
     }
 }

@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController("SysConfController")
 @RequestMapping(value = "/rest/sys/conf")
 public class ConfController
@@ -44,18 +47,19 @@ public class ConfController
     @RequiresPermissions("sys.conf:view")
     public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
-        List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
+        List<EasyUITreeNode<Conf>> easyUITreeNodes = new ArrayList<>(list.size());
         for (Conf po : list) {
-            String ConfId = Integer.toString(po.getId());
+            String confId = Integer.toString(po.getId());
             String pid = Integer.toString(po.getParentId());
             String text = po.getName();
             String state = po.isHasChild() ? "closed" : "open";
             String icon = po.isHasChild() ? "icon-dict2" : "icon-item1";
-            EasyUITreeNodes.add(new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po));
+            easyUITreeNodes.add(new EasyUITreeNode<>(confId, pid, text, state, icon, false, po));
         }
-        return EasyUITreeNodes;
+        return easyUITreeNodes;
     }
 
+    @Override
     @GetMapping(value = "/find")
     @OpLog(name = "分页查找指定ID的系统配置项")
     @RequiresPermissions("sys.conf:view")
@@ -68,6 +72,7 @@ public class ConfController
         return modelMap;
     }
 
+    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "新增系统配置项")
     @RequiresPermissions("sys.conf:add")
@@ -79,6 +84,7 @@ public class ConfController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑系统配置项")
     @RequiresPermissions("sys.conf:edit")
@@ -88,6 +94,7 @@ public class ConfController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除系统配置项")
     @RequiresPermissions("sys.conf:remove")

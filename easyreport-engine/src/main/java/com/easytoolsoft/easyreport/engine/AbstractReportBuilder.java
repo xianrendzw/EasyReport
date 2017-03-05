@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 public abstract class AbstractReportBuilder implements ReportBuilder {
     protected final AbstractReportDataSet reportDataSet;
     protected final ReportParameter reportParameter;
@@ -22,6 +25,7 @@ public abstract class AbstractReportBuilder implements ReportBuilder {
         this.reportParameter = reportParameter;
     }
 
+    @Override
     public ReportTable getTable() {
         StringBuilder table = new StringBuilder();
         table.append("<table id=\"easyreport\" class=\"easyreport\">");
@@ -32,6 +36,7 @@ public abstract class AbstractReportBuilder implements ReportBuilder {
                 reportDataSet.getMetaData().getRows().size(), reportDataSet.getMetaData().getColumns().size());
     }
 
+    @Override
     public void drawTableHeaderRows() {
         List<ReportDataColumn> leftFixedColumns = this.reportDataSet.getHeaderLeftFixedColumns();
         ColumnTree rightColumnTree = this.reportDataSet.getHeaderRightColumnTree();

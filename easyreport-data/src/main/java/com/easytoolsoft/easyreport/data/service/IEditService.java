@@ -3,6 +3,9 @@ package com.easytoolsoft.easyreport.data.service;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public interface IEditService<T, U> {
     /**
      * 根据主键更新用户信息

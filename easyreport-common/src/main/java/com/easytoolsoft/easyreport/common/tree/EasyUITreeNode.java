@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * jQueryEasyUI(http://www.jeasyui.com/)树节点视图数据模型类
+ * @author tomdeng
  */
 public class EasyUITreeNode<T> {
     private String id;

@@ -272,7 +272,7 @@ public class QueryParameter implements Serializable {
      */
     @JsonIgnore
     public boolean hasDefaultValue() {
-        return !this.getDefaultValue().equals("noDefaultValue");
+        return !"noDefaultValue".equals(this.getDefaultValue());
     }
 
     /**
@@ -282,7 +282,7 @@ public class QueryParameter implements Serializable {
      */
     @JsonIgnore
     public boolean hasDefaultText() {
-        return !this.getDefaultText().equals("noDefaultText");
+        return !"noDefaultText".equals(this.getDefaultText());
     }
 
     /**

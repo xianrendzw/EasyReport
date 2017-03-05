@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.pair;
 
+/**
+ * @author tomdeng
+ */
 public class TextValuePair {
     private String text;
     private String value;

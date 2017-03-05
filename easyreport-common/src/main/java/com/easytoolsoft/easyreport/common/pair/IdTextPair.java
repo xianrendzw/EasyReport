@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.pair;
 
+/**
+ * @author tomdeng
+ */
 public class IdTextPair {
     private String id;
     private String text;

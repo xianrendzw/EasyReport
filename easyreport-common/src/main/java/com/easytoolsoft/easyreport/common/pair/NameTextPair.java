@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.pair;
 
+/**
+ * @author tomdeng
+ */
 public class NameTextPair {
     private String name;
     private String text;

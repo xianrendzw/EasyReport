@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * ServletContext 初始化数据 Filter
+ * @author tomdeng
  */
 public class ContextInitDataFilter implements Filter {
     private String version = Constants.VERSION_CODE;

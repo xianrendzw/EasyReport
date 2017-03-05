@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 
 /**
  * 报表元数据设置控件器
+ * @author tomdeng
  */
 @RestController
 @RequestMapping(value = "/rest/metadata/report")
@@ -65,6 +66,7 @@ public class ReportController
         return modelMap;
     }
 
+    @Override
     @GetMapping(value = "/find")
     @OpLog(name = "分页查询报表")
     @RequiresPermissions("report.designer:view")
@@ -133,7 +135,9 @@ public class ReportController
                                   String queryParams, HttpServletRequest request) {
         JsonResult<List<ReportMetaDataColumn>> result = new JsonResult<>();
         if (dsId != null) {
-            if (dataRange == null) dataRange = 7;
+            if (dataRange == null) {
+                dataRange = 7;
+            }
             sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
             result.setData(this.service.getMetaDataColumns(dsId, sqlText));
         } else {
@@ -150,7 +154,9 @@ public class ReportController
                                      String queryParams, HttpServletRequest request) {
         JsonResult<String> result = new JsonResult<>();
         if (dsId != null) {
-            if (dataRange == null) dataRange = 7;
+            if (dataRange == null) {
+                dataRange = 7;
+            }
             sqlText = this.getSqlText(sqlText, dataRange, queryParams, request);
             this.service.explainSqlText(dsId, sqlText);
             result.setData(sqlText);

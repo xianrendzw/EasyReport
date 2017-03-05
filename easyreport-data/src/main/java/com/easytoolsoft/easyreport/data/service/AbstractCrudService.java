@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * 基本增删改查(CRUD)数据访问服务基类
  *
+ * @author tomdeng
  * @param <Dao>
  * @param <Po>
  * @param <Example>

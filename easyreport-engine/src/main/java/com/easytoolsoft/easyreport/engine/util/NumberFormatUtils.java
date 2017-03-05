@@ -9,6 +9,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
+/**
+ * @author tomdeng
+ */
 public class NumberFormatUtils {
     private static final Logger logger = LoggerFactory.getLogger(NumberFormatUtils.class);
 
@@ -54,8 +57,9 @@ public class NumberFormatUtils {
     }
 
     public static String decimalFormat(Object value, int decimals) {
-        if (value == null)
+        if (value == null) {
             return "";
+        }
 
         String formattedValue = value.toString();
         NumberFormat nf = DecimalFormat.getInstance();

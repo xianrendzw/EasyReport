@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.form.control;
 
+/**
+ * @author tomdeng
+ */
 public class HtmlCheckBox extends HtmlFormElement {
     private final String value;
     private boolean checked;

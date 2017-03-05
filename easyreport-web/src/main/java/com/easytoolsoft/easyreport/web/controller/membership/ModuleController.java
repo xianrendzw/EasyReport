@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/membership/module")
 public class ModuleController
@@ -50,6 +53,7 @@ public class ModuleController
         return modelMap;
     }
 
+    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "新增系统模块")
     @RequiresPermissions("membership.module:add")
@@ -63,6 +67,7 @@ public class ModuleController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑指定ID的系统模块")
     @RequiresPermissions("membership.module:edit")

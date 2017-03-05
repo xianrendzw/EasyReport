@@ -20,6 +20,9 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMemberModuleService")
 public class ModuleService
         extends AbstractCrudService<IModuleDao, Module, ModuleExample>
@@ -55,7 +58,7 @@ public class ModuleService
 
         List<Module> moduleList = this.getAll();
         // 0表示返回所有系统模块
-        if (moduleIds.equals("0")) {
+        if ("0".equals(moduleIds)) {
             return moduleList;
         }
         Map<Integer, Module> moduleMap = new HashMap<>(moduleList.size());

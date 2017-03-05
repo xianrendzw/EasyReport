@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * 绑定当前登录的用户
+ * @author tomdeng
  */
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

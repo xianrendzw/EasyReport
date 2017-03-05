@@ -4,6 +4,9 @@ import com.easytoolsoft.easyreport.data.helper.PageInfo;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public interface IGetService<T, U> {
     /**
      * @param example

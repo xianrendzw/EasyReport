@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMetaReportService")
 public class ReportService
         extends AbstractCrudService<IReportDao, Report, ReportExample>

@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.engine.data;
 
+/**
+ * @author tomdeng
+ */
 public class ReportQueryParamItem {
     private String name;
     private String text;

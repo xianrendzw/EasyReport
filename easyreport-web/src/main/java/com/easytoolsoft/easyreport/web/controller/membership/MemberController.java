@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用户登录页控制器
+ * @author tomdeng
  */
 @Slf4j
 @Controller
@@ -64,9 +65,9 @@ public class MemberController {
         } catch (IncorrectCredentialsException | UnknownAccountException ex) {
             result.setMsg("用户名/密码错误!");
         } catch (Exception ex) {
-            if (ex.getClass().getSimpleName().equals("LockedAccountException")) {
+            if ("LockedAccountException".equals(ex.getClass().getSimpleName())) {
                 result.setMsg("您的账号已经被锁定!");
-            } else if (ex.getClass().getSimpleName().equals("ExcessiveAttemptsException")) {
+            } else if ("ExcessiveAttemptsException".equals(ex.getClass().getSimpleName())) {
                 result.setMsg("您重试密码超过10次,账号已被锁定!");
             }
         }

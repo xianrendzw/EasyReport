@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * 报表的查询参数表单视图接口
+ * @author tomdeng
  */
 public interface QueryParamFormView {
 

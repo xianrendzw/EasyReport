@@ -13,6 +13,7 @@ import java.util.Map;
 
 /**
  * 横向展示统计列的报表生成类
+ * @author tomdeng
  */
 public class HorizontalStatColumnReportBuilder extends AbstractReportBuilder implements ReportBuilder {
 

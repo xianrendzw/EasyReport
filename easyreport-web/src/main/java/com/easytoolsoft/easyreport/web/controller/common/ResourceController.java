@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 动态生成的系统资源文件(js,css等)控制器
+ * @author tomdeng
  */
 @Controller
 @RequestMapping(value = "/dynamic")

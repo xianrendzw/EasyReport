@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
+ * @author tomdeng
  */
 public abstract class AbstractReportDataSet implements ReportDataSet {
     protected final static String PATH_SEPARATOR = "$";
@@ -308,14 +309,18 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
             }
             final ColumnSortType sortType = column.getMetaData().getSortType();
             Collections.sort(valueList, (o1, o2) -> {
-                if (sortType == ColumnSortType.DIGIT_ASCENDING)
+                if (sortType == ColumnSortType.DIGIT_ASCENDING) {
                     return ComparatorUtils.compareByDigitPriority(o1, o2);
-                if (sortType == ColumnSortType.DIGIT_DESCENDING)
+                }
+                if (sortType == ColumnSortType.DIGIT_DESCENDING) {
                     return ComparatorUtils.compareByDigitPriority(o2, o1);
-                if (sortType == ColumnSortType.CHAR_ASCENDING)
+                }
+                if (sortType == ColumnSortType.CHAR_ASCENDING) {
                     return o1.compareTo(o2);
-                if (sortType == ColumnSortType.CHAR_DESCENDING)
+                }
+                if (sortType == ColumnSortType.CHAR_DESCENDING) {
                     return o2.compareTo(o1);
+                }
                 return 0;
             });
             nonStatColumnDataMap.put(column.getName(), valueList);
@@ -399,8 +404,9 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
                 for (ColumnTreeNode subNode : subNodes) {
                     if (subNode.getParent().getPath().equals(parentNode.getPath())) {
                         parentNode.getChildren().add(subNode);
-                        if (level == (depth - 2))
+                        if (level == (depth - 2)) {
                             leafNodes.add(subNode);
+                        }
                     }
                 }
             }
@@ -521,14 +527,18 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         }
 
         Collections.sort(treeNodes, (o1, o2) -> {
-            if (sortType == ColumnSortType.DIGIT_ASCENDING)
+            if (sortType == ColumnSortType.DIGIT_ASCENDING) {
                 return ComparatorUtils.compareByDigitPriority(o1.getValue(), o2.getValue());
-            if (sortType == ColumnSortType.DIGIT_DESCENDING)
+            }
+            if (sortType == ColumnSortType.DIGIT_DESCENDING) {
                 return ComparatorUtils.compareByDigitPriority(o2.getValue(), o1.getValue());
-            if (sortType == ColumnSortType.CHAR_ASCENDING)
+            }
+            if (sortType == ColumnSortType.CHAR_ASCENDING) {
                 return o1.getValue().compareTo(o2.getValue());
-            if (sortType == ColumnSortType.CHAR_DESCENDING)
+            }
+            if (sortType == ColumnSortType.CHAR_DESCENDING) {
                 return o2.getValue().compareTo(o1.getValue());
+            }
             return 0;
         });
     }

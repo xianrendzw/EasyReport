@@ -1,5 +1,8 @@
 package com.easytoolsoft.easyreport.common.form.control;
 
+/**
+ * @author tomdeng
+ */
 public abstract class HtmlFormElement {
     protected final String name;
     protected final String text;

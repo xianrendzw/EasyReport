@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * @author tomdeng
+ */
 public class VelocityUtils {
     /**
      * 替换的模板中的参数

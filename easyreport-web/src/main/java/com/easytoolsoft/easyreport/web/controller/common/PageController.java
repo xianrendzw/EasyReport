@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 /**
  * 通用的页面控件器
+ * @author tomdeng
  */
 @Controller
 @RequestMapping(value = "/views")

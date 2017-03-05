@@ -9,6 +9,7 @@ import com.easytoolsoft.easyreport.common.form.control.HtmlTextBox;
 
 /**
  * Bootstrapper风格控件报表查询参数表单视图
+ * @author tomdeng
  */
 public class BootstrapQueryFormView extends AbstractQueryParamFormView implements QueryParamFormView {
     @Override
@@ -77,8 +78,9 @@ public class BootstrapQueryFormView extends AbstractQueryParamFormView implement
         boolean isCheckedAll = true;
         StringBuilder htmlText = new StringBuilder("");
         for (HtmlCheckBox checkBox : checkBoxList.getValue()) {
-            if (!checkBox.isChecked())
+            if (!checkBox.isChecked()) {
                 isCheckedAll = false;
+            }
             String checked = checkBox.isChecked() ? "checked=\"checked\"" : "";
             htmlText.append(String.format("<label class=\"checkbox\">%s", checkBox.getText()));
             htmlText.append(String.format("<input class=\"checkbox-item\" type=\"checkbox\" name=\"%s\" value=\"%s\" %s />",

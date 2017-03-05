@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 /**
  * 用户权限服务外观类
+ * @author tomdeng
  */
 @Service
 public class MembershipFacade {

@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表列类型
+ * @author tomdeng
  */
 public enum ColumnType {
     /**
@@ -31,14 +32,18 @@ public enum ColumnType {
     }
 
     public static ColumnType valueOf(int arg) {
-        if (arg == 1)
+        if (arg == 1) {
             return LAYOUT;
-        if (arg == 2)
+        }
+        if (arg == 2) {
             return DIMENSION;
-        if (arg == 3)
+        }
+        if (arg == 3) {
             return STATISTICAL;
-        if (arg == 4)
+        }
+        if (arg == 4) {
             return COMPUTED;
+        }
         return DIMENSION;
     }
 

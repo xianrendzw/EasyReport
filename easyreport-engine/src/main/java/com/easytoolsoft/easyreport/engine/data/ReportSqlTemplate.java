@@ -4,6 +4,9 @@ import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
 
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 public class ReportSqlTemplate {
 
     private String sqlTemplate;

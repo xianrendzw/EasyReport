@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 报表查询器接口
+ * @author tomdeng
  */
 public interface Queryer {
     /**

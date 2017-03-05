@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * 报表元数据行类
+ * @author tomdeng
  */
 public class ReportMetaDataRow {
     private final Map<String, ReportMetaDataCell> cells = new HashMap<>();

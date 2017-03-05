@@ -5,6 +5,9 @@ import com.easytoolsoft.easyreport.domain.schedule.service.impl.TaskService;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public class TaskUtils {
     private final static TaskService service = new TaskService();
     private static List<Task> tasks;

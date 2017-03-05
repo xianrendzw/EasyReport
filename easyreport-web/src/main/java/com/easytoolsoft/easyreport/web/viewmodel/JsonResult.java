@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * json 结果返回对象
+ * @author tomdeng
  */
 @Data
 @SuppressWarnings("serial")

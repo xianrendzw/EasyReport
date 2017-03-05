@@ -22,6 +22,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 public abstract class AbstractQueryer {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected final ReportDataSource dataSource;

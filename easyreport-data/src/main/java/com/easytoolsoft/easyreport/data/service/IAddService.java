@@ -2,6 +2,9 @@ package com.easytoolsoft.easyreport.data.service;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public interface IAddService<T> {
     /**
      * @param record

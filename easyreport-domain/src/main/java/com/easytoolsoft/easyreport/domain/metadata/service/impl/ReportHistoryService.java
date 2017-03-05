@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMetaReportHistoryService")
 public class ReportHistoryService
         extends AbstractCrudService<IReportHistoryDao, ReportHistory, ReportHistoryExample>

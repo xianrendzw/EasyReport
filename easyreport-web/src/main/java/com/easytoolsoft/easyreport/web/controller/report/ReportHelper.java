@@ -29,6 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * @author tomdeng
+ */
 @Component
 public class ReportHelper {
     private static ReportService reportService;

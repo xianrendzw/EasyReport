@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author tomdeng
+ */
 public class CategoryExample {
     protected String orderByClause;
 

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 /**
  * 无数据源连接池,直接使用jdbc连接
+ * @author tomdeng
  */
 public class NoDataSourcePool implements DataSourcePoolWrapper {
     @Override

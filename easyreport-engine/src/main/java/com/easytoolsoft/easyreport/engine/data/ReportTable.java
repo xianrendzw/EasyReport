@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表类
+ * @author tomdeng
  */
 public class ReportTable {
     private final String htmlText;

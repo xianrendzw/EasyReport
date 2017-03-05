@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * 纵向展示统计列的报表生成类
+ * @author tomdeng
  */
 public class VerticalStatColumnReportBuilder extends AbstractReportBuilder implements ReportBuilder {
 

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMemberUserService")
 public class UserService
         extends AbstractCrudService<IUserDao, User, UserExample>

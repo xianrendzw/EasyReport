@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * @author tomdeng
+ */
 @SuppressWarnings("serial")
 @Data
 @Builder

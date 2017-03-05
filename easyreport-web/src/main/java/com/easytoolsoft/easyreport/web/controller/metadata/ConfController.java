@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * 报表配置控制器
+ * @author tomdeng
  */
 @RestController("MetaDataConfController")
 @RequestMapping(value = "/rest/metadata/conf")
@@ -46,18 +47,19 @@ public class ConfController
     @RequiresPermissions("report.conf:view")
     public List<EasyUITreeNode<Conf>> listChildren(Integer id) {
         List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
-        List<EasyUITreeNode<Conf>> EasyUITreeNodes = new ArrayList<>(list.size());
+        List<EasyUITreeNode<Conf>> easyUITreeNodes = new ArrayList<>(list.size());
         for (Conf po : list) {
-            String ConfId = Integer.toString(po.getId());
+            String confId = Integer.toString(po.getId());
             String pid = Integer.toString(po.getParentId());
             String text = po.getName();
             String state = po.isHasChild() ? "closed" : "open";
             String icon = po.isHasChild() ? "icon-dict2" : "icon-item1";
-            EasyUITreeNodes.add(new EasyUITreeNode<>(ConfId, pid, text, state, icon, false, po));
+            easyUITreeNodes.add(new EasyUITreeNode<>(confId, pid, text, state, icon, false, po));
         }
-        return EasyUITreeNodes;
+        return easyUITreeNodes;
     }
 
+    @Override
     @RequestMapping(value = "/find")
     @OpLog(name = "分页查找指定ID的报表元数据配置项")
     @RequiresPermissions("report.conf:view")
@@ -70,6 +72,7 @@ public class ConfController
         return modelMap;
     }
 
+    @Override
     @RequestMapping(value = "/add")
     @OpLog(name = "新增报表元数据配置项")
     @RequiresPermissions("report.conf:add")
@@ -81,6 +84,7 @@ public class ConfController
         return result;
     }
 
+    @Override
     @RequestMapping(value = "/edit")
     @OpLog(name = "编辑报表元数据配置项")
     @RequiresPermissions("report.conf:edit")
@@ -90,6 +94,7 @@ public class ConfController
         return result;
     }
 
+    @Override
     @RequestMapping(value = "/remove")
     @OpLog(name = "删除报表元数据配置项")
     @RequiresPermissions("report.conf:remove")

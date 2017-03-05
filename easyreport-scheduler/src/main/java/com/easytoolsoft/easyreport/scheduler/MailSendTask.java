@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.TimerTask;
 
+/**
+ * @author tomdeng
+ */
 @Slf4j
 public class MailSendTask extends TimerTask {
     @Override

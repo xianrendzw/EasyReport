@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.data.dao;
 /**
  * 基本增删改查(CRUD)数据访问接口
  *
+ * @author tomdeng
  * @param <T> Po
  * @param <U> Example
  */

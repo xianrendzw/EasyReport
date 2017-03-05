@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Dao接口中查询参数构造类
+ * @author tomdeng
  */
 public class ParameterBuilder {
     private final Map<String, Object> params = new HashMap<>(6);
@@ -38,7 +39,9 @@ public class ParameterBuilder {
         Map<String, Object> params = new HashMap<>(fields.length);
         for (Field field : fields) {
             Object value = getValue(field, obj);
-            if (value != null) params.put(field.getName(), value);
+            if (value != null) {
+                params.put(field.getName(), value);
+            }
         }
         return params;
     }

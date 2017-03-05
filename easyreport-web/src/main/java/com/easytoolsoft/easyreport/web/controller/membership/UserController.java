@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/membership/user")
 public class UserController
@@ -42,6 +45,7 @@ public class UserController
         return modelMap;
     }
 
+    @Override
     @RequestMapping(value = "/add")
     @OpLog(name = "新增用户")
     @RequiresPermissions("membership.user:add")
@@ -54,6 +58,7 @@ public class UserController
         return result;
     }
 
+    @Override
     @RequestMapping(value = "/edit")
     @OpLog(name = "修改用户")
     @RequiresPermissions("membership.user:edit")
@@ -64,6 +69,7 @@ public class UserController
         return result;
     }
 
+    @Override
     @RequestMapping(value = "/remove")
     @OpLog(name = "删除用户")
     @RequiresPermissions("membership.user:remove")

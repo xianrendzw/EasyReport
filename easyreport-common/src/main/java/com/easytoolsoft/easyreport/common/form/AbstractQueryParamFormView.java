@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * 报表的查询参数表单视图基类
+ * @author tomdeng
  */
 public abstract class AbstractQueryParamFormView {
 
@@ -26,8 +27,9 @@ public abstract class AbstractQueryParamFormView {
         List<NameTextPair> list = new ArrayList<>(formElements.size());
         for (HtmlFormElement element : formElements) {
             NameTextPair nameTextPair = this.createNameTextPair(element);
-            if (nameTextPair != null)
+            if (nameTextPair != null) {
                 list.add(nameTextPair);
+            }
         }
         return list;
     }
@@ -40,8 +42,9 @@ public abstract class AbstractQueryParamFormView {
         Map<String, String> textMap = new HashMap<>(formElements.size());
         for (HtmlFormElement element : formElements) {
             NameTextPair nameTextPair = this.createNameTextPair(element);
-            if (nameTextPair != null)
+            if (nameTextPair != null) {
                 textMap.put(nameTextPair.getName(), nameTextPair.getText());
+            }
         }
         return textMap;
     }

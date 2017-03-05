@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 @Service
 public class ChartReportService implements IChartReportService {
     @Override

@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 纵向展示报表统计列的报表数据集类。
+ * @author tomdeng
  */
 public class VerticalStatColumnDataSet
         extends AbstractReportDataSet implements ReportDataSet {

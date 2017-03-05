@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMemberRoleService")
 public class RoleService
         extends AbstractCrudService<IRoleDao, Role, RoleExample>
@@ -52,7 +55,7 @@ public class RoleService
         if (CollectionUtils.isEmpty(list)) {
             return false;
         }
-        return list.stream().anyMatch(x -> x.getCode().equals("superAdmin"));
+        return list.stream().anyMatch(x -> "superAdmin".equals(x.getCode()));
     }
 
     @Override

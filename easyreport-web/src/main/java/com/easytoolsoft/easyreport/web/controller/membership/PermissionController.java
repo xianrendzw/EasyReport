@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/membership/permission")
 public class PermissionController
@@ -37,6 +40,7 @@ public class PermissionController
         return modelMap;
     }
 
+    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "增加权限")
     @RequiresPermissions("membership.permission:add")
@@ -49,6 +53,7 @@ public class PermissionController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "修改权限")
     @RequiresPermissions("membership.permission:edit")
@@ -59,6 +64,7 @@ public class PermissionController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除权限")
     @RequiresPermissions("membership.permission:remove")

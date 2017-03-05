@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * easyui gridview控件分页类 <br>
+ * @author tomdeng
  */
 @Data
 @NoArgsConstructor

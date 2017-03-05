@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 报表树型列节点类
+ * @author tomdeng
  */
 public class ColumnTreeNode {
     private final String name;

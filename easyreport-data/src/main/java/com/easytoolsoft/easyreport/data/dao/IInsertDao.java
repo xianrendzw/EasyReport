@@ -3,6 +3,7 @@ package com.easytoolsoft.easyreport.data.dao;
 import java.util.List;
 
 /**
+ * @author tomdeng
  * @param <T>
  */
 public interface IInsertDao<T> {

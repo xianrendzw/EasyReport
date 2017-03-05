@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.exception;
 
 /**
  * 模板解析异常
+ * @author tomdeng
  */
 public class TemplatePraseException extends RuntimeException {
     private static final long serialVersionUID = -1347415208165095730L;

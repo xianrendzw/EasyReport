@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMemberPermissionService")
 public class PermissionService
         extends AbstractCrudService<IPermissionDao, Permission, PermissionExample>

@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.exception;
 
 /**
  * 报表SQL查询语句执行失败异常
+ * @author tomdeng
  */
 public class SQLQueryException extends RuntimeException {
     private static final long serialVersionUID = -8642401582122059411L;

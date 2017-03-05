@@ -34,6 +34,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 @RestController
 @RequestMapping(value = "/rest/membership/role")
 public class RoleController
@@ -80,6 +83,7 @@ public class RoleController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "修改角色")
     @RequiresPermissions("membership.role:edit")
@@ -89,6 +93,7 @@ public class RoleController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除角色")
     @RequiresPermissions("membership.role:remove")
@@ -183,7 +188,7 @@ public class RoleController
 
         List<EasyUITreeNode<String>> rootNodes = new ArrayList<>(20);
         rootNodes.addAll(nodes.stream()
-                .filter(treeNode -> treeNode.getPId().equals("0"))
+                .filter(treeNode -> "0".equals(treeNode.getPId()))
                 .collect(Collectors.toList()));
         for (EasyUITreeNode<String> rootNode : rootNodes) {
             getChildNodes(nodes, rootNode);

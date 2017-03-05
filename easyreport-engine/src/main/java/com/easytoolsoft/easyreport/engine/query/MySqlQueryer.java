@@ -7,6 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author tomdeng
+ */
 public class MySqlQueryer extends AbstractQueryer implements Queryer {
     public MySqlQueryer(ReportDataSource dataSource, ReportParameter parameter) {
         super(dataSource, parameter);

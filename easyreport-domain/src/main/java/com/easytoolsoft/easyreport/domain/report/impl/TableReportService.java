@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 
 /**
  * 报表生成服务类
+ * @author tomdeng
  */
 @Service("EzrptMetaReportingGenerationService")
 public class TableReportService implements ITableReportService {
@@ -197,7 +198,7 @@ public class TableReportService implements ITableReportService {
         if (values.length == 1) {
             return values[0];
         }
-        if (dataType.equals("float") || dataType.equals("integer")) {
+        if ("float".equals(dataType) || "integer".equals(dataType)) {
             return StringUtils.join(values, ",");
         }
         return StringUtils.join(values, "','");
@@ -329,15 +330,15 @@ public class TableReportService implements ITableReportService {
             queryParam.setDefaultValue(VelocityUtils.parse(queryParam.getDefaultValue(), buildinParams));
             queryParam.setContent(VelocityUtils.parse(queryParam.getContent(), buildinParams));
             String formElement = queryParam.getFormElement().toLowerCase();
-            if (formElement.equals("select") || formElement.equalsIgnoreCase("selectMul")) {
+            if ("select".equals(formElement) || "selectMul".equalsIgnoreCase(formElement)) {
                 htmlFormElement = this.getComboBoxFormElements(queryParam, report.getDsId(), buildinParams);
-            } else if (formElement.equals("checkbox")) {
+            } else if ("checkbox".equals(formElement)) {
                 htmlFormElement = new HtmlCheckBox(queryParam.getName(),queryParam.getText(),
                         queryParam.getRealDefaultValue());
-            } else if (formElement.equals("text")) {
+            } else if ("text".equals(formElement)) {
                 htmlFormElement = new HtmlTextBox(queryParam.getName(),queryParam.getText(),
                         queryParam.getRealDefaultValue());
-            } else if (formElement.equals("date")) {
+            } else if ("date".equals(formElement)) {
                 htmlFormElement = new HtmlDateBox(queryParam.getName(),queryParam.getText(),
                         queryParam.getRealDefaultValue());
             }
@@ -368,7 +369,7 @@ public class TableReportService implements ITableReportService {
         }
 
         HtmlComboBox htmlComboBox = new HtmlComboBox(queryParam.getName(), queryParam.getText(), htmlSelectOptions);
-        htmlComboBox.setMultipled(queryParam.getFormElement().equals("selectMul"));
+        htmlComboBox.setMultipled("selectMul".equals(queryParam.getFormElement()));
         htmlComboBox.setAutoComplete(queryParam.isAutoComplete());
         return htmlComboBox;
     }
@@ -385,12 +386,12 @@ public class TableReportService implements ITableReportService {
 
     private List<ReportQueryParamItem> getOptions(QueryParameter queryParam, int dsId,
                                                   Map<String, Object> buildinParams) {
-        if (queryParam.getDataSource().equals("sql")) {
+        if ("sql".equals(queryParam.getDataSource())) {
             return this.reportService.executeQueryParamSqlText(dsId, queryParam.getContent());
         }
 
         List<ReportQueryParamItem> options = new ArrayList<>();
-        if (queryParam.getDataSource().equals("text") && StringUtils.isNoneBlank(queryParam.getContent())) {
+        if ("text".equals(queryParam.getDataSource()) && StringUtils.isNoneBlank(queryParam.getContent())) {
             HashSet<String> set = new HashSet<>();
             String[] optionSplits = StringUtils.split(queryParam.getContent(), '|');
             for (String option : optionSplits) {

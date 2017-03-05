@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 /**
  * dhtmxTree(http://dhtmlx.com/docs/products/dhtmlxTree/)控件的工具类
+ * @author tomdeng
  */
 public class DhtmlXTreeUtils {
     public static DhtmlXTreeNode getRootNode(String id, List<DhtmlXTreeNode> nodes) {
@@ -23,17 +24,17 @@ public class DhtmlXTreeUtils {
     }
 
     public static String getJSONString(String id, List<DhtmlXTreeNode> nodes) {
-        String JSONTextFormat = "{id:\"%1$s\", item:[%2$s]}";
-        String JSONNodeFormat = "{id:\"%1$s\",text:\"%2$s\",tooltip:\"%3$s\",child:%4$s}";
+        String jsonTextFormat = "{id:\"%1$s\", item:[%2$s]}";
+        String jsonNodeFormat = "{id:\"%1$s\",text:\"%2$s\",tooltip:\"%3$s\",child:%4$s}";
 
         StringBuilder jsonString = new StringBuilder();
         int count = nodes.size();
         for (int i = 0; i < count; i++) {
             DhtmlXTreeNode node = nodes.get(i);
-            String JOSNNodeStr = String.format(JSONNodeFormat, node.getId(), node.getText(), node.getTooltip(), node.getChild());
-            jsonString.append(JOSNNodeStr).append(i < count - 1 ? "," : "");
+            String jsonNodeStr = String.format(jsonNodeFormat, node.getId(), node.getText(), node.getTooltip(), node.getChild());
+            jsonString.append(jsonNodeStr).append(i < count - 1 ? "," : "");
         }
-        return String.format(JSONTextFormat, id, jsonString);
+        return String.format(jsonTextFormat, id, jsonString);
     }
 
     public static List<DhtmlXTreeNode> getNodes(Collection<DhtmlXTreeNode> nodes, String rootId) {

@@ -2,6 +2,9 @@ package com.easytoolsoft.easyreport.engine.data;
 
 import com.easytoolsoft.easyreport.engine.util.NumberFormatUtils;
 
+/**
+ * @author tomdeng
+ */
 public class ReportDataCell {
     private final ReportDataColumn column;
     private final String name;
@@ -36,9 +39,9 @@ public class ReportDataCell {
             decimals = decimals <= 0 ? 2 : decimals;
             return NumberFormatUtils.percentFormat(this.value, decimals);
         }
-        if (this.column.getMetaData().getDataType().equals("DECIMAL")
-                || this.column.getMetaData().getDataType().equals("DOUBLE")
-                || this.column.getMetaData().getDataType().equals("FLOAT")) {
+        if ("DECIMAL".equals(this.column.getMetaData().getDataType())
+                || "DOUBLE".equals(this.column.getMetaData().getDataType())
+                || "FLOAT".equals(this.column.getMetaData().getDataType())) {
             decimals = decimals <= 0 ? 4 : decimals;
             return NumberFormatUtils.decimalFormat(value, decimals);
         }

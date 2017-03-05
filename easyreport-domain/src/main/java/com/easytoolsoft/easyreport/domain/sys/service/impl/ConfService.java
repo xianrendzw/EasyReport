@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptSysConfService")
 public class ConfService
         extends AbstractCrudService<IConfDao, Conf, ConfExample>

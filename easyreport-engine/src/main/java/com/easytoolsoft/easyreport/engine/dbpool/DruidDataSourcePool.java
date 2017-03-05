@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 /**
  * Druid数据源连接池包装类
  * <a href="https://github.com/alibaba/druid/wiki>Druid</a>
+ * @author tomdeng
  */
 public class DruidDataSourcePool implements DataSourcePoolWrapper {
     @Override

@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptMetaConfService")
 public class ConfService
         extends AbstractCrudService<IConfDao, Conf, ConfExample>

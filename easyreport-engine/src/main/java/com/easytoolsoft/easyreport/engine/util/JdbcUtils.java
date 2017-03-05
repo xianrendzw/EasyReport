@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Jdbc工具类.
+ * @author tomdeng
  */
 public class JdbcUtils {
     private static final Logger logger = LoggerFactory.getLogger(JdbcUtils.class);
@@ -33,12 +34,15 @@ public class JdbcUtils {
 
     public static void releaseJdbcResource(Connection conn, Statement stmt, ResultSet rs) {
         try {
-            if (stmt != null)
+            if (stmt != null) {
                 stmt.close();
-            if (rs != null)
+            }
+            if (rs != null) {
                 rs.close();
-            if (conn != null)
+            }
+            if (conn != null) {
                 conn.close();
+            }
         } catch (SQLException ex) {
             logger.error("数据库资源释放异常", ex);
             throw new RuntimeException("数据库资源释放异常", ex);

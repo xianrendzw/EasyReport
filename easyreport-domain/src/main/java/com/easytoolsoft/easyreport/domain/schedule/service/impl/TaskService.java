@@ -7,6 +7,9 @@ import com.easytoolsoft.easyreport.domain.schedule.po.Task;
 import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author tomdeng
+ */
 @Service("EzrptScheduleTaskService")
 public class TaskService
         extends AbstractCrudService<ITaskDao, Task, TaskExample>

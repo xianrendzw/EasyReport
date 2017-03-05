@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 /**
  * 报表数据源控制器
+ * @author tomdeng
  */
 @RestController
 @RequestMapping(value = "/rest/metadata/ds")
@@ -54,6 +55,7 @@ public class DataSourceController
         return modelMap;
     }
 
+    @Override
     @RequestMapping(value = "/add")
     @OpLog(name = "新增数据源")
     @RequiresPermissions("report.ds:add")
@@ -65,6 +67,7 @@ public class DataSourceController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑数据源")
     @RequiresPermissions("report.ds:edit")
@@ -74,6 +77,7 @@ public class DataSourceController
         return result;
     }
 
+    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除数据源")
     @RequiresPermissions("report.ds:remove")
