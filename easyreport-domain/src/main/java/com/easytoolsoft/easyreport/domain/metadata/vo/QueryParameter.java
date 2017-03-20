@@ -1,8 +1,9 @@
 package com.easytoolsoft.easyreport.domain.metadata.vo;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 报表查询参数类
