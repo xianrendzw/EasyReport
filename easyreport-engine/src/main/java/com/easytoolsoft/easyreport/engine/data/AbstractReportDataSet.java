@@ -1,10 +1,5 @@
 package com.easytoolsoft.easyreport.engine.data;
 
-import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
-import com.easytoolsoft.easyreport.engine.util.AviatorExprUtils;
-import com.easytoolsoft.easyreport.engine.util.ComparatorUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,9 +9,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.easytoolsoft.easyreport.engine.exception.NotFoundLayoutColumnException;
+import com.easytoolsoft.easyreport.engine.util.AviatorExprUtils;
+import com.easytoolsoft.easyreport.engine.util.ComparatorUtils;
+import org.apache.commons.lang.StringUtils;
+
 /**
- * 报表数据集类,包含生成报表所需的数据集，配置及元数据。
- * @author tomdeng
+ * 抽象报表数据集类,包含生成报表所需的数据集，配置及元数据。
+ *
+ * @author Tom Deng
+ * @date 2017-03-25
  */
 public abstract class AbstractReportDataSet implements ReportDataSet {
     protected final static String PATH_SEPARATOR = "$";
@@ -46,75 +48,17 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         this.statColumnLayout = statColumnLayout;
     }
 
-    /**
-     * 获取报表数据集中行key(或树路径)分隔字符串
-     * <sample>layoutValue$col1value$col2value$col3value$...</sample>
-     *
-     * @return
-     */
+    @Override
     public String getPathSeparator() {
         return PATH_SEPARATOR;
     }
 
-    /**
-     * 获取报表元数据对象
-     *
-     * @return {@link ReportMetaDataSet}
-     */
+    @Override
     public ReportMetaDataSet getMetaData() {
         return this.metaDataSet;
     }
 
-    /**
-     * 获取报表数据集(RowMap)每一行的key
-     *
-     * @param rowNode    行结点
-     * @param columnNode 列结点
-     * @return 行key
-     */
-    public abstract String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode);
-
-    /**
-     * 获取报表表头(header)左边固定列集合
-     *
-     * @return List<ReportDataColumn>
-     */
-    public abstract List<ReportDataColumn> getHeaderLeftFixedColumns();
-
-    /**
-     * 获取表头(header)右边列树型结构
-     *
-     * @return ColumnTree
-     */
-    public abstract ColumnTree getHeaderRightColumnTree();
-
-    /**
-     * 获取报表表体(body)左边固定列树型结构
-     *
-     * @return ColumnTree
-     */
-    public abstract ColumnTree getBodyLeftFixedColumnTree();
-
-    /**
-     * 获取报表表体(body)右边列集合
-     *
-     * @return List<ColumnTreeNode>
-     */
-    public abstract List<ColumnTreeNode> getBodyRightColumnNodes();
-
-    /**
-     * 是否在报表中隐藏统计列
-     * 当统计列只有一列时,如果维度列大于0,则不显示出统计列，只显示布局列或维度列
-     *
-     * @return true|false
-     */
-    public abstract boolean isHideStatColumn();
-
-    /**
-     * 获取布局列树
-     *
-     * @return ColumnTree
-     */
+    @Override
     public ColumnTree getLayoutColumnTree() {
         if (this.layoutColumnTree != null) {
             return this.layoutColumnTree;
@@ -123,11 +67,7 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         return this.layoutColumnTree;
     }
 
-    /**
-     * 获取维度列树
-     *
-     * @return ColumnTree {@link ColumnTree}
-     */
+    @Override
     public ColumnTree getDimColumnTree() {
         if (this.dimColumnTree != null) {
             return this.dimColumnTree;
@@ -137,7 +77,8 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         // 无维度列则直接设置树只有一个节点
         if (depth == 0) {
             List<ColumnTreeNode> roots = new ArrayList<>();
-            ReportDataColumn column = new ReportDataColumn(new ReportMetaDataColumn("stat_value", "值", ColumnType.DIMENSION));
+            ReportDataColumn column = new ReportDataColumn(
+                new ReportMetaDataColumn("stat_value", "值", ColumnType.DIMENSION));
             roots.add(new ColumnTreeNode(column));
             this.dimColumnTree = new ColumnTree(roots, 1);
             this.dimColumnTree.setLeafNodes(roots);
@@ -148,11 +89,7 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         return this.dimColumnTree;
     }
 
-    /**
-     * 获取报表统计列树
-     *
-     * @return ColumnTree
-     */
+    @Override
     public ColumnTree getStatColumnTree() {
         if (this.statColumnTree != null) {
             return this.statColumnTree;
@@ -166,18 +103,14 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
 
         List<ReportDataColumn> statColumns = this.getStatColumns();
         treeNodes.addAll(statColumns.stream().filter(
-                statColumn -> !statColumn.getMetaData().isHidden())
-                .map(this::createStatColumnTreeNode)
-                .collect(Collectors.toList()));
+            statColumn -> !statColumn.getMetaData().isHidden())
+            .map(this::createStatColumnTreeNode)
+            .collect(Collectors.toList()));
         this.statColumnTree = new ColumnTree(treeNodes, 1);
         return this.statColumnTree;
     }
 
-    /**
-     * 获取报表布局列
-     *
-     * @return {@link List<ReportDataColumn}
-     */
+    @Override
     public List<ReportDataColumn> getLayoutColumns() {
         if (this.layoutColumns == null) {
             List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getLayoutColumns();
@@ -187,17 +120,13 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
 
             this.layoutColumns = new ArrayList<>();
             this.layoutColumns.addAll(metaDataColumns.stream()
-                    .map(ReportDataColumn::new)
-                    .collect(Collectors.toList()));
+                .map(ReportDataColumn::new)
+                .collect(Collectors.toList()));
         }
         return this.layoutColumns;
     }
 
-    /**
-     * 获取报表所有维度列列表
-     *
-     * @return {@link List<ReportDataColumn>}
-     */
+    @Override
     public List<ReportDataColumn> getDimColumns() {
         if (this.dimColumns != null) {
             return this.dimColumns;
@@ -206,16 +135,12 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         this.dimColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getDimColumns();
         this.dimColumns.addAll(metaDataColumns.stream()
-                .map(ReportDataColumn::new)
-                .collect(Collectors.toList()));
+            .map(ReportDataColumn::new)
+            .collect(Collectors.toList()));
         return this.dimColumns;
     }
 
-    /**
-     * 获取报表所有启用的统计列列表
-     *
-     * @return {@link List<ReportDataColumn>}
-     */
+    @Override
     public List<ReportDataColumn> getEnabledStatColumns() {
         if (this.enabledStatColumns != null) {
             return this.enabledStatColumns;
@@ -223,15 +148,11 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
 
         this.enabledStatColumns = new ArrayList<>();
         this.enabledStatColumns.addAll(this.getStatColumns().stream()
-                .filter(statColumn -> !statColumn.getMetaData().isHidden()).collect(Collectors.toList()));
+            .filter(statColumn -> !statColumn.getMetaData().isHidden()).collect(Collectors.toList()));
         return this.enabledStatColumns;
     }
 
-    /**
-     * 获取报表所有的计算列列表
-     *
-     * @return {@link List<ReportDataColumn>}
-     */
+    @Override
     public List<ReportDataColumn> getComputedColumns() {
         if (this.computedColumns != null) {
             return this.computedColumns;
@@ -239,16 +160,12 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
 
         this.computedColumns = new ArrayList<>();
         this.computedColumns.addAll(this.getStatColumns().stream()
-                .filter(statColumn -> statColumn.getMetaData().getType() == ColumnType.COMPUTED)
-                .collect(Collectors.toList()));
+            .filter(statColumn -> statColumn.getMetaData().getType() == ColumnType.COMPUTED)
+            .collect(Collectors.toList()));
         return this.computedColumns;
     }
 
-    /**
-     * 获取报表所有统计列(含计算列)列表
-     *
-     * @return {@link List<ReportDataColumn>}
-     */
+    @Override
     public List<ReportDataColumn> getStatColumns() {
         if (this.statColumns != null) {
             return this.statColumns;
@@ -257,16 +174,12 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         this.statColumns = new ArrayList<>();
         List<ReportMetaDataColumn> metaDataColumns = this.metaDataSet.getStatColumns();
         this.statColumns.addAll(metaDataColumns.stream()
-                .map(ReportDataColumn::new)
-                .collect(Collectors.toList()));
+            .map(ReportDataColumn::new)
+            .collect(Collectors.toList()));
         return this.statColumns;
     }
 
-    /**
-     * 获取报表所有非统计列列表
-     *
-     * @return {@link List<ReportDataColumn>}
-     */
+    @Override
     public List<ReportDataColumn> getNonStatColumns() {
         if (this.nonStatColumns != null) {
             return this.nonStatColumns;
@@ -278,20 +191,12 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         return nonStatColumns;
     }
 
-    /**
-     * 获取维度列总数
-     *
-     * @return 维度列总数
-     */
+    @Override
     public int getDimColumnCount() {
         return this.getDimColumns().size();
     }
 
-    /**
-     * 获取所有非统计列去重数据集合
-     *
-     * @return {@link Map<String, List<String>>}
-     */
+    @Override
     public Map<String, List<String>> getUnduplicatedNonStatColumnDataMap() {
         Map<String, List<String>> nonStatColumnDataMap = new HashMap<>();
         List<ReportMetaDataRow> metaDataRows = this.metaDataSet.getRows();
@@ -328,11 +233,7 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         return nonStatColumnDataMap;
     }
 
-    /**
-     * 获取报表数据行Map,其中key由于布局列与维度列的值组成,value为统计列与计算列值的集合
-     *
-     * @return Map<String, ReportDataRow>
-     */
+    @Override
     public Map<String, ReportDataRow> getRowMap() {
         Map<String, ReportDataRow> dataRowMap = new HashMap<>();
         List<ReportDataColumn> statColumns = this.getStatColumns();
@@ -521,8 +422,8 @@ public abstract class AbstractReportDataSet implements ReportDataSet {
         ColumnType columnType = column.getMetaData().getType();
         final ColumnSortType sortType = column.getMetaData().getSortType();
         if (sortType == ColumnSortType.DEFAULT ||
-                columnType == ColumnType.STATISTICAL ||
-                columnType == ColumnType.COMPUTED) {
+            columnType == ColumnType.STATISTICAL ||
+            columnType == ColumnType.COMPUTED) {
             return;
         }
 
