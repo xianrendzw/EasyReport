@@ -35,7 +35,11 @@ EasyReport(ver2.0) 用户操作手册
 ### 2.1 从源代码安装(From Source Code)
 首先确定安装好[jdk1.8][]与[maven3][]、[MySQL5+][]，并配置好maven仓库，然后按如下步骤操作：
 * step1:git clone https://github.com/xianrendzw/EasyReport.git
-* step2:找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
+* step2:创建元数据库和示例数据库:
+  2.1 自己新建一个或者使用原有的mysql数据库, 用某个账号密码测试,可以进行创建库等操作
+  2.2 找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
+  2.3 找到 your_git_repository/EasyReport/docs/db/2.0/examples_db.zip, 解压后执行该sql脚本,创建数据库及示例数据。
+      打开页面后(第五步做完),在数据源管理中,更改示例数据源的用户名密码
 * step3:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
 * step4:mvn clean package -Dmaven.test.skip=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
 * step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
