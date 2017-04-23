@@ -646,16 +646,4 @@
         </developer>
     </developers>
     <contributors></contributors>
-    <distributionManagement>
-        <repository>
-            <id>maven-releases</id>
-            <name>Nexus Release Repository</name>
-            <url>http://nexus.okcoin-inc.com/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://nexus.okcoin-inc.com/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>
