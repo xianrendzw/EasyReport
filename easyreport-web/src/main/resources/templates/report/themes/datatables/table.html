@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}">
+<head>
+    <title th:text="${name}"></title>
+    <link rel="stylesheet" href="../../static/vendor/datatables/media/css/jquery.dataTables.min.css"
+          th:href="@{/vendor/datatables/media/css/jquery.dataTables.min.css}"/>
+    <link rel="stylesheet"
+          href="../../static/vendor/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css"
+          th:href="@{vendor/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css}"/>
+    <script src="../../static/vendor/datatables/media/js/jquery.dataTables.min.js"
+            th:src="@{/vendor/datatables/media/js/jquery.dataTables.min.js}"></script>
+    <script src="../../static/vendor/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js"
+            th:src="@{/vendor/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js}"></script>
+    <script src="../../static/js/report/themes/datatables/table.js"
+            th:src="@{'/js/report/themes/datatables/table.js?v='+${version}}"></script>
+</head>
+<body class="easyui-layout" layout:fragment="content"></body>
+</html>

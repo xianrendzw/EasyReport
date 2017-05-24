@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * 报表数据源类
+ *
  * @author tomdeng
  */
 public class ReportDataSource {
@@ -17,14 +18,16 @@ public class ReportDataSource {
     private final String password;
     private final Map<String, Object> options;
 
-    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password,
-                            String queryerClass, String dbPoolClass) {
+    public ReportDataSource(final String uid, final String driverClass, final String jdbcUrl, final String user,
+                            final String password,
+                            final String queryerClass, final String dbPoolClass) {
         this(uid, driverClass, jdbcUrl, user, password, queryerClass, dbPoolClass, new HashMap<>(3));
     }
 
-    public ReportDataSource(String uid, String driverClass, String jdbcUrl, String user, String password,
-                            String queryerClass, String dbPoolClass,
-                            Map<String, Object> options) {
+    public ReportDataSource(final String uid, final String driverClass, final String jdbcUrl, final String user,
+                            final String password,
+                            final String queryerClass, final String dbPoolClass,
+                            final Map<String, Object> options) {
         this.uid = uid;
         this.driverClass = driverClass;
         this.jdbcUrl = jdbcUrl;
@@ -52,7 +55,6 @@ public class ReportDataSource {
     public String getDriverClass() {
         return this.driverClass;
     }
-
 
     /**
      * 获取数据源连接字符串(JDBC)
@@ -107,6 +109,6 @@ public class ReportDataSource {
      * @return 数据源配置选项
      */
     public Map<String, Object> getOptions() {
-        return options;
+        return this.options;
     }
 }

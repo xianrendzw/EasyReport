@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表元数据列类
+ *
  * @author tomdeng
  */
 public class ReportMetaDataColumn {
@@ -26,7 +27,7 @@ public class ReportMetaDataColumn {
     public ReportMetaDataColumn() {
     }
 
-    public ReportMetaDataColumn(String name, String text, ColumnType type) {
+    public ReportMetaDataColumn(final String name, final String text, final ColumnType type) {
         this.name = name;
         this.text = text;
         this.type = type;
@@ -46,7 +47,7 @@ public class ReportMetaDataColumn {
      *
      * @return 报表元数据列的顺序(从1开始)
      */
-    public void setOrdinal(int ordinal) {
+    public void setOrdinal(final int ordinal) {
         this.ordinal = ordinal;
     }
 
@@ -121,7 +122,7 @@ public class ReportMetaDataColumn {
      *
      * @param expression 计算表达式
      */
-    public void setExpression(String expression) {
+    public void setExpression(final String expression) {
         this.expression = expression;
     }
 
@@ -131,7 +132,7 @@ public class ReportMetaDataColumn {
      * @return 格式化字符串
      */
     public String getFormat() {
-        return format == null ? "" : this.format;
+        return this.format == null ? "" : this.format;
     }
 
     /**
@@ -139,7 +140,7 @@ public class ReportMetaDataColumn {
      *
      * @param format 格式化字符串
      */
-    public void setFormat(String format) {
+    public void setFormat(final String format) {
         this.format = format;
     }
 
@@ -175,7 +176,7 @@ public class ReportMetaDataColumn {
      *
      * @param decimals 小数精度,默认浮点数为4位，百分比为2位，其他为0
      */
-    public void setDecimals(int decimals) {
+    public void setDecimals(final int decimals) {
         this.decimals = decimals;
     }
 
@@ -209,7 +210,7 @@ public class ReportMetaDataColumn {
      *
      * @param sortType (0:默认,1：数字优先升序,2:数字优先降序,3：字符优先升序,4:字符优先降序)
      */
-    public void setSortType(int sortType) {
+    public void setSortType(final int sortType) {
         this.sortType = ColumnSortType.valueOf(sortType);
     }
 
@@ -263,7 +264,7 @@ public class ReportMetaDataColumn {
      *
      * @param isPercent
      */
-    public void setPercent(boolean isPercent) {
+    public void setPercent(final boolean isPercent) {
         this.isPercent = isPercent;
     }
 
@@ -281,7 +282,7 @@ public class ReportMetaDataColumn {
      *
      * @param isOptional
      */
-    public void setOptional(boolean isOptional) {
+    public void setOptional(final boolean isOptional) {
         this.isOptional = isOptional;
     }
 
@@ -299,7 +300,7 @@ public class ReportMetaDataColumn {
      *
      * @param isDisplayInMail
      */
-    public void setDisplayInMail(boolean isDisplayInMail) {
+    public void setDisplayInMail(final boolean isDisplayInMail) {
         this.isDisplayInMail = isDisplayInMail;
     }
 
@@ -317,7 +318,7 @@ public class ReportMetaDataColumn {
      *
      * @param isHidden
      */
-    public void setHidden(boolean isHidden) {
+    public void setHidden(final boolean isHidden) {
         this.isHidden = isHidden;
     }
 
@@ -335,7 +336,7 @@ public class ReportMetaDataColumn {
      *
      * @param comment
      */
-    public void setComment(String comment) {
+    public void setComment(final String comment) {
         this.comment = comment;
     }
 
@@ -343,12 +344,12 @@ public class ReportMetaDataColumn {
         return this.copyToNew(this.name, this.text);
     }
 
-    public ReportMetaDataColumn copyToNew(String name, String text) {
+    public ReportMetaDataColumn copyToNew(final String name, final String text) {
         return this.copyToNew(name, text, this.isPercent);
     }
 
-    public ReportMetaDataColumn copyToNew(String name, String text, boolean isPercent) {
-        ReportMetaDataColumn column = new ReportMetaDataColumn();
+    public ReportMetaDataColumn copyToNew(final String name, final String text, final boolean isPercent) {
+        final ReportMetaDataColumn column = new ReportMetaDataColumn();
         column.setName(name);
         column.setText(text);
         column.setPercent(isPercent);

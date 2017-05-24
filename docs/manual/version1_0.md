@@ -37,14 +37,14 @@ EasyReport(ver1.0) 用户操作手册
 **step3**:cd yourgitrepository/EasyReport/easyreport-web
 **step4**:修改 src\main\resources\${env}\resource.properties 数据库连接字符串的IP、用户与密码
 **step5**:mvn clean package -Dmaven.test.skip=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
-**step6**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jboss,jetty等容器中
+**step6**:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jeasyreport,jetty等容器中
 
 ### 2.2 从发布包安装(From Release Packages)
 首先确定安装好[jre1.8][]或[jdk1.8][]与[MySQL5+][]，然后按如下步骤操作：
 **step1**:直接从[release](https://github.com/xianrendzw/EasyReport/releases)下载war文件
 **step2**:在MySQL中创建名为**easy_report**的数据库，然后解压[mysql.zip][],并执行easy_report_mysql.sql创建表结构与导入初始数据
 **step3**:修改war文件里WEB-INF\classes\resource.properties中数据库连接字符串的IP、用户与密码
-**step4**:然后把war这个文件部署到tomcat,jboss,jetty等容器中
+**step4**:然后把war这个文件部署到tomcat,jeasyreport,jetty等容器中
 
 ### 2.3 定时任务程序部署(Scheduled Task Deamon)
 有时需要把报表定时（每天、每月，每季度等）以邮件形式发布给相关的人员，因此需要定时任务调度程序，常用的调度程序也很多（linux:at,crontab;windows:计划任务）,本工具实现一个简单的调度程序。

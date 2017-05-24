@@ -1,14 +1,17 @@
 package com.easytoolsoft.easyreport.web.controller.schedule;
 
-import com.easytoolsoft.easyreport.domain.schedule.example.TaskExample;
-import com.easytoolsoft.easyreport.domain.schedule.po.MailTaskOptions;
-import com.easytoolsoft.easyreport.domain.schedule.po.SMSTaskOptions;
-import com.easytoolsoft.easyreport.domain.schedule.po.Task;
-import com.easytoolsoft.easyreport.domain.schedule.service.ITaskService;
+import java.util.Date;
+import java.util.Map;
+
+import com.easytoolsoft.easyreport.meta.domain.Task;
+import com.easytoolsoft.easyreport.meta.domain.example.TaskExample;
+import com.easytoolsoft.easyreport.meta.domain.options.MailTaskOptions;
+import com.easytoolsoft.easyreport.meta.domain.options.SMSTaskOptions;
+import com.easytoolsoft.easyreport.meta.service.TaskService;
+import com.easytoolsoft.easyreport.support.annotation.OpLog;
+import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
-import com.easytoolsoft.easyreport.web.spring.aop.OpLog;
-import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
-import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
+import com.easytoolsoft.easyreport.web.model.DataGridPager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,62 +20,58 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.Map;
-
 /**
- * @author tomdeng
+ * @author Tom Deng
+ * @date 2017-03-25
  */
 @RestController
 @RequestMapping(value = "/rest/schedule/task")
 public class TaskController
-        extends BaseController<ITaskService, Task, TaskExample> {
+    extends BaseController<TaskService, Task, TaskExample, Integer> {
+
+    private final Integer MAIL_TASK = 1;
+    private final Integer SMS_TASK = 2;
 
     @GetMapping(value = "/list")
     @OpLog(name = "获取任务列表")
     @RequiresPermissions("schedule.task:view")
-    public Map<String, Object> list(DataGridPager pager, String fieldName, String keyword) {
-        return super.find(pager, fieldName, keyword);
+    public Map<String, Object> list(final DataGridPager pager, final String fieldName, final String keyword) {
+        return this.queryByPage(pager, fieldName, keyword);
     }
 
-    @Override
     @PostMapping(value = "/add")
     @OpLog(name = "增加任务")
     @RequiresPermissions("schedule.task:add")
-    public JsonResult add(Task po) {
+    public ResponseResult add(final Task po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
-        return super.add(po);
+        return this.create(po);
     }
 
-    @Override
     @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
     @RequiresPermissions("schedule.task:edit")
-    public JsonResult edit(Task po) {
-        return super.edit(po);
+    public ResponseResult edit(final Task po) {
+        return this.update(po);
     }
 
-    @Override
     @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
     @RequiresPermissions("schedule.task:remove")
-    public JsonResult remove(int id) {
-        return super.remove(id);
+    public ResponseResult remove(final Integer id) {
+        return this.delete(id);
     }
 
     @GetMapping(value = "/getJsonOptions")
     @OpLog(name = "获取配置项JSON结构")
     @RequiresPermissions("schedule.task:view")
-    public JsonResult getJsonOptions(Integer type) throws JsonProcessingException {
-        JsonResult<String> result = new JsonResult<>();
-        if (type.equals(1)) {
-            result.setData(new ObjectMapper().writeValueAsString(new MailTaskOptions()));
-        } else if (type.equals(2)) {
-            result.setData(new ObjectMapper().writeValueAsString(new SMSTaskOptions()));
-        } else {
-            result.setData("{}");
+    public ResponseResult getJsonOptions(final Integer type) throws JsonProcessingException {
+        if (this.MAIL_TASK.equals(type)) {
+            return ResponseResult.success((new ObjectMapper().writeValueAsString(new MailTaskOptions())));
         }
-        return result;
+        if (this.SMS_TASK.equals(type)) {
+            return ResponseResult.success(new ObjectMapper().writeValueAsString(new SMSTaskOptions()));
+        }
+        return ResponseResult.success("{}");
     }
 }

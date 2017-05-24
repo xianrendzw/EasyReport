@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.exception;
 
 /**
  * 报表维度列中没有找到布局维度列异常类
+ *
  * @author tomdeng
  */
 public class NotFoundLayoutColumnException extends RuntimeException {
@@ -11,15 +12,15 @@ public class NotFoundLayoutColumnException extends RuntimeException {
         super("没找到报表中的布局列，请配置布局列!");
     }
 
-    public NotFoundLayoutColumnException(String message) {
+    public NotFoundLayoutColumnException(final String message) {
         super(message);
     }
 
-    public NotFoundLayoutColumnException(String message, Throwable cause) {
+    public NotFoundLayoutColumnException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public NotFoundLayoutColumnException(Throwable cause) {
+    public NotFoundLayoutColumnException(final Throwable cause) {
         super(cause);
     }
 }

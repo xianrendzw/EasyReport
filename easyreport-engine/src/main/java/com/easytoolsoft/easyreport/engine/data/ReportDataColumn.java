@@ -2,13 +2,14 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表数据列
+ *
  * @author tomdeng
  */
 public class ReportDataColumn {
     private final ReportMetaDataColumn metaDataColumn;
     private String parentName;
 
-    public ReportDataColumn(ReportMetaDataColumn metaDataColumn) {
+    public ReportDataColumn(final ReportMetaDataColumn metaDataColumn) {
         this.metaDataColumn = metaDataColumn;
     }
 
@@ -62,7 +63,7 @@ public class ReportDataColumn {
      *
      * @param parentName
      */
-    public void setParentName(String parentName) {
+    public void setParentName(final String parentName) {
         this.parentName = parentName;
     }
 }

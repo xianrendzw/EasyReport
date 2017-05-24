@@ -4,6 +4,7 @@ import com.easytoolsoft.easyreport.engine.data.ReportTable;
 
 /**
  * 报表生成接口。
+ *
  * @author tomdeng
  */
 public interface ReportBuilder {

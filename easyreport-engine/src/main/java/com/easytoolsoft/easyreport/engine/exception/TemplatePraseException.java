@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.exception;
 
 /**
  * 模板解析异常
+ *
  * @author tomdeng
  */
 public class TemplatePraseException extends RuntimeException {
@@ -11,15 +12,15 @@ public class TemplatePraseException extends RuntimeException {
         super();
     }
 
-    public TemplatePraseException(String message) {
+    public TemplatePraseException(final String message) {
         super(message);
     }
 
-    public TemplatePraseException(String message, Throwable cause) {
+    public TemplatePraseException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public TemplatePraseException(Throwable cause) {
+    public TemplatePraseException(final Throwable cause) {
         super("模板引擎解析出错.详细信息：" + cause.getMessage(), cause);
     }
 }

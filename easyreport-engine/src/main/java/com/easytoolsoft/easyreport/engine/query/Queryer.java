@@ -1,13 +1,14 @@
 package com.easytoolsoft.easyreport.engine.query;
 
+import java.util.List;
+
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataColumn;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataRow;
 import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 
-import java.util.List;
-
 /**
  * 报表查询器接口
+ *
  * @author tomdeng
  */
 public interface Queryer {

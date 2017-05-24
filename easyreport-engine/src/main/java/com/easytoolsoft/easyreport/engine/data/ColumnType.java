@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表列类型
+ *
  * @author tomdeng
  */
 public enum ColumnType {
@@ -27,11 +28,11 @@ public enum ColumnType {
 
     private final int value;
 
-    ColumnType(int value) {
+    ColumnType(final int value) {
         this.value = value;
     }
 
-    public static ColumnType valueOf(int arg) {
+    public static ColumnType valueOf(final int arg) {
         if (arg == 1) {
             return LAYOUT;
         }
@@ -48,6 +49,6 @@ public enum ColumnType {
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
 }

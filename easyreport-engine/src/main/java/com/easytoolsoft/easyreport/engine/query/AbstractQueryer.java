@@ -1,5 +1,15 @@
 package com.easytoolsoft.easyreport.engine.query;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataCell;
@@ -12,16 +22,6 @@ import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author tomdeng
  */
@@ -31,36 +31,36 @@ public abstract class AbstractQueryer {
     protected final ReportParameter parameter;
     protected final List<ReportMetaDataColumn> metaDataColumns;
 
-    protected AbstractQueryer(ReportDataSource dataSource, ReportParameter parameter) {
+    protected AbstractQueryer(final ReportDataSource dataSource, final ReportParameter parameter) {
         this.dataSource = dataSource;
         this.parameter = parameter;
         this.metaDataColumns = this.parameter == null ?
-                new ArrayList<>(0) :
-                new ArrayList<>(this.parameter.getMetaColumns());
+            new ArrayList<>(0) :
+            new ArrayList<>(this.parameter.getMetaColumns());
     }
 
-    public List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText) {
+    public List<ReportMetaDataColumn> parseMetaDataColumns(final String sqlText) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
         List<ReportMetaDataColumn> columns = null;
 
         try {
-            logger.debug("Parse Report MetaDataColumns SQL:{},", sqlText);
+            this.logger.debug("Parse Report MetaDataColumns SQL:{},", sqlText);
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(this.preprocessSqlText(sqlText));
-            ResultSetMetaData rsMataData = rs.getMetaData();
-            int count = rsMataData.getColumnCount();
+            final ResultSetMetaData rsMataData = rs.getMetaData();
+            final int count = rsMataData.getColumnCount();
             columns = new ArrayList<>(count);
             for (int i = 1; i <= count; i++) {
-                ReportMetaDataColumn column = new ReportMetaDataColumn();
+                final ReportMetaDataColumn column = new ReportMetaDataColumn();
                 column.setName(rsMataData.getColumnLabel(i));
                 column.setDataType(rsMataData.getColumnTypeName(i));
                 column.setWidth(rsMataData.getColumnDisplaySize(i));
                 columns.add(column);
             }
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
@@ -68,15 +68,15 @@ public abstract class AbstractQueryer {
         return columns;
     }
 
-    public List<ReportQueryParamItem> parseQueryParamItems(String sqlText) {
+    public List<ReportQueryParamItem> parseQueryParamItems(final String sqlText) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        HashSet<String> set = new HashSet<>();
-        List<ReportQueryParamItem> rows = new ArrayList<>();
+        final HashSet<String> set = new HashSet<>();
+        final List<ReportQueryParamItem> rows = new ArrayList<>();
 
         try {
-            logger.debug(sqlText);
+            this.logger.debug(sqlText);
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sqlText);
@@ -90,7 +90,7 @@ public abstract class AbstractQueryer {
                 }
                 rows.add(new ReportQueryParamItem(name, text));
             }
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
@@ -109,28 +109,28 @@ public abstract class AbstractQueryer {
         ResultSet rs = null;
 
         try {
-            logger.debug(this.parameter.getSqlText());
+            this.logger.debug(this.parameter.getSqlText());
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(this.parameter.getSqlText());
             return this.getMetaDataRows(rs, this.getSqlColumns(this.parameter.getMetaColumns()));
-        } catch (Exception ex) {
-            logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
+        } catch (final Exception ex) {
+            this.logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
             throw new SQLQueryException(ex);
         } finally {
             JdbcUtils.releaseJdbcResource(conn, stmt, rs);
         }
     }
 
-    protected List<ReportMetaDataRow> getMetaDataRows(ResultSet rs, List<ReportMetaDataColumn> sqlColumns)
-            throws SQLException {
-        List<ReportMetaDataRow> rows = new ArrayList<>();
+    protected List<ReportMetaDataRow> getMetaDataRows(final ResultSet rs, final List<ReportMetaDataColumn> sqlColumns)
+        throws SQLException {
+        final List<ReportMetaDataRow> rows = new ArrayList<>();
         while (rs.next()) {
-            ReportMetaDataRow row = new ReportMetaDataRow();
-            for (ReportMetaDataColumn column : sqlColumns) {
+            final ReportMetaDataRow row = new ReportMetaDataRow();
+            for (final ReportMetaDataColumn column : sqlColumns) {
                 Object value = rs.getObject(column.getName());
                 if (column.getDataType().contains("BINARY")) {
-                    value = new String((byte[]) value);
+                    value = new String((byte[])value);
                 }
                 row.add(new ReportMetaDataCell(column, column.getName(), value));
             }
@@ -139,10 +139,10 @@ public abstract class AbstractQueryer {
         return rows;
     }
 
-    protected List<ReportMetaDataColumn> getSqlColumns(List<ReportMetaDataColumn> metaDataColumns) {
+    protected List<ReportMetaDataColumn> getSqlColumns(final List<ReportMetaDataColumn> metaDataColumns) {
         return metaDataColumns.stream()
-                .filter(x -> x.getType() != ColumnType.COMPUTED)
-                .collect(Collectors.toList());
+            .filter(x -> x.getType() != ColumnType.COMPUTED)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -152,7 +152,7 @@ public abstract class AbstractQueryer {
      * @param sqlText 原sql语句
      * @return 预处理后的sql语句
      */
-    protected String preprocessSqlText(String sqlText) {
+    protected String preprocessSqlText(final String sqlText) {
         return sqlText;
     }
 
@@ -165,7 +165,7 @@ public abstract class AbstractQueryer {
         try {
             Class.forName(this.dataSource.getDriverClass());
             return JdbcUtils.getDataSource(this.dataSource).getConnection();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

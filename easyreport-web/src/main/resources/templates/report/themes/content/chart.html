@@ -1,0 +1,38 @@
+<div xmlns:th="http://www.thymeleaf.org" id="chart-report-div" style="margin: 5px;">
+    <form id="chart-report-form" method="post">
+        <table class="designer-table" style="width: 100%;padding: 6px;">
+            <tr>
+                <td style="text-align: left;" th:utext="${formHtmlText}">&nbsp;&nbsp;
+                    <a id="btn-chart-generate" href="#" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-ok'">生成</a>
+                    <input id="chart-report-id" type="hidden" name="id" th:value="${id}"/>
+                    <input id="chart-report-name" type="hidden" name="name" th:value="${name}"/>
+                    <input id="chart-report-uid" type="hidden" name="uid" th:value="${uid}"/>
+                </td>
+            </tr>
+            <tr id="chart-report-columns">
+                <td colspan="2" th:utext="${statColumHtmlText}"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label style="width: 120px;">选择维度:</label><span th:utext="${nonStatColumHtmlText}">&nbsp;</span>
+                    横轴维度：<select id="xAxisDim"></select>&nbsp;
+                    顺序：<select id="sortType">
+                    <option value="asc">升序</option>
+                    <option value="desc">降序</option>
+                </select>&nbsp;
+                    <a id="btnViewChart" href="#" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-preview'">查看</a>&nbsp;
+                    <a id="btnAddChart" href="#" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-add'">对比</a>&nbsp;
+                    <a id="btnToggleChart" href="#" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-toggle'">转换</a>&nbsp;
+                    <a id="btnResetChart" href="#" class="easyui-linkbutton"
+                       data-options="iconCls:'icon-reload'">重置</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div xmlns:th="http://www.thymeleaf.org" id="legend1" style="height: 345px; border: 1px solid #ccc;"
+     th:text="${message}"></div>

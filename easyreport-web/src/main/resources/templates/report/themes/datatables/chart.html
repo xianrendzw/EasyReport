@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}">
+<head>
+    <title th:text="${name}"></title>
+    <script src="../../static/vendor/echarts.min.js" th:href="@{/vendor/echarts.min.js}"></script>
+    <script src="../../static/js/report/themes/datatables/chart.js"
+            th:src="@{'/js/report/themes/datatables/chart.js?v='+${version}}"></script>
+</head>
+<body class="easyui-layout" layout:fragment="content"></body>
+</html>

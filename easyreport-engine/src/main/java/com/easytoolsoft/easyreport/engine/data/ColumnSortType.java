@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表列排序类型
+ *
  * @author tomdeng
  */
 public enum ColumnSortType {
@@ -33,11 +34,11 @@ public enum ColumnSortType {
 
     private final int value;
 
-    ColumnSortType(int value) {
+    ColumnSortType(final int value) {
         this.value = value;
     }
 
-    public static ColumnSortType valueOf(int arg) {
+    public static ColumnSortType valueOf(final int arg) {
         if (arg == 0) {
             return DEFAULT;
         }
@@ -57,6 +58,6 @@ public enum ColumnSortType {
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
 }

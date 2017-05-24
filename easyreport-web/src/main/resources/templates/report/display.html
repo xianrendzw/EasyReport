@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common_layout}">
+<head>
+    <title th:text="${report.name}"></title>
+    <link rel="stylesheet" href="../../static/vendor/tablesorter/css/theme.dark.css"
+          th:href="@{/vendor/tablesorter/css/theme.dark.css}"/>
+    <link rel="stylesheet" href="../../static/js/report/themes/content/default.css"
+          th:href="@{/js/report/themes/content/default.css}"/>
+    <script src="../../static/vendor/tablesorter/jquery.tablesorter.min.js"
+            th:src="@{/vendor/tablesorter/jquery.tablesorter.min.js}"></script>
+    <script src="../../static/vendor/jquery.fileDownload.js" th:src="@{/vendor/jquery.fileDownload.js}"></script>
+    <script src="../../static/vendor/jquery.fixtableheader.js" th:src="@{/vendor/jquery.fixtableheader.js}"></script>
+    <script src="../../static/vendor/echarts.min.js" th:src="@{/vendor/echarts.min.js}"></script>
+    <script src="../../static/js/report/themes/content/chart.js"
+            th:src="@{'/js/report/themes/content/chart.js?v='+${version}}"></script>
+    <script src="../../static/js/report/themes/content/table.js"
+            th:src="@{'/js/report/themes/content/table.js?v='+${version}}"></script>
+    <script src="../../static/js/report/display.js" th:src="@{'/js/report/display.js?v='+${version}}"></script>
+</head>
+<body class="easyui-layout" layout:fragment="content">
+<div region="center" style="border-top-width: 0">
+    <div id="report-main-tabs" class="easyui-tabs" border="false" fit="true">
+        <div title="表格" data-options="iconCls:'icon-table'"></div>
+        <div title="图表" data-options="iconCls:'icon-chart4'"></div>
+        <input id="report-main-uid" type="hidden" name="uid" th:value="${report.uid}"/>
+    </div>
+</div>
+</body>
+</html>

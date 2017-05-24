@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * 报表数据行类
+ *
  * @author tomdeng
  */
 public class ReportDataRow {
@@ -14,12 +15,12 @@ public class ReportDataRow {
     public ReportDataRow() {
     }
 
-    public ReportDataRow add(ReportDataCell cell) {
+    public ReportDataRow add(final ReportDataCell cell) {
         this.cells.put(cell.getName(), cell);
         return this;
     }
 
-    public ReportDataRow addAll(List<ReportDataCell> cells) {
+    public ReportDataRow addAll(final List<ReportDataCell> cells) {
         cells.forEach(this::add);
         return this;
     }
@@ -28,12 +29,12 @@ public class ReportDataRow {
         return this.cells;
     }
 
-    public ReportDataCell getCell(String name) {
+    public ReportDataCell getCell(final String name) {
         return this.cells.get(name);
     }
 
-    public Object getCellValue(String name) {
-        ReportDataCell cell = this.cells.get(name);
+    public Object getCellValue(final String name) {
+        final ReportDataCell cell = this.cells.get(name);
         return (cell == null) ? "" : cell.getValue();
     }
 }

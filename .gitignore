@@ -1,4 +1,12 @@
+# Compiled class file
 *.class
+
+# Log file
+*.log
+logs/
+
+# BlueJ files
+*.ctxt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -7,34 +15,18 @@
 *.jar
 *.war
 *.ear
+*.zip
+*.tar.gz
+*.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-nb-configuration.xml
-/easyreport-common/target/
-/easyreport-common/.settings/
-/easyreport-common/.classpath
-/easyreport-domain/target/
-/easyreport-domain/.settings/
-/easyreport-domain/.classpath
-/easyreport-web/target/
-/easyreport-web/.settings/
-/easyreport-web/.classpath
-/easyreport-data/target/
-/easyreport-data/.settings/
-/easyreport-data/.classpath
-/easyreport-engine/target/
-/easyreport-engine/.settings/
-/easyreport-engine/.classpath
-/easyreport-membership/target/
-/easyreport-membership/.settings/
-/easyreport-membership/.classpath
-/easyreport-queryer/target/
-/easyreport-queryer/.settings/
-/easyreport-queryer/.classpath
-.project
+
+
+target/
+.settings/
 .classpath
+.project
 .settings
-*/logs/
 .idea
 *.iml

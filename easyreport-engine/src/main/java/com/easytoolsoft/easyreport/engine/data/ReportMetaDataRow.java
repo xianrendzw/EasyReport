@@ -6,6 +6,7 @@ import java.util.Map;
 
 /**
  * 报表元数据行类
+ *
  * @author tomdeng
  */
 public class ReportMetaDataRow {
@@ -15,17 +16,17 @@ public class ReportMetaDataRow {
     public ReportMetaDataRow() {
     }
 
-    public ReportMetaDataRow add(ReportMetaDataCell cell) {
+    public ReportMetaDataRow add(final ReportMetaDataCell cell) {
         this.cells.put(cell.getName(), cell);
         if (cell.getColumn().getType() != ColumnType.STATISTICAL) {
-            Object cellValue = cell.getValue();
-            rowKeyBuilder.append((cellValue == null) ? "" : cellValue.toString().trim());
-            rowKeyBuilder.append("$");
+            final Object cellValue = cell.getValue();
+            this.rowKeyBuilder.append((cellValue == null) ? "" : cellValue.toString().trim());
+            this.rowKeyBuilder.append("$");
         }
         return this;
     }
 
-    public ReportMetaDataRow addAll(List<ReportMetaDataCell> cells) {
+    public ReportMetaDataRow addAll(final List<ReportMetaDataCell> cells) {
         cells.forEach(this::add);
         return this;
     }
@@ -34,12 +35,12 @@ public class ReportMetaDataRow {
         return this.cells;
     }
 
-    public ReportMetaDataCell getCell(String name) {
+    public ReportMetaDataCell getCell(final String name) {
         return this.cells.get(name);
     }
 
-    public Object getCellValue(String name) {
-        ReportMetaDataCell cell = this.cells.get(name);
+    public Object getCellValue(final String name) {
+        final ReportMetaDataCell cell = this.cells.get(name);
         return (cell == null) ? null : cell.getValue();
     }
 

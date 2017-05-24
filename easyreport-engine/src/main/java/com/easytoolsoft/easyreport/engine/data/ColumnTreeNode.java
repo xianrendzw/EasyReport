@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 报表树型列节点类
+ *
  * @author tomdeng
  */
 public class ColumnTreeNode {
@@ -19,16 +20,16 @@ public class ColumnTreeNode {
     private String path;
     private ReportDataColumn column;
 
-    public ColumnTreeNode(ReportDataColumn column) {
+    public ColumnTreeNode(final ReportDataColumn column) {
         this(column.getName(), column.getText(), column.getText());
         this.column = column;
     }
 
-    public ColumnTreeNode(String name, String text, String value) {
+    public ColumnTreeNode(final String name, final String text, final String value) {
         this(name, text, value, null);
     }
 
-    public ColumnTreeNode(String name, String text, String value, ColumnTreeNode parent) {
+    public ColumnTreeNode(final String name, final String text, final String value, final ColumnTreeNode parent) {
         this.name = name;
         this.text = text;
         this.value = value;
@@ -67,7 +68,7 @@ public class ColumnTreeNode {
      *
      * @param value 报表树型列的值
      */
-    public void setValue(String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 
@@ -85,7 +86,7 @@ public class ColumnTreeNode {
      *
      * @param parent 父列节点
      */
-    public void setParent(ColumnTreeNode parent) {
+    public void setParent(final ColumnTreeNode parent) {
         this.parent = parent;
     }
 
@@ -121,7 +122,7 @@ public class ColumnTreeNode {
      *
      * @param depth 列在当前树中的深度(0表示第一层)
      */
-    public void setDepth(int depth) {
+    public void setDepth(final int depth) {
         this.depth = depth;
     }
 
@@ -139,7 +140,7 @@ public class ColumnTreeNode {
      *
      * @param spans html表格中的colspan或rowspan的总数
      */
-    public void setSpans(int spans) {
+    public void setSpans(final int spans) {
         this.spans = spans;
     }
 
@@ -157,7 +158,7 @@ public class ColumnTreeNode {
      *
      * @param path
      */
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -175,7 +176,7 @@ public class ColumnTreeNode {
      *
      * @param column {@link ReportDataColumn}
      */
-    public void setColumn(ReportDataColumn column) {
+    public void setColumn(final ReportDataColumn column) {
         this.column = column;
     }
 
@@ -189,7 +190,7 @@ public class ColumnTreeNode {
     }
 
     public ColumnTreeNode copyToNew() {
-        ColumnTreeNode treeNode = new ColumnTreeNode(this.name, this.text, this.value);
+        final ColumnTreeNode treeNode = new ColumnTreeNode(this.name, this.text, this.value);
         treeNode.setColumn(this.column);
         treeNode.setDepth(this.depth);
         treeNode.setParent(this.parent);

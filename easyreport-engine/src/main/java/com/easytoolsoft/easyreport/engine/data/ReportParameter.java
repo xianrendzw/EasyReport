@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * 报表参数类
+ *
  * @author tomdeng
  */
 public class ReportParameter {
@@ -33,9 +34,9 @@ public class ReportParameter {
      * @param isRowSpan          是否生成rowspan（跨行)的表格,默认为true
      * @param sqlText            报表sql查询语句
      */
-    public ReportParameter(String id, String name, int layout, int statColumnLayout,
-                           List<ReportMetaDataColumn> metaColumns, Set<String> enabledStatColumns,
-                           boolean isRowSpan, String sqlText) {
+    public ReportParameter(final String id, final String name, final int layout, final int statColumnLayout,
+                           final List<ReportMetaDataColumn> metaColumns, final Set<String> enabledStatColumns,
+                           final boolean isRowSpan, final String sqlText) {
         this.id = id;
         this.name = name;
         this.layout = LayoutType.valueOf(layout);
@@ -60,7 +61,7 @@ public class ReportParameter {
      *
      * @param id
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -78,7 +79,7 @@ public class ReportParameter {
      *
      * @param name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -96,7 +97,7 @@ public class ReportParameter {
      *
      * @param layout 报表布局形式(1:横向;2:纵向)
      */
-    public void setLayout(int layout) {
+    public void setLayout(final int layout) {
         this.layout = LayoutType.valueOf(layout);
     }
 
@@ -106,7 +107,7 @@ public class ReportParameter {
      * @return (1:横向;2:纵向)
      */
     public LayoutType getStatColumnLayout() {
-        return statColumnLayout;
+        return this.statColumnLayout;
     }
 
     /**
@@ -114,7 +115,7 @@ public class ReportParameter {
      *
      * @param statColumnLayout (1:横向;2:纵向)
      */
-    public void setStatColumnLayout(LayoutType statColumnLayout) {
+    public void setStatColumnLayout(final LayoutType statColumnLayout) {
         this.statColumnLayout = statColumnLayout;
     }
 
@@ -132,7 +133,7 @@ public class ReportParameter {
      *
      * @param sqlText
      */
-    public void setSqlText(String sqlText) {
+    public void setSqlText(final String sqlText) {
         this.sqlText = sqlText;
     }
 
@@ -150,7 +151,7 @@ public class ReportParameter {
      *
      * @param metaColumns 报表元数据列集合
      */
-    public void setMetaColumns(List<ReportMetaDataColumn> metaColumns) {
+    public void setMetaColumns(final List<ReportMetaDataColumn> metaColumns) {
         this.metaColumns = metaColumns;
     }
 
@@ -162,7 +163,7 @@ public class ReportParameter {
      * @return 报表中启用的统计(含计算)列名集合
      */
     public Set<String> getEnabledStatColumns() {
-        return enabledStatColumns == null ? new HashSet<>(0) : this.enabledStatColumns;
+        return this.enabledStatColumns == null ? new HashSet<>(0) : this.enabledStatColumns;
     }
 
     /**
@@ -170,7 +171,7 @@ public class ReportParameter {
      *
      * @param enabledStatColumns 报表中启用的统计(含计算)列名集合
      */
-    public void setEnabledStatColumns(Set<String> enabledStatColumns) {
+    public void setEnabledStatColumns(final Set<String> enabledStatColumns) {
         this.enabledStatColumns = enabledStatColumns;
     }
 
@@ -180,7 +181,7 @@ public class ReportParameter {
      * @return true|false
      */
     public boolean isRowSpan() {
-        return isRowSpan;
+        return this.isRowSpan;
     }
 
     /**
@@ -188,7 +189,7 @@ public class ReportParameter {
      *
      * @param isRowSpan true|false
      */
-    public void setRowSpan(boolean isRowSpan) {
+    public void setRowSpan(final boolean isRowSpan) {
         this.isRowSpan = isRowSpan;
     }
 }

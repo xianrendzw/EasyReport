@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Oops!404</title>
+</head>
+<html>
+<div class="errorPage">
+    <span class="oops">Oops!404</span><br/>
+    <p>Not Found Page (<span th:text="${path}"></span>).</p>
+    <p th:text="${'Details: ' + message}"></p>
+    <p th:text="${'Status: ' + status}"></p>
+</div>
+</html>
+</html>

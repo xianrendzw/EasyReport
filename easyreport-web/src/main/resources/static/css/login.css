@@ -1,0 +1,178 @@
+html {
+
+}
+
+body {
+    height: 100%;
+    font-family: "Microsoft Yahei", "微软雅黑", verdana, arial, sans-serif;
+    font-size: 12px;
+}
+
+textarea {
+    font-size: 12px;
+}
+
+input {
+    font-size: 12px;
+}
+
+select {
+    font-size: 12px;
+}
+
+td {
+    font-size: 12px;
+}
+
+div {
+    font-size: 12px;
+}
+
+p {
+    font-size: 12px;
+}
+
+span {
+    font-size: 12px;
+}
+
+a {
+    color: rgb(25, 39, 107);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(117, 152, 220);
+    text-decoration: none;
+}
+
+.clear {
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    clear: both;
+}
+
+.system-name {
+    text-align: center;
+    color: rgb(102, 102, 102);
+    padding-left: 4px;
+    font-size: 20px;
+}
+
+#login-container {
+    margin: -182px 0px 0px -290px;
+    left: 50%;
+    top: 50%;
+    width: 610px;
+    height: 285px;
+    position: absolute;
+    z-index: 100;
+}
+
+.login-bg-image {
+    float: left;
+}
+
+#login-main {
+    background: url("../images/login_bg_center.gif") repeat-x center;
+    width: 561px;
+    height: 285px;
+    float: left;
+}
+
+#login-left {
+    background: url("../images/login_separate_line.gif") no-repeat right;
+    width: 206px;
+    height: 285px;
+    text-align: center;
+    float: left;
+}
+
+#login-left #login-left-main {
+    margin: -10px 0px 0px 0px;
+}
+
+#login-left #logo {
+    margin: 90px 25px 0px 0px;
+}
+
+#login-right {
+    width: 355px;
+    height: 285px;
+    float: left;
+}
+
+#login-right #login-right-main {
+    margin: 80px 25px 0px 0px;
+}
+
+#login-right p {
+    margin: 3px 0px;
+}
+
+#login-right p span {
+    width: 82px;
+    text-align: right;
+    color: rgb(85, 94, 123);
+    padding-top: 5px;
+    padding-right: 20px;
+    font-size: 16px;
+    float: left;
+    display: block;
+}
+
+.login-form-validatecode {
+    padding: 0px 0px 0px 105px;
+}
+
+.login-form-checkbox {
+    margin: auto;
+    padding: 16px 0px 0px 30px;
+}
+
+#login-right p label {
+    font-family: "Microsoft Yahei", "微软雅黑", verdana, arial, sans-serif;
+    font-size: 14px;
+}
+
+#login-right .txtinput {
+    background: url("../images/login_input.gif") no-repeat left top;
+    padding: 3px;
+    border: 1px solid rgb(173, 190, 224);
+    width: 153px;
+    height: 22px;
+    font-size: 18px;
+    margin-top: 0px;
+}
+
+#login-right .select {
+    padding: 3px;
+    border: 1px solid rgb(173, 190, 224);
+    width: 153px;
+    height: 22px;
+    font-size: 12px;
+    margin-top: 0px;
+}
+
+#login-right .login-submit {
+    background: url("../images/login_button.png") no-repeat center;
+    border-width: 0px;
+    width: 85px;
+    height: 24px;
+    color: rgb(40, 56, 119);
+    font-weight: bold;
+    margin-right: 65px;
+    float: right;
+}
+
+#login-message-tips {
+    background: yellow;
+    margin: 50px 40px 0px 30px;
+    padding: 5px 0px 2px;
+    border: 1px solid rgb(199, 213, 241);
+    border-image: none;
+    height: 16px;
+    text-align: center;
+    clear: both;
+}

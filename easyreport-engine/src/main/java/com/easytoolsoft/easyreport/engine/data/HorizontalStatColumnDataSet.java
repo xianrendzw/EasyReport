@@ -4,29 +4,31 @@ import java.util.List;
 
 /**
  * 横向展示报表统计列的报表数据集类。
+ *
  * @author tomdeng
  */
 public class HorizontalStatColumnDataSet
-        extends AbstractReportDataSet implements ReportDataSet {
+    extends AbstractReportDataSet implements ReportDataSet {
     /**
      * @param metaDataSet
      * @param layout
      * @param statColumnLayout
      */
-    public HorizontalStatColumnDataSet(ReportMetaDataSet metaDataSet, LayoutType layout, LayoutType statColumnLayout) {
+    public HorizontalStatColumnDataSet(final ReportMetaDataSet metaDataSet, final LayoutType layout,
+                                       final LayoutType statColumnLayout) {
         super(metaDataSet, layout, statColumnLayout);
     }
 
     @Override
-    public String getRowKey(ColumnTreeNode rowNode, ColumnTreeNode columnNode) {
-        return layout == LayoutType.HORIZONTAL ?
-                (columnNode.getPath() + rowNode.getPath()) : (rowNode.getPath() + columnNode.getPath());
+    public String getRowKey(final ColumnTreeNode rowNode, final ColumnTreeNode columnNode) {
+        return this.layout == LayoutType.HORIZONTAL ?
+            (columnNode.getPath() + rowNode.getPath()) : (rowNode.getPath() + columnNode.getPath());
     }
 
     @Override
     public List<ReportDataColumn> getHeaderLeftFixedColumns() {
-        return layout == LayoutType.HORIZONTAL ?
-                this.getDimColumns() : this.getLayoutColumns();
+        return this.layout == LayoutType.HORIZONTAL ?
+            this.getDimColumns() : this.getLayoutColumns();
     }
 
     @Override
@@ -43,14 +45,14 @@ public class HorizontalStatColumnDataSet
 
     @Override
     public ColumnTree getBodyLeftFixedColumnTree() {
-        return layout == LayoutType.HORIZONTAL ?
-                this.getDimColumnTree() : this.getLayoutColumnTree();
+        return this.layout == LayoutType.HORIZONTAL ?
+            this.getDimColumnTree() : this.getLayoutColumnTree();
     }
 
     @Override
     public List<ColumnTreeNode> getBodyRightColumnNodes() {
-        return layout == LayoutType.HORIZONTAL ?
-                this.getLayoutColumnTree().getLastLevelNodes() : this.getDimColumnTree().getLastLevelNodes();
+        return this.layout == LayoutType.HORIZONTAL ?
+            this.getLayoutColumnTree().getLastLevelNodes() : this.getDimColumnTree().getLastLevelNodes();
     }
 
     @Override
@@ -58,28 +60,28 @@ public class HorizontalStatColumnDataSet
         // 如果布局列横向显示
         // 或者布局列纵向显示（即显示在表体左边)且表头有维度列
         return this.getEnabledStatColumns().size() == 1 &&
-                (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0);
+            (this.layout == LayoutType.HORIZONTAL || this.getDimColumnCount() > 0);
     }
 
     private ColumnTree getHorizontalLayoutHeaderColumnTree() {
-        ColumnTree statColumnTree = this.getStatColumnTree();
+        final ColumnTree statColumnTree = this.getStatColumnTree();
 
-        ColumnTree layoutColumnTree = this.getLayoutColumnTree();
+        final ColumnTree layoutColumnTree = this.getLayoutColumnTree();
         if (this.isHideStatColumn()) {
             return layoutColumnTree;
         }
 
-        for (ColumnTreeNode leafNode : layoutColumnTree.getLeafNodes()) {
+        for (final ColumnTreeNode leafNode : layoutColumnTree.getLeafNodes()) {
             leafNode.getChildren().addAll(statColumnTree.getRoots());
         }
         this.setTreeNodeSpansAndDepth(layoutColumnTree.getRoots(), this.getLayoutColumns());
-        int depth = layoutColumnTree.getDepth() + statColumnTree.getDepth();
+        final int depth = layoutColumnTree.getDepth() + statColumnTree.getDepth();
         this.headerColumnTree = new ColumnTree(layoutColumnTree.getRoots(), depth);
         return this.headerColumnTree;
     }
 
     private ColumnTree getVerticalLayoutHeaderColumnTree() {
-        ColumnTree statColumnTree = this.getStatColumnTree();
+        final ColumnTree statColumnTree = this.getStatColumnTree();
 
         // 如果右边没有维度列则表头列直接设置为统计列
         if (this.getDimColumnCount() == 0) {
@@ -89,16 +91,16 @@ public class HorizontalStatColumnDataSet
             return this.headerColumnTree;
         }
 
-        ColumnTree dimColumnTree = this.getDimColumnTree();
+        final ColumnTree dimColumnTree = this.getDimColumnTree();
         if (this.isHideStatColumn()) {
             return dimColumnTree;
         }
 
-        for (ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
+        for (final ColumnTreeNode leafNode : dimColumnTree.getLeafNodes()) {
             leafNode.getChildren().addAll(statColumnTree.getRoots());
         }
         this.setTreeNodeSpansAndDepth(dimColumnTree.getRoots(), this.getDimColumns());
-        int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
+        final int depth = dimColumnTree.getDepth() + statColumnTree.getDepth();
         this.headerColumnTree = new ColumnTree(dimColumnTree.getRoots(), depth);
         return this.headerColumnTree;
     }

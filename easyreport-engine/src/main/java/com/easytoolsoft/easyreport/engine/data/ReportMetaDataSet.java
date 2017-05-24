@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * 报表元数据集类
+ *
  * @author tomdeng
  */
 public class ReportMetaDataSet {
@@ -23,9 +24,9 @@ public class ReportMetaDataSet {
      * @param columns            报表元数据列集合
      * @param enabledStatColumns 报表中启用的统计列
      */
-    public ReportMetaDataSet(List<ReportMetaDataRow> rows,
-                             List<ReportMetaDataColumn> columns,
-                             Set<String> enabledStatColumns) {
+    public ReportMetaDataSet(final List<ReportMetaDataRow> rows,
+                             final List<ReportMetaDataColumn> columns,
+                             final Set<String> enabledStatColumns) {
         this.rows = rows;
         this.columns = columns;
         this.initilizeColumn(enabledStatColumns);
@@ -77,14 +78,14 @@ public class ReportMetaDataSet {
         return this.statColumns;
     }
 
-    private void initilizeColumn(Set<String> enabledStatColumns) {
+    private void initilizeColumn(final Set<String> enabledStatColumns) {
         this.nonComputeColumns = new ArrayList<>();
         this.layoutColumns = new ArrayList<>();
         this.dimColumns = new ArrayList<>();
         this.statColumns = new ArrayList<>();
 
         for (int i = 0; i < this.columns.size(); i++) {
-            ReportMetaDataColumn column = this.columns.get(i);
+            final ReportMetaDataColumn column = this.columns.get(i);
             column.setOrdinal(i + 1);
             if (column.getType() != ColumnType.COMPUTED) {
                 this.nonComputeColumns.add(column);

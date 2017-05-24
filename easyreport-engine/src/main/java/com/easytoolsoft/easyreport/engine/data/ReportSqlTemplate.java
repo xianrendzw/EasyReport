@@ -1,18 +1,18 @@
 package com.easytoolsoft.easyreport.engine.data;
 
-import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
-
 import java.util.Map;
+
+import com.easytoolsoft.easyreport.engine.util.VelocityUtils;
 
 /**
  * @author tomdeng
  */
 public class ReportSqlTemplate {
 
-    private String sqlTemplate;
-    private Map<String, Object> parameters;
+    private final String sqlTemplate;
+    private final Map<String, Object> parameters;
 
-    public ReportSqlTemplate(String sqlTemplate, Map<String, Object> parameters) {
+    public ReportSqlTemplate(final String sqlTemplate, final Map<String, Object> parameters) {
         this.sqlTemplate = sqlTemplate;
         this.parameters = parameters;
     }

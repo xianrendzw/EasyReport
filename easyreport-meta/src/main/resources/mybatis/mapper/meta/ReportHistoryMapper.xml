@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.easytoolsoft.easyreport.meta.data.ReportHistoryRepository">
+    <!-- CodeBuilder  Generated-->
+    <resultMap id="ReportHistoryMap" type="com.easytoolsoft.easyreport.meta.domain.ReportHistory">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="report_id" property="reportId" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="ds_id" property="dsId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="sql_text" property="sqlText" jdbcType="LONGVARCHAR"/>
+        <result column="meta_columns" property="metaColumns" jdbcType="LONGVARCHAR"/>
+        <result column="query_params" property="queryParams" jdbcType="LONGVARCHAR"/>
+        <result column="options" property="options" jdbcType="LONGVARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="sequence" property="sequence" jdbcType="INTEGER"/>
+        <result column="comment" property="comment" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Table_Name">ezrpt_meta_report_history</sql>
+    <sql id="Base_Column_List_Without_Id">
+        report_id , uid , category_id , ds_id , name , sql_text , meta_columns , query_params , options , status ,
+        sequence , comment , author , gmt_created , gmt_modified
+    </sql>
+    <sql id="Base_Column_List">
+        id ,
+        <include refid="Base_Column_List_Without_Id"/>
+    </sql>
+    <sql id="Insert_Columns">
+        <if test="record.reportId != null">report_id,</if>
+        <if test="record.uid != null">uid,</if>
+        <if test="record.categoryId != null">category_id,</if>
+        <if test="record.dsId != null">ds_id,</if>
+        <if test="record.name != null">name,</if>
+        <if test="record.sqlText != null">sql_text,</if>
+        <if test="record.metaColumns != null">meta_columns,</if>
+        <if test="record.queryParams != null">query_params,</if>
+        <if test="record.options != null">options,</if>
+        <if test="record.status != null">status,</if>
+        <if test="record.sequence != null">sequence,</if>
+        <if test="record.comment != null">comment,</if>
+        <if test="record.author != null">author,</if>
+        <if test="record.gmtCreated != null">gmt_created,</if>
+        <if test="record.gmtModified != null">gmt_modified,</if>
+    </sql>
+    <sql id="Insert_Values">
+        <if test="record.reportId != null">#{record.reportId,jdbcType=INTEGER},</if>
+        <if test="record.uid != null">#{record.uid,jdbcType=VARCHAR},</if>
+        <if test="record.categoryId != null">#{record.categoryId,jdbcType=INTEGER},</if>
+        <if test="record.dsId != null">#{record.dsId,jdbcType=INTEGER},</if>
+        <if test="record.name != null">#{record.name,jdbcType=VARCHAR},</if>
+        <if test="record.sqlText != null">#{record.sqlText,jdbcType=LONGVARCHAR},</if>
+        <if test="record.metaColumns != null">#{record.metaColumns,jdbcType=LONGVARCHAR},</if>
+        <if test="record.queryParams != null">#{record.queryParams,jdbcType=LONGVARCHAR},</if>
+        <if test="record.options != null">#{record.options,jdbcType=LONGVARCHAR},</if>
+        <if test="record.status != null">#{record.status,jdbcType=INTEGER},</if>
+        <if test="record.sequence != null">#{record.sequence,jdbcType=INTEGER},</if>
+        <if test="record.comment != null">#{record.comment,jdbcType=VARCHAR},</if>
+        <if test="record.author != null">#{record.author,jdbcType=VARCHAR},</if>
+        <if test="record.gmtCreated != null">#{record.gmtCreated,jdbcType=TIMESTAMP},</if>
+        <if test="record.gmtModified != null">#{record.gmtModified,jdbcType=TIMESTAMP},</if>
+    </sql>
+    <sql id="Batch_Insert_Values">
+        #{record.reportId,jdbcType=INTEGER},
+        #{record.uid,jdbcType=VARCHAR},
+        #{record.categoryId,jdbcType=INTEGER},
+        #{record.dsId,jdbcType=INTEGER},
+        #{record.name,jdbcType=VARCHAR},
+        #{record.sqlText,jdbcType=LONGVARCHAR},
+        #{record.metaColumns,jdbcType=LONGVARCHAR},
+        #{record.queryParams,jdbcType=LONGVARCHAR},
+        #{record.options,jdbcType=LONGVARCHAR},
+        #{record.status,jdbcType=INTEGER},
+        #{record.sequence,jdbcType=INTEGER},
+        #{record.comment,jdbcType=VARCHAR},
+        #{record.author,jdbcType=VARCHAR},
+        #{record.gmtCreated,jdbcType=TIMESTAMP},
+        #{record.gmtModified,jdbcType=TIMESTAMP},
+    </sql>
+    <sql id="Batch_Insert_Values_On_DuplicateKey">
+        #{record.id,jdbcType=INTEGER},
+        <include refid="Batch_Insert_Values"/>
+    </sql>
+    <sql id="Update_Set_From_Bean">
+        <if test="record.reportId != null">report_id = #{record.reportId,jdbcType=INTEGER} ,</if>
+        <if test="record.uid != null">uid = #{record.uid,jdbcType=VARCHAR} ,</if>
+        <if test="record.categoryId != null">category_id = #{record.categoryId,jdbcType=INTEGER} ,</if>
+        <if test="record.dsId != null">ds_id = #{record.dsId,jdbcType=INTEGER} ,</if>
+        <if test="record.name != null">name = #{record.name,jdbcType=VARCHAR} ,</if>
+        <if test="record.sqlText != null">sql_text = #{record.sqlText,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.metaColumns != null">meta_columns = #{record.metaColumns,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.queryParams != null">query_params = #{record.queryParams,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.options != null">options = #{record.options,jdbcType=LONGVARCHAR} ,</if>
+        <if test="record.status != null">status = #{record.status,jdbcType=INTEGER} ,</if>
+        <if test="record.sequence != null">sequence = #{record.sequence,jdbcType=INTEGER} ,</if>
+        <if test="record.comment != null">comment = #{record.comment,jdbcType=VARCHAR} ,</if>
+        <if test="record.author != null">author = #{record.author,jdbcType=VARCHAR} ,</if>
+        <if test="record.gmtCreated != null">gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP} ,</if>
+        <if test="record.gmtModified != null">gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP} ,</if>
+    </sql>
+    <!-- insert -->
+    <insert id="insert" parameterType="java.util.Map">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="Table_Name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Columns"/>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Insert_Values"/>
+        </trim>
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.Map">
+        insert into
+        <include refid="Table_Name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List_Without_Id"/>
+        </trim>
+        values
+        <foreach collection="records" item="record" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <include refid="Batch_Insert_Values"/>
+            </trim>
+        </foreach>
+    </insert>
+    <insert id="batchInsertOnDuplicateKey" parameterType="java.util.Map">
+        insert into
+        <include refid="Table_Name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        values
+        <foreach collection="records" item="record" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <include refid="Batch_Insert_Values_On_DuplicateKey"/>
+            </trim>
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        report_id = VALUES(report_id) , uid = VALUES(uid) , category_id = VALUES(category_id) , ds_id = VALUES(ds_id) ,
+        name = VALUES(name) , sql_text = VALUES(sql_text) , meta_columns = VALUES(meta_columns) , query_params =
+        VALUES(query_params) , options = VALUES(options) , status = VALUES(status) , sequence = VALUES(sequence) ,
+        comment = VALUES(comment) , author = VALUES(author) , gmt_created = VALUES(gmt_created) , gmt_modified =
+        VALUES(gmt_modified)
+    </insert>
+    <!-- end insert -->
+    <!-- delete -->
+    <delete id="deleteById" parameterType="java.util.Map">
+        delete from
+        <include refid="Table_Name"/>
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="java.util.Map">
+        delete from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <delete id="deleteIn" parameterType="java.util.Map">
+        delete from
+        <include refid="Table_Name"/>
+        where id in
+        <foreach collection="records" item="record" index="index" open="(" separator="," close=")">
+            #{record.id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <!-- end delete -->
+    <!-- update -->
+    <update id="updateById" parameterType="java.util.Map">
+        update
+        <include refid="Table_Name"/>
+        <set>
+            <include refid="Update_Set_From_Bean"/>
+        </set>
+        where id = #{record.id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByExample" parameterType="java.util.Map">
+        update
+        <include refid="Table_Name"/>
+        <set>
+            <include refid="Update_Set_From_Bean"/>
+        </set>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="batchUpdate" parameterType="java.util.Map">
+        <foreach collection="records" item="record" index="index" open="" close="" separator=";">
+            update
+            <include refid="Table_Name"/>
+            <set>
+                <include refid="Update_Set_From_Bean"/>
+            </set>
+            where id=#{record.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <!-- end update -->
+    <!-- select -->
+    <select id="selectById" resultMap="ReportHistoryMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByExample" resultMap="ReportHistoryMap" parameterType="java.util.Map">
+        select
+        <if test="example != null and example.distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="example != null and example.orderByClause != null">
+            order by ${example.orderByClause}
+        </if>
+    </select>
+    <select id="selectOneByExample" resultMap="ReportHistoryMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        limit 1
+    </select>
+    <select id="selectIn" resultMap="ReportHistoryMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        where id IN
+        <foreach collection="records" item="record" index="index" open="(" separator="," close=")">
+            #{record.id,jdbcType=INTEGER}
+        </foreach>
+    </select>
+    <select id="countByExample" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="countByPager" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) as total from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <select id="selectByPager" resultMap="ReportHistoryMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        <include refid="Table_Name"/>
+        <if test="example != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="pager.sortItem != null and pager.sortItem != '' ">
+            order by ${pager.sortItem} ${pager.sortType}
+        </if>
+        limit #{pager.startIndex} , #{pager.pageSize}
+    </select>
+    <!-- end select -->
+    <!-- My Custom Interfaces -->
+</mapper>

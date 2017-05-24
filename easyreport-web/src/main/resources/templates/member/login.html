@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>EasyReport-A Sample and Easy to Use Web Reporting System</title>
+    <link rel="shortcut icon" href="../../static/images/favicon.ico"
+          th:href="@{/images/favicon.ico}"/>
+    <link href="../../static/css/login.css"
+          th:href="@{'/css/login.css?v='+${version}}" rel="stylesheet"/>
+    <script src="../../static/vendor/jquery.min.js"
+            th:src="@{/vendor/jquery.min.js}"></script>
+    <script src="../../static/vendor/jquery.extension.js"
+            th:src="@{/vendor/jquery.extension.js}"></script>
+    <script src="../../static/vendor/jquery-form/jquery.formautofill.min.js"
+            th:src="@{/vendor/jquery-form/jquery.formautofill.min.js}"></script>
+    <script src="../../static/vendor/jquery-form/jquery-form.min.js"
+            th:src="@{/vendor/jquery-form/jquery-form.min.js}"></script>
+    <script src="../../static/vendor/jquery-validate/jquery.validate.min.js"
+            th:src="@{/vendor/jquery-validate/jquery.validate.min.js}"></script>
+    <script src="../../static/jquery-validate/jquery.validate.message.zh-cn.js"
+            th:src="@{/vendor/jquery-validate/jquery.validate.message.zh-cn.js}"></script>
+    <script src="../../static/vendor/juicer/juicer-min.js"
+            th:src="@{/vendor/juicer/juicer-min.js}"></script>
+    <script src="../../static/vendor/moment.min.js"
+            th:src="@{/vendor/moment.min.js}"></script>
+    <script src="../../static/js/dynamic/init.js"
+            th:src="@{'/dynamic/resource/init.js?v='+${version}}"></script>
+    <script src="../../static/js/member/login.js"
+            th:src="@{'/js/member/login.js?v='+${version}}"></script>
+    <script type="text/javascript">
+        if (window != top)
+            top.location.href = location.href;
+    </script>
+</head>
+<body>
+<form id="login-form" name="login-form">
+    <div id="login-container">
+        <img class="login-bg-image" src="../../static/images/login_bg_left.gif"
+             th:src="@{/images/login_bg_left.gif}"/>
+        <div id="login-main">
+            <div id="login-left">
+                <div id="login-left-main">
+                    <img id="logo" title="EasyReport" src="../../static/images/favicon_64.ico"
+                         th:src="@{/images/favicon_64.ico}"/><br/>
+                    <p class="system-name">EasyReport</p>
+                </div>
+            </div>
+            <div id="login-right">
+                <div id="login-right-main">
+                    <p>
+                        <span th:text="|#{view.member.login.account}:|"></span><input type="text" id="account"
+                                                                                      name="account" class="txtinput"
+                                                                                      maxlength="100"
+                                                                                      value="admin"/>
+                    </p>
+                    <p>
+                        <span th:text="|#{view.member.login.password}:|"></span><input type="password" id="password"
+                                                                                       name="password" class="txtinput"
+                                                                                       maxlength="64"
+                                                                                       value="123456"/>
+                    </p>
+                    <!--<p>-->
+                    <!--<span th:text="|#{view.member.login.captcha}:|"></span><input type="text" id="validCode"-->
+                    <!--name="validCode"-->
+                    <!--class="txtinput"/>-->
+                    <!--</p>-->
+                    <p>
+                        <span></span><input type="checkbox" id="rememberMe" name="rememberMe"/> <label
+                            th:text="#{view.member.login.rememberMe}"></label>
+                    </p>
+                    <p>
+                        <input type="button" id="btnLogin" name="btnLogin" class="login-submit" value="登录"/>
+                    </p>
+                </div>
+                <div id="login-message-tips"></div>
+            </div>
+        </div>
+        <img class="login-bg-image" src="../../static/images/login_bg_right.gif"
+             th:src="@{/images/login_bg_right.gif}"/>
+        <br class="clear"/>
+    </div>
+</form>
+</body>
+</html>

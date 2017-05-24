@@ -1,0 +1,28 @@
+<div xmlns:th="http://www.thymeleaf.org" id="table-report-div" style="margin: 5px;">
+    <form id="table-report-form">
+        <table class="designer-table" style="width: 100%;padding: 6px;">
+            <tr>
+                <td id="table-report-title" colspan="2" style="font-size: 24px;" th:text="${name}"></td>
+            </tr>
+            <tr>
+                <td style="text-align: left;"><span th:utext="${formHtmlText}"></span>
+                    <input id="table-report-isMergeRow" type="checkbox" name="isMergeRow" checked="checked"/>合并左边相同维度行
+                    <a id="btn-generate" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">生成</a>
+                </td>
+                <td style="text-align: right;">
+                    <img id="btn-export-excel" title="导出到Excel" style="cursor: pointer;padding-right: 5px;"
+                         src="../../static/custom/easyui/themes/icons/excel_24.png"
+                         th:src="@{/custom/easyui/themes/icons/excel_24.png}"/>
+                    <input id="table-report-id" type="hidden" name="id" th:value="${id}"/>
+                    <input id="table-report-name" type="hidden" name="name" th:value="${name}"/>
+                    <input id="table-report-uid" type="hidden" name="uid" th:value="${uid}"/>
+                    <input id="table-report-isRowSpan" type="hidden" name="isRowSpan" th:value="true"/></td>
+            </tr>
+            <tr id="table-report-columns" th:if="${not #strings.isEmpty(statColumHtmlTex)}">
+                <td colspan="2" style="text-align: left;" th:utext="${statColumHtmlText}"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div xmlns:th="http://www.thymeleaf.org" style="margin: 5px;" id="table-report-htmltext-div"
+     th:text="${htmlTable}"></div>

@@ -1,8 +1,5 @@
 package com.easytoolsoft.easyreport.engine.dbpool;
 
-import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
-
-import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +7,13 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
+import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
+
 /**
  * 无数据源连接池,直接使用jdbc连接
+ *
  * @author tomdeng
  */
 public class NoDataSourcePool implements DataSourcePoolWrapper {
@@ -30,9 +32,9 @@ public class NoDataSourcePool implements DataSourcePoolWrapper {
         @Override
         public Connection getConnection() throws SQLException {
             return DriverManager.getConnection(
-                    this.reportDataSource.getJdbcUrl(),
-                    this.reportDataSource.getUser(),
-                    this.reportDataSource.getPassword());
+                this.reportDataSource.getJdbcUrl(),
+                this.reportDataSource.getUser(),
+                this.reportDataSource.getPassword());
         }
 
         @Override

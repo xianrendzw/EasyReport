@@ -2,6 +2,7 @@ package com.easytoolsoft.easyreport.engine.data;
 
 /**
  * 报表布局类型
+ *
  * @author tomdeng
  */
 public enum LayoutType {
@@ -17,11 +18,11 @@ public enum LayoutType {
 
     private final int value;
 
-    LayoutType(int value) {
+    LayoutType(final int value) {
         this.value = value;
     }
 
-    public static LayoutType valueOf(int arg) {
+    public static LayoutType valueOf(final int arg) {
         if (arg == 1) {
             return HORIZONTAL;
         }
@@ -32,6 +33,6 @@ public enum LayoutType {
     }
 
     public int getValue() {
-        return value;
+        return this.value;
     }
 }

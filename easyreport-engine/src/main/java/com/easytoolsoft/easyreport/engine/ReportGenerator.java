@@ -1,7 +1,7 @@
 package com.easytoolsoft.easyreport.engine;
 
-import com.easytoolsoft.easyreport.engine.data.LayoutType;
 import com.easytoolsoft.easyreport.engine.data.AbstractReportDataSet;
+import com.easytoolsoft.easyreport.engine.data.LayoutType;
 import com.easytoolsoft.easyreport.engine.data.ReportDataSource;
 import com.easytoolsoft.easyreport.engine.data.ReportMetaDataSet;
 import com.easytoolsoft.easyreport.engine.data.ReportParameter;
@@ -10,6 +10,7 @@ import com.easytoolsoft.easyreport.engine.query.Queryer;
 
 /**
  * 报表产生器类
+ *
  * @author tomdeng
  */
 public class ReportGenerator {
@@ -19,7 +20,7 @@ public class ReportGenerator {
      * @param parameter
      * @return ReportTable
      */
-    public static ReportTable generate(ReportDataSource ds, ReportParameter parameter) {
+    public static ReportTable generate(final ReportDataSource ds, final ReportParameter parameter) {
         return generate(getDataSet(ds, parameter), parameter);
     }
 
@@ -28,7 +29,7 @@ public class ReportGenerator {
      * @param parameter
      * @return ReportTable
      */
-    public static ReportTable generate(Queryer queryer, ReportParameter parameter) {
+    public static ReportTable generate(final Queryer queryer, final ReportParameter parameter) {
         return generate(getDataSet(queryer, parameter), parameter);
     }
 
@@ -37,7 +38,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static ReportTable generate(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
+    public static ReportTable generate(final ReportMetaDataSet metaDataSet, final ReportParameter parameter) {
         return generate(getDataSet(metaDataSet, parameter), parameter);
     }
 
@@ -46,7 +47,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static AbstractReportDataSet getDataSet(ReportDataSource ds, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(final ReportDataSource ds, final ReportParameter parameter) {
         return new DataExecutor(ds, parameter).execute();
     }
 
@@ -55,7 +56,7 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static AbstractReportDataSet getDataSet(Queryer queryer, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(final Queryer queryer, final ReportParameter parameter) {
         return new DataExecutor(queryer, parameter).execute();
     }
 
@@ -64,7 +65,8 @@ public class ReportGenerator {
      * @param parameter
      * @return
      */
-    public static AbstractReportDataSet getDataSet(ReportMetaDataSet metaDataSet, ReportParameter parameter) {
+    public static AbstractReportDataSet getDataSet(final ReportMetaDataSet metaDataSet,
+                                                   final ReportParameter parameter) {
         return new DataExecutor(parameter).execute(metaDataSet);
     }
 
@@ -73,14 +75,15 @@ public class ReportGenerator {
      * @param parameter
      * @return ReportTable
      */
-    public static ReportTable generate(AbstractReportDataSet dataSet, ReportParameter parameter) {
-        ReportBuilder builder = createBuilder(dataSet, parameter);
-        ReportDirector director = new ReportDirector(builder);
+    public static ReportTable generate(final AbstractReportDataSet dataSet, final ReportParameter parameter) {
+        final ReportBuilder builder = createBuilder(dataSet, parameter);
+        final ReportDirector director = new ReportDirector(builder);
         director.build();
         return builder.getTable();
     }
 
-    private static ReportBuilder createBuilder(AbstractReportDataSet reportDataSet, ReportParameter parameter) {
+    private static ReportBuilder createBuilder(final AbstractReportDataSet reportDataSet,
+                                               final ReportParameter parameter) {
         if (parameter.getStatColumnLayout() == LayoutType.HORIZONTAL) {
             return new HorizontalStatColumnReportBuilder(reportDataSet, parameter);
         }

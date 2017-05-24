@@ -1,58 +1,51 @@
 package com.easytoolsoft.easyreport.web.controller.common;
 
-import com.easytoolsoft.easyreport.data.helper.PageInfo;
-import com.easytoolsoft.easyreport.data.service.ICrudService;
-import com.easytoolsoft.easyreport.web.viewmodel.DataGridPager;
-import com.easytoolsoft.easyreport.web.viewmodel.JsonResult;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.easytoolsoft.easyreport.mybatis.pager.PageInfo;
+import com.easytoolsoft.easyreport.mybatis.service.CrudService;
+import com.easytoolsoft.easyreport.support.model.ResponseResult;
+import com.easytoolsoft.easyreport.web.model.DataGridPager;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * 公共Action控制器类
  *
+ * @param <Service>
+ * @param <Model>
+ * @param <Example>
+ * @param <Type>
  * @author Tom Deng
+ * @date 2017-03-25
  */
 @Slf4j
-public class BaseController<Service extends ICrudService<Model, Example>, Model, Example> {
+public class BaseController<Service extends CrudService<Model, Example, Type>, Model, Example, Type> {
     @Autowired
     protected Service service;
 
-    public Map<String, Object> list(DataGridPager pager) {
-        PageInfo pageInfo = pager.toPageInfo();
-        List<Model> list = this.service.getByPage(pageInfo);
-        return this.getListMap(pageInfo, list);
+    protected ResponseResult create(final Model po) {
+        return ResponseResult.success(this.service.add(po));
     }
 
-    public Map<String, Object> find(DataGridPager pager, String fieldName, String keyword) {
-        PageInfo pageInfo = pager.toPageInfo();
-        List<Model> list = this.service.getByPage(pageInfo, fieldName, keyword);
-        return this.getListMap(pageInfo, list);
+    protected ResponseResult delete(final Type id) {
+        return ResponseResult.success(this.service.removeById(id));
     }
 
-    public JsonResult add(Model po) {
-        JsonResult<String> result = new JsonResult<>();
-        this.service.add(po);
-        return result;
+    protected ResponseResult update(final Model po) {
+        return ResponseResult.success(this.service.editById(po));
     }
 
-    public JsonResult edit(Model po) {
-        JsonResult<String> result = new JsonResult<>();
-        this.service.editById(po);
-        return result;
+    protected Map<String, Object> queryByPage(final DataGridPager pager, final String fieldName, final String keyword) {
+        final PageInfo pageInfo = pager.toPageInfo();
+        final List<Model> list = this.service.getByPage(pageInfo, fieldName, keyword);
+        return this.getPageListMap(pageInfo, list);
     }
 
-    public JsonResult remove(int id) {
-        JsonResult<String> result = new JsonResult<>();
-        this.service.removeById(id);
-        return result;
-    }
-
-    private Map<String, Object> getListMap(PageInfo pageInfo, List<Model> list) {
-        Map<String, Object> modelMap = new HashMap<>(2);
+    protected Map<String, Object> getPageListMap(final PageInfo pageInfo, final List<Model> list) {
+        final Map<String, Object> modelMap = new HashMap<>(2);
         modelMap.put("total", pageInfo.getTotals());
         modelMap.put("rows", list);
         return modelMap;

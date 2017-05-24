@@ -10,10 +10,11 @@ import java.util.TimeZone;
 
 /**
  * 日期工具类
+ *
  * @author tomdeng
  */
 public class DateUtils {
-    private static final String YYYY_MM_DD="yyyy-MM-dd";
+    private static final String YYYY_MM_DD = "yyyy-MM-dd";
 
     /**
      * 获取当前时间的yyyy-MM-dd格式字符串
@@ -30,9 +31,9 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 当前时间指定格式字符串
      */
-    public static String getNow(String pattern) {
-        Calendar now = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
+    public static String getNow(final String pattern) {
+        final Calendar now = Calendar.getInstance();
+        final SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(now.getTime());
     }
 
@@ -43,13 +44,13 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定日期格式返回日期字符串
      */
-    public static String getDate(String date, String pattern) {
+    public static String getDate(final String date, final String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            Date theDate = format.parse(date);
+            final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+            final Date theDate = format.parse(date);
             format.applyPattern(pattern);
             return format.format(theDate);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -61,8 +62,8 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定格式的日期字符串
      */
-    public static String getDate(Date date, String pattern) {
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
+    public static String getDate(final Date date, final String pattern) {
+        final SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
@@ -73,18 +74,17 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定日期格式的UTC日期字符串
      */
-    @SuppressWarnings("deprecation")
-    public static String getUtcDate(String date, String pattern) {
+    public static String getUtcDate(final String date, final String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            Date now = Calendar.getInstance().getTime();
-            Date theDate = format.parse(date);
+            final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+            final Date now = Calendar.getInstance().getTime();
+            final Date theDate = format.parse(date);
             theDate.setHours(now.getHours());
             theDate.setMinutes(now.getMinutes());
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
             format.applyPattern(pattern);
             return format.format(theDate);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -95,8 +95,8 @@ public class DateUtils {
      * @param days 天数
      * @return 增加days天后的日期
      */
-    public static Date add(int days) {
-        Calendar now = Calendar.getInstance();
+    public static Date add(final int days) {
+        final Calendar now = Calendar.getInstance();
         now.add(Calendar.DAY_OF_YEAR, days);
         return now.getTime();
     }
@@ -108,9 +108,9 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定日期格式的字符串
      */
-    public static String add(int days, String pattern) {
-        Date date = add(days);
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
+    public static String add(final int days, final String pattern) {
+        final Date date = add(days);
+        final SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
@@ -121,14 +121,14 @@ public class DateUtils {
      * @param days 天数
      * @return yyyyMMdd格式的日期字符串
      */
-    public static String add(int date, int days) {
+    public static String add(final int date, final int days) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-            Calendar cd = Calendar.getInstance();
+            final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(String.valueOf(date)));
             cd.add(Calendar.DAY_OF_YEAR, days);
             return format.format(cd.getTime());
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -141,14 +141,14 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定日期格式的字符串
      */
-    public static String add(String date, int days, String pattern) {
+    public static String add(final String date, final int days, final String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            Calendar cd = Calendar.getInstance();
+            final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+            final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(date));
             cd.add(Calendar.DAY_OF_YEAR, days);
             return new SimpleDateFormat(pattern).format(cd.getTime());
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -160,14 +160,14 @@ public class DateUtils {
      * @param hours 小时数
      * @return
      */
-    public static String addHours(int date, int hours) {
+    public static String addHours(final int date, final int hours) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-            Calendar cd = Calendar.getInstance();
+            final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(String.valueOf(date)));
             cd.add(Calendar.HOUR_OF_DAY, hours);
             return format.format(cd.getTime());
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -180,14 +180,14 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 指定日期格式的字符串
      */
-    public static String addHours(String date, int hours, String pattern) {
+    public static String addHours(final String date, final int hours, final String pattern) {
         try {
-            SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            Calendar cd = Calendar.getInstance();
+            final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
+            final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(date));
             cd.add(Calendar.HOUR_OF_DAY, hours);
             return new SimpleDateFormat(pattern).format(cd.getTime());
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -199,7 +199,7 @@ public class DateUtils {
      * @param endDt   结束日期 (yyyy-MM-dd格式)
      * @return 相隔的天数
      */
-    public static long getDateDiff(String startDt, String endDt) {
+    public static long getDateDiff(final String startDt, final String endDt) {
         return getDateDiff(startDt, endDt, YYYY_MM_DD);
     }
 
@@ -211,13 +211,13 @@ public class DateUtils {
      * @param pattern 日期时间格式(如:yyyy-MM-dd,MM-dd-yyyy等)
      * @return 相隔的天数
      */
-    public static long getDateDiff(String startDt, String endDt, String pattern) {
-        SimpleDateFormat sd = new SimpleDateFormat(pattern);
-        long nd = 1000 * 24 * 60 * 60;
+    public static long getDateDiff(final String startDt, final String endDt, final String pattern) {
+        final SimpleDateFormat sd = new SimpleDateFormat(pattern);
+        final long nd = 1000 * 24 * 60 * 60;
         try {
-            long diff = sd.parse(endDt).getTime() - sd.parse(startDt).getTime();
+            final long diff = sd.parse(endDt).getTime() - sd.parse(startDt).getTime();
             return diff / nd;
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -230,7 +230,7 @@ public class DateUtils {
      * @return 日期列表(包含开始与结束日期)
      * @throws ParseException
      */
-    public static List<String> getDateList(String startDt, String endDt) throws ParseException {
+    public static List<String> getDateList(final String startDt, final String endDt) throws ParseException {
         return getDateList(startDt, endDt, YYYY_MM_DD);
     }
 
@@ -243,14 +243,15 @@ public class DateUtils {
      * @return 日期列表(包含开始与结束日期)
      * @throws ParseException
      */
-    public static List<String> getDateList(String startDt, String endDt, String pattern) throws ParseException {
-        SimpleDateFormat sd = new SimpleDateFormat(pattern);
-        List<String> dateList = new ArrayList<>();
+    public static List<String> getDateList(final String startDt, final String endDt, final String pattern)
+        throws ParseException {
+        final SimpleDateFormat sd = new SimpleDateFormat(pattern);
+        final List<String> dateList = new ArrayList<>();
 
         dateList.add(startDt);
-        Calendar startCalendar = Calendar.getInstance();
+        final Calendar startCalendar = Calendar.getInstance();
         startCalendar.setTime(sd.parse(startDt));
-        Calendar endCalendar = Calendar.getInstance();
+        final Calendar endCalendar = Calendar.getInstance();
         endCalendar.setTime(sd.parse(endDt));
         startCalendar.add(Calendar.DAY_OF_YEAR, 1);
         while (startCalendar.before(endCalendar)) {

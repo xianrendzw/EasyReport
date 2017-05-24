@@ -5,9 +5,11 @@ import java.util.List;
 
 /**
  * jQueryEasyUI(http://www.jeasyui.com/)树节点视图数据模型类
+ *
  * @author tomdeng
  */
 public class EasyUITreeNode<T> {
+    private final List<EasyUITreeNode<T>> children = new ArrayList<>();
     private String id;
     private String pid;
     private String text;
@@ -15,7 +17,6 @@ public class EasyUITreeNode<T> {
     private String iconCls;
     private boolean checked;
     private T attributes;
-    private final List<EasyUITreeNode<T>> children = new ArrayList<>();
 
     public EasyUITreeNode(String id, String pid, String text) {
         this(id, pid, text, "closed", "", false, null);
@@ -44,6 +45,10 @@ public class EasyUITreeNode<T> {
         return this.id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getPId() {
         return this.pid;
     }
@@ -52,48 +57,44 @@ public class EasyUITreeNode<T> {
         return this.text;
     }
 
-    public String getIconCls() {
-        return this.iconCls == null ? "" : this.iconCls;
-    }
-
-    public boolean getChecked() {
-        return this.checked;
-    }
-
-    public String getState() {
-        return this.state;
-    }
-
-    public T getAttributes() {
-        return this.attributes;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
     public void setText(String text) {
         this.text = text;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public String getIconCls() {
+        return this.iconCls == null ? "" : this.iconCls;
     }
 
     public void setIconCls(String iconCls) {
         this.iconCls = iconCls;
     }
 
+    public boolean getChecked() {
+        return this.checked;
+    }
+
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
 
+    public String getState() {
+        return this.state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public T getAttributes() {
+        return this.attributes;
+    }
+
     public void setAttributes(T attributes) {
         this.attributes = attributes;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public List<EasyUITreeNode<T>> getChildren() {

@@ -6,9 +6,11 @@ import java.util.List;
 /**
  * dhtmxTree(http://dhtmlx.com/docs/products/dhtmlxTree/)控件的树结点数据模型类
  * http://docs.dhtmlx.com/tree__syntax_templates.html#jsonformattemplate
+ *
  * @author tomdeng
  */
 public class DhtmlXTreeNode {
+    private final List<DhtmlXTreeNode> item;
     private String id;
     private String pid;
     private String text;
@@ -17,7 +19,6 @@ public class DhtmlXTreeNode {
     private int child = 0;
     private int open;
     private int sequence = 10;
-    private final List<DhtmlXTreeNode> item;
 
     public DhtmlXTreeNode() {
         this.item = new ArrayList<>(10);
