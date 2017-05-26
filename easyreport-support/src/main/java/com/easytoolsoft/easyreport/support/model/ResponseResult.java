@@ -2,11 +2,11 @@ package com.easytoolsoft.easyreport.support.model;
 
 import java.io.Serializable;
 
+import com.easytoolsoft.easyreport.support.consts.AppEnvConsts;
 import com.easytoolsoft.easyreport.support.enums.ErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 /**
@@ -15,7 +15,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @author zhiwei.deng
  * @date 2017-03-25
  */
-@Slf4j
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResponseResult<T> implements Serializable {
@@ -71,7 +70,7 @@ public class ResponseResult<T> implements Serializable {
      * @return
      */
     public static ResponseResult failure(final ErrorCode errorCode, final Throwable ex) {
-        return failure(errorCode, log.isDebugEnabled() ? ExceptionUtils.getStackTrace(ex) : "");
+        return failure(errorCode, AppEnvConsts.isProductionMode() ? "" : ExceptionUtils.getStackTrace(ex));
     }
 
     /**
@@ -127,7 +126,7 @@ public class ResponseResult<T> implements Serializable {
      * @return
      */
     public static ResponseResult failure(final int code, final String msg, final Throwable ex) {
-        return build(code, msg, log.isDebugEnabled() ? ExceptionUtils.getStackTrace(ex) : "", null);
+        return build(code, msg, AppEnvConsts.isProductionMode() ? "" : ExceptionUtils.getStackTrace(ex), null);
     }
 
     /**

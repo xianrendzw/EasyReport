@@ -12,6 +12,7 @@ public enum SystemErrorCode implements ErrorCode {
     DATA_VALIDATION_FAILURE(901, "error.code.sys.901"),
     DATA_BIND_VALIDATION_FAILURE(902, "error.code.sys.902"),
     SQL_EXECUTE_FAILURE(903, "error.code.sys.903"),
+    METHOD_ARGUMENT_NOT_VALID(904, "error.code.sys.902"),
 
     BAD_REQUEST(400, "error.code.httpstatus.400"),
     UNAUTHORIZED(401, "error.code.httpstatus.401"),

@@ -12,6 +12,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,6 +66,16 @@ public class ExceptionAdvice {
     public ResponseResult handleSQLException(final SQLException e) {
         log.error("SQLException", e);
         return ResponseResult.failure(SystemErrorCode.SQL_EXECUTE_FAILURE, e);
+    }
+
+    /**
+     * 400 - Bad Request
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseResult handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException", e);
+        return ResponseResult.failure(SystemErrorCode.DATA_BIND_VALIDATION_FAILURE, e);
     }
 
     /**
