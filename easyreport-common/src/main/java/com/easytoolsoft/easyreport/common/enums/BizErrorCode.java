@@ -8,9 +8,8 @@ import com.easytoolsoft.easyreport.support.i18n.LocaleUtils;
  * @date 2017-05-01
  **/
 public enum BizErrorCode implements ErrorCode {
-    UNKNOWN_ERROR(-1, "error.code.unknow"),
-    BAB_CREDENTIALS(11000, "error.code.11000"),
-    REFRESH_TOKEN_FAILURE(11001, "error.code.11001");
+    BAB_CREDENTIALS(11000, "error.code.biz.11000"),
+    REFRESH_TOKEN_FAILURE(11001, "error.code.biz.11001");
 
     private int code;
     private String message;
