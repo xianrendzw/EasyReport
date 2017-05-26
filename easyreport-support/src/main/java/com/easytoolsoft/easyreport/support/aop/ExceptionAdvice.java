@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.validation.ValidationException;
 
+import com.easytoolsoft.easyreport.support.enums.SystemErrorCode;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseResult handleHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
-        log.error("参数解析失败", e);
-        return ResponseResult.failure(400, "参数解析失败", e.toString());
+        log.error("HttpMessageNotReadableException", e);
+        return ResponseResult.failure(SystemErrorCode.HTTP_MESSAGE_NOT_READABLE, e);
     }
 
     /**
@@ -42,8 +43,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
     public ResponseResult handleValidationException(final ValidationException e) {
-        log.error("参数验证失败", e);
-        return ResponseResult.failure(400, "参数验证失败", e.toString());
+        log.error("ValidationException", e);
+        return ResponseResult.failure(SystemErrorCode.DATA_VALIDATION_FAILURE, e);
     }
 
     /**
@@ -52,8 +53,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public ResponseResult handleBindException(final BindException e) {
-        log.error("参数验证失败", e);
-        return ResponseResult.failure(400, "参数验证失败", e.toString());
+        log.error("BindException", e);
+        return ResponseResult.failure(SystemErrorCode.DATA_BIND_VALIDATION_FAILURE, e);
     }
 
     /**
@@ -62,8 +63,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SQLException.class)
     public ResponseResult handleSQLException(final SQLException e) {
-        log.error("SQL语句执行出错", e);
-        return ResponseResult.failure(400, "SQL语句执行出错", e.toString());
+        log.error("SQLException", e);
+        return ResponseResult.failure(SystemErrorCode.SQL_EXECUTE_FAILURE, e);
     }
 
     /**
@@ -72,8 +73,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseResult handleHttpRequestMethodNotSupportedException(final HttpRequestMethodNotSupportedException e) {
-        log.error("不支持当前请求方法", e);
-        return ResponseResult.failure(405, "不支持当前请求方法", e.toString());
+        log.error(HttpStatus.METHOD_NOT_ALLOWED.getReasonPhrase(), e);
+        return ResponseResult.failure(SystemErrorCode.METHOD_NOT_ALLOWED, e);
     }
 
     /**
@@ -82,8 +83,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseResult handleHttpMediaTypeNotSupportedException(final Exception e) {
-        log.error("不支持当前媒体类型", e);
-        return ResponseResult.failure(415, "不支持当前媒体类型", e.toString());
+        log.error(HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase(), e);
+        return ResponseResult.failure(SystemErrorCode.UNSUPPORTED_MEDIA_TYPE, e);
     }
 
     /**
@@ -92,7 +93,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResponseResult handleException(final Exception e) {
-        log.error("服务运行异常", e);
-        return ResponseResult.failure(500, "服务运行异常", e.toString());
+        log.error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e);
+        return ResponseResult.failure(SystemErrorCode.INTERNAL_SERVER_ERROR, e);
     }
 }

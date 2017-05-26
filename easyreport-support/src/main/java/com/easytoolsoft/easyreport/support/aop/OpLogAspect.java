@@ -1,7 +1,5 @@
 package com.easytoolsoft.easyreport.support.aop;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +8,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -39,7 +38,7 @@ public class OpLogAspect {
     @AfterThrowing(pointcut = "pointcut()", throwing = "e")
     public void doAfterThrowing(final JoinPoint joinPoint, final Throwable e) {
         try {
-            this.logEvent(joinPoint, "ERROR", this.getExceptionStack(e));
+            this.logEvent(joinPoint, "ERROR", ExceptionUtils.getStackTrace(e));
         } catch (final Exception ex) {
             log.error("异常信息:{}", ex.getMessage());
         }
@@ -85,19 +84,6 @@ public class OpLogAspect {
             }
         }
         return eventParameter;
-    }
-
-    protected String getExceptionStack(final Throwable ex) {
-        String stackInfo = "";
-        try (StringWriter out = new StringWriter()) {
-            final PrintWriter printWriter = new PrintWriter(out);
-            ex.printStackTrace(printWriter);
-            stackInfo = out.toString();
-            printWriter.close();
-        } catch (final Exception e) {
-            log.error("获取异常堆栈信息出错", e);
-        }
-        return stackInfo;
     }
 
     /**
