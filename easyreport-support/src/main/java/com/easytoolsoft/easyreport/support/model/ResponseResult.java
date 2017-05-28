@@ -12,7 +12,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 /**
  * ResponseBody注解返回的JSON对象类
  *
- * @author zhiwei.deng
+ * @author Tom Deng
  * @date 2017-03-25
  */
 @Getter
@@ -60,7 +60,7 @@ public class ResponseResult<T> implements Serializable {
      * @param errorCode
      * @return
      */
-    public static ResponseResult failure(ErrorCode errorCode) {
+    public static ResponseResult failure(final ErrorCode errorCode) {
         return failure(errorCode, "");
     }
 
@@ -88,7 +88,7 @@ public class ResponseResult<T> implements Serializable {
      * @param <U>
      * @return
      */
-    public static <U> ResponseResult failure(ErrorCode errorCode, U data) {
+    public static <U> ResponseResult failure(final ErrorCode errorCode, final U data) {
         return build(errorCode.getCode(), errorCode.getMessage(), "", data);
     }
 

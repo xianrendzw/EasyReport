@@ -48,7 +48,7 @@ public class ServletConfig {
         registrationBean.setFilter(new ContextInitDataFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.addInitParameter(AppEnvConsts.APP_NAME_ITEM, this.envProperties.getAppName());
-        registrationBean.addInitParameter(AppEnvConsts.ENV_ITEM, this.envProperties.getName());
+        registrationBean.addInitParameter(AppEnvConsts.ENV_NAME_ITEM, this.envProperties.getName());
         registrationBean.addInitParameter(AppEnvConsts.VERSION_ITEM, this.envProperties.getVersion());
         registrationBean.setName("contextInitDataFilter");
         return registrationBean;
@@ -67,8 +67,10 @@ public class ServletConfig {
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error"));
+            container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/customError/401"));
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/customError/403"));
+            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/customError/404"));
+            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/customError"));
         };
     }
 

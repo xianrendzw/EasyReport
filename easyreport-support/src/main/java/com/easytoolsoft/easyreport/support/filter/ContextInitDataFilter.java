@@ -20,14 +20,14 @@ import com.easytoolsoft.easyreport.support.consts.AppEnvConsts;
  */
 public class ContextInitDataFilter implements Filter {
     private String version = AppEnvConsts.VERSION;
-    private String env = AppEnvConsts.ENV;
+    private String envName = AppEnvConsts.ENV_NAME;
     private String appName = AppEnvConsts.APP_NAME;
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
         this.appName = filterConfig.getInitParameter(AppEnvConsts.APP_NAME_ITEM);
         this.version = filterConfig.getInitParameter(AppEnvConsts.VERSION_ITEM);
-        this.env = filterConfig.getInitParameter(AppEnvConsts.ENV_ITEM);
+        this.envName = filterConfig.getInitParameter(AppEnvConsts.ENV_NAME_ITEM);
     }
 
     @Override
@@ -47,12 +47,15 @@ public class ContextInitDataFilter implements Filter {
         }
         if (request.getAttribute(AppEnvConsts.APP_NAME_ITEM) == null) {
             request.setAttribute(AppEnvConsts.APP_NAME_ITEM, this.appName);
+            AppEnvConsts.setAppName(this.appName);
         }
         if (request.getAttribute(AppEnvConsts.VERSION_ITEM) == null) {
             request.setAttribute(AppEnvConsts.VERSION_ITEM, this.version);
+            AppEnvConsts.setVersion(this.version);
         }
-        if (request.getAttribute(AppEnvConsts.ENV_ITEM) == null) {
-            request.setAttribute(AppEnvConsts.ENV_ITEM, this.env);
+        if (request.getAttribute(AppEnvConsts.ENV_NAME_ITEM) == null) {
+            request.setAttribute(AppEnvConsts.ENV_NAME_ITEM, this.envName);
+            AppEnvConsts.setEnvName(this.envName);
         }
     }
 }
