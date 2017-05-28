@@ -106,13 +106,13 @@ public class CommonErrorController extends AbstractErrorController {
         return this.getErrorModel(request);
     }
 
-    private ResponseEntity<Map<String, Object>> getResponseEntity(final HttpServletRequest request) {
+    protected ResponseEntity<Map<String, Object>> getResponseEntity(final HttpServletRequest request) {
         final HttpStatus status = getStatus(request);
         final Map<String, Object> model = this.getErrorModel(request);
         return new ResponseEntity<>(model, status);
     }
 
-    private Map<String, Object> getErrorModel(final HttpServletRequest request) {
+    protected Map<String, Object> getErrorModel(final HttpServletRequest request) {
         final HttpStatus status = getStatus(request);
         final Map<String, Object> model = Collections.unmodifiableMap(
             getErrorAttributes(request, isIncludeStackTrace(request)));
@@ -120,7 +120,7 @@ public class CommonErrorController extends AbstractErrorController {
         return model;
     }
 
-    private boolean isIncludeStackTrace(HttpServletRequest request) {
+    protected boolean isIncludeStackTrace(HttpServletRequest request) {
         IncludeStacktrace include = this.errorProperties.getIncludeStacktrace();
         if (include == IncludeStacktrace.ALWAYS) {
             return true;
