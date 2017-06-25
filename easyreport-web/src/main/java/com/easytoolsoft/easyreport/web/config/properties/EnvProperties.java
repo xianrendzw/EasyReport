@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "easytoolsoft.easyreport.env")
+@ConfigurationProperties(prefix = "easyreport.env")
 @PropertySource("classpath:conf/properties/env.properties")
 public class EnvProperties {
     private String appName;

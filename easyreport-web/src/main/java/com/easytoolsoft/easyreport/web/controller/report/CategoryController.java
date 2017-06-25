@@ -15,7 +15,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +34,7 @@ public class CategoryController
 
     @GetMapping(value = "/getCategoryTree")
     @OpLog(name = "获取报表分类树")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public ResponseResult getCategoryTree() {
         final List<EasyUITreeNode<Category>> roots = new ArrayList<>();
         final List<Category> categories = this.service.getAll();
@@ -67,7 +67,7 @@ public class CategoryController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页查找报表分类")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public Map<String, Object> list(final DataGridPager pager, final String fieldName, final String keyword) {
         final PageInfo pageInfo = pager.toPageInfo();
         final List<Category> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
@@ -79,7 +79,7 @@ public class CategoryController
 
     @PostMapping(value = "/add")
     @OpLog(name = "增加报表分类")
-    @RequiresPermissions("report.designer:add")
+    @Secured("report.designer:add")
     public ResponseResult add(final Category po) {
         po.setHasChild((byte)0);
         po.setPath("");
@@ -91,7 +91,7 @@ public class CategoryController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑报表分类")
-    @RequiresPermissions("report.designer:edit")
+    @Secured("report.designer:edit")
     public ResponseResult edit(final Category po) {
         this.service.editById(po);
         return ResponseResult.success(po);
@@ -99,7 +99,7 @@ public class CategoryController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除报表分类")
-    @RequiresPermissions("report.designer:remove")
+    @Secured("report.designer:remove")
     public ResponseResult remove(final Integer id, final Integer pid) {
         this.service.remove(id, pid);
         return ResponseResult.success(pid);
@@ -107,7 +107,7 @@ public class CategoryController
 
     @PostMapping(value = "/move")
     @OpLog(name = "移动报表分类")
-    @RequiresPermissions("report.designer:edit")
+    @Secured("report.designer:edit")
     public ResponseResult move(final Integer sourceId, final Integer targetId, final Integer sourcePid,
                                final String sourcePath) {
         this.service.move(sourceId, targetId, sourcePid, sourcePath);
@@ -122,7 +122,7 @@ public class CategoryController
 
     @PostMapping(value = "/paste")
     @OpLog(name = "复制与粘贴报表分类")
-    @RequiresPermissions("report.designer:edit")
+    @Secured("report.designer:edit")
     public ResponseResult paste(final Integer sourceId, final Integer targetId) {
         final List<EasyUITreeNode<Category>> nodes = new ArrayList<>(1);
         final Category po = this.service.paste(sourceId, targetId);
@@ -136,7 +136,7 @@ public class CategoryController
 
     @GetMapping(value = "/rebuildPath")
     @OpLog(name = "重新构建分类树路径")
-    @RequiresPermissions("report.designer:edit")
+    @Secured("report.designer:edit")
     public ResponseResult rebuildPath() {
         this.service.rebuildAllPath();
         return ResponseResult.success("");

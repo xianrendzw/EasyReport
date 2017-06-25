@@ -15,7 +15,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +34,7 @@ public class DataSourceController
 
     @GetMapping(value = "/listAll")
     @OpLog(name = "获取所有数据源")
-    @RequiresPermissions("report.ds:view")
+    @Secured("report.ds:view")
     public List<DataSource> listAll() {
         return this.service.getAll().stream()
             .map(x -> DataSource.builder()
@@ -47,7 +47,7 @@ public class DataSourceController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取数据源列表")
-    @RequiresPermissions("report.ds:view")
+    @Secured("report.ds:view")
     public Map<String, Object> list(final DataGridPager pager, final String fieldName, final String keyword) {
         final PageInfo pageInfo = pager.toPageInfo();
         final List<DataSource> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
@@ -59,7 +59,7 @@ public class DataSourceController
 
     @RequestMapping(value = "/add")
     @OpLog(name = "新增数据源")
-    @RequiresPermissions("report.ds:add")
+    @Secured("report.ds:add")
     public ResponseResult add(final DataSource po) {
         po.setGmtCreated(new Date());
         po.setUid(UUID.randomUUID().toString());
@@ -69,7 +69,7 @@ public class DataSourceController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "编辑数据源")
-    @RequiresPermissions("report.ds:edit")
+    @Secured("report.ds:edit")
     public ResponseResult edit(final DataSource po) {
         this.service.editById(po);
         return ResponseResult.success("");
@@ -77,7 +77,7 @@ public class DataSourceController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除数据源")
-    @RequiresPermissions("report.ds:remove")
+    @Secured("report.ds:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         return ResponseResult.success("");
@@ -85,7 +85,7 @@ public class DataSourceController
 
     @PostMapping(value = "/testConnection")
     @OpLog(name = "测试数据源")
-    @RequiresPermissions("report.ds:view")
+    @Secured("report.ds:view")
     public ResponseResult testConnection(final String driverClass, final String url, final String pass,
                                          final String user) {
         if (this.service.testConnection(driverClass, url, user, pass)) {
@@ -96,7 +96,7 @@ public class DataSourceController
 
     @PostMapping(value = "/testConnectionById")
     @OpLog(name = "测试数据源")
-    @RequiresPermissions("report.ds:view")
+    @Secured("report.ds:view")
     public ResponseResult testConnection(final Integer id) {
         final DataSource dsPo = this.service.getById(id);
         final boolean testResult = this.service.testConnection(

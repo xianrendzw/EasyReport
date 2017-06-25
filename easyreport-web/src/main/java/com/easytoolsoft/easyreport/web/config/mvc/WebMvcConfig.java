@@ -20,7 +20,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 /**
- * @author Tom Deng
+ * spring mvc 配置类
+ *
+ * @author zhiwei.deng
  * @date 2017-04-11
  **/
 @Configuration
@@ -36,7 +38,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
-    public void configureDefaultServletHandling(final DefaultServletHandlerConfigurer configurer) {
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
 
@@ -58,6 +60,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public HandlerMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver();
+    }
+
+    @Bean
+    public ResponseBodyWrapFactoryBean getResponseBodyWrap() {
+        return new ResponseBodyWrapFactoryBean();
+    }
+
+    @Bean
     public LocaleResolver localeResolver() {
         final CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         //保存7天有效
@@ -67,15 +79,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         localeResolver.setCookiePath("/");
         return localeResolver;
     }
-
-    @Bean
-    public HandlerMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver();
-    }
-
-    @Bean
-    public ResponseBodyWrapFactoryBean getResponseBodyWrap() {
-        return new ResponseBodyWrapFactoryBean();
-    }
 }
-

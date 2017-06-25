@@ -12,7 +12,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class EventController
     extends BaseController<EventService, Event, EventExample, Integer> {
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取系统日志列表")
-    @RequiresPermissions("membership.event:view")
+    @Secured("membership.event:view")
     public Map<String, Object> list(final DataGridPager pager, final String fieldName, final String keyword) {
         final PageInfo pageInfo = pager.toPageInfo();
         final List<Event> list = this.service.getByPage(pageInfo, fieldName, "%" + keyword + "%");
@@ -40,7 +40,7 @@ public class EventController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除系统日志")
-    @RequiresPermissions("membership.event:remove")
+    @Secured("membership.event:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         return ResponseResult.success("");
@@ -48,7 +48,7 @@ public class EventController
 
     @GetMapping(value = "/clear")
     @OpLog(name = "清除系统日志")
-    @RequiresPermissions("membership.event:clear")
+    @Secured("membership.event:clear")
     public ResponseResult clear() {
         this.service.clear();
         return ResponseResult.success("");

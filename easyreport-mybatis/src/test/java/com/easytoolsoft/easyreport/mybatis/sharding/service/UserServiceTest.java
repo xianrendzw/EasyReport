@@ -36,7 +36,7 @@ public class UserServiceTest extends BaseTest {
             .gmtCreated(new Date())
             .comment("")
             .build();
-        this.userService.add(user, new ShardTable("user"));
+        this.userService.add(user, new ShardTable("", "user", ""));
         Assert.assertThat(user.getId(), new GreaterThan<>(0));
     }
 }

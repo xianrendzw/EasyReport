@@ -29,15 +29,4 @@ public class ImpalaQueryer extends AbstractQueryer implements Queryer {
             throw new RuntimeException(ex);
         }
     }
-
-    @Override
-    protected String preprocessSqlText(String sqlText) {
-        sqlText = StringUtils.stripEnd(sqlText.trim(), ";");
-        Pattern pattern = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(sqlText);
-        if (matcher.find()) {
-            sqlText = matcher.replaceFirst("");
-        }
-        return sqlText + " limit 1";
-    }
 }

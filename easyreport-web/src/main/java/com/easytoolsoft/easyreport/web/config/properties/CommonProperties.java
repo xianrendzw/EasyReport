@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "easytoolsoft.easyreport.common")
+@ConfigurationProperties(prefix = "easyreport.common")
 @PropertySource("classpath:conf/properties/common.properties")
 public class CommonProperties {
     private String item1;

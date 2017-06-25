@@ -1,5 +1,7 @@
 package com.easytoolsoft.easyreport.support.enums;
 
+import java.util.Arrays;
+
 import com.easytoolsoft.easyreport.support.i18n.LocaleUtils;
 
 /**
@@ -50,11 +52,9 @@ public enum SystemErrorCode implements ErrorCode {
      * @return
      */
     public static SystemErrorCode valueOf(int code) {
-        for (SystemErrorCode errorCode : values()) {
-            if (errorCode.code == code) {
-                return errorCode;
-            }
-        }
-        return SystemErrorCode.UNKNOWN_ERROR;
+        return Arrays.stream(values())
+            .filter(x -> x.code == code)
+            .findFirst()
+            .orElse(SystemErrorCode.UNKNOWN_ERROR);
     }
 }

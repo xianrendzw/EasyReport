@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/body}">
+<head>
+    <title>401</title>
+</head>
+<body layout:fragment="content" class="contrast-blue error contrast-background">
+<div class="middle-container">
+    <div class="middle-row">
+        <div class="middle-wrapper">
+            <div class="error-container-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <i class="icon-question-sign"></i>
+                                404
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="error-container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <h4 class="text-center title">Ooops!401</h4>
+                            <p class="text-center">
+                                Access Deny (<span th:text="${path}"></span>).
+                            </p>
+                            <p class="text-center" th:text="${'Details: ' + message}"></p>
+                            <p class="text-center" th:text="${'Status: ' + status}"></p>
+                            <div class="text-center">
+                                <a class="btn btn-md btn-ablock" th:href="@{/home/index}">
+                                    <i class="icon-chevron-left"></i>
+                                    Go back
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="error-container-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <img width="121" height="31" alt="Flatty" th:src="@{/images/logo_lg.svg}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

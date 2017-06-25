@@ -15,7 +15,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +33,7 @@ public class ConfController
 
     @RequestMapping(value = "/list")
     @OpLog(name = "获取指定ID的报表元数据配置项")
-    @RequiresPermissions("report.conf:view")
+    @Secured("report.conf:view")
     public Map<String, Object> list(final DataGridPager pager, final Integer id) {
         final int pid = (id == null ? 0 : id);
         final PageInfo pageInfo = pager.toPageInfo();
@@ -46,7 +46,7 @@ public class ConfController
 
     @RequestMapping(value = "/listChildren")
     @OpLog(name = "获取指定ID的所有子报表元数据配置项")
-    @RequiresPermissions("report.conf:view")
+    @Secured("report.conf:view")
     public List<EasyUITreeNode<Conf>> listChildren(final Integer id) {
         final List<Conf> list = this.service.getByParentId(id == null ? 0 : id);
         final List<EasyUITreeNode<Conf>> easyUITreeNodes = new ArrayList<>(list.size());
@@ -63,7 +63,7 @@ public class ConfController
 
     @RequestMapping(value = "/find")
     @OpLog(name = "分页查找指定ID的报表元数据配置项")
-    @RequiresPermissions("report.conf:view")
+    @Secured("report.conf:view")
     public Map<String, Object> find(final DataGridPager pager, final String fieldName, final String keyword) {
         final PageInfo pageInfo = pager.toPageInfo();
         final List<Conf> list = this.service.getByPage(pageInfo, fieldName, keyword);
@@ -75,7 +75,7 @@ public class ConfController
 
     @RequestMapping(value = "/add")
     @OpLog(name = "新增报表元数据配置项")
-    @RequiresPermissions("report.conf:add")
+    @Secured("report.conf:add")
     public ResponseResult add(final Conf po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
@@ -85,7 +85,7 @@ public class ConfController
 
     @RequestMapping(value = "/edit")
     @OpLog(name = "编辑报表元数据配置项")
-    @RequiresPermissions("report.conf:edit")
+    @Secured("report.conf:edit")
     public ResponseResult edit(final Conf po) {
         this.service.editById(po);
         return ResponseResult.success("");
@@ -93,7 +93,7 @@ public class ConfController
 
     @RequestMapping(value = "/remove")
     @OpLog(name = "删除报表元数据配置项")
-    @RequiresPermissions("report.conf:remove")
+    @Secured("report.conf:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         return ResponseResult.success("");
@@ -101,7 +101,7 @@ public class ConfController
 
     @GetMapping(value = "/getConfItems")
     @OpLog(name = "获取指定父key下的所有配置项")
-    @RequiresPermissions("report.conf:view")
+    @Secured("report.conf:view")
     public ResponseResult getConfItems(final String key) {
         return ResponseResult.success(this.service.getByParentKey(key));
     }

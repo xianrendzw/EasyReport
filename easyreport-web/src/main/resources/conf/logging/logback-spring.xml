@@ -44,7 +44,6 @@
     </appender>
 
     <logger name="com.easytoolsoft" level="@logging.level.com.easytoolsoft@"/>
-    <logger name="com.easytoolsoft.easyreport" level="@logging.level.com.easytoolsoft.easyreport@"/>
     <logger name="org.mybatis" level="@logging.level.org.mybatis@"/>
 
     <root level="@logging.level.root@">

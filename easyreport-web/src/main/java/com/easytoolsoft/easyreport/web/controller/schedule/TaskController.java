@@ -14,7 +14,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +34,14 @@ public class TaskController
 
     @GetMapping(value = "/list")
     @OpLog(name = "获取任务列表")
-    @RequiresPermissions("schedule.task:view")
+    @Secured("schedule.task:view")
     public Map<String, Object> list(final DataGridPager pager, final String fieldName, final String keyword) {
         return this.queryByPage(pager, fieldName, keyword);
     }
 
     @PostMapping(value = "/add")
     @OpLog(name = "增加任务")
-    @RequiresPermissions("schedule.task:add")
+    @Secured("schedule.task:add")
     public ResponseResult add(final Task po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
@@ -50,21 +50,21 @@ public class TaskController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改任务")
-    @RequiresPermissions("schedule.task:edit")
+    @Secured("schedule.task:edit")
     public ResponseResult edit(final Task po) {
         return this.update(po);
     }
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除任务")
-    @RequiresPermissions("schedule.task:remove")
+    @Secured("schedule.task:remove")
     public ResponseResult remove(final Integer id) {
         return this.delete(id);
     }
 
     @GetMapping(value = "/getJsonOptions")
     @OpLog(name = "获取配置项JSON结构")
-    @RequiresPermissions("schedule.task:view")
+    @Secured("schedule.task:view")
     public ResponseResult getJsonOptions(final Integer type) throws JsonProcessingException {
         if (this.MAIL_TASK.equals(type)) {
             return ResponseResult.success((new ObjectMapper().writeValueAsString(new MailTaskOptions())));

@@ -1,0 +1,92 @@
+.slider {
+  width: 100%;
+  min-height: 250px;
+  display: block;
+  position: relative;
+  overflow: hidden; }
+
+.slider ul {
+  list-style: none;
+  margin: 0; }
+
+.slider-content {
+  float: left;
+  width: 100%;
+  display: block;
+  overflow: auto;
+  min-height: 250px; }
+
+.slider-content ul {
+  margin: 0;
+  float: left;
+  width: 100%;
+  display: block;
+  position: relative; }
+
+.slider-content ul li {
+  float: left;
+  width: 100%; }
+
+.slider-content ul ul li a {
+  padding: 5px 10px;
+  display: block;
+  border-bottom: 1px solid #dce1e5;
+  text-transform: capitalize; }
+
+.slider-content ul ul li a:hover {
+  background: #f4f7f9; }
+
+.slider-content .title {
+  padding: 5px 0;
+  text-indent: 10px;
+  background: #dce1e5;
+  color: #143249;
+  width: 100%;
+  float: left;
+  font-weight: bold;
+  text-transform: uppercase; }
+
+.slider .slider-nav {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 10px;
+  min-height: 250px;
+  background: #dce1e5; }
+
+.slider .slider-nav ul {
+  padding: 5px 0; }
+
+.slider .slider-nav li a {
+  padding: 3px 5px;
+  line-height: 13px;
+  text-align: center;
+  color: #807f7f;
+  font-weight: bold;
+  display: block;
+  text-transform: uppercase;
+  cursor: pointer; }
+
+.slider .arrow:before, .slider .arrow.down:before {
+  position: relative;
+  top: 3px;
+  content: "\f062";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em; }
+
+.slider .arrow.down:before {
+  content: "\f063";
+  top: 5px; }
+
+.slider .slide-up, .slider .slide-down {
+  height: 30px;
+  background: #dce1e5;
+  text-align: center;
+  cursor: pointer;
+  float: right;
+  width: 100%;
+  position: relative; }

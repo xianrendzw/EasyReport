@@ -29,7 +29,7 @@ import com.easytoolsoft.easyreport.web.model.DataGridPager;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,14 +51,14 @@ public class RoleController
 
     @GetMapping(value = "/isSuperAdmin")
     @OpLog(name = "是否为超级管理角色")
-    @RequiresPermissions("membership.role:view")
+    @Secured("membership.role:view")
     public ResponseResult isSuperAdmin(@CurrentUser final User loginUser) {
         return ResponseResult.success(this.service.isSuperAdminRole(loginUser.getRoles()));
     }
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取角色列表")
-    @RequiresPermissions("membership.role:view")
+    @Secured("membership.role:view")
     public Map<String, Object> list(@CurrentUser final User loginUser, final DataGridPager pager,
                                     final String fieldName, final String keyword) {
         final PageInfo pageInfo = pager.toPageInfo();
@@ -71,7 +71,7 @@ public class RoleController
 
     @PostMapping(value = "/add")
     @OpLog(name = "增加角色")
-    @RequiresPermissions("membership.role:add")
+    @Secured("membership.role:add")
     public ResponseResult add(@CurrentUser final User loginUser, final Role po) {
         po.setModules("");
         po.setPermissions("");
@@ -84,7 +84,7 @@ public class RoleController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改角色")
-    @RequiresPermissions("membership.role:edit")
+    @Secured("membership.role:edit")
     public ResponseResult edit(final Role po) {
         this.service.editById(po);
         return ResponseResult.success("");
@@ -92,7 +92,7 @@ public class RoleController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除角色")
-    @RequiresPermissions("membership.role:remove")
+    @Secured("membership.role:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         return ResponseResult.success("");
@@ -100,7 +100,7 @@ public class RoleController
 
     @GetMapping(value = "/getRoleList")
     @OpLog(name = "获取当前的角色列表")
-    @RequiresPermissions("membership.role:view")
+    @Secured("membership.role:view")
     public List<IdNamePair> getRoleList(@CurrentUser final User loginUser) {
         final List<IdNamePair> list = new ArrayList<>(10);
         final List<Role> roleList = this.service.getRolesList(loginUser);
@@ -115,7 +115,7 @@ public class RoleController
 
     @PostMapping(value = "/authorize")
     @OpLog(name = "给角色授权")
-    @RequiresPermissions("membership.role:authorize")
+    @Secured("membership.role:authorize")
     public ResponseResult authorize(final Role po) {
         po.setPermissions(StringUtils.stripEnd(po.getPermissions(), ","));
         po.setModules(this.permissionService.getModuleIds(po.getPermissions()));
@@ -125,14 +125,14 @@ public class RoleController
 
     @GetMapping(value = "/getRoleById")
     @OpLog(name = "获取指定id的角色信息")
-    @RequiresPermissions("membership.role:view")
+    @Secured("membership.role:view")
     public Role getRoleById(final Integer id) {
         return this.service.getById(id);
     }
 
     @GetMapping(value = "/listPermissionTree")
     @OpLog(name = "获取当前用户所拥有的权限列表")
-    @RequiresPermissions("membership.role:view")
+    @Secured("membership.role:view")
     public List<EasyUITreeNode<String>> listPermissionTree(@CurrentUser final User loginUser,
                                                            final Integer roleId) {
         final Map<String, String[]> roleModuleAndPermissionMap

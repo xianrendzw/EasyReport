@@ -26,10 +26,10 @@ public class MetaDataSourceConfig extends AbstractDataSourceConfig {
     static final String PACKAGE = "com.easytoolsoft.easyreport.meta.data";
     static final String MAPPER_LOCATION = "classpath*:mybatis/mapper/meta/*.xml";
 
-    @Value("${easytoolsoft.easyreport.meta.datasource.type}")
+    @Value("${easyreport.meta.datasource.type}")
     private Class<? extends DataSource> dataSourceType;
 
-    @ConfigurationProperties(prefix = "easytoolsoft.easyreport.meta.datasource")
+    @ConfigurationProperties(prefix = "easyreport.meta.datasource")
     @Bean(name = "metaDataSource")
     public DataSource dataSource() {
         return DataSourceBuilder.create()

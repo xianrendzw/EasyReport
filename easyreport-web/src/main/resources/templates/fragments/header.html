@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+    <link rel="shortcut icon" href="../../static/favicon.ico" th:href="@{/favicon.ico}"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+    <meta content="EasyReport--A sample and easy to use web report tool" name="description"/>
+    <link th:href="@{/images/meta_icons/favicon.ico}" rel="shortcut icon" type="image/x-icon"/>
+    <link th:href="@{/images/meta_icons/apple-touch-icon.png}" rel="apple-touch-icon-precomposed"/>
+    <link th:href="@{/images/meta_icons/apple-touch-icon-57x57.png}" rel="apple-touch-icon-precomposed" sizes="57x57"/>
+    <link th:href="@{/images/meta_icons/apple-touch-icon-72x72.png}" rel="apple-touch-icon-precomposed" sizes="72x72"/>
+    <link th:href="@{/images/meta_icons/apple-touch-icon-114x114.png}" rel="apple-touch-icon-precomposed"
+          sizes="114x114"/>
+    <link th:href="@{/images/meta_icons/apple-touch-icon-144x144.png}" rel="apple-touch-icon-precomposed"
+          sizes="144x144"/>
+    <!-- / bootstrap [required] -->
+    <link th:href="@{/stylesheets/bootstrap/bootstrap.css}" media="all" rel="stylesheet"/>
+    <!-- / theme file [required] -->
+    <link th:href="@{/stylesheets/light-theme.css}" media="all" id="color-settings-body-color" rel="stylesheet"/>
+    <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
+    <link th:href="@{/stylesheets/theme-colors.css}" media="all" rel="stylesheet"/>
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/javascripts/ie/html5shiv.js}"></script>
+    <script th:src="@{/javascripts/ie/respond.min.js}"></script>
+    <![endif]-->
+    <!-- / jquery [required] -->
+    <script th:src="@{/javascripts/jquery/jquery.min.js}"></script>
+    <!-- / jquery mobile (for touch events) -->
+    <script th:src="@{/javascripts/jquery/jquery.mobile.custom.min.js}"></script>
+    <!-- / jquery migrate (for compatibility with new jquery) [required] -->
+    <script th:src="@{/javascripts/jquery/jquery-migrate.min.js}"></script>
+    <!-- / jquery ui -->
+    <script th:src="@{/javascripts/jquery/jquery-ui.min.js}"></script>
+    <!-- / jQuery UI Touch Punch -->
+    <script th:src="@{/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js}"></script>
+    <!-- / bootstrap [required] -->
+    <script th:src="@{/javascripts/bootstrap/bootstrap.js}"></script>
+    <!-- / modernizr -->
+    <script th:src="@{/javascripts/plugins/modernizr/modernizr.min.js}"></script>
+    <!-- / retina -->
+    <script th:src="@{/javascripts/plugins/retina/retina.js}"></script>
+    <!-- / theme file [required] -->
+    <script th:src="@{/javascripts/theme.js}"></script>
+    <!-- / form submit and validate [required] -->
+    <script th:src="@{/javascripts/plugins/jquery-form/jquery.formautofill.min.js}"></script>
+    <script th:src="@{/javascripts/plugins/jquery-form/jquery-form.min.js}"></script>
+    <script th:src="@{/javascripts/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/javascripts/plugins/validate/jquery.validate.message.zh-cn.js}"></script>
+    <!-- / system dynamic generated -->
+    <script th:src="@{'/dynamic/resource/init.js?v='+${version}}"></script>
+</th:block>
+</html>

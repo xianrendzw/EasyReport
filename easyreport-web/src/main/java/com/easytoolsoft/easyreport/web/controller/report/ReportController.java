@@ -54,7 +54,7 @@ public class ReportController {
 
     @OpLog(name = "预览报表")
     @GetMapping(value = {"/uid/{uid}"})
-    //@RequiresPermissions("report.designer:preview")
+    //@Secured("report.designer:preview")
     public ModelAndView preview(@PathVariable final String uid) {
         final ModelAndView modelAndView = new ModelAndView("report/display");
         modelAndView.addObject("report", ReportUtils.getReportMetaData(uid));
@@ -63,7 +63,7 @@ public class ReportController {
 
     @OpLog(name = "预览报表")
     @RequestMapping(value = {"/{type}/uid/{uid}"})
-    //@RequiresPermissions("report.designer:preview")
+    //@Secured("report.designer:preview")
     public ModelAndView preview(@PathVariable final String type, @PathVariable final String uid,
                                 final String theme, final Boolean isRenderByForm, final String uiStyle,
                                 final HttpServletRequest request) {
@@ -92,7 +92,7 @@ public class ReportController {
     @OpLog(name = "获取报表DataSet JSON格式数据")
     @ResponseBody
     @RequestMapping(value = "/getDataSet.json")
-    //@RequiresPermissions("report.designer:preview")
+    //@Secured("report.designer:preview")
     public ResponseResult getDataSet(final String uid, final HttpServletRequest request) {
         ResponseResult result;
         try {
@@ -114,7 +114,7 @@ public class ReportController {
     @OpLog(name = "获取表格报表JSON格式数据")
     @ResponseBody
     @PostMapping(value = "/table/getData.json")
-    //@RequiresPermissions("report.designer:preview")
+    //@Secured("report.designer:preview")
     public JSONObject getTableData(final String uid, final HttpServletRequest request) {
         final JSONObject data = new JSONObject();
         try {
@@ -133,7 +133,7 @@ public class ReportController {
     @OpLog(name = "获取图表报表JSON格式数据")
     @ResponseBody
     @PostMapping(value = "/chart/getData.json")
-    //@RequiresPermissions("report.designer:preview")
+    //@Secured("report.designer:preview")
     public JSONObject getChartData(final String uid, final HttpServletRequest request) {
         final JSONObject data = ReportUtils.getDefaultChartData();
         if (StringUtils.isNotBlank(uid)) {
@@ -161,7 +161,7 @@ public class ReportController {
 
     @PostMapping(value = "/table/exportExcel")
     @OpLog(name = "导出报表为Excel")
-    //@RequiresPermissions("report.designer:export")
+    //@Secured("report.designer:export")
     public void exportToExcel(final String uid, final String name, final String htmlText,
                               final HttpServletRequest request, final HttpServletResponse response) {
         try {

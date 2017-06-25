@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">EasyReport</title>
+</head>
+<body layout:fragment="content"></body>
+</html>

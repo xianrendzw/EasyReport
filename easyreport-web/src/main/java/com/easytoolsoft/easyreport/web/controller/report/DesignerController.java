@@ -33,7 +33,7 @@ import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +60,7 @@ public class DesignerController
 
     @GetMapping(value = "/list")
     @OpLog(name = "分页获取报表列表")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public Map<String, Object> list(final DataGridPager pager, final Integer id) {
         final PageInfo pageInfo = this.getPageInfo(pager);
         final List<Report> list = this.service.getByPage(pageInfo, "t1.category_id", id == null ? 0 : id);
@@ -72,7 +72,7 @@ public class DesignerController
 
     @GetMapping(value = "/find")
     @OpLog(name = "分页查询报表")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public Map<String, Object> find(final DataGridPager pager, final String fieldName, final String keyword) {
         final PageInfo pageInfo = this.getPageInfo(pager);
         final List<Report> list = this.service.getByPage(pageInfo, "t1." + fieldName, "%" + keyword + "%");
@@ -84,7 +84,7 @@ public class DesignerController
 
     @GetMapping(value = "/getAll")
     @OpLog(name = "获取所有报表")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public List<IdNamePair> getAll(@CurrentUser final User loginUser) {
         final List<Report> reportList = this.service.getAll();
         if (CollectionUtils.isEmpty(reportList)) {
@@ -100,7 +100,7 @@ public class DesignerController
 
     @PostMapping(value = "/add")
     @OpLog(name = "新增报表")
-    @RequiresPermissions("report.designer:add")
+    @Secured("report.designer:add")
     public ResponseResult add(@CurrentUser final User loginUser, final Report po) {
         po.setCreateUser(loginUser.getAccount());
         po.setUid(UUID.randomUUID().toString());
@@ -113,7 +113,7 @@ public class DesignerController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改报表")
-    @RequiresPermissions("report.designer:edit")
+    @Secured("report.designer:edit")
     public ResponseResult edit(@CurrentUser final User loginUser, final Report po) {
         this.service.editById(po);
         this.reportHistoryService.add(this.getReportHistory(loginUser, po));
@@ -122,7 +122,7 @@ public class DesignerController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除报表")
-    @RequiresPermissions("report.designer:remove")
+    @Secured("report.designer:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         return ResponseResult.success("");
@@ -130,7 +130,7 @@ public class DesignerController
 
     @PostMapping(value = "/execSqlText")
     @OpLog(name = "获取报表元数据列集合")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public ResponseResult execSqlText(final Integer dsId, String sqlText, Integer dataRange,
                                       final String queryParams, final HttpServletRequest request) {
         if (dsId != null) {
@@ -145,7 +145,7 @@ public class DesignerController
 
     @PostMapping(value = "/previewSqlText")
     @OpLog(name = "预览报表SQL语句")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public ResponseResult previewSqlText(final Integer dsId, String sqlText, Integer dataRange,
                                          final String queryParams, final HttpServletRequest request) {
         if (dsId != null) {
@@ -161,7 +161,7 @@ public class DesignerController
 
     @GetMapping(value = "/getMetaColumnScheme")
     @OpLog(name = "获取报表元数据列结构")
-    @RequiresPermissions("report.designer:view")
+    @Secured("report.designer:view")
     public ReportMetaDataColumn getMetaColumnScheme() {
         final ReportMetaDataColumn column = new ReportMetaDataColumn();
         column.setName("expr");
@@ -176,8 +176,8 @@ public class DesignerController
         final Map<String, Object> formParameters =
             this.tableReportService.getBuildInParameters(request.getParameterMap(), dataRange);
         if (StringUtils.isNotBlank(queryParams)) {
-            final List<QueryParameterOptions> queryParameters = JSON.parseArray(queryParams,
-                QueryParameterOptions.class);
+            final List<QueryParameterOptions> queryParameters =
+                JSON.parseArray(queryParams, QueryParameterOptions.class);
             queryParameters.stream()
                 .filter(parameter -> !formParameters.containsKey(parameter.getName()))
                 .forEach(parameter -> formParameters.put(parameter.getName(), parameter.getRealDefaultValue()));

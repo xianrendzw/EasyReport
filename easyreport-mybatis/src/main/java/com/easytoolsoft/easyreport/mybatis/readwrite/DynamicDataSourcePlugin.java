@@ -46,7 +46,7 @@ public class DynamicDataSourcePlugin implements Interceptor {
             cacheMap.put(mappedStatement.getId(), dynamicDataSourceType);
             DynamicDataSourceHolder.putDataSource(dynamicDataSourceType);
 
-            log.info("SQL [{}] from datasource [{}],SqlCommandType [{}]",
+            log.info("SqlMapper ID [{}] from DataSourceType [{}],SqlCommandType [{}]",
                 mappedStatement.getId(), dynamicDataSourceType.name(), mappedStatement.getSqlCommandType().name());
         }
         return invocation.proceed();

@@ -13,7 +13,7 @@ import com.easytoolsoft.easyreport.support.annotation.OpLog;
 import com.easytoolsoft.easyreport.support.model.ResponseResult;
 import com.easytoolsoft.easyreport.web.controller.common.BaseController;
 import com.easytoolsoft.easyreport.web.model.DataGridPager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +30,7 @@ public class PermissionController
 
     @GetMapping(value = "/list")
     @OpLog(name = "获取权限列表")
-    @RequiresPermissions("membership.permission:view")
+    @Secured("membership.permission:view")
     public Map<String, Object> list(final DataGridPager pager, final Integer id) {
         final int moduleId = (id == null ? 0 : id);
         final PageInfo pageInfo = pager.toPageInfo();
@@ -43,7 +43,7 @@ public class PermissionController
 
     @PostMapping(value = "/add")
     @OpLog(name = "增加权限")
-    @RequiresPermissions("membership.permission:add")
+    @Secured("membership.permission:add")
     public ResponseResult add(final Permission po) {
         po.setGmtCreated(new Date());
         po.setGmtModified(new Date());
@@ -54,7 +54,7 @@ public class PermissionController
 
     @PostMapping(value = "/edit")
     @OpLog(name = "修改权限")
-    @RequiresPermissions("membership.permission:edit")
+    @Secured("membership.permission:edit")
     public ResponseResult edit(final Permission po) {
         this.service.editById(po);
         this.service.reloadCache();
@@ -63,7 +63,7 @@ public class PermissionController
 
     @PostMapping(value = "/remove")
     @OpLog(name = "删除权限")
-    @RequiresPermissions("membership.permission:remove")
+    @Secured("membership.permission:remove")
     public ResponseResult remove(final Integer id) {
         this.service.removeById(id);
         this.service.reloadCache();

@@ -94,4 +94,13 @@ public class User implements Serializable {
     public String getCredentialsSalt() {
         return this.account + this.salt;
     }
+
+    /**
+     * 是否启用
+     *
+     * @return true|false
+     */
+    public boolean isEnabled() {
+        return this.status == 1;
+    }
 }

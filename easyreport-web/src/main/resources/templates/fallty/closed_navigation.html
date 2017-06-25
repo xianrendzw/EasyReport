@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Closed navigation | Flatty - Flat Administration Template</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content='text/html;charset=utf-8' http-equiv='content-type'>
+    <meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
+    <link href='assets/images/meta_icons/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+    <link href='assets/images/meta_icons/apple-touch-icon.png' rel='apple-touch-icon-precomposed'>
+    <link href='assets/images/meta_icons/apple-touch-icon-57x57.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+    <link href='assets/images/meta_icons/apple-touch-icon-72x72.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+    <link href='assets/images/meta_icons/apple-touch-icon-114x114.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+    <link href='assets/images/meta_icons/apple-touch-icon-144x144.png' rel='apple-touch-icon-precomposed' sizes='144x144'>
+    <!-- / START - page related stylesheets [optional] -->
+    
+    <!-- / END - page related stylesheets [optional] -->
+    <!-- / bootstrap [required] -->
+    <link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- / theme file [required] -->
+    <link href="assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
+    <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
+    <link href="assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- / demo file [not required!] -->
+    <link href="assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+      <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
+      <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  <body class='contrast-red main-nav-closed'>
+    <header>
+      <nav class='navbar navbar-default'>
+        <a class='navbar-brand' href='index.html'>
+          <img width="81" height="21" class="logo" alt="Flatty" src="assets/images/logo.svg" />
+          <img width="21" height="21" class="logo-xs" alt="Flatty" src="assets/images/logo_xs.svg" />
+        </a>
+        <a class='toggle-nav btn pull-left' href='#'>
+          <i class='icon-reorder'></i>
+        </a>
+        <ul class='nav'>
+          <li class='dropdown light only-icon'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='icon-cog'></i>
+            </a>
+            <ul class='dropdown-menu color-settings'>
+              <li class='color-settings-body-color'>
+                <div class='color-title'>Body color</div>
+                <a data-change-to='assets/stylesheets/light-theme.css' href='#'>
+                  Light
+                  <small>(default)</small>
+                </a>
+                <a data-change-to='assets/stylesheets/dark-theme.css' href='#'>
+                  Dark
+                </a>
+                <a data-change-to='assets/stylesheets/dark-blue-theme.css' href='#'>
+                  Dark blue
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li class='color-settings-contrast-color'>
+                <div class='color-title'>Contrast color</div>
+                            <a data-change-to="contrast-red" href="#"><i class='icon-cog text-red'></i>
+                Red
+                <small>(default)</small>
+                </a>
+    
+                            <a data-change-to="contrast-blue" href="#"><i class='icon-cog text-blue'></i>
+                Blue
+                </a>
+    
+                            <a data-change-to="contrast-orange" href="#"><i class='icon-cog text-orange'></i>
+                Orange
+                </a>
+    
+                            <a data-change-to="contrast-purple" href="#"><i class='icon-cog text-purple'></i>
+                Purple
+                </a>
+    
+                            <a data-change-to="contrast-green" href="#"><i class='icon-cog text-green'></i>
+                Green
+                </a>
+    
+                            <a data-change-to="contrast-muted" href="#"><i class='icon-cog text-muted'></i>
+                Muted
+                </a>
+    
+                            <a data-change-to="contrast-fb" href="#"><i class='icon-cog text-fb'></i>
+                Facebook
+                </a>
+    
+                            <a data-change-to="contrast-dark" href="#"><i class='icon-cog text-dark'></i>
+                Dark
+                </a>
+    
+                            <a data-change-to="contrast-pink" href="#"><i class='icon-cog text-pink'></i>
+                Pink
+                </a>
+    
+                            <a data-change-to="contrast-grass-green" href="#"><i class='icon-cog text-grass-green'></i>
+                Grass green
+                </a>
+    
+                            <a data-change-to="contrast-sea-blue" href="#"><i class='icon-cog text-sea-blue'></i>
+                Sea blue
+                </a>
+    
+                            <a data-change-to="contrast-banana" href="#"><i class='icon-cog text-banana'></i>
+                Banana
+                </a>
+    
+                            <a data-change-to="contrast-dark-orange" href="#"><i class='icon-cog text-dark-orange'></i>
+                Dark orange
+                </a>
+    
+                            <a data-change-to="contrast-brown" href="#"><i class='icon-cog text-brown'></i>
+                Brown
+                </a>
+    
+              </li>
+            </ul>
+          </li>
+          <li class='dropdown medium only-icon widget'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='icon-rss'></i>
+              <div class='label'>5</div>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-user text-success'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      John Doe signed up
+                      <small class='text-muted'>just now</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-inbox text-error'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      New Order #002
+                      <small class='text-muted'>3 minutes ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-comment text-warning'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      America Leannon commented Flatty with veeery long text.
+                      <small class='text-muted'>1 hour ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-user text-success'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      Jane Doe signed up
+                      <small class='text-muted'>last week</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-inbox text-error'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      New Order #001
+                      <small class='text-muted'>1 year ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='widget-footer'>
+                <a href='#'>All notifications</a>
+              </li>
+            </ul>
+          </li>
+          <li class='dropdown dark user-menu'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <img width="23" height="23" alt="Mila Kunis" src="assets/images/avatar.jpg" />
+              <span class='user-name'>Mila Kunis</span>
+              <b class='caret'></b>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='user_profile.html'>
+                  <i class='icon-user'></i>
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href='user_profile.html'>
+                  <i class='icon-cog'></i>
+                  Settings
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='sign_in.html'>
+                  <i class='icon-signout'></i>
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <form action='search_results.html' class='navbar-form navbar-right hidden-xs' method='get'>
+          <button class='btn btn-link icon-search' name='button' type='submit'></button>
+          <div class='form-group'>
+            <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text" />
+          </div>
+        </form>
+      </nav>
+    </header>
+    <div id='wrapper'>
+      <div id='main-nav-bg'></div>
+      <nav id='main-nav'>
+        <div class='navigation'>
+          <div class='search'>
+            <form action='search_results.html' method='get'>
+              <div class='search-wrapper'>
+                <input value="" class="search-query form-control" placeholder="Search..." autocomplete="off" name="q" type="text" />
+                <button class='btn btn-link icon-search' name='button' type='submit'></button>
+              </div>
+            </form>
+          </div>
+          <ul class='nav nav-stacked'>
+            <li class=''>
+              <a href='index.html'>
+                <i class='icon-dashboard'></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class=''>
+                      <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
+              <span>Forms</span>
+              <i class='icon-angle-down angle-down'></i>
+              </a>
+      
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='form_styles.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Form styles and features</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='form_components.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Form components</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='validations.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Validations</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='wizard.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Wizard</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-tint'></i>
+                <span>UI Elements & Widgets</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='ui_elements.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>UI Elements</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='widgets.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Widgets</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='buttons_and_icons.html'>
+                <i class='icon-star'></i>
+                <span>Buttons & Icons</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-cogs'></i>
+                <span>Components</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='charts.html'>
+                    <i class='icon-bar-chart'></i>
+                    <span>Charts</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='address_book.html'>
+                    <i class='icon-envelope'></i>
+                    <span>Address book</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='chats.html'>
+                    <i class='icon-comments'></i>
+                    <span>Chats</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='filetrees.html'>
+                    <i class='icon-list-ul'></i>
+                    <span>File trees</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fileupload.html'>
+                    <i class='icon-file'></i>
+                    <span>Fileupload</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='todo.html'>
+                    <i class='icon-list-alt'></i>
+                    <span>Todo list</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='wysiwyg.html'>
+                    <i class='icon-paste'></i>
+                    <span>WYSIWYG</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='tables.html'>
+                <i class='icon-table'></i>
+                <span>Tables</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='grid.html'>
+                <i class='icon-th'></i>
+                <span>Grid</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='type.html'>
+                <i class='icon-font'></i>
+                <span>Typography</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='calendar.html'>
+                <i class='icon-calendar'></i>
+                <span>Calendar</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-book'></i>
+                <span>Example pages</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='invoice.html'>
+                    <i class='icon-money'></i>
+                    <span>Invoice</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='gallery.html'>
+                    <i class='icon-picture'></i>
+                    <span>Gallery</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='timeline.html'>
+                    <i class='icon-time'></i>
+                    <span>Timeline</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='pricing_tables.html'>
+                    <i class='icon-table'></i>
+                    <span>Pricing tables</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='user_profile.html'>
+                    <i class='icon-user'></i>
+                    <span>User profile</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='err404.html' target='_blank'>
+                    <i class='icon-question-sign'></i>
+                    <span>404 Error</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='err500.html' target='_blank'>
+                    <i class='icon-cogs'></i>
+                    <span>500 Error</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='sign_in.html' target='_blank'>
+                    <i class='icon-signin'></i>
+                    <span>Sign in</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='faq.html'>
+                    <i class='icon-bullhorn'></i>
+                    <span>FAQ</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='orders.html'>
+                    <i class='icon-inbox'></i>
+                    <span>Orders</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='search_results.html'>
+                    <i class='icon-search'></i>
+                    <span>Search results</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='blank.html'>
+                    <i class='icon-circle-blank'></i>
+                    <span>Blank page</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class='dropdown-collapse in' href='#'>
+                <i class='icon-cog'></i>
+                <span>Layouts</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='in nav nav-stacked'>
+                <li class='active'>
+                  <a href='closed_navigation.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Closed navigation</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_header.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed header</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_navigation.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed navigation</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_navigation_and_header.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed navigation & header</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='email_templates.html'>
+                <i class='icon-mail-reply'></i>
+                <span>Email templates</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse' href='#'>
+                <i class='icon-folder-open-alt'></i>
+                <span>Four level dropdown</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li>
+                  <a class='dropdown-collapse' href='#'>
+                    <i class='icon-caret-right'></i>
+                    <span>Second level</span>
+                    <i class='icon-angle-down angle-down'></i>
+                  </a>
+                  <ul class='nav nav-stacked'>
+                    <li>
+                      <a class='dropdown-collapse' href='#'>
+                        <i class='icon-caret-right'></i>
+                        <span>Third level</span>
+                        <i class='icon-angle-down angle-down'></i>
+                      </a>
+                      <ul class='nav nav-stacked'>
+                        <li>
+                          <a href='#'>
+                            <i class='icon-caret-right'></i>
+                            <span>Fourth level</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href='#'>
+                            <i class='icon-caret-right'></i>
+                            <span>Another fourth level</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <section id='content'>
+        <div class='container'>
+          <div class='row' id='content-wrapper'>
+            <div class='col-xs-12'>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='page-header'>
+                    <h1 class='pull-left'>
+                      <i class='icon-cog'></i>
+                      <span>Closed navigation</span>
+                    </h1>
+                    <div class='pull-right'>
+                      <ul class='breadcrumb'>
+                        <li>
+                          <a href='index.html'>
+                            <i class='icon-bar-chart'></i>
+                          </a>
+                        </li>
+                        <li class='separator'>
+                          <i class='icon-angle-right'></i>
+                        </li>
+                        <li>Layouts</li>
+                        <li class='separator'>
+                          <i class='icon-angle-right'></i>
+                        </li>
+                        <li class='active'>Closed navigation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='alert alert-info alert-dismissable'>
+                <a class='close' data-dismiss='alert' href='#'>&times;</a>
+                <strong>Hey there!</strong>
+                If you are using some touch device right now, you can try slide from left to right on navigation to open it. Sliding from right to left will close it.
+              </div>
+              Et est beatae voluptatibus ipsa consequuntur iste aut libero quam. cumque magnam dolorum reprehenderit repellendus. assumenda expedita voluptatem quia eius aut. enim porro ex iste. et consectetur ad pariatur ex voluptatem sit
+              <br>
+              <br>
+              Qui quasi veritatis enim modi consequatur nihil optio natus dolore inventore ut eius quod. dolore mollitia vitae illo eaque voluptas. et at assumenda odio aut et aut dolore pariatur qui quibusdam neque illo eveniet. dolor voluptate praesentium fugiat tempora dignissimos temporibus nostrum similique quia. tempora est totam vitae aliquid saepe dolorum aut pariatur culpa omnis debitis eos in laudantium. et autem aut error aut sapiente explicabo doloremque
+              <br>
+              <br>
+              Qui et et consequatur. est et sint recusandae qui fuga ducimus fugit at amet sit. deleniti voluptatum ut consequatur deleniti iste quis hic. nesciunt commodi et amet molestias ut ut iste culpa enim sed fuga illo non
+              <br>
+              <br>
+              Aut magnam maiores atque adipisci eum est voluptate quia fuga est. ut voluptatibus molestias repellat labore. nam quia magnam velit impedit rerum aut iusto maiores error nisi. atque veniam omnis ratione
+              <br>
+              <br>
+              Et accusamus et blanditiis saepe repudiandae similique et. autem ut quae qui amet iure ut praesentium facere. odit dignissimos sunt sapiente alias. cum doloribus consequatur ab sit voluptas et et exercitationem beatae dignissimos alias laborum fugit. est autem eius unde voluptatem rerum architecto est quasi voluptate voluptatum tenetur tempora. quia totam et delectus rerum veritatis
+              <br>
+              <br>
+              Quis itaque quam soluta omnis molestias quis illum nostrum quos quo. excepturi fugiat est natus voluptas nulla suscipit dicta sint. pariatur culpa error porro cupiditate nisi quod eveniet autem odio dicta consequatur
+              <br>
+              <br>
+              Dolorem error sit laboriosam. fugit distinctio quae nihil provident. doloribus aut laudantium reprehenderit ipsum modi adipisci sapiente libero est voluptas. sapiente facere suscipit saepe itaque voluptas minima vel corporis voluptas dolorem voluptate id. aliquid tempora voluptatum hic velit maiores enim velit odio ea aliquam beatae tempora
+              <br>
+              <br>
+              Nulla et facere eligendi voluptatem fuga sit sed reprehenderit earum. error ut dolorem ut corporis recusandae aut quas. beatae et dolorum autem eveniet cumque repellat ut harum. sint minus animi occaecati sit repudiandae et autem quis in quia. magnam vel cupiditate beatae sint repellendus. ut sequi quo non natus alias unde soluta animi atque eos molestiae omnis
+              <br>
+              <br>
+              Error ratione ut occaecati. error ut quas minus voluptatem cupiditate ipsam et ut delectus sed sit aliquam qui. amet est corrupti dolores voluptate reiciendis odit quibusdam. natus ut minus magnam autem mollitia consequatur et natus qui ut. alias voluptas temporibus officiis quis laboriosam earum ipsum voluptates. numquam nemo est ullam animi debitis aliquam voluptatum aut aut
+              <br>
+              <br>
+              Temporibus omnis aut iure optio eum officia molestiae qui ex illo exercitationem. provident saepe recusandae et omnis quia facere amet dolorum. dolorem a laborum repellat quibusdam quia eos quas unde officiis eos ex aut. blanditiis nesciunt eveniet rerum quod cupiditate. hic quisquam voluptas sit
+              <br>
+              <br>
+              Provident odit sunt eos quidem sed perspiciatis laborum dolores voluptates ut dolorem omnis enim. aliquid molestiae velit quo qui ipsa laboriosam incidunt veritatis. veritatis quod dignissimos distinctio. voluptatem ipsum excepturi aperiam et voluptatum blanditiis excepturi exercitationem recusandae. porro fugit quidem unde facere perferendis consequatur deserunt pariatur ut veritatis suscipit et. aliquid aperiam et mollitia aut sunt
+              <br>
+              <br>
+              Natus adipisci distinctio sequi est esse at alias eius sit laboriosam reprehenderit officiis sed. quidem provident sunt et delectus. possimus est inventore vel eius provident exercitationem tempora ducimus repellat
+              <br>
+              <br>
+              Sit et voluptatem quia et. voluptas dolore qui consequuntur ipsa voluptatem labore fugiat. illo voluptatibus veritatis laborum adipisci et omnis nihil deserunt et rerum et. deleniti et dolore eos et ex. mollitia pariatur perferendis consequuntur excepturi. cum incidunt et quia debitis sint fugiat id id blanditiis quo quibusdam. nulla ut qui soluta
+              <br>
+              <br>
+              Corporis cumque quod reprehenderit possimus voluptatem fugit molestiae assumenda excepturi quia minima. id sed quia similique ea autem recusandae facere non id dolorem voluptatem aut velit. adipisci modi maxime aut dolores velit voluptatem sunt cumque vel voluptatem voluptates cum minus. iste sed repudiandae architecto et porro quam deserunt fugit. odit sequi suscipit unde tempore et earum corrupti
+              <br>
+              <br>
+              Tenetur repellat officiis assumenda cum voluptas harum. similique iste magnam iste debitis totam. est in dignissimos rem exercitationem eligendi. recusandae repellat ab veniam atque facere possimus nobis labore molestiae. nobis dolor porro alias reiciendis facilis molestiae veniam inventore fuga voluptas sed
+              <br>
+              <br>
+              Officia fugiat qui quidem cum tenetur culpa molestiae quis dolorem molestias dolores consequatur. velit animi natus quod dolores dolores repudiandae in omnis. ut quia sapiente labore magnam corporis nisi nisi. odit illum et aliquid dolores. dolor nihil et voluptatum vel illum quisquam blanditiis
+              <br>
+              <br>
+              Iusto possimus fugit qui laborum. modi ipsum ipsam rerum adipisci nisi. suscipit expedita nihil voluptas non repudiandae. voluptas nam maiores facilis est non qui ad rerum ipsam quia animi atque et et
+              <br>
+              <br>
+              Culpa atque eos eligendi quae ex. deserunt officiis et adipisci assumenda dolorem rerum ipsam delectus facere ipsum et voluptatum commodi sit. architecto omnis aperiam maiores dignissimos labore tenetur est dolorum facere temporibus nisi temporibus sunt qui. dolorem voluptatem rerum ullam vero. pariatur quaerat laudantium qui. soluta deleniti minus sint inventore voluptatibus itaque
+              <br>
+              <br>
+              Ipsa culpa autem molestiae non aliquid delectus et. dolorem eaque id possimus quod eos officia id dolores. ut dolores fugit eveniet aut nostrum sit quo dolorem asperiores aut omnis ab. id hic voluptatibus unde sunt in ut quod. quo ab illo qui odio blanditiis id id cupiditate praesentium vero quo voluptatem consequatur. ipsa mollitia sequi qui aut adipisci iusto exercitationem aut quae qui asperiores aut labore provident
+              <br>
+              <br>
+              Natus similique illum amet aliquam numquam deserunt exercitationem magnam eius optio consequuntur et id. itaque molestiae sunt ab autem nesciunt ut repudiandae omnis nihil. perspiciatis illo commodi est pariatur in aliquid mollitia saepe et quo fugiat placeat incidunt maxime. quia sequi odio doloremque at natus enim reprehenderit commodi tenetur nostrum rerum illo. magni iste quis quia quidem nemo labore quasi dolorem nam. et voluptatem ipsa officiis et velit reprehenderit
+              <br>
+              <br>
+              Illum ullam libero rerum praesentium ut. quos facere maxime ut placeat sapiente voluptas eum qui. qui in voluptas voluptas enim recusandae ad sequi consequatur eius inventore ducimus officiis aut debitis. est non et non voluptatem dicta temporibus quia. et eveniet rem dolores reprehenderit velit iusto et. vitae quo esse voluptas laborum quasi non numquam rerum
+              <br>
+              <br>
+              Officiis beatae quaerat rerum cum minus ut quo consectetur ut sed ab explicabo. dolor est tempore perspiciatis. odio dignissimos ea nihil nemo necessitatibus quas voluptas sed deserunt atque eos error laborum non. labore ut quisquam ex ea aliquam nisi velit voluptatum voluptatem. et excepturi voluptatem excepturi reprehenderit tenetur velit. fugit voluptas earum harum nihil ut iste
+              <br>
+              <br>
+              Nulla qui eum quasi sit. quis asperiores illo aut corrupti nostrum tempore numquam autem dicta. numquam aut aut fuga enim aut molestias autem voluptas accusantium sed. libero voluptatem consequatur asperiores. aut asperiores corporis sit
+              <br>
+              <br>
+              Ducimus libero autem ducimus rem. facere quae dignissimos voluptatem facere et omnis possimus laudantium enim quia eum voluptate omnis. tempore in quia perferendis consequatur quos. molestias dolores aut nulla amet quidem ea vitae itaque. voluptas cum rem mollitia repellat molestiae ipsum et ut quae molestiae sit harum odio. qui non veritatis eveniet id cupiditate eum incidunt voluptatibus aperiam et
+              <br>
+              <br>
+              Sapiente recusandae ipsam rerum quasi asperiores pariatur quo aut quas cum. tempora natus quis eligendi omnis pariatur veniam voluptatem sed a tempore. officiis ullam amet quae et quo eligendi quis facere. quos tempore distinctio consectetur vero earum sunt non id. laboriosam rem nihil harum dolorum perspiciatis fugiat atque explicabo
+              <br>
+              <br>
+              Deserunt minus quia aliquam itaque id laboriosam. totam neque iste ut nihil delectus praesentium est. iure odit voluptate fugiat voluptate. magnam id quia in deleniti eum ea qui id sunt et natus dolores autem esse. non illo est id. inventore molestias omnis nostrum ullam
+              <br>
+              <br>
+              Deserunt eum exercitationem consequuntur voluptate ad qui vel et rem explicabo dolores doloremque non. consequatur repellendus qui voluptatem ipsa eius cumque. rem dolores alias eveniet impedit et sunt dolorem aut perferendis. nesciunt aliquam ex odio molestiae ab in vero repellendus rem aut voluptatem ipsam. unde mollitia et ut nostrum illo velit. numquam dolorem labore voluptatem cupiditate repellendus aut et dignissimos qui qui nisi laudantium. voluptatum cumque in qui itaque quis quasi praesentium corrupti autem veritatis qui iusto suscipit
+              <br>
+              <br>
+              Neque aut odio est laborum eum. et dolore aliquid voluptas laborum accusantium mollitia doloremque id quia occaecati aut. quia aliquam molestiae aut veniam et consectetur id illum ut nam vero
+              <br>
+              <br>
+              Velit reprehenderit sed et magni fugit nihil in alias quibusdam quo. ex corrupti perferendis necessitatibus delectus iste. natus et tenetur accusamus corrupti voluptatem quia ut suscipit
+              <br>
+              <br>
+              Iure qui repellat rerum nihil sed ut ut eaque similique. nam ipsa inventore accusamus perspiciatis rerum est molestias voluptas laudantium nemo tempora esse qui necessitatibus. hic nam veritatis reprehenderit neque molestiae est
+              <br>
+              <br>
+              Odio sed necessitatibus enim. iure quod qui in culpa. sit est at consequuntur similique. similique nam commodi eum temporibus. omnis quam eligendi consequatur ut eligendi deserunt consequatur laboriosam dignissimos necessitatibus. modi non molestiae temporibus quod voluptate placeat velit veritatis fugiat accusantium. asperiores commodi blanditiis qui qui temporibus facilis perferendis quos laboriosam
+              <br>
+              <br>
+              Ipsa molestiae eum tempora expedita est in nostrum ratione rerum consequuntur est aut accusantium ipsam. eos officia a provident quibusdam at velit mollitia id incidunt ea nihil iure in molestiae. corporis repudiandae assumenda id. animi molestiae fugit qui fuga. et omnis provident nesciunt perspiciatis a voluptas. qui nisi aut enim et et voluptatem accusantium corporis quia ratione
+              <br>
+              <br>
+              Corporis commodi pariatur vel consequatur tempora voluptatibus aut. explicabo rem velit ut quod voluptate velit quaerat ipsa nulla. quidem enim est magni corporis reiciendis. sit inventore incidunt sunt nulla sint aut est non fugiat aliquam odit eligendi ea eius. qui magnam dolor beatae alias. vel totam possimus non. eius ut nesciunt illo quas alias eos voluptatibus neque odio dolore voluptas
+              <br>
+              <br>
+              Iusto et autem odio. accusamus suscipit fuga sunt et ea ab libero placeat. aspernatur quo placeat quos quia eligendi voluptates voluptates dolor numquam veritatis reiciendis. sit voluptatum aut omnis non corporis ratione rerum eum enim omnis similique ea excepturi perferendis. provident et omnis in soluta. in quibusdam tempora molestiae asperiores eos earum architecto sint impedit laboriosam iste
+              <br>
+              <br>
+              Cum est tenetur sint repellendus. quo facilis quibusdam occaecati voluptatum perspiciatis repudiandae provident impedit cupiditate. quibusdam qui eos odit illum aut eum. laboriosam consequuntur qui cum. cumque maiores magnam sit
+              <br>
+              <br>
+              Et rerum delectus enim consectetur vel sequi eos non ad optio modi id qui. adipisci ut in temporibus corrupti. voluptas nesciunt tempore beatae quo iusto facere recusandae mollitia occaecati sapiente harum. et voluptatem velit non veritatis unde rerum quis inventore qui. omnis iure dolores quo nulla iste alias architecto deleniti cumque rerum est nisi tempora adipisci. dicta quidem hic ipsa dolorem et ipsam qui veritatis voluptate. dolor commodi odit doloribus laboriosam quis expedita quo et
+              <br>
+              <br>
+              Quia ratione alias iusto cupiditate illum fuga explicabo. eos aliquam voluptas sequi nihil esse vel iure expedita pariatur id sint. sed dignissimos consequatur quibusdam quibusdam eos magni
+              <br>
+              <br>
+              Ut aliquam omnis eos quis non aspernatur. odit et est cum tempora neque. placeat dolor nihil veniam enim neque itaque
+              <br>
+              <br>
+              Eligendi excepturi et aut. harum asperiores et dolores asperiores reprehenderit fugiat voluptate nulla perferendis mollitia qui laborum optio. aspernatur sed nobis optio delectus molestiae. voluptas cupiditate natus ratione eum assumenda recusandae. maxime vel quo esse consequatur odio quisquam earum ducimus officia ad. assumenda possimus hic est veniam animi corrupti consequatur ab atque iste. quaerat rerum aliquam placeat beatae quo quia neque
+              <br>
+              <br>
+              Sequi vel quis aliquid sit veritatis iure tempora. enim dicta consequuntur officiis deleniti est deleniti quia dolor et. molestiae laboriosam nulla explicabo numquam repudiandae. in itaque itaque architecto laudantium est. ea aut sit assumenda enim quasi adipisci. aut occaecati atque numquam eveniet laboriosam quos asperiores tempora velit tenetur nam nihil
+              <br>
+              <br>
+            </div>
+          </div>
+          <footer id='footer'>
+            <div class='footer-wrapper'>
+              <div class='row'>
+                <div class='col-sm-6 text'>
+                  Copyright © 2013 Your Project Name
+                </div>
+                <div class='col-sm-6 buttons'>
+                  <a class="btn btn-link" href="http://www.bublinastudio.com/flatty">Preview</a>
+                  <a class="btn btn-link" href="https://wrapbootstrap.com/theme/flatty-flat-administration-template-WB0P6NR1N">Purchase</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </div>
+    <!-- / jquery [required] -->
+    <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+    <!-- / jquery mobile (for touch events) -->
+    <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
+    <!-- / jquery migrate (for compatibility with new jquery) [required] -->
+    <script src="assets/javascripts/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- / jquery ui -->
+    <script src="assets/javascripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- / jQuery UI Touch Punch -->
+    <script src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <!-- / bootstrap [required] -->
+    <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <!-- / modernizr -->
+    <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
+    <!-- / retina -->
+    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
+    <!-- / theme file [required] -->
+    <script src="assets/javascripts/theme.js" type="text/javascript"></script>
+    <!-- / demo file [not required!] -->
+    <script src="assets/javascripts/demo.js" type="text/javascript"></script>
+    <!-- / START - page related files and scripts [optional] -->
+    
+    <!-- / END - page related files and scripts [optional] -->
+  </body>
+</html>

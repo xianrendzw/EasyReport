@@ -2,8 +2,8 @@ package com.easytoolsoft.easyreport.web.config.mvc;
 
 import com.easytoolsoft.easyreport.support.consts.AppEnvConsts;
 import com.easytoolsoft.easyreport.support.filter.ContextInitDataFilter;
+import com.easytoolsoft.easyreport.web.config.properties.CorsConfig;
 import com.easytoolsoft.easyreport.web.config.properties.EnvProperties;
-import org.apache.catalina.servlets.DefaultServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace;
@@ -11,31 +11,28 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
- * @author Tom Deng
+ * java web servlet 配置类
+ *
+ * @author zhiwei.deng
  * @date 2017-04-11
  **/
 @Configuration
-@EnableConfigurationProperties(EnvProperties.class)
+@EnableConfigurationProperties({EnvProperties.class, CorsConfig.class})
 public class ServletConfig {
     @Autowired
     private EnvProperties envProperties;
 
-    /**
-     * 让static下的静态资源走DefaultServlet, 不走SpringMVC DispatchServlet
-     *
-     * @return ServletRegistrationBean
-     */
-    @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        return new ServletRegistrationBean(new DefaultServlet(), "/static/*");
-    }
+    @Autowired
+    private CorsConfig corsConfig;
 
     /**
      * 在系统启动时加一些初始化数据到request上下文中
@@ -55,13 +52,18 @@ public class ServletConfig {
     }
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        final FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-        filterRegistration.addInitParameter("targetFilterLifecycle", "true");
-        filterRegistration.setEnabled(true);
-        filterRegistration.addUrlPatterns("/*");
-        return filterRegistration;
+    @Order(0)
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource corsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(corsConfig.getAllowOrigins());
+        corsConfiguration.setAllowedHeaders(corsConfig.getAllowHeaders());
+        corsConfiguration.setAllowedMethods(corsConfig.getAllowMethods());
+        corsConfiguration.setAllowCredentials(corsConfig.getAllowCredentials());
+        corsConfiguration.setExposedHeaders(corsConfig.getExposeHeaders());
+        corsConfiguration.setMaxAge(corsConfig.getMaxAge());
+        corsConfigurationSource.registerCorsConfiguration(corsConfig.getPathPattern(), corsConfiguration);
+        return new CorsFilter(corsConfigurationSource);
     }
 
     @Bean

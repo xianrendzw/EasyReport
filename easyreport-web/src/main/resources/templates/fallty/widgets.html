@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Widgets | Flatty - Flat Administration Template</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content='text/html;charset=utf-8' http-equiv='content-type'>
+    <meta content='Flat administration template for Twitter Bootstrap. Twitter Bootstrap 3 template with Ruby on Rails support.' name='description'>
+    <link href='assets/images/meta_icons/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+    <link href='assets/images/meta_icons/apple-touch-icon.png' rel='apple-touch-icon-precomposed'>
+    <link href='assets/images/meta_icons/apple-touch-icon-57x57.png' rel='apple-touch-icon-precomposed' sizes='57x57'>
+    <link href='assets/images/meta_icons/apple-touch-icon-72x72.png' rel='apple-touch-icon-precomposed' sizes='72x72'>
+    <link href='assets/images/meta_icons/apple-touch-icon-114x114.png' rel='apple-touch-icon-precomposed' sizes='114x114'>
+    <link href='assets/images/meta_icons/apple-touch-icon-144x144.png' rel='apple-touch-icon-precomposed' sizes='144x144'>
+    <!-- / START - page related stylesheets [optional] -->
+    
+    <!-- / END - page related stylesheets [optional] -->
+    <!-- / bootstrap [required] -->
+    <link href="assets/stylesheets/bootstrap/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- / theme file [required] -->
+    <link href="assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
+    <!-- / coloring file [optional] (if you are going to use custom contrast color) -->
+    <link href="assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- / demo file [not required!] -->
+    <link href="assets/stylesheets/demo.css" media="all" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+      <script src="assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
+      <script src="assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  <body class='contrast-red '>
+    <header>
+      <nav class='navbar navbar-default'>
+        <a class='navbar-brand' href='index.html'>
+          <img width="81" height="21" class="logo" alt="Flatty" src="assets/images/logo.svg" />
+          <img width="21" height="21" class="logo-xs" alt="Flatty" src="assets/images/logo_xs.svg" />
+        </a>
+        <a class='toggle-nav btn pull-left' href='#'>
+          <i class='icon-reorder'></i>
+        </a>
+        <ul class='nav'>
+          <li class='dropdown light only-icon'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='icon-cog'></i>
+            </a>
+            <ul class='dropdown-menu color-settings'>
+              <li class='color-settings-body-color'>
+                <div class='color-title'>Body color</div>
+                <a data-change-to='assets/stylesheets/light-theme.css' href='#'>
+                  Light
+                  <small>(default)</small>
+                </a>
+                <a data-change-to='assets/stylesheets/dark-theme.css' href='#'>
+                  Dark
+                </a>
+                <a data-change-to='assets/stylesheets/dark-blue-theme.css' href='#'>
+                  Dark blue
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li class='color-settings-contrast-color'>
+                <div class='color-title'>Contrast color</div>
+                            <a data-change-to="contrast-red" href="#"><i class='icon-cog text-red'></i>
+                Red
+                <small>(default)</small>
+                </a>
+    
+                            <a data-change-to="contrast-blue" href="#"><i class='icon-cog text-blue'></i>
+                Blue
+                </a>
+    
+                            <a data-change-to="contrast-orange" href="#"><i class='icon-cog text-orange'></i>
+                Orange
+                </a>
+    
+                            <a data-change-to="contrast-purple" href="#"><i class='icon-cog text-purple'></i>
+                Purple
+                </a>
+    
+                            <a data-change-to="contrast-green" href="#"><i class='icon-cog text-green'></i>
+                Green
+                </a>
+    
+                            <a data-change-to="contrast-muted" href="#"><i class='icon-cog text-muted'></i>
+                Muted
+                </a>
+    
+                            <a data-change-to="contrast-fb" href="#"><i class='icon-cog text-fb'></i>
+                Facebook
+                </a>
+    
+                            <a data-change-to="contrast-dark" href="#"><i class='icon-cog text-dark'></i>
+                Dark
+                </a>
+    
+                            <a data-change-to="contrast-pink" href="#"><i class='icon-cog text-pink'></i>
+                Pink
+                </a>
+    
+                            <a data-change-to="contrast-grass-green" href="#"><i class='icon-cog text-grass-green'></i>
+                Grass green
+                </a>
+    
+                            <a data-change-to="contrast-sea-blue" href="#"><i class='icon-cog text-sea-blue'></i>
+                Sea blue
+                </a>
+    
+                            <a data-change-to="contrast-banana" href="#"><i class='icon-cog text-banana'></i>
+                Banana
+                </a>
+    
+                            <a data-change-to="contrast-dark-orange" href="#"><i class='icon-cog text-dark-orange'></i>
+                Dark orange
+                </a>
+    
+                            <a data-change-to="contrast-brown" href="#"><i class='icon-cog text-brown'></i>
+                Brown
+                </a>
+    
+              </li>
+            </ul>
+          </li>
+          <li class='dropdown medium only-icon widget'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <i class='icon-rss'></i>
+              <div class='label'>5</div>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-user text-success'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      John Doe signed up
+                      <small class='text-muted'>just now</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-inbox text-error'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      New Order #002
+                      <small class='text-muted'>3 minutes ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-comment text-warning'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      America Leannon commented Flatty with veeery long text.
+                      <small class='text-muted'>1 hour ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-user text-success'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      Jane Doe signed up
+                      <small class='text-muted'>last week</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='#'>
+                  <div class='widget-body'>
+                    <div class='pull-left icon'>
+                      <i class='icon-inbox text-error'></i>
+                    </div>
+                    <div class='pull-left text'>
+                      New Order #001
+                      <small class='text-muted'>1 year ago</small>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class='widget-footer'>
+                <a href='#'>All notifications</a>
+              </li>
+            </ul>
+          </li>
+          <li class='dropdown dark user-menu'>
+            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+              <img width="23" height="23" alt="Mila Kunis" src="assets/images/avatar.jpg" />
+              <span class='user-name'>Mila Kunis</span>
+              <b class='caret'></b>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='user_profile.html'>
+                  <i class='icon-user'></i>
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href='user_profile.html'>
+                  <i class='icon-cog'></i>
+                  Settings
+                </a>
+              </li>
+              <li class='divider'></li>
+              <li>
+                <a href='sign_in.html'>
+                  <i class='icon-signout'></i>
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <form action='search_results.html' class='navbar-form navbar-right hidden-xs' method='get'>
+          <button class='btn btn-link icon-search' name='button' type='submit'></button>
+          <div class='form-group'>
+            <input value="" class="form-control" placeholder="Search..." autocomplete="off" id="q_header" name="q" type="text" />
+          </div>
+        </form>
+      </nav>
+    </header>
+    <div id='wrapper'>
+      <div id='main-nav-bg'></div>
+      <nav id='main-nav'>
+        <div class='navigation'>
+          <div class='search'>
+            <form action='search_results.html' method='get'>
+              <div class='search-wrapper'>
+                <input value="" class="search-query form-control" placeholder="Search..." autocomplete="off" name="q" type="text" />
+                <button class='btn btn-link icon-search' name='button' type='submit'></button>
+              </div>
+            </form>
+          </div>
+          <ul class='nav nav-stacked'>
+            <li class=''>
+              <a href='index.html'>
+                <i class='icon-dashboard'></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class=''>
+                      <a class="dropdown-collapse" href="#"><i class='icon-edit'></i>
+              <span>Forms</span>
+              <i class='icon-angle-down angle-down'></i>
+              </a>
+      
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='form_styles.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Form styles and features</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='form_components.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Form components</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='validations.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Validations</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='wizard.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Wizard</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class='dropdown-collapse in' href='#'>
+                <i class='icon-tint'></i>
+                <span>UI Elements & Widgets</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='in nav nav-stacked'>
+                <li class=''>
+                  <a href='ui_elements.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>UI Elements</span>
+                  </a>
+                </li>
+                <li class='active'>
+                  <a href='widgets.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Widgets</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='buttons_and_icons.html'>
+                <i class='icon-star'></i>
+                <span>Buttons & Icons</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-cogs'></i>
+                <span>Components</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='charts.html'>
+                    <i class='icon-bar-chart'></i>
+                    <span>Charts</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='address_book.html'>
+                    <i class='icon-envelope'></i>
+                    <span>Address book</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='chats.html'>
+                    <i class='icon-comments'></i>
+                    <span>Chats</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='filetrees.html'>
+                    <i class='icon-list-ul'></i>
+                    <span>File trees</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fileupload.html'>
+                    <i class='icon-file'></i>
+                    <span>Fileupload</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='todo.html'>
+                    <i class='icon-list-alt'></i>
+                    <span>Todo list</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='wysiwyg.html'>
+                    <i class='icon-paste'></i>
+                    <span>WYSIWYG</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='tables.html'>
+                <i class='icon-table'></i>
+                <span>Tables</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='grid.html'>
+                <i class='icon-th'></i>
+                <span>Grid</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='type.html'>
+                <i class='icon-font'></i>
+                <span>Typography</span>
+              </a>
+            </li>
+            <li class=''>
+              <a href='calendar.html'>
+                <i class='icon-calendar'></i>
+                <span>Calendar</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-book'></i>
+                <span>Example pages</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='invoice.html'>
+                    <i class='icon-money'></i>
+                    <span>Invoice</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='gallery.html'>
+                    <i class='icon-picture'></i>
+                    <span>Gallery</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='timeline.html'>
+                    <i class='icon-time'></i>
+                    <span>Timeline</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='pricing_tables.html'>
+                    <i class='icon-table'></i>
+                    <span>Pricing tables</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='user_profile.html'>
+                    <i class='icon-user'></i>
+                    <span>User profile</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='err404.html' target='_blank'>
+                    <i class='icon-question-sign'></i>
+                    <span>404 Error</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='err500.html' target='_blank'>
+                    <i class='icon-cogs'></i>
+                    <span>500 Error</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='sign_in.html' target='_blank'>
+                    <i class='icon-signin'></i>
+                    <span>Sign in</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='faq.html'>
+                    <i class='icon-bullhorn'></i>
+                    <span>FAQ</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='orders.html'>
+                    <i class='icon-inbox'></i>
+                    <span>Orders</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='search_results.html'>
+                    <i class='icon-search'></i>
+                    <span>Search results</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='blank.html'>
+                    <i class='icon-circle-blank'></i>
+                    <span>Blank page</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a class='dropdown-collapse ' href='#'>
+                <i class='icon-cog'></i>
+                <span>Layouts</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li class=''>
+                  <a href='closed_navigation.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Closed navigation</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_header.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed header</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_navigation.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed navigation</span>
+                  </a>
+                </li>
+                <li class=''>
+                  <a href='fixed_navigation_and_header.html'>
+                    <i class='icon-caret-right'></i>
+                    <span>Fixed navigation & header</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class=''>
+              <a href='email_templates.html'>
+                <i class='icon-mail-reply'></i>
+                <span>Email templates</span>
+              </a>
+            </li>
+            <li>
+              <a class='dropdown-collapse' href='#'>
+                <i class='icon-folder-open-alt'></i>
+                <span>Four level dropdown</span>
+                <i class='icon-angle-down angle-down'></i>
+              </a>
+              <ul class='nav nav-stacked'>
+                <li>
+                  <a class='dropdown-collapse' href='#'>
+                    <i class='icon-caret-right'></i>
+                    <span>Second level</span>
+                    <i class='icon-angle-down angle-down'></i>
+                  </a>
+                  <ul class='nav nav-stacked'>
+                    <li>
+                      <a class='dropdown-collapse' href='#'>
+                        <i class='icon-caret-right'></i>
+                        <span>Third level</span>
+                        <i class='icon-angle-down angle-down'></i>
+                      </a>
+                      <ul class='nav nav-stacked'>
+                        <li>
+                          <a href='#'>
+                            <i class='icon-caret-right'></i>
+                            <span>Fourth level</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href='#'>
+                            <i class='icon-caret-right'></i>
+                            <span>Another fourth level</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <section id='content'>
+        <div class='container'>
+          <div class='row' id='content-wrapper'>
+            <div class='col-xs-12'>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='page-header'>
+                    <h1 class='pull-left'>
+                      <i class='icon-tint'></i>
+                      <span>Widgets</span>
+                    </h1>
+                    <div class='pull-right'>
+                      <ul class='breadcrumb'>
+                        <li>
+                          <a href='index.html'>
+                            <i class='icon-bar-chart'></i>
+                          </a>
+                        </li>
+                        <li class='separator'>
+                          <i class='icon-angle-right'></i>
+                        </li>
+                        <li>
+                          UI Elements & Widgets
+                        </li>
+                        <li class='separator'>
+                          <i class='icon-angle-right'></i>
+                        </li>
+                        <li class='active'>Widgets</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='group-header group-header-first'>
+                <div class='row'>
+                  <div class='col-sm-6 col-sm-offset-3'>
+                    <div class='text-center'>
+                      <h2>Quick navigation</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='row box box-transparent'>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link blue-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-comments'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link green-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-star'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link orange-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-magic'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link purple-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-eye-open'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link red-background'>
+                    <a href='orders.html'>
+                      <div class='header'>
+                        <div class='icon-inbox'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link muted-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-refresh'></div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class='text-center'>
+                <small class='text-muted'>OR</small>
+              </div>
+              <br>
+              <div class='row box box-transparent'>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link blue-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-comments'></div>
+                      </div>
+                      <div class='content'>Comments</div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link green-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-star'></div>
+                      </div>
+                      <div class='content'>Veeeery long title of this quick link</div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link orange-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-magic'></div>
+                      </div>
+                      <div class='content'>Magic</div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link purple-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-eye-open'></div>
+                      </div>
+                      <div class='content'>Show</div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link red-background'>
+                    <a href='orders.html'>
+                      <div class='header'>
+                        <div class='icon-inbox'></div>
+                      </div>
+                      <div class='content'>Orders</div>
+                    </a>
+                  </div>
+                </div>
+                <div class='col-xs-4 col-sm-2'>
+                  <div class='box-quick-link muted-background'>
+                    <a href='#'>
+                      <div class='header'>
+                        <div class='icon-refresh'></div>
+                      </div>
+                      <div class='content'>Spinning</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class='group-header'>
+                <div class='row'>
+                  <div class='col-sm-6 col-sm-offset-3'>
+                    <div class='text-center'>
+                      <h2>Statistics</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='row'>
+                <div class='col-sm-6'>
+                  <div class='box'>
+                    <div class='box-header'>
+                      <div class='title'>
+                        <div class='icon-inbox'></div>
+                        Orders
+                      </div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='row'>
+                      <div class='col-sm-6'>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-error'>191</h3>
+                          <small>New</small>
+                          <div class='text-error icon-inbox align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-warning'>311</h3>
+                          <small>In process</small>
+                          <div class='text-warning icon-check align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-info'>3</h3>
+                          <small>Pending</small>
+                          <div class='text-info icon-time align-right'></div>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='box-content box-statistic red-background'>
+                          <h3 class='title text-primary'>3</h3>
+                          <small>Shipped</small>
+                          <div class='text-primary icon-truck align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic green-background'>
+                          <h3 class='title text-success'>981</h3>
+                          <small>Completed</small>
+                          <div class='text-success icon-flag align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic muted-background'>
+                          <h3 class='title text-muted'>0</h3>
+                          <small>Canceled</small>
+                          <div class='text-muted icon-remove align-right'></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-3'>
+                  <div class='box'>
+                    <div class='box-header'>
+                      <div class='title'>
+                        <i class='icon-group'></i>
+                        Visitors
+                      </div>
+                    </div>
+                    <div class='row'>
+                      <div class='col-sm-12'>
+                        <div class='box-content box-statistic text-right'>
+                          <h3 class='title text-error'>9100</h3>
+                          <small>Unique</small>
+                          <div class='text-error icon-user align-left'></div>
+                        </div>
+                        <div class='box-content box-statistic text-right'>
+                          <h3 class='title text-warning'>41 000</h3>
+                          <small>Pageviews</small>
+                          <div class='text-warning icon-book align-left'></div>
+                        </div>
+                        <div class='box-content box-statistic text-right'>
+                          <h3 class='title text-primary'>12:21</h3>
+                          <small>Average time</small>
+                          <div class='text-primary icon-time align-left'></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-3'>
+                  <div class='box'>
+                    <div class='box-header'>
+                      <div class='title'>
+                        <i class='icon-comments'></i>
+                        Comments
+                      </div>
+                    </div>
+                    <div class='row'>
+                      <div class='col-sm-12'>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-error'>91</h3>
+                          <small>New</small>
+                          <div class='text-error icon-plus align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-success'>1</h3>
+                          <small>Approved</small>
+                          <div class='text-success icon-ok align-right'></div>
+                        </div>
+                        <div class='box-content box-statistic'>
+                          <h3 class='title text-info'>123</h3>
+                          <small>Pending</small>
+                          <div class='text-info icon-time align-right'></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='group-header'>
+                <div class='row'>
+                  <div class='col-sm-6 col-sm-offset-3'>
+                    <div class='text-center'>
+                      <h2>Boxes</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='row'>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header'>
+                      <div class='title'>Classic box</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header red-background'>
+                      <div class='title'>Colored</div>
+                      <div class='actions'>
+                        <div class='btn-group'>
+                          <a class='btn btn-white dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px'>
+                            Dropdown
+                            <span class='caret'></span>
+                          </a>
+                          <ul class='dropdown-menu pull-right'>
+                            <li>
+                              <a href='#'>Action</a>
+                            </li>
+                            <li>
+                              <a href='#'>Another action</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered box-nomargin'>
+                    <div class='box-header blue-background'>
+                      <div class='title'>Bordered</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class='hr-double'>
+              <div class='row'>
+                <div class='col-sm-4'>
+                  <div class='box box-collapsed box-nomargin'>
+                    <div class='box-header orange-background'>
+                      <div class='title'>Collapsed</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header'>
+                      <div class='title'>With label</div>
+                      <div class='actions'>
+                        <span class='label label-success'>
+                          31%
+                          <i class='icon-arrow-up'></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered box-nomargin'>
+                    <div class='box-header purple-background'>
+                      <div class='title'>Scrollable</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      <div class='scrollable' data-scrollable-height='78' data-scrollable-start='top'>
+                        Quod qui atque excepturi ipsum et adipisci fugiat voluptatem sit porro animi ut sunt tenetur ipsam culpa harum est laboriosam voluptas inventore optio eius nihil dicta iusto sapiente ut harum sapiente officia eum dolores autem id sunt aperiam perferendis ducimus voluptas quasi sed eos velit ab ipsum laudantium ut autem voluptatem eos sed voluptatum repudiandae quia illum debitis ipsum natus laboriosam eligendi non illo omnis et alias enim expedita aliquid inventore dolorem saepe sunt consectetur quo eum odit cumque neque enim sed qui maiores modi itaque perferendis ratione eos et saepe facere quis totam consequatur mollitia voluptatibus beatae officia qui veritatis placeat voluptas perspiciatis maxime nisi asperiores commodi distinctio inventore non dolor consequatur quo ut quia soluta sint harum ipsum quisquam repellendus corporis dignissimos nisi suscipit deserunt ipsam aut incidunt ut repudiandae sed officiis aut omnis consequuntur doloribus perferendis error qui quis voluptas nihil quasi et nihil eius omnis quia laudantium veniam minima et quae quo ea maxime consequuntur rerum ut neque ea dignissimos cum et animi assumenda nam ducimus et ducimus ut ut nobis corrupti vero delectus et sed beatae qui cumque sunt tempora qui aut reprehenderit eum ipsum rerum in itaque enim suscipit ut in accusamus nostrum ea iste illum molestiae voluptas corrupti quasi pariatur ipsa vero veniam sed repudiandae culpa culpa delectus omnis quia provident molestias libero eum nam qui voluptate autem omnis cum est hic eveniet et neque quis quos ut cupiditate natus ex aut reiciendis autem earum repudiandae sint consequuntur libero quia voluptatem libero est cupiditate consequatur consequatur laudantium et fugiat accusamus dolores et a ut nihil neque nulla et est suscipit eligendi molestiae iure totam tempora consequatur exercitationem quisquam corrupti quia minus fugit voluptatem quam saepe exercitationem et deserunt ea ut explicabo sunt doloremque sit reprehenderit eum facere repellendus nesciunt omnis perspiciatis saepe consectetur fugit voluptas voluptas laborum maxime numquam numquam alias itaque ea et accusantium qui inventore at fugiat deserunt vero ut deserunt aut sed sint natus incidunt architecto placeat ducimus asperiores assumenda mollitia est tempora maiores corrupti exercitationem aperiam praesentium officia est sit sunt rerum recusandae quaerat et earum animi esse sit veritatis ullam aut est nihil et debitis nisi ut eum et rerum quia quas tempora suscipit enim ut iusto cum accusantium dolores delectus sequi dolorem dolor tenetur excepturi neque omnis nihil cum dolorem iure velit est aut qui natus occaecati velit sunt sunt tempora dignissimos sunt sit libero asperiores earum itaque reprehenderit quia reprehenderit animi hic sed quis soluta et repellendus odio omnis aperiam deleniti tenetur laborum quia architecto maiores ab natus fugit nam magnam voluptatum recusandae voluptatem et sequi repellendus accusantium illum eos voluptatem atque fugit laboriosam suscipit autem non dolores error et cupiditate et voluptatibus consequuntur ut minus quia dolorum adipisci harum non delectus sed debitis sunt non voluptas molestiae sint ipsam molestiae ratione eos quibusdam velit sunt ut deserunt et non fugiat cum alias quis quo quis et est illo eos est cupiditate beatae consequatur adipisci provident labore similique consequatur dolore repudiandae quia expedita tempore explicabo est maxime sunt ut doloribus sunt odit commodi eligendi quia maxime consectetur labore sapiente placeat sit inventore aperiam dignissimos est sed est in et et sint voluptate non earum dolores est a sequi deserunt consequatur iste maxime sed laborum tenetur perspiciatis voluptas ut voluptatum error vel fuga exercitationem rem in iure dicta quaerat voluptatem qui at voluptate iusto distinctio laudantium velit officia placeat voluptatem sit soluta dolor inventore vero explicabo quaerat aspernatur quia quam deserunt quia corrupti eos quam minima molestias est laudantium reiciendis minima et ducimus omnis voluptatem aut molestiae repellendus nam nesciunt quia atque deleniti eos et voluptatem a qui rem sit fuga explicabo ut dignissimos dolorem ad vel neque a aliquam et velit et deleniti molestias veniam tempore consequatur rerum ad reprehenderit iste illum ut possimus cum ab est debitis corrupti quae inventore ab non earum consequatur iusto quos soluta incidunt enim necessitatibus harum odio nihil quia accusamus accusantium sunt non eveniet repellat consectetur quas illo et error quia aut quasi nulla eum et amet eveniet ut voluptas labore rerum ut dignissimos placeat alias non aut id corporis tempora enim dolores aut sed unde ut quo corporis odit qui quas eaque odit quisquam magnam voluptate veniam aut et nulla sunt ducimus sunt deleniti qui est aperiam ipsa aut reiciendis sed qui voluptates ut culpa sit quis ducimus beatae voluptatem at laboriosam corporis consectetur qui ratione et et quisquam quasi error minus excepturi sed veniam adipisci voluptatem minima optio eveniet aut non aut modi possimus et ad maxime ab facilis beatae explicabo autem soluta iure qui quibusdam dolor et consequatur veniam omnis vero omnis beatae sed vero assumenda repellendus molestiae soluta sit nemo aliquid totam fugiat eligendi a rerum ut ipsa dignissimos quam ullam saepe qui necessitatibus quia aut omnis culpa excepturi tempore maiores voluptatem veritatis optio totam dolor aut enim sunt blanditiis in magnam dolorum inventore eius debitis quas enim dolor itaque quis consequatur et nisi quaerat et ullam mollitia voluptatem eos repellendus enim voluptas velit recusandae et fugiat ducimus totam ab est voluptas quas magni rerum labore sequi minus exercitationem magnam temporibus esse velit eum id similique ut consequuntur nostrum qui pariatur inventore beatae aut eos sunt est odit quibusdam veritatis earum assumenda vel quo sit dolor ab mollitia voluptate dolorum recusandae eos dolorum nesciunt est fugit dignissimos incidunt voluptas et natus rem fugiat et velit et animi est esse id distinctio amet sed dignissimos labore culpa praesentium praesentium ipsa cumque ea consequatur enim unde fugiat accusantium excepturi non expedita explicabo velit adipisci reprehenderit voluptates accusantium suscipit optio rerum qui doloremque sunt occaecati sequi quaerat ad voluptas repellat rerum in vel iusto enim molestiae corrupti quo iusto magnam eum culpa iure qui tenetur ut dolor veniam ullam harum porro recusandae placeat enim nobis eveniet consequuntur ut nobis voluptatem quis labore dolor minus placeat rerum earum dolores labore beatae provident et at quo dolor et dolores officiis id quos omnis dolores dolore aut id et eos qui debitis aut et est fuga temporibus adipisci aut eum sed vel
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class='hr-double'>
+              <div class='row'>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header'>
+                      <div class='title'>
+                        <i class='icon-book'></i>
+                        With icon & padding
+                      </div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content box-padding'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-transparent box-nomargin'>
+                    <div class='box-header'>
+                      <div class='title'>Transparent</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered box-nomargin' style='margin-bottom: 0;'>
+                    <div class='box-header blue-background'>
+                      <div class='title'>Double padding</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content box-double-padding'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class='hr-double'>
+              <div class='row'>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header box-header-small red-background'>
+                      <div class='title'>
+                        <i class='icon-resize-vertical'></i>
+                        Small box
+                      </div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content box-padding'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered blue-border box-nomargin'>
+                    <div class='box-header box-header-small blue-background'>
+                      <div class='title'>Small & Bordered</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered box-nomargin' style='margin-bottom: 0;'>
+                    <div class='box-header box-header-small purple-background'>
+                      <div class='title'>Small & Scrollable</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      <div class='scrollable' data-scrollable-height='200' data-scrollable-start='top'>
+                        Asperiores est soluta eligendi voluptates omnis error architecto sit ut voluptates nostrum beatae expedita corporis error voluptatem ex molestiae molestias fugit rerum fugiat iure est voluptate suscipit dolores recusandae repellendus et et maxime sed excepturi et dolor eos ea sunt explicabo aliquam qui aut enim in dolor molestiae modi architecto voluptas dolore praesentium quae cupiditate eos illo quo et est est placeat alias consectetur temporibus eum exercitationem ut debitis cum eum cumque adipisci quas non labore consequatur harum aut molestiae doloribus quia tenetur tempore nulla ducimus quis ut dolorem voluptatibus recusandae error at velit eum ut fugiat aut sint cupiditate possimus occaecati in id voluptates laudantium sed occaecati ad reprehenderit unde autem ut aut voluptatibus aut architecto blanditiis voluptates inventore et eaque id enim ut velit praesentium autem nobis omnis perspiciatis maiores repellendus explicabo minima eius animi est vitae quos corporis at occaecati omnis consequuntur aut provident nemo explicabo sequi reiciendis voluptatem eum voluptas eveniet voluptatem aliquam non vel a fuga corporis sunt ea dolor non ipsa error fugit molestiae nemo sit repellat adipisci provident aspernatur consequuntur porro mollitia et totam tempora eum consequuntur voluptatem porro quis veniam est numquam minima fugiat laudantium non ut id et nisi voluptatem sed eligendi quo quis deleniti corrupti sunt ut consequatur rerum rerum laudantium praesentium sed non sint pariatur nobis sint dolores expedita dicta animi illo adipisci quasi ratione et repellat rerum architecto unde nihil quae sapiente est consequatur voluptate quam atque ut facere est temporibus perferendis deleniti consequuntur itaque optio asperiores vitae sapiente qui voluptas aliquam dolor sit omnis facilis facere ex possimus iusto voluptatem enim aspernatur nesciunt qui consequuntur neque architecto maxime veritatis voluptas illum qui eius qui qui aperiam distinctio quae quis et blanditiis consequatur dolor dolores nam mollitia nesciunt eum ut sit quia quis aspernatur et quia magnam recusandae nihil aperiam eum iusto est voluptatem consequatur est ut aut quo quos nihil consequatur est ab eaque eveniet eveniet dolores hic aspernatur ullam earum voluptate quas aperiam itaque eius unde non autem possimus velit dolor eum aut sed non doloribus explicabo aliquam inventore reprehenderit rerum nihil temporibus aut rem recusandae fugiat quae repellendus ut esse ut nihil nemo pariatur iste omnis ut velit eos id quis quia qui harum error id reiciendis ut maiores officiis iusto consequatur quo non sit provident ipsum consectetur sunt nam voluptas enim consequatur perferendis aut aliquam optio impedit repellendus ut voluptatem occaecati laboriosam ab expedita rerum omnis in voluptatum blanditiis beatae optio odio totam aspernatur dolor accusamus iste eligendi sit sunt ut sunt inventore et vero vel cupiditate voluptatem iste id nam perferendis aut aut corporis nulla dolore incidunt nihil earum qui quae sit aliquid illo eos possimus vero enim magnam aut dolor voluptas soluta similique laudantium itaque dolorem maxime distinctio autem nulla quis iste dolorum temporibus molestias recusandae non totam et laboriosam aut eius necessitatibus possimus fugit facilis voluptatem porro autem voluptatem at rerum voluptatem qui labore similique aut maxime hic tempora autem mollitia reprehenderit accusantium quia inventore molestiae consequatur est enim aperiam debitis similique consequuntur dignissimos minus rerum voluptas rerum laudantium voluptatem ut odit sed fugit laudantium reprehenderit quas vero perspiciatis quibusdam illum rerum adipisci non voluptatem ut laudantium sit sint nulla a aperiam aliquam corrupti distinctio atque temporibus et iusto modi reprehenderit aut et cupiditate eveniet ab iure voluptatum ad qui fugit voluptates consequatur dolore natus voluptatibus et quia ab et ut accusamus maxime commodi repellendus cupiditate id illo blanditiis tempora ea porro ducimus et ut quam qui molestias enim voluptas quia nostrum eum est facere libero distinctio temporibus et dignissimos blanditiis labore corrupti deleniti et et occaecati commodi eos officiis autem quas excepturi et esse sint ut veniam velit cum maxime sed pariatur saepe maxime quis autem accusamus dolor aut nostrum perferendis et dolorum id maiores ut ea a ipsam aperiam molestiae repudiandae non impedit qui nam eum consequuntur qui et qui qui ratione aliquid et corrupti rem dolore consequuntur nesciunt voluptatem eius ipsa eius eaque amet suscipit debitis velit assumenda quia consequuntur et quos quos quisquam magnam recusandae velit id voluptas minus enim ipsam architecto aspernatur sunt modi dolor et ut at dolor et a velit fuga reiciendis est ex deleniti laudantium vitae sint deleniti cupiditate sed perspiciatis est placeat accusamus distinctio error nemo neque excepturi neque quia doloribus culpa quae sunt voluptatem eius voluptatibus sapiente laboriosam sed non ut eaque quis eum consequatur iste ipsum et modi velit earum impedit vel nisi totam quisquam voluptas voluptas consectetur quia consequatur omnis eligendi dolor quibusdam eligendi in sint impedit debitis minus expedita officia perspiciatis fugiat placeat earum reiciendis in perspiciatis in natus temporibus qui velit alias optio vitae commodi ipsum aliquam rem consequatur sunt nihil autem a accusamus temporibus quasi dignissimos repudiandae debitis distinctio blanditiis ut vero cumque aut molestiae eligendi dolorem distinctio nihil quae dolores consequuntur aut pariatur non atque debitis officia error adipisci aliquam et ea temporibus facere nihil ut nostrum doloribus consequatur et ut earum debitis omnis rem commodi veniam ut repellat rerum perspiciatis quos commodi atque vero et facilis eum iusto et delectus beatae quia quo dolore fuga sed voluptates laudantium aspernatur doloribus omnis et impedit est quis delectus dolore pariatur laboriosam numquam voluptatem illum mollitia maxime saepe laboriosam dolorem culpa modi minima tempora quae doloribus in praesentium assumenda eaque ut laudantium voluptas quasi non quos beatae et aut id aperiam ex ullam ipsa eos quisquam doloribus ad sed quibusdam deleniti in labore neque molestias et sed laborum ducimus id perferendis eligendi placeat commodi quisquam qui debitis ipsa explicabo aut sit consequatur natus ea excepturi iure mollitia odit sequi quidem iste dolor molestias consectetur voluptatum eos ad quam sed laudantium in voluptatem accusantium corporis aliquid veritatis laborum a tenetur aut ab qui sunt alias et magnam veniam in perferendis temporibus iusto sed delectus dolor voluptas accusantium non aut unde dolor architecto ut ut beatae itaque veniam fugit laudantium perferendis error sit nulla temporibus odio sed inventore quia labore sint est accusantium error odit dolorum omnis odio modi ea facilis placeat qui provident voluptatem tempore molestiae rerum dolore
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr class='hr-double'>
+              <div class='row'>
+                <div class='col-sm-4'>
+                  <div class='box box-nomargin'>
+                    <div class='box-header box-header-small green-background'>
+                      <div class='title'>
+                        <i class='icon-resize-vertical'></i>
+                        With toolbox
+                      </div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content'>
+                      <div class='box-toolbox box-toolbox-top'>
+                        <div class='pull-left'>
+                          <a class='btn btn-white'>
+                            <i class='icon-bold'></i>
+                          </a>
+                          <a class='btn btn-white'>
+                            <i class='icon-italic'></i>
+                          </a>
+                        </div>
+                        <div class='pull-right'>
+                          <a class='btn btn-white'>
+                            <i class='icon-eye-open'></i>
+                          </a>
+                        </div>
+                      </div>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered muted-border box-nomargin'>
+                    <div class='box-header box-header-small orange-background'>
+                      <div class='title'>Bottom toolbox</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content box-padding'>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                      <div class='box-toolbox box-toolbox-bottom'>
+                        <div class='pull-left'>
+                          <a class='btn btn-white'>
+                            <i class='icon-bold'></i>
+                          </a>
+                          <a class='btn btn-white'>
+                            <i class='icon-italic'></i>
+                          </a>
+                        </div>
+                        <div class='pull-right'>
+                          <a class='btn btn-white'>
+                            <i class='icon-eye-open'></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class='col-sm-4'>
+                  <div class='box box-bordered box-nomargin'>
+                    <div class='box-header box-header-small muted-background'>
+                      <div class='title'>Top & Bottom toolbox</div>
+                      <div class='actions'>
+                        <a class="btn box-remove btn-xs btn-link" href="#"><i class='icon-remove'></i>
+                        </a>
+                        
+                        <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                        </a>
+                      </div>
+                    </div>
+                    <div class='box-content box-double-padding'>
+                      <div class='box-toolbox box-toolbox-top'>
+                        <div class='pull-left'>
+                          <a class='btn btn-white'>
+                            <i class='icon-bold'></i>
+                          </a>
+                          <a class='btn btn-white'>
+                            <i class='icon-italic'></i>
+                          </a>
+                        </div>
+                        <div class='pull-right'>
+                          <a class='btn btn-white'>
+                            <i class='icon-eye-open'></i>
+                          </a>
+                        </div>
+                      </div>
+                      Explicabo voluptate eos ipsam et recusandae quasi laudantium est velit nihil perspiciatis minima corrupti neque sint dolores dolorum consequatur voluptatem
+                      <div class='box-toolbox box-toolbox-bottom'>
+                        <div class='pull-left'>
+                          <a class='btn btn-white'>
+                            <i class='icon-bold'></i>
+                          </a>
+                          <a class='btn btn-white'>
+                            <i class='icon-italic'></i>
+                          </a>
+                        </div>
+                        <div class='pull-right'>
+                          <a class='btn btn-white'>
+                            <i class='icon-eye-open'></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer id='footer'>
+            <div class='footer-wrapper'>
+              <div class='row'>
+                <div class='col-sm-6 text'>
+                  Copyright © 2013 Your Project Name
+                </div>
+                <div class='col-sm-6 buttons'>
+                  <a class="btn btn-link" href="http://www.bublinastudio.com/flatty">Preview</a>
+                  <a class="btn btn-link" href="https://wrapbootstrap.com/theme/flatty-flat-administration-template-WB0P6NR1N">Purchase</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </div>
+    <!-- / jquery [required] -->
+    <script src="assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+    <!-- / jquery mobile (for touch events) -->
+    <script src="assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
+    <!-- / jquery migrate (for compatibility with new jquery) [required] -->
+    <script src="assets/javascripts/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- / jquery ui -->
+    <script src="assets/javascripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- / jQuery UI Touch Punch -->
+    <script src="assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <!-- / bootstrap [required] -->
+    <script src="assets/javascripts/bootstrap/bootstrap.js" type="text/javascript"></script>
+    <!-- / modernizr -->
+    <script src="assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
+    <!-- / retina -->
+    <script src="assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
+    <!-- / theme file [required] -->
+    <script src="assets/javascripts/theme.js" type="text/javascript"></script>
+    <!-- / demo file [not required!] -->
+    <script src="assets/javascripts/demo.js" type="text/javascript"></script>
+    <!-- / START - page related files and scripts [optional] -->
+    <script src="assets/javascripts/plugins/slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- / END - page related files and scripts [optional] -->
+  </body>
+</html>

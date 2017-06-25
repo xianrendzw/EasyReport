@@ -1,0 +1,18 @@
+.mention_name {
+  font-size: 12px; }
+
+.mention_username {
+  font-size: 12px;
+  color: #999; }
+
+.mention_image {
+  float: left;
+  margin-right: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  width: 20px;
+  height: 20px; }
+
+.active .mention_username {
+  color: #fff; }

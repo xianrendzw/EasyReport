@@ -92,7 +92,7 @@
     </sql>
     <!-- insert -->
     <insert id="insert" parameterType="java.util.Map">
-        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.lang.Integer" keyProperty="record.id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into

@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.easytoolsoft.easyreport.engine.data.ColumnType;
@@ -19,17 +21,19 @@ import com.easytoolsoft.easyreport.engine.data.ReportParameter;
 import com.easytoolsoft.easyreport.engine.data.ReportQueryParamItem;
 import com.easytoolsoft.easyreport.engine.exception.SQLQueryException;
 import com.easytoolsoft.easyreport.engine.util.JdbcUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author tomdeng
  */
-public abstract class AbstractQueryer {
+public abstract class AbstractQueryer implements Queryer {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected final ReportDataSource dataSource;
     protected final ReportParameter parameter;
     protected final List<ReportMetaDataColumn> metaDataColumns;
+    private final Pattern SQL_LIMIT_PATTERN = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
 
     protected AbstractQueryer(final ReportDataSource dataSource, final ReportParameter parameter) {
         this.dataSource = dataSource;
@@ -39,6 +43,7 @@ public abstract class AbstractQueryer {
             new ArrayList<>(this.parameter.getMetaColumns());
     }
 
+    @Override
     public List<ReportMetaDataColumn> parseMetaDataColumns(final String sqlText) {
         Connection conn = null;
         Statement stmt = null;
@@ -68,6 +73,7 @@ public abstract class AbstractQueryer {
         return columns;
     }
 
+    @Override
     public List<ReportQueryParamItem> parseQueryParamItems(final String sqlText) {
         Connection conn = null;
         Statement stmt = null;
@@ -99,10 +105,12 @@ public abstract class AbstractQueryer {
         return rows;
     }
 
+    @Override
     public List<ReportMetaDataColumn> getMetaDataColumns() {
         return this.metaDataColumns;
     }
 
+    @Override
     public List<ReportMetaDataRow> getMetaDataRows() {
         Connection conn = null;
         Statement stmt = null;
@@ -153,7 +161,12 @@ public abstract class AbstractQueryer {
      * @return 预处理后的sql语句
      */
     protected String preprocessSqlText(final String sqlText) {
-        return sqlText;
+        String sql = StringUtils.stripEnd(sqlText.trim(), ";");
+        Matcher matcher = SQL_LIMIT_PATTERN.matcher(sqlText);
+        if (matcher.find()) {
+            sql = matcher.replaceFirst("");
+        }
+        return sql + " limit 1";
     }
 
     /**
