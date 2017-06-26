@@ -26,10 +26,10 @@ public class MemberDataSourceConfig extends AbstractDataSourceConfig {
     static final String PACKAGE = "com.easytoolsoft.easyreport.membership.data";
     static final String MAPPER_LOCATION = "classpath*:mybatis/mapper/membership/*.xml";
 
-    @Value("${easytoolsoft.easyreport.member.datasource.type}")
+    @Value("${easyreport.member.datasource.type}")
     private Class<? extends DataSource> dataSourceType;
 
-    @ConfigurationProperties(prefix = "easytoolsoft.easyreport.member.datasource")
+    @ConfigurationProperties(prefix = "easyreport.member.datasource")
     @Bean(name = "memberDataSource")
     public DataSource dataSource() {
         return DataSourceBuilder.create()

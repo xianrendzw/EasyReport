@@ -1,10 +1,8 @@
 package com.easytoolsoft.easyreport.web.controller.member;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.easytoolsoft.easyreport.membership.service.EventService;
 import com.easytoolsoft.easyreport.support.i18n.LocaleUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,8 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/member")
 public class LoginController {
-    @Resource
-    private EventService eventService;
 
     @GetMapping("/login/{lang}")
     public ModelAndView language(@PathVariable final String lang, final HttpServletRequest request,
@@ -36,7 +32,6 @@ public class LoginController {
     @GetMapping(value = {"/login"})
     public String login(final HttpServletRequest request, final HttpServletResponse response) {
         LocaleUtils.setInitLocale(request, response);
-        log.info(LocaleUtils.getMessage("view.member.login.account"));
         return "member/login";
     }
 }

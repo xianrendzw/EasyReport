@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.easytoolsoft.easyreport.membership.domain.User;
 import com.easytoolsoft.easyreport.support.consts.UserAuthConsts;
 import com.easytoolsoft.easyreport.support.security.MembershipFacade;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Autowired
-    private MembershipFacade<UserDetails> membershipFacade;
+    private MembershipFacade<User> membershipFacade;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws

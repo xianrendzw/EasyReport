@@ -3,9 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/body}">
 <head>
-    <title th:text="|#{view.member.login.signIn}|">Sign in</title>
-    <script src="../../static/custom/js/member/login.js"
-            th:src="@{'/custom/js/member/login.js?v='+${version}}"></script>
+    <title th:text="#{view.member.login.signIn}">Sign in</title>
+    <!--<script src="../../static/custom/js/member/login.js"-->
+            <!--th:src="@{'/custom/js/member/login.js?v='+${version}}"></script>-->
 </head>
 <body layout:fragment="content" class="contrast-blue login contrast-background">
 <div class="middle-container">

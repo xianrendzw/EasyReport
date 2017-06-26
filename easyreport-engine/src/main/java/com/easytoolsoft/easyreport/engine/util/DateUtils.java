@@ -15,6 +15,7 @@ import java.util.TimeZone;
  */
 public class DateUtils {
     private static final String YYYY_MM_DD = "yyyy-MM-dd";
+    private static final String YYYYMMDD = "yyyyMMdd";
 
     /**
      * 获取当前时间的yyyy-MM-dd格式字符串
@@ -77,13 +78,14 @@ public class DateUtils {
     public static String getUtcDate(final String date, final String pattern) {
         try {
             final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            final Date now = Calendar.getInstance().getTime();
-            final Date theDate = format.parse(date);
-            theDate.setHours(now.getHours());
-            theDate.setMinutes(now.getMinutes());
+            final Calendar now = Calendar.getInstance();
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(format.parse(date));
+            calendar.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
+            calendar.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
             format.applyPattern(pattern);
-            return format.format(theDate);
+            return format.format(calendar.getTime());
         } catch (final ParseException e) {
             throw new RuntimeException(e);
         }
@@ -123,7 +125,7 @@ public class DateUtils {
      */
     public static String add(final int date, final int days) {
         try {
-            final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            final SimpleDateFormat format = new SimpleDateFormat(YYYYMMDD);
             final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(String.valueOf(date)));
             cd.add(Calendar.DAY_OF_YEAR, days);
@@ -162,7 +164,7 @@ public class DateUtils {
      */
     public static String addHours(final int date, final int hours) {
         try {
-            final SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            final SimpleDateFormat format = new SimpleDateFormat(YYYYMMDD);
             final Calendar cd = Calendar.getInstance();
             cd.setTime(format.parse(String.valueOf(date)));
             cd.add(Calendar.HOUR_OF_DAY, hours);

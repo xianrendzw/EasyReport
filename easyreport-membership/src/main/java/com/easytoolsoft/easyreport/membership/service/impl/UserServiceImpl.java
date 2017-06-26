@@ -19,7 +19,7 @@ public class UserServiceImpl
     extends AbstractCrudService<UserRepository, User, UserExample, Integer>
     implements UserService {
 
-    @Resource(name = "ShiroPasswordService")
+    @Resource
     private PasswordService passwordService;
 
     @Override

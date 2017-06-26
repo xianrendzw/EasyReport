@@ -53,12 +53,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .formLogin().loginPage("/member/login").and()
+            .formLogin()
+            .loginPage("/member/login")
+            .defaultSuccessUrl("/home/index")
+            .permitAll()
+            .and()
+            .logout()
+            .logoutUrl("/member/logout")
+            .logoutSuccessUrl("/member/login")
+            .permitAll()
+            .and()
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-            .antMatchers("/v1/auth/**", "/v1/locale/**").permitAll()
-            .antMatchers("/v1/**").authenticated()
-            .anyRequest().permitAll().and()
+            .antMatchers(
+                "/home/**",
+                "/views/**",
+                "/rest/**"
+            ).authenticated()
+            .anyRequest().permitAll()
+            .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and();
 
