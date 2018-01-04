@@ -289,6 +289,11 @@
                 <artifactId>aviator</artifactId>
                 <version>${aviator.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.codehaus.janino</groupId>
+                <artifactId>janino</artifactId>
+                <version>3.0.8</version>
+            </dependency>
             <!-- swagger for spring boot jersey -->
             <dependency>
                 <groupId>io.swagger</groupId>

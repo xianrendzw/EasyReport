@@ -1,0 +1,82 @@
+server:
+  port: @server.port@
+  error:
+    whitelabel:
+      enabled: false
+  tomcat:
+    max-threads: 2000
+    accept-count: 2000
+    max-connections: 5000
+    min-spare-threads: 4
+  connection-timeout: 5000
+#
+# easytoolsoft
+#
+easytoolsoft:
+    easyreport:
+        common:
+            item1: '@easytoolsoft.easyreport.common.item1@'
+            item2: '@easytoolsoft.easyreport.common.item2@'
+        env:
+            app-name: EasyReport
+            name: '@easytoolsoft.easyreport.env.name@'
+            version: '@easytoolsoft.easyreport.env.version@'
+        member:
+            datasource:
+                driver-class-name: com.mysql.jdbc.Driver
+                max-active: 10
+                min-idle: 0
+                password: '@easytoolsoft.easyreport.member.datasource.password@'
+                type: com.alibaba.druid.pool.DruidDataSource
+                url: '@easytoolsoft.easyreport.member.datasource.url@'
+                username: '@easytoolsoft.easyreport.member.datasource.username@'
+        meta:
+            datasource:
+                driver-class-name: com.mysql.jdbc.Driver
+                max-active: 10
+                min-idle: 0
+                password: '@easytoolsoft.easyreport.meta.datasource.password@'
+                type: com.alibaba.druid.pool.DruidDataSource
+                url: '@easytoolsoft.easyreport.meta.datasource.url@'
+                username: '@easytoolsoft.easyreport.meta.datasource.username@'
+        shiro:
+            filters: '@easytoolsoft.easyreport.shiro.filters@'
+
+#
+# spring
+#
+spring:
+    messages:
+        always-use-message-format: true
+        basename: messages/messages
+        cache-seconds: 3600
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: HTML
+#
+# logging
+#
+logging:
+  config: @logging.config@
+  path: @logging.path@
+  level:
+    default: @logging.level.default@
+    ucenter: @logging.level.easyreport@
+    mybatis: @logging.level.mybatis@
+#
+# management
+#
+management:
+    security:
+        enabled: false
+    add-application-context-header: false
+#
+# custom spring mvc
+#
+my:
+    spring:
+        mvc:
+            response-body:
+                base-package: com.easytoolsoft.easyreport.web.controller

@@ -13,7 +13,7 @@
     <name>easyreport-web</name>
     <description>controller与web视图模块</description>
     <properties>
-        <start-class>com.easytoolsoft.easyreport.web.Application</start-class>
+        <start-class>com.easytoolsoft.easyreport.web.WebApplication</start-class>
         <docker.image.prefix>easytoolsoft</docker.image.prefix>
         <push.image>false</push.image>
     </properties>
@@ -118,6 +118,10 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
         </dependency>
         <!-- test -->
         <dependency>

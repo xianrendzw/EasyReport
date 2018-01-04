@@ -1,7 +1,5 @@
 package com.easytoolsoft.easyreport.scheduler.config.datasource;
 
-import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -13,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import javax.sql.DataSource;
 
 /**
  * 报表业务数据源配置类
@@ -26,7 +26,7 @@ public class MetaDataSourceConfig extends AbstractDataSourceConfig {
     static final String PACKAGE = "com.easytoolsoft.easyreport.report.data";
     static final String MAPPER_LOCATION = "classpath*:mybatis/mapper/report/*.xml";
 
-    @Value("${easytoolsoft.easyreport.report.datasource.type}")
+    @Value("${easytoolsoft.easyreport.meta.datasource.type}")
     private Class<? extends DataSource> dataSourceType;
 
     @ConfigurationProperties(prefix = "easytoolsoft.easyreport.report.datasource")

@@ -1,14 +1,13 @@
 package com.easytoolsoft.easyreport.web.config.properties;
 
-import javax.validation.Valid;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 
 /**
  * 自定义配置类
@@ -21,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @Configuration
 @ConfigurationProperties(prefix = "easytoolsoft.easyreport")
-@PropertySource("classpath:conf/properties/config.properties")
 public class ConfigProperties {
     @Valid
     private final Shiro shiro = new Shiro();
