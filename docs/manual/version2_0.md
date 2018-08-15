@@ -41,8 +41,8 @@ EasyReport(ver2.0) 用户操作手册
   2.3 找到 your_git_repository/EasyReport/docs/db/2.0/examples_db.zip, 解压后执行该sql脚本,创建数据库及示例数据。
       打开页面后(第五步做完),在数据源管理中,更改示例数据源的用户名密码
 * step3:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
-* step4:mvn clean package -Dmaven.test.skip=true -P${env} (${env}变量说明:dev表示开发环境,prod表示生产，test表示测试)
-* step5:经过step4之后会在target目录生成easyreport-web.war文件，然后把这个文件部署到tomcat,jeasyreport,jetty等容器中
+* step4:mvn -DskipTests package
+* step5:经过step4, 如果没有报错，mvn spring-boot:run -pl easyreport-web 启动程序，然后就可以通过浏览器localhost:8080查看
 
 ### 2.2 从发布包安装(From Release Packages)
 首先确定安装好[jre1.8][]或[jdk1.8][]与[MySQL5+][]，然后按如下步骤操作：
