@@ -55,6 +55,14 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
+    h2:
+        console:
+            enabled: true
+            path: /h2
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: none
 #
 # logging
 #
