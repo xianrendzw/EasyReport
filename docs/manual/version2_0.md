@@ -33,25 +33,12 @@ EasyReport(ver2.0) 用户操作手册
 系统默认登录用户:**admin** 密码:**123456**
 
 ### 2.1 从源代码安装(From Source Code)
-首先确定安装好[jdk1.8][]与[maven3][]、[MySQL5+][]，并配置好maven仓库，然后按如下步骤操作：
+首先确定安装好[jdk1.8][]与[maven3][]，并配置好maven仓库，然后按如下步骤操作：
 * step1:git clone https://github.com/xianrendzw/EasyReport.git
-* step2:创建元数据库和示例数据库:
-  2.1 自己新建一个或者使用原有的mysql数据库, 用某个账号密码测试,可以进行创建库等操作
-  2.2 找到 your_git_repository/EasyReport/docs/db/2.0/easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
-  2.3 找到 your_git_repository/EasyReport/docs/db/2.0/examples_db.zip, 解压后执行该sql脚本,创建数据库及示例数据。
-      打开页面后(第五步做完),在数据源管理中,更改示例数据源的用户名密码
-* step3:修改 your_git_repository/EasyReport/easyreport-web/src/main/filters/${env}.properties 数据库连接字符串的IP、用户与密码
-* step4:mvn -DskipTests package
-* step5:经过step4, 如果没有报错，mvn spring-boot:run -pl easyreport-web 启动程序，然后就可以通过浏览器localhost:8080查看
+* step2:mvn -DskipTests package
+* step3:经过step2, 如果没有报错，mvn spring-boot:run -pl easyreport-web 启动程序，然后就可以通过浏览器localhost:8080查看
 
-### 2.2 从发布包安装(From Release Packages)
-首先确定安装好[jre1.8][]或[jdk1.8][]与[MySQL5+][]，然后按如下步骤操作：
-* step1:直接从[release][]下载最新版本war文件
-* step2:直接从[release][]下载db.zip并解压找到easyreport2.sql,并在Mysql中执行该sql脚本,创建数据库及表结构、初始数据
-* step3:修改war文件里WEB-INF/classes/config/easyreport/spring/spring-datasource.xml中数据库连接字符串的IP、用户与密码
-* step4:然后把war这个文件部署到tomcat,jeasyreport,jetty等容器中
-
-### 2.3 定时任务程序部署(Scheduled Task Deamon)
+### 2.2 定时任务程序部署(Scheduled Task Deamon)
 有时需要把报表定时（每天、每月，每季度等）以邮件形式发布给相关的人员，因此需要定时任务调度程序，常用的调度程序也很多（linux:at,crontab;windows:计划任务）,本工具实现一个简单的调度程序。
 **说明：**该程序是可选的，如果不需要定时把报表以邮件方式发布，则可不部署该程序。  具体安装与部署步骤如下:
 * step1:cd yourgitrepository/EasyReport/easyreport-scheduler
