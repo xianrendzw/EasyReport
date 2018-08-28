@@ -112,7 +112,7 @@ public abstract class AbstractQueryer {
             this.logger.debug(this.parameter.getSqlText());
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(this.parameter.getSqlText());
+            rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText()));
             return this.getMetaDataRows(rs, this.getSqlColumns(this.parameter.getMetaColumns()));
         } catch (final Exception ex) {
             this.logger.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
