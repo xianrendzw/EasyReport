@@ -24,19 +24,13 @@ easytoolsoft:
         member:
             datasource:
                 driver-class-name: org.h2.Driver
-                max-active: 10
-                min-idle: 0
                 password: '@easytoolsoft.easyreport.member.datasource.password@'
-                type: com.alibaba.druid.pool.DruidDataSource
                 url: '@easytoolsoft.easyreport.member.datasource.url@'
                 username: '@easytoolsoft.easyreport.member.datasource.username@'
         meta:
             datasource:
                 driver-class-name: org.h2.Driver
-                max-active: 10
-                min-idle: 0
                 password: '@easytoolsoft.easyreport.meta.datasource.password@'
-                type: com.alibaba.druid.pool.DruidDataSource
                 url: '@easytoolsoft.easyreport.meta.datasource.url@'
                 username: '@easytoolsoft.easyreport.meta.datasource.username@'
         shiro:

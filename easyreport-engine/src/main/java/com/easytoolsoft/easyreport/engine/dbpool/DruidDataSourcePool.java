@@ -30,6 +30,7 @@ public class DruidDataSourcePool implements DataSourcePoolWrapper {
                 MapUtils.getInteger(rptDs.getOptions(), "timeBetweenEvictionRunsMillis", 60000));
             dataSource.setMinEvictableIdleTimeMillis(
                 MapUtils.getInteger(rptDs.getOptions(), "minEvictableIdleTimeMillis", 300000));
+            dataSource.setValidationQuery("select 1");
             dataSource.setTestWhileIdle(MapUtils.getBoolean(rptDs.getOptions(), "testWhileIdle", true));
             dataSource.setTestOnBorrow(MapUtils.getBoolean(rptDs.getOptions(), "testOnBorrow", false));
             dataSource.setTestOnReturn(MapUtils.getBoolean(rptDs.getOptions(), "testOnReturn", false));
