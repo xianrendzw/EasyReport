@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.web.config.datasource;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -7,7 +8,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,16 +25,12 @@ import org.springframework.transaction.support.TransactionTemplate;
  * 用户与权限业务数据源配置类
  *
  * @author Tom Deng
- * @date 2017-03-28
  **/
 @Configuration
 @MapperScan(basePackages = MemberDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "memberSqlSessionFactory")
 public class MemberDataSourceConfig extends AbstractDataSourceConfig {
     static final String PACKAGE = "com.easytoolsoft.easyreport.membership.data";
     static final String MAPPER_LOCATION = "classpath*:mybatis/mapper/membership/*.xml";
-
-    @Value("${easytoolsoft.easyreport.member.datasource.type}")
-    private Class<? extends DataSource> dataSourceType;
 
     @Bean
     @Primary
@@ -44,12 +40,11 @@ public class MemberDataSourceConfig extends AbstractDataSourceConfig {
     }
 
     @Primary
-    //@ConfigurationProperties(prefix = "easytoolsoft.easyreport.member.datasource")
     @Bean(name = "memberDataSource")
     public DataSource dataSource() {
-        DataSource dsh =  firstDataSourceProperties().initializeDataSourceBuilder().build();
-        //DataSource dsh = DataSourceBuilder.create().build();
-
+        DruidDataSource dsh = firstDataSourceProperties().initializeDataSourceBuilder().type
+            (DruidDataSource.class).build();
+        dsh.setValidationQuery("select 1");
         Resource initSchema = new ClassPathResource("schema.sql");
         Resource initData = new ClassPathResource("data.sql");
         DatabasePopulator databasePopulator = new ResourceDatabasePopulator(initSchema, initData);
@@ -73,7 +68,7 @@ public class MemberDataSourceConfig extends AbstractDataSourceConfig {
     @Primary
     @Bean(name = "memberSqlSessionTemplate")
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("memberSqlSessionFactory") final
-                                                 SqlSessionFactory sqlSessionFactory)
+    SqlSessionFactory sqlSessionFactory)
         throws Exception {
         return this.createSqlSessionTemplate(sqlSessionFactory);
     }
@@ -81,7 +76,7 @@ public class MemberDataSourceConfig extends AbstractDataSourceConfig {
     @Primary
     @Bean(name = "memberTransactionTemplate")
     public TransactionTemplate transactionTemplate(@Qualifier("memberTransactionManager") final
-                                                   DataSourceTransactionManager transactionManager)
+    DataSourceTransactionManager transactionManager)
         throws Exception {
         return this.createTransactionTemplate(transactionManager);
     }

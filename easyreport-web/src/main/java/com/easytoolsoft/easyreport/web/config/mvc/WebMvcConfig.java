@@ -8,6 +8,7 @@ import com.easytoolsoft.easyreport.support.resolver.CurrentUserMethodArgumentRes
 import com.easytoolsoft.easyreport.support.resolver.ResponseBodyWrapFactoryBean;
 import com.easytoolsoft.easyreport.web.spring.converter.CustomMappingJackson2HttpMessageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -16,7 +17,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 /**
@@ -24,7 +25,13 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
  * @date 2017-04-11
  **/
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Bean
+    LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
+
     @Override
     public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {
         converters.add(messageConverter());

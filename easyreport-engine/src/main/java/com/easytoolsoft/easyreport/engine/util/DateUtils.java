@@ -77,13 +77,17 @@ public class DateUtils {
     public static String getUtcDate(final String date, final String pattern) {
         try {
             final SimpleDateFormat format = new SimpleDateFormat(YYYY_MM_DD);
-            final Date now = Calendar.getInstance().getTime();
+            final Calendar now = Calendar.getInstance();
+
             final Date theDate = format.parse(date);
-            theDate.setHours(now.getHours());
-            theDate.setMinutes(now.getMinutes());
+            Calendar accDate = Calendar.getInstance();
+            accDate.setTime(theDate);
+            accDate.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
+            accDate.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
+
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
             format.applyPattern(pattern);
-            return format.format(theDate);
+            return format.format(accDate.getTime());
         } catch (final ParseException e) {
             throw new RuntimeException(e);
         }

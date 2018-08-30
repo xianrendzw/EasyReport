@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
  * @date 2017-03-25
  */
 @Data
-@NoArgsConstructor
 public class PageInfo {
     public static final String SORT_TYPE_ASC = "asc";
     public static final String SORT_TYPE_DES = "desc";

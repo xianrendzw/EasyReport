@@ -7,11 +7,12 @@ import org.apache.catalina.servlets.DefaultServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
  * @author Tom Deng
- * @date 2017-04-11
  **/
 @Configuration
 @EnableConfigurationProperties(EnvProperties.class)
@@ -65,13 +65,14 @@ public class ServletConfig {
     }
 
     @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
-        return container -> {
-            container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/customError/401"));
-            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/customError/403"));
-            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/customError/404"));
-            container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/customError"));
-        };
+    public ConfigurableServletWebServerFactory containerCustomizer() {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+
+        factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/customError/401"));
+        factory.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/customError/403"));
+        factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/customError/404"));
+        factory.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/customError"));
+        return factory;
     }
 
     @Bean

@@ -2,7 +2,7 @@ package com.easytoolsoft.easyreport.web.controller.common;
 
 import com.easytoolsoft.easyreport.support.web.CommonErrorController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
