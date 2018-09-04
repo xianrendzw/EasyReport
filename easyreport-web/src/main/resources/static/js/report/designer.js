@@ -120,16 +120,16 @@ var DesignerMVC = {
              type: 2
              }*/],
         MetaColumnTypes: [{
-            text: "布局列",
+            text: "上侧索引",
             value: 1
         }, {
-            text: "维度列",
+            text: "左侧索引",
             value: 2
         }, {
-            text: "统计列",
+            text: "数值",
             value: 3
         }, {
-            text: "计算列",
+            text: "自定义数值",
             value: 4
         }],
         MetaColumnSortTypes: [{

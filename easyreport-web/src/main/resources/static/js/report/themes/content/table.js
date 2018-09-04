@@ -139,7 +139,8 @@ var TableReportMVC = {
             });
 
             var noRowSpan = !TableReportMVC.Util.hasRowSpan();
-            table.data('isSort', noRowSpan).fixScroll();
+            //can't scroll to left
+            //table.data('isSort', noRowSpan).fixScroll();
 
             //如果表格中没有跨行rowspan(暂不支持跨行)
             if (noRowSpan) {

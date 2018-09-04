@@ -18,11 +18,11 @@
                     <input id="table-report-uid" type="hidden" name="uid" th:value="${uid}"/>
                     <input id="table-report-isRowSpan" type="hidden" name="isRowSpan" th:value="true"/></td>
             </tr>
-            <tr id="table-report-columns" th:if="${not #strings.isEmpty(statColumHtmlTex)}">
+            <tr id="table-report-columns" th:if="${not #strings.isEmpty(statColumHtmlText)}">
                 <td colspan="2" style="text-align: left;" th:utext="${statColumHtmlText}"></td>
             </tr>
         </table>
     </form>
 </div>
-<div xmlns:th="http://www.thymeleaf.org" style="margin: 5px;" id="table-report-htmltext-div"
+<div xmlns:th="http://www.thymeleaf.org" style="margin: 5px;" id="table-report-htmltext-div"t
      th:text="${htmlTable}"></div>

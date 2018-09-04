@@ -1,5 +1,7 @@
 package com.easytoolsoft.easyreport.web.controller.report;
 
+import com.alibaba.fastjson.JSONObject;
+import com.easytoolsoft.easyreport.engine.data.LayoutType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -106,6 +108,11 @@ public class DesignerController
         po.setUid(UUID.randomUUID().toString());
         po.setComment("");
         po.setGmtCreated(new Date());
+        String opt = po.getOptions();
+        JSONObject optJs = JSONObject.parseObject(opt);
+        optJs.put("layout", LayoutType.HORIZONTAL.getValue());
+        po.setOptions(optJs.toJSONString());
+
         this.service.add(po);
         this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         return ResponseResult.success("");
@@ -115,6 +122,11 @@ public class DesignerController
     @OpLog(name = "修改报表")
     @RequiresPermissions("report.designer:edit")
     public ResponseResult edit(@CurrentUser final User loginUser, final Report po) {
+        String opt = po.getOptions();
+        JSONObject optJs = JSONObject.parseObject(opt);
+        optJs.put("layout", LayoutType.HORIZONTAL.getValue());
+        po.setOptions(optJs.toJSONString());
+
         this.service.editById(po);
         this.reportHistoryService.add(this.getReportHistory(loginUser, po));
         return ResponseResult.success("");

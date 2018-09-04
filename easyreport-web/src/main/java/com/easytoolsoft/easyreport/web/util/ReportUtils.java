@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.web.util;
 
+import com.easytoolsoft.easyreport.engine.data.LayoutType;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +89,7 @@ public class ReportUtils {
                                         final HttpServletRequest request) {
         final Report report = reportService.getByUid(uid);
         final ReportOptions options = reportService.parseOptions(report.getOptions());
+        options.setLayout(LayoutType.HORIZONTAL.getValue());
         final List<ReportMetaDataColumn> metaDataColumns = reportService.parseMetaColumns(report.getMetaColumns());
         final Map<String, Object> buildInParams = tableReportService.getBuildInParameters(request.getParameterMap(),
             options.getDataRange());

@@ -208,7 +208,7 @@ utcIntEndTime|UTC整型结束日期|20150204
 ### 3.7 相关参考(Referrence Links)
 
 * 报表SQL中使用的模板引擎:[velocity][]
-* 计算列中使用的表达式引擎:[aviator][]
+* 计算列中使用的表达式引擎:[aviator][]、[aviator-doc][]
 * 所有示例中的数据来源:[pm25.in][]、[aqistudy][]
 * 图表控件:[echarts][]、[highcharts][]
 * 前端报表表格及排序相关js插件：[tablesorter][]、[DataTables][]
@@ -230,8 +230,9 @@ utcIntEndTime|UTC整型结束日期|20150204
 [lombok]: https://projectlombok.org/download.html
 [tomcat8+]: http://tomcat.apache.org/
 [MySQL5+]: http://dev.mysql.com/downloads/mysql/
-[velocity]: http://velocity.apache.org/engine/releases/velocity-1.5/user-guide.html
+[velocity]: http://velocity.apache.org/engine/1.7/user-guide.html
 [aviator]: https://code.google.com/p/aviator/wiki/User_Guide_zh
+[aviator-doc]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/files/Aviator-2.3.0用户指南.pdf
 [org.apache.commons.lang3.StringUtils]: http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html
 [pm25.in]: http://www.pm25.in
 [aqistudy]: http://aqistudy.sinaapp.com/historydata/index.php

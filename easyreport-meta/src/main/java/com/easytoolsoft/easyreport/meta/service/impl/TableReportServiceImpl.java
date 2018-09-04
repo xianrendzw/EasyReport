@@ -1,5 +1,6 @@
 package com.easytoolsoft.easyreport.meta.service.impl;
 
+import com.easytoolsoft.easyreport.engine.data.LayoutType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,6 +98,8 @@ public class TableReportServiceImpl implements TableReportService {
         final String sqlText = new ReportSqlTemplate(report.getSqlText(), formParams).execute();
         final Set<String> enabledStatColumn = this.getEnabledStatColumns(formParams);
         final ReportOptions options = this.reportService.parseOptions(report.getOptions());
+        //report layout: need not to be configured by user
+        //options.setLayout(LayoutType.HORIZONTAL.getValue());
         final List<ReportMetaDataColumn> metaColumns = this.reportService.parseMetaColumns(report.getMetaColumns());
         return new ReportParameter(report.getId().toString(), report.getName(),
             options.getLayout(), options.getStatColumnLayout(), metaColumns,
@@ -446,7 +449,8 @@ public class TableReportServiceImpl implements TableReportService {
             checkbox.setChecked(!column.isOptional());
             checkBoxes.add(checkbox);
         }
-        return new HtmlCheckBoxList("statColumns", "统计列", checkBoxes);
+        // 统计列 -> 数值列
+        return new HtmlCheckBoxList("statColumns", "数值列", checkBoxes);
     }
 
     @Override
