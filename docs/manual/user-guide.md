@@ -27,6 +27,35 @@ select area, year(dt), quality, pm25, pm10, o3 from fact_air_cn where area='北�
 这样，一份报表就做好了。
 
 
+### 4 高级功能介绍：
+
+#### 1 数值列可选
+只选择感兴趣的数值列，让有限的页面空间显示更多我们感兴趣的内容
+![column-select][]
+
+#### 2 加入维度筛选
+针对一个或多个维度列，生成下拉选择框，只显示感兴趣的维度列。
+![dem-select-1][]
+
+上面的城市选项，需要在“查询参数”tab下设置，而且下拉框的内容可以从数据库里查出来，也可以自己按照name1,text1|name2,text2|... 格式输入。
+同时sql语句里要加上对应的筛选项名，比如：where area in ('${area}')
+![dem-select-2][]
+
+#### 3 加入日期筛选
+报表的内容一般每天都会更新，所以日期的筛选很重要，本工具内置了startTime(七天前)，endTime(今天)两个变量，可以很方便地滚动查看前7天的数据表内容。
+Sql语句里也要加上对应的筛选项名，比如：where dt > '${startTime}' and dt < '${endTime}'，
+startTime，endTime是内置参数，不需要想配置城市筛选项那样定义值
+![date-select][]
+
+#### 4 报表的另一个重要方面是排序方式，按需排序后可以方便地发现重要信息
+在设计报表页面，每一列都有排序方式设置，比如我想按照自己的顺序对城市名称进行排序，可以这么操作： 
+![set-sort-1][]
+显示的报表如下：
+![set-sort-2][]
+#### 5 通过报表右上角的图标，点击即可导出excel文件
+
+
+
 [jdk1.8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 [jre1.8]: http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 [maven3]: http://maven.apache.org/download.cgi
@@ -90,3 +119,9 @@ select area, year(dt), quality, pm25, pm10, o3 from fact_air_cn where area='北�
 [design-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/design-1.jpg
 [design-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/design-2.jpg
 [design-3]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/design-3.jpg
+[column-select]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/column-select.jpg
+[dem-select-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/dem-select-1.jpg
+[dem-select-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/dem-select-2.jpg
+[date-select]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/date-select.jpg
+[set-sort-1]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/set-sort-1.jpg
+[set-sort-2]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/set-sort-2.jpg

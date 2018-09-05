@@ -30,13 +30,13 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 * 数据访问采用mybatis框架,方便二次开发
 * 报表展现支持自定义生成模板
 
-## [2.0用户参考][]
-## [1.0用户参考][]
+## [入门手册][]
+## [用户参考][]
 ## 捐助
 您的热情,我的动力!开源是一种精神,也是一种生活...
 
 ![支付宝][]
 
-[1.0用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version1_0.md
-[2.0用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version2_0.md
+[入门手册]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/user-guide.md
+[用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version2_0.md
 [支付宝]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/alipay-code.png
