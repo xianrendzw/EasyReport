@@ -5,8 +5,10 @@ A simple and easy to use Web Report System for java
 
 EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语句查询出的数据转换成报表页面，
 同时支持表格的跨行(RowSpan)与跨列(ColSpan)配置。
-同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。  
-欢迎加入QQ群交流：（365582678）
+同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。 
+欢迎加入Telegram群交流：https://t.me/+HsQVqBBXQ8s0OTVl
+欢迎加入QQ群交流：（365582678）已经不再使用
+
 
 * mvn -DskipTests package
 * mvn spring-boot:run -pl easyreport-web 
