@@ -1,4 +1,4 @@
-EasyReport
+![Wechat](https://github.com/xianrendzw/EasyReport/assets/177784/5efd50b3-588c-4e13-8357-a1e2c7b4257b)EasyReport
 ==========
 
 A simple and easy to use Web Report System for java
@@ -7,10 +7,8 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 同时支持表格的跨行(RowSpan)与跨列(ColSpan)配置。
 同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。 
 
-欢迎加入Telegram群交流：https://t.me/+HsQVqBBXQ8s0OTVl
-
-欢迎加入QQ群交流：（365582678）已经不再使用
-
+欢迎扫码微信进群交流：
+![微信][]
 
 * mvn -DskipTests package
 * mvn spring-boot:run -pl easyreport-web 
@@ -36,11 +34,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 
 ## [入门手册][]
 ## [用户参考][]
-## 捐助
-您的热情,我的动力!开源是一种精神,也是一种生活...
-
-![支付宝][]
 
 [入门手册]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/user-guide.md
 [用户参考]: https://github.com/xianrendzw/EasyReport/blob/master/docs/manual/version2_0.md
-[支付宝]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/alipay-code.png
+[微信]: https://raw.githubusercontent.com/xianrendzw/EasyReport/master/docs/assets/imgs/Wechat.jpg
