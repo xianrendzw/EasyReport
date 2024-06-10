@@ -7,7 +7,7 @@ EasyReport是一个简单易用的Web报表工具,它的主要功能是把SQL语
 同时支持表格的跨行(RowSpan)与跨列(ColSpan)配置。
 同时它还支持报表Excel导出、图表显示及固定表头与左边列的功能。 
 
-欢迎扫码微信进群交流：
+欢迎扫码微信进群交流(备注EasyReport)：
 ![微信][]
 
 * mvn -DskipTests package
