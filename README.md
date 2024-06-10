@@ -1,4 +1,4 @@
-![Wechat](https://github.com/xianrendzw/EasyReport/assets/177784/5efd50b3-588c-4e13-8357-a1e2c7b4257b)EasyReport
+EasyReport
 ==========
 
 A simple and easy to use Web Report System for java
