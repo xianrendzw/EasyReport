@@ -2,7 +2,8 @@
     <form id="chart-report-form" method="post">
         <table class="designer-table" style="width: 100%;padding: 6px;">
             <tr>
-                <td style="text-align: left;" th:utext="${formHtmlText}">&nbsp;&nbsp;
+                <td style="text-align: left;">
+                    <span th:utext="${formHtmlText}"></span>
                     <a id="btn-chart-generate" href="#" class="easyui-linkbutton"
                        data-options="iconCls:'icon-ok'">生成</a>
                 </td>
